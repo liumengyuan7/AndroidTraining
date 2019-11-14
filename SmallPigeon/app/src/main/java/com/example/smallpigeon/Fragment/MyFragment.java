@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.My.UpdatePersonalMsg;
 import com.example.smallpigeon.R;
 
@@ -27,11 +28,11 @@ public class MyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my,container,false);
         //获取-我的-页面右上角小工具控件id
         my_Settings=view.findViewById(R.id.my_Settings);
-        //注册监听事件
+        //点击事件 跳转到修改个人资料页面
         my_Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),UpdatePersonalMsg.class);
+                Intent intent = new Intent(getContext(), PersonalCenter.class);
                 startActivity(intent);
             }
         });
