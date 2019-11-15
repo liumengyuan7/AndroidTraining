@@ -45,7 +45,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                 android:id="@+id/personal_center_userSex"
+                 android:id="@+id/personal_center_more_userSex"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:text=""
@@ -71,17 +71,20 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="30dp">
             <TextView
+                android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="唱歌跳舞"
+                android:text=""
                 android:textSize="20sp"
                 android:textColor="#000000"
+                android:id="@+id/personal_center_more_userInterest"
                 />
 
         </LinearLayout>

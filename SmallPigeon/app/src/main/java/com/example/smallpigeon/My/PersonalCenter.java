@@ -61,7 +61,7 @@ public class PersonalCenter extends AppCompatActivity {
 
                 case R.id.personal_center_back://个人信息页面返回到-我的-activity
                     Intent intent = new Intent(PersonalCenter.this, MyFragment.class);
-                    startActivity(intent);
+                    finish();
                     break;
                 case R.id.personal_center_updateImg://进入修改头像activity
                     Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
@@ -72,7 +72,8 @@ public class PersonalCenter extends AppCompatActivity {
                     startActivity(intent2);
                     break;
                 case R.id.personal_center_more://进入更多修改activity
-
+                    Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
+                    startActivity(intent3);
                     break;
             }
 
