@@ -19,16 +19,20 @@
             android:textSize="25dp"/>
     </LinearLayout>
     <EditText
+        android:id="@+id/username"
         android:hint="用户名/手机号"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
     <EditText
+        android:id="@+id/password"
         android:hint="密码"
         android:layout_marginTop="10dp"
+        android:inputType="numberPassword"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
     <Button
+        android:id="@+id/user_login"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"

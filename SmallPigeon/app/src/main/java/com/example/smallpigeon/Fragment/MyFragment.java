@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.My.UpdatePersonalMsg;
 import com.example.smallpigeon.R;
@@ -21,7 +23,7 @@ import com.example.smallpigeon.R;
 
 public class MyFragment extends Fragment {
     private ImageView my_Settings;
-
+    private Button loginOrRegister;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,8 +38,14 @@ public class MyFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
+        loginOrRegister = view.findViewById(R.id.LoginOrRegister);
+        loginOrRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
 
