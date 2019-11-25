@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.PersonalCenter;
@@ -28,8 +29,16 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my,container,false);
-        //获取-我的-页面右上角小工具控件id
-        my_Settings=view.findViewById(R.id.my_Settings);
+        getViews(view);
+        btnEvent();
+
+        return view;
+
+
+    }
+
+    //按钮的点击事件
+    private void btnEvent() {
         //点击事件 跳转到修改个人资料页面
         my_Settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +47,7 @@ public class MyFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        loginOrRegister = view.findViewById(R.id.LoginOrRegister);
+
         loginOrRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,8 +56,13 @@ public class MyFragment extends Fragment {
             }
         });
 
-        return view;
-
-
     }
+
+    //获取视图的控件
+    private void getViews(View view) {
+        //获取-我的-页面右上角小工具控件id
+        my_Settings=view.findViewById(R.id.my_Settings);
+        loginOrRegister = view.findViewById(R.id.LoginOrRegister);
+    }
+
 }
