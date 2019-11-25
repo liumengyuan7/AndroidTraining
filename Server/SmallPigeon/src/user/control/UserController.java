@@ -16,12 +16,11 @@ public class UserController extends Controller {
 	public void userLogin() {
 		String username = getPara("username");
 		String password = getPara("password");
-		List<User> result = new UserService().userLogin(username, password);
-		Gson gson = new Gson();
-		if(result!=null) {
-			renderText(gson.toJson(result));
-		}else {
+		String result = new UserService().userLogin(username, password);
+		if(result==null) {
 			renderText("false");
+		}else {
+			renderText(result);
 		}
 	}
 	

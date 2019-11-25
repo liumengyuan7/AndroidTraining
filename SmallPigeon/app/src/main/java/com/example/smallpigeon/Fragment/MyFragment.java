@@ -2,6 +2,7 @@ package com.example.smallpigeon.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.PersonalCenter;
@@ -31,7 +33,7 @@ public class MyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my,container,false);
         getViews(view);
         btnEvent();
-
+        loginEvent();
         return view;
 
 
@@ -47,15 +49,30 @@ public class MyFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
 
-        loginOrRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+    //登录按钮
+    private void loginEvent(){
+        //跳转登录界面
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
+        String nickname = pre.getString("user_nickname","");
+        if(nickname.equals("") || nickname == null){
+            loginOrRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }else{
+            loginOrRegister.setText("欢迎登录："+nickname);
+            loginOrRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
+        }
     }
 
     //获取视图的控件
@@ -65,4 +82,9 @@ public class MyFragment extends Fragment {
         loginOrRegister = view.findViewById(R.id.LoginOrRegister);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loginEvent();
+    }
 }

@@ -2,7 +2,9 @@ package com.example.smallpigeon.LoginOrRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +19,10 @@ import android.widget.Toast;
 
 import com.example.smallpigeon.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +33,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+import java.util.prefs.Preferences;
 
 public class LoginActivity extends AppCompatActivity {
     private ImageView loginReturn;
@@ -43,11 +51,24 @@ public class LoginActivity extends AppCompatActivity {
             if(result.equals("false")){
                 Toast.makeText(getApplicationContext(),"登录失败！",Toast.LENGTH_SHORT).show();
             }else{
-//                Gson gson = new Gson();
-//                JsonObject jsonObject = new JsonObject();
-//                jsonObject.get("attrs");
-//                System.out.println(jsonObject.toString());
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    JSONObject json1 = jsonArray.getJSONObject(0);
+                    JSONObject json2 = new JSONObject(json1.getString("attrs"));
+                    SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pre.edit();
+                    editor.putString("user_nickname",json2.getString("user_nickname"));
+                    editor.putString("user_sex",json2.getString("user_sex"));
+                    editor.putString("user_email",json2.getString("user_email"));
+                    editor.putString("user_register_time",json2.getString("user_register_time"));
+                    editor.putString("user_phone",json2.getString("user_phone"));
+                    editor.putString("user_points",json2.getString("user_points"));
+                    editor.commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     };

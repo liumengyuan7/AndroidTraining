@@ -11,18 +11,13 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-<<<<<<< HEAD
         android:background="#259B24">
-
-=======
-        android:background="#fff">
         <ImageView
             android:id="@+id/loginReturn"
             android:layout_width="25dp"
             android:layout_marginLeft="20dp"
             android:layout_height="match_parent"
             android:src="@mipmap/returnimage"/>
->>>>>>> db50219fc317f217af414813e31ead0dcdc28d5d
         <TextView
 
             android:gravity="center"
