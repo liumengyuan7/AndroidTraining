@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                                    +":8080/SmallPigeon/user/userLogin?username="+username.getText().toString()
+                                    +":8080/smallpigeon/user/userLogin?username="+username.getText().toString()
                                     +"&&password="+password.getText().toString());
                             URLConnection conn = url.openConnection();
                             InputStream in = conn.getInputStream();

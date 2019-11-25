@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="smallpigeon">
+    <output-path>$PROJECT_DIR$/out/artifacts/smallpigeon</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="SmallPigeon/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="SmallPigeon" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
