@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/zhuce"
     tools:context=".LoginOrRegister.RegisterActivity">
     <LinearLayout
         android:gravity="center"
@@ -43,11 +44,15 @@
                 android:text="邮  箱:"
                 android:textSize="25sp"/>
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/register_userEmail"
                 android:hint="请输入您的邮箱账号"
                 />
+            <Button
+                android:text="发送验证码"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -219,6 +224,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/circular"
         android:text="我的注册已完成~"
+        android:alpha="0.7"
         android:id="@+id/btn_FinishReg"
         />
 </LinearLayout>

@@ -17,13 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smallpigeon.Fragment.MyFragment;
-import com.example.smallpigeon.My.PersonalCenter;
-import com.example.smallpigeon.My.Personal_center_More;
-import com.example.smallpigeon.My.Personal_center_updateUserNickname;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
@@ -46,9 +41,10 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox science;
     private CheckBox star;
     private CheckBox comic;
-    private String str;
+    private String sexstr;
+    private  String interesStr;
     private  String str1;
-
+    private String str2;
     private  LinearLayout register_Linear;
     private ImageView Register_Return;
 
@@ -116,7 +112,9 @@ public class RegisterActivity extends AppCompatActivity {
     class CustomeClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            str="";
+            sexstr="";
+            interesStr="";
+            str2="";
             switch (v.getId()){
                 case R.id.btn_FinishReg:
                     for(int i=0;i<radioGroup_userSex.getChildCount();i++){
@@ -125,49 +123,68 @@ public class RegisterActivity extends AppCompatActivity {
                         {
                             Log.e("单选按钮","性别："+RB.getText());
                             if(RB.getText()=="男"){
-                                str=str+"Man;";
+                                sexstr=sexstr+"Man;";
                             }
                             else{
-                                str=str+"Woman;";
+                                sexstr=sexstr+"Woman;";
                             }
                             break;
                         }
                     }
                     if(outdoor.isChecked())
-                        str=str+"outdoor,";
+                        interesStr=interesStr+"outdoor,";
                     if(music.isChecked())
-                        str+="music,";
+                        interesStr+="music,";
                     if(film.isChecked())
-                        str+="film,";
+                        interesStr+="film,";
                     if(society.isChecked())
-                        str+="society,";
+                        interesStr+="society,";
                     if(delicacy.isChecked())
-                        str+="delicacy,";
+                        interesStr+="delicacy,";
                     if(science.isChecked())
-                        str+="science,";
+                        interesStr+="science,";
                     if(star.isChecked())
-                        str+="star,";
+                        interesStr+="star,";
                     if(comic.isChecked())
-                        str+="comic,";
+                        interesStr+="comic,";
+                    str2=interesStr;
+                    if(sexstr==""||interesStr==""){
+                        if(sexstr.length()==0&&interesStr.length()!=0)
+                            Toast.makeText(getApplicationContext(),"你是小哥哥还是小姐姐?",Toast.LENGTH_SHORT).show();
+                        if(sexstr.length()!=0&&interesStr.length()==0)
+                            Toast.makeText(getApplicationContext(),"可不可以告诉我你的兴趣爱好~",Toast.LENGTH_SHORT).show();
+                        if(sexstr.length()==0&&interesStr.length()==0)
+                            Toast.makeText(getApplicationContext(),"嘤嘤嘤,不知道你是小哥哥还是小姐姐，也不知道你的兴趣爱好",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Log.e("str"," "+str2);
+                        int b = str2.length();
+                        str1 = str2.substring(0,b-1);//兴趣爱好
+                        Log.e("str1"," "+str1);
+                        String userEmail = register_userEmail.getText().toString();
+                        String userPassword = register_userPassword.getText().toString();
+                        String userNickname=register_userNickname.getText().toString();
 
-                    Log.e("str"," "+str);
-                    int b = str.length();
-                    str1 = str.substring(0,b-1);//性别+兴趣爱好
-                    Log.e("str1"," "+str1);
+                        if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0){
 
-                    String userEmail = register_userEmail.getText().toString();
-                    String userPassword = register_userPassword.getText().toString();
-                    String userNickname=register_userNickname.getText().toString();
-                    userRegister(userEmail,userPassword,userNickname,str1);
+                        }
+                        else{
+                            userRegister(userEmail,userPassword,userNickname,str1,sexstr);
 
-                    Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                    finish();
+                            Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                            finish();
+                        }
+
+            }
+
+
+
                     break;
 
                 case R.id.Register_Return:
                     Intent intent3 = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent3);
+                    finish();
                     break;
 
             }
@@ -179,13 +196,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    public void userRegister(final String userEmail,final String userPassword,final String userNickname,final String str){
+    public void userRegister(final String userEmail,final String userPassword,final String userNickname,final String str,final String sexstr){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/userRegister?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&sexAndInterest="+str);
+                            +":8080/SmallPigeon/user/Register?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&sexAndInterest="+str+"&&sex="+sexstr);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
