@@ -56,7 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText register_userEmail;
     private EditText register_userPassword;
     private EditText register_userNickname;
-
+    private EditText register_checkPwd;
+    private EditText register_checkCode;
+    private Button getCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
         register_Linear.setLayoutParams(params1);
 
 
+
+
     }
 
     private void getViews() {
@@ -105,12 +109,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         Register_Return=findViewById(R.id.Register_Return);
 
+        register_checkPwd=findViewById(R.id.register_checkPwd);
+        register_checkCode=findViewById(R.id.register_checkCode);
+        getCode=findViewById(R.id.register_getCode);
+
 
     }
     private void registListeners(){
         listener = new CustomeClickListener();
         btn_FinishReg.setOnClickListener(listener);
         Register_Return.setOnClickListener(listener);
+        getCode.setOnClickListener(listener);
+
     }
 
 
@@ -121,7 +131,20 @@ public class RegisterActivity extends AppCompatActivity {
             interesStr="";
             str2="";
             switch (v.getId()){
+
+                case R.id.register_getCode://发送验证码
+
+                    break;
+
                 case R.id.btn_FinishReg:
+//                    String checkcode=register_checkCode.getText().toString();//获取用户输入的验证码
+//                    if(checkcode=="验证码"){
+//                        //提示注册成功  148行之后的代码挪至此处
+//                    }
+//                    else{
+//                        //提示错误
+//
+//                    }
                     for(int i=0;i<radioGroup_userSex.getChildCount();i++){
                         RadioButton RB=(RadioButton) radioGroup_userSex.getChildAt(i);
                         if(RB.isChecked())
@@ -133,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
                             else{
                                 sexstr=sexstr+"Woman;";
                             }
-                            break;
+
                         }
                     }
                     if(outdoor.isChecked())
@@ -155,11 +178,11 @@ public class RegisterActivity extends AppCompatActivity {
                     str2=interesStr;
                     if(sexstr==""||interesStr==""){
                         if(sexstr.length()==0&&interesStr.length()!=0)
-                            Toast.makeText(getApplicationContext(),"你是小哥哥还是小姐姐?",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
                         if(sexstr.length()!=0&&interesStr.length()==0)
-                            Toast.makeText(getApplicationContext(),"可不可以告诉我你的兴趣爱好~",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
                         if(sexstr.length()==0&&interesStr.length()==0)
-                            Toast.makeText(getApplicationContext(),"嘤嘤嘤,不知道你是小哥哥还是小姐姐，也不知道你的兴趣爱好",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         Log.e("str"," "+str2);
@@ -169,16 +192,34 @@ public class RegisterActivity extends AppCompatActivity {
                         String userEmail = register_userEmail.getText().toString();
                         String userPassword = register_userPassword.getText().toString();
                         String userNickname=register_userNickname.getText().toString();
+                        String checkpwd=register_checkPwd.getText().toString();
 
-                        if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0){
 
+
+                        if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0||checkpwd.length()==0){
+                            if(userEmail.length()==0)
+                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                            if(userPassword.length()==0)
+                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                            if(userNickname.length()==0)
+                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                            if(register_checkPwd.length()==0)
+                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                            if(userEmail.length()==0&&userPassword.length()==0&&userNickname.length()==0)
+                                Toast.makeText(getApplicationContext(),"注册信息不可为空~",Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            userRegister(userEmail,userPassword,userNickname,str1,sexstr);
+                            if(userPassword!=checkpwd){
+                                Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                userRegister(userEmail,userPassword,userNickname,str1,sexstr);
 
-                            Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                            finish();
+                                Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                                finish();
+                            }
+
                         }
 
             }
