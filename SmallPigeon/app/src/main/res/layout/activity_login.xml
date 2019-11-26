@@ -15,12 +15,13 @@
         <ImageView
             android:id="@+id/loginReturn"
             android:layout_width="25dp"
-            android:layout_marginLeft="20dp"
+
             android:layout_height="match_parent"
             android:src="@mipmap/returnimage"/>
         <TextView
 
             android:gravity="center"
+            android:layout_marginLeft="-10dp"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

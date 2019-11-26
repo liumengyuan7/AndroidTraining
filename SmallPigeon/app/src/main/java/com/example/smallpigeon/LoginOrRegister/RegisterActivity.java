@@ -2,16 +2,22 @@ package com.example.smallpigeon.LoginOrRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Fragment.MyFragment;
@@ -42,7 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox comic;
     private String str;
     private  String str1;
-
+    private  LinearLayout register_Linear;
+    private ImageView Register_Return;
 
     private EditText register_userEmail;
     private EditText register_userPassword;
@@ -54,7 +61,25 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getViews();
+        setViews();//屏幕适配
         registListeners();
+    }
+
+    private void setViews() {
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(displayMetrics);
+        int displayWidth = displayMetrics.widthPixels;
+        int displayHeight = displayMetrics.heightPixels;
+
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+                (int)(displayWidth * 1f + 0.1f),
+                (int)(displayHeight * 0.5f + 0.5f));
+        params1.setMargins((int)(displayWidth * 0.001f + 0.1f),(int)(displayHeight * 0.001f + 0.5f)
+                ,(int)(displayWidth * 0.05f + 0.5f),0);
+        register_Linear.setLayoutParams(params1);
+
+
     }
 
     private void getViews() {
@@ -74,11 +99,16 @@ public class RegisterActivity extends AppCompatActivity {
         register_userPassword=findViewById(R.id.register_userPassword);
         register_userNickname=findViewById(R.id.register_userNickname);
 
+        register_Linear=findViewById(R.id.register_Linear);
+
+        Register_Return=findViewById(R.id.Register_Return);
+
 
     }
     private void registListeners(){
         listener = new CustomeClickListener();
         btn_FinishReg.setOnClickListener(listener);
+        Register_Return.setOnClickListener(listener);
     }
 
 
@@ -123,20 +153,25 @@ public class RegisterActivity extends AppCompatActivity {
                     int b = str.length();
                     str1 = str.substring(0,b-1);//性别+兴趣爱好
                     Log.e("str1"," "+str1);
+
+                    String userEmail = register_userEmail.getText().toString();
+                    String userPassword = register_userPassword.getText().toString();
+                    String userNickname=register_userNickname.getText().toString();
+                    userRegister(userEmail,userPassword,userNickname,str1);
+
+                    Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                    finish();
                     break;
 
-
+                case R.id.Register_Return:
+                    Intent intent3 = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent3);
+                    break;
 
             }
 
-            String userEmail = register_userEmail.getText().toString();
-            String userPassword = register_userPassword.getText().toString();
-            String userNickname=register_userNickname.getText().toString();
-            userRegister(userEmail,userPassword,userNickname,str1);
 
-            Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-            finish();
 
 
         }
