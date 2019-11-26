@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String re = msg.obj+"";
             if(re.equals("false")){
-                Toast.makeText(getApplicationContext(),"登录失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"您的账号或者密码错误，登录失败！",Toast.LENGTH_SHORT).show();
             }else{
                 try {
                     String result = re.split(";")[0];
@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user_sex",json2.getString("user_sex"));
                     editor.putString("user_email",json2.getString("user_email"));
                     editor.putString("user_register_time",json2.getString("user_register_time"));
-                    editor.putString("user_phone",json2.getString("user_phone"));
                     editor.putString("user_points",json2.getString("user_points"));
                     editor.putString("user_interest",re.split(";")[1]);
                     editor.commit();
@@ -106,36 +105,12 @@ public class LoginActivity extends AppCompatActivity {
         userLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    MessageDigest md = MessageDigest.getInstance("MD5");
-                    md.update(password.getText().toString().getBytes());
-                    md5Pass = new BigInteger(1, md.digest()).toString(16);
-                    Log.e("md5",md5Pass);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
+                if(username.getText().toString().equals("") || password.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"账号或者密码不能为空哦，请重新输入！",Toast.LENGTH_SHORT).show();
+                }else {
+                    sendMessageToServer();
                 }
-                new Thread(){
-                    @Override
-                    public void run() {
-                        try {
-                            URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                                    +":8080/smallpigeon/user/userLogin?username="+username.getText().toString()
-                                    +"&&password="+md5Pass);
-                            URLConnection conn = url.openConnection();
-                            InputStream in = conn.getInputStream();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                            String result = reader.readLine();
-                            Message message = new Message();
-                            message.obj = result;
-                            message.what = 2;
-                            handlerLogin.sendMessage(message);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
+
             }
         });
 
@@ -152,6 +127,40 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //向服务器发送数据
+    private void sendMessageToServer(){
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getText().toString().getBytes());
+            md5Pass = new BigInteger(1, md.digest()).toString(16);
+            Log.e("md5",md5Pass);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/user/userLogin?useremail="+username.getText().toString()
+                            +"&&password="+md5Pass);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 2;
+                    handlerLogin.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
 }

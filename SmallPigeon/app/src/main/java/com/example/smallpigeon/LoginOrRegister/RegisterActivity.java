@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -17,13 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smallpigeon.Fragment.MyFragment;
-import com.example.smallpigeon.My.PersonalCenter;
-import com.example.smallpigeon.My.Personal_center_More;
-import com.example.smallpigeon.My.Personal_center_updateUserNickname;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
@@ -47,9 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox star;
     private CheckBox comic;
     private String sexstr;
-    private  String interesStr;
-    private  String str1;
-    private String str2;
+    private String interesStr;
+    private String str1;
     private  LinearLayout register_Linear;
     private ImageView Register_Return;
 
@@ -60,6 +55,18 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText register_checkCode;
     private Button getCode;
 
+    private Handler userRegister = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj + "";
+            if(result.equals("true")){
+                Toast.makeText(getApplicationContext(),"注册成功！",Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
         registListeners();
     }
 
+    //动态设置控件
     private void setViews() {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -88,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    //获取视图的控件
     private void getViews() {
         btn_FinishReg=findViewById(R.id.btn_FinishReg);
         radioGroup_userSex=findViewById(R.id.radioGroup_userSex);
@@ -115,6 +124,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
+    //注册监听器
     private void registListeners(){
         listener = new CustomeClickListener();
         btn_FinishReg.setOnClickListener(listener);
@@ -123,13 +134,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
+    //设置监听器
     class CustomeClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             sexstr="";
             interesStr="";
-            str2="";
             switch (v.getId()){
 
                 case R.id.register_getCode://发送验证码
@@ -175,7 +185,6 @@ public class RegisterActivity extends AppCompatActivity {
                         interesStr+="star,";
                     if(comic.isChecked())
                         interesStr+="comic,";
-                    str2=interesStr;
                     if(sexstr==""||interesStr==""){
                         if(sexstr.length()==0&&interesStr.length()!=0)
                             Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
@@ -185,9 +194,8 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        Log.e("str"," "+str2);
-                        int b = str2.length();
-                        str1 = str2.substring(0,b-1);//兴趣爱好
+                        Log.e("str"," "+interesStr);
+                        str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
                         Log.e("str1"," "+str1);
                         String userEmail = register_userEmail.getText().toString();
                         String userPassword = register_userPassword.getText().toString();
@@ -221,10 +229,7 @@ public class RegisterActivity extends AppCompatActivity {
                             }
 
                         }
-
-            }
-
-
+                    }
 
                     break;
 
@@ -241,21 +246,21 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-
+    //用户的注册
     public void userRegister(final String userEmail,final String userPassword,final String userNickname,final String str,final String sexstr){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/SmallPigeon/user/Register?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&sexAndInterest="+str+"&&sex="+sexstr);
+                            +":8080/SmallPigeon/user/Register?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&sexAndInterest="+str+"&&userSex="+sexstr);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String result = reader.readLine();
                     Message message = new Message();
                     message.obj = result;
-
+                    userRegister.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -264,4 +269,5 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }.start();
     }
+
 }

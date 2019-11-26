@@ -122,6 +122,7 @@ public class PersonalCenter extends AppCompatActivity {
 
         SignOut=findViewById(R.id.personal_center_SignOut);
     }
+
     private void registListeners() {
         listener = new CustomeClickListener();
         personal_center_back.setOnClickListener(listener);
@@ -152,6 +153,7 @@ public class PersonalCenter extends AppCompatActivity {
                     SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                     Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
                     intent3.putExtra("sex",pre.getString("user_sex",""));
+                    intent3.putExtra("time",pre.getString("user_register_time",""));
                     intent3.putExtra("interest",pre.getString("user_interest",""));
                     startActivity(intent3);
                     break;
@@ -160,8 +162,9 @@ public class PersonalCenter extends AppCompatActivity {
 
             }
         }
+
     //从user表中获取user_email  nickname points
-        public void getUserBasicMsg(){
+    public void getUserBasicMsg(){
             new Thread(){
                 @Override
                 public void run() {
@@ -185,6 +188,6 @@ public class PersonalCenter extends AppCompatActivity {
         }
 
 
-    }
+}
 
 
