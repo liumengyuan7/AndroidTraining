@@ -14,15 +14,15 @@
         android:layout_height="50dp"
         >
         <ImageView
-            android:id="@+id/personal_center_back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/left"
-            android:layout_marginRight="310dp"
-            android:layout_gravity="center"
-            />
+            android:id="@+id/Register_Return"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/returnimage"/>
         <TextView
+
             android:gravity="center"
+            android:layout_marginLeft="-10dp"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="注册"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/register_userPassword"
-                android:hint="建议使用特殊字符,字母,数字组成的密码哦"
+                android:hint="推荐特殊字符,字母,数字组成密码"
                 />
         </LinearLayout>
 
@@ -104,7 +104,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="性         别:"
+                android:text="性  别:"
                 android:textSize="25sp"
                 />
             <RadioGroup
@@ -130,6 +130,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/register_Linear"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="vertical">
@@ -140,7 +141,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="兴趣爱好:"
+                    android:text="兴  趣:"
                     android:textSize="25sp" />
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -175,9 +176,12 @@
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="107dp"
-                    android:layout_height="match_parent"></LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="兴  趣:"
+                    android:alpha="0"
+                    android:textSize="25sp" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
