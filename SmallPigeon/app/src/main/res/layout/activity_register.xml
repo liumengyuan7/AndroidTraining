@@ -44,15 +44,12 @@
                 android:text="邮  箱:"
                 android:textSize="25sp"/>
             <EditText
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/register_userEmail"
                 android:hint="请输入您的邮箱账号"
                 />
-            <Button
-                android:text="发送验证码"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,6 +72,27 @@
                 android:hint="推荐特殊字符,字母,数字组成密码"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff"
+            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="确认密码:"
+                android:textSize="25sp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_checkPwd"
+                android:hint="请再次输入您的密码"
+                />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,6 +113,38 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/register_userNickname"
                 android:hint="请编辑您的用户名"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff"
+            />
+        <LinearLayout
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="输入验证码:"
+                android:textSize="25sp"/>
+            <EditText
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_checkCode"
+                android:hint="输入验证码"
+                />
+            <Button
+                android:layout_marginLeft="30dp"
+                android:alpha="0.7"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="获取验证码"
+                android:id="@+id/register_getCode"
+                android:background="@drawable/circular"
                 />
         </LinearLayout>
         <LinearLayout

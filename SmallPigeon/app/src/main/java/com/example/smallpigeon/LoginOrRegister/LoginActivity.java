@@ -120,7 +120,13 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+        //忘记密码
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     //向服务器发送数据
