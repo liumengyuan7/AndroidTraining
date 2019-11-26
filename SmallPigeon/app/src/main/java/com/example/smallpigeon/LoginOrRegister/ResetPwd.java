@@ -36,6 +36,7 @@ public class ResetPwd extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent3 = new Intent(ResetPwd.this, ForgetPassword.class);
+                startActivity(intent3);
                 finish();
             }
         });
