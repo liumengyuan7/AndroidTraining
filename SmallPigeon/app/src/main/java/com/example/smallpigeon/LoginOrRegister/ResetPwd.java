@@ -52,7 +52,7 @@ public class ResetPwd extends AppCompatActivity {
                     finish();
                 }
                 else
-                    Toast.makeText(getApplicationContext(),"两次输入的密码不一致哦~请重新输入~",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"两次输入的密码不一致哦~请重新输入",Toast.LENGTH_SHORT).show();
                     resetPwd.setText("");
                     checkPwd.setText("");
             }
