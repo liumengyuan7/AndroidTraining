@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String re = msg.obj+"";
             if(re.equals("false")){
-                Toast.makeText(getApplicationContext(),"登录失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"您的账号或者密码错误，登录失败！",Toast.LENGTH_SHORT).show();
             }else{
                 try {
                     String result = re.split(";")[0];
@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user_sex",json2.getString("user_sex"));
                     editor.putString("user_email",json2.getString("user_email"));
                     editor.putString("user_register_time",json2.getString("user_register_time"));
-                    editor.putString("user_phone",json2.getString("user_phone"));
                     editor.putString("user_points",json2.getString("user_points"));
                     editor.putString("user_interest",re.split(";")[1]);
                     editor.commit();
@@ -139,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/userLogin?username="+username.getText().toString()
+                            +":8080/smallpigeon/user/userLogin?useremail="+username.getText().toString()
                             +"&&password="+md5Pass);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

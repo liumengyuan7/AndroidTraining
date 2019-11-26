@@ -7,9 +7,9 @@ public class UserController extends Controller {
 	
 	//用户登录
 	public void userLogin() {
-		String username = getPara("username");
+		String useremail = getPara("useremail");
 		String password = getPara("password");
-		String result = new UserService().userLogin(username, password);
+		String result = new UserService().userLogin(useremail, password);
 		if(result==null) {
 			renderText("false");
 		}else {
@@ -19,7 +19,7 @@ public class UserController extends Controller {
 
 	//用户注册
 	public void userRegister(){
-		
+        String
 	}
 	
 	

@@ -1,14 +1,11 @@
 package user.service;
 
-import java.util.List;
-
-import bean.User;
 import user.dao.UserDao;
 
 public class UserService {
 
-	public String userLogin(String username, String password) {
-		return new UserDao().userLogin(username, password);
+	public String userLogin(String useremail, String password) {
+		return new UserDao().userLogin(useremail, password);
 	}
 
 	public boolean userRegister(){

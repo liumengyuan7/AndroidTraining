@@ -69,9 +69,7 @@ public class MyFragment extends Fragment {
             loginOrRegister.setText("欢迎登录："+nickname);
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-
-                }
+                public void onClick(View v) { }
             });
         }
     }
