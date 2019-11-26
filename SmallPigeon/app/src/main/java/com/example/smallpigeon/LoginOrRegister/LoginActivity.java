@@ -106,36 +106,12 @@ public class LoginActivity extends AppCompatActivity {
         userLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    MessageDigest md = MessageDigest.getInstance("MD5");
-                    md.update(password.getText().toString().getBytes());
-                    md5Pass = new BigInteger(1, md.digest()).toString(16);
-                    Log.e("md5",md5Pass);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
+                if(username.getText().toString().equals("") || password.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"账号或者密码不能为空哦，请重新输入！",Toast.LENGTH_SHORT).show();
+                }else {
+                    sendMessageToServer();
                 }
-                new Thread(){
-                    @Override
-                    public void run() {
-                        try {
-                            URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                                    +":8080/smallpigeon/user/userLogin?username="+username.getText().toString()
-                                    +"&&password="+md5Pass);
-                            URLConnection conn = url.openConnection();
-                            InputStream in = conn.getInputStream();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                            String result = reader.readLine();
-                            Message message = new Message();
-                            message.obj = result;
-                            message.what = 2;
-                            handlerLogin.sendMessage(message);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
+
             }
         });
 
@@ -146,6 +122,40 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //向服务器发送数据
+    private void sendMessageToServer(){
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getText().toString().getBytes());
+            md5Pass = new BigInteger(1, md.digest()).toString(16);
+            Log.e("md5",md5Pass);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/user/userLogin?username="+username.getText().toString()
+                            +"&&password="+md5Pass);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 2;
+                    handlerLogin.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
 }

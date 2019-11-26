@@ -16,7 +16,11 @@ public class UserController extends Controller {
 			renderText(result);
 		}
 	}
-	
+
+	//ÓÃ»§×¢²á
+	public void userRegister(){
+		
+	}
 	
 	
 }

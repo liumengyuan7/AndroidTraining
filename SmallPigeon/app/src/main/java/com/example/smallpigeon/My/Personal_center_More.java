@@ -39,11 +39,12 @@ public class Personal_center_More extends AppCompatActivity {
 
     }
 
-    //获取性别和爱好
+    //获取性别和爱好输入到框里
     private void getSexAndInterest(){
         Intent intent = getIntent();
         personal_center_more_userSex.setText(intent.getStringExtra("sex"));
-        personal_center_more_userInterest.setText(intent.getStringExtra("interest"));
+        personal_center_more_userInterest.setText(intent.getStringExtra("interest")
+                .substring(0,intent.getStringExtra("interest").length()-1));
     }
 
     //获取视图的控件

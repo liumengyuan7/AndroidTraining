@@ -48,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox comic;
     private String str;
     private  String str1;
+
     private  LinearLayout register_Linear;
     private ImageView Register_Return;
 
@@ -124,10 +125,10 @@ public class RegisterActivity extends AppCompatActivity {
                         {
                             Log.e("单选按钮","性别："+RB.getText());
                             if(RB.getText()=="男"){
-                                str=str+"Man,";
+                                str=str+"Man;";
                             }
                             else{
-                                str=str+"Woman,";
+                                str=str+"Woman;";
                             }
                             break;
                         }
@@ -184,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/SmallPigeon/user/Register?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&sexAndInterest="+str);
+                            +":8080/smallpigeon/user/userRegister?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&sexAndInterest="+str);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
