@@ -11,8 +11,8 @@ public class UserDao {
 	private String interest = "";
 
 	//用户的登录
-	public String userLogin(String useremail,String password) {
-		List<User> list = User.dao.find("select * from user where user_email=? and user_password=?",useremail,password);
+	public String userLogin(String email,String password) {
+		List<User> list = User.dao.find("select * from user where user_email=? and user_password=?",email,password);
 		if(! list.isEmpty()) {
 		    List<User> list1 = User.dao.find("select interest.* from interest,user where user.id =?",list.get(0).getStr("id"));
 			User user = list1.get(0);

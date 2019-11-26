@@ -4,8 +4,8 @@ import user.dao.UserDao;
 
 public class UserService {
 
-	public String userLogin(String useremail, String password) {
-		return new UserDao().userLogin(useremail, password);
+	public String userLogin(String email, String password) {
+		return new UserDao().userLogin(email, password);
 	}
 
 	public boolean userRegister(){
