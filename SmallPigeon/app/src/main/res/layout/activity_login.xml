@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/zhuce"
     tools:context=".LoginOrRegister.LoginActivity">
     <LinearLayout
 
@@ -46,6 +47,8 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:alpha="0.6"
+        android:background="@drawable/circular"
         android:text="登录"/>
     <LinearLayout
         android:orientation="horizontal"
