@@ -3,6 +3,7 @@ package com.example.smallpigeon.My;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Fragment.MyFragment;
+import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
@@ -50,6 +52,7 @@ public class PersonalCenter extends AppCompatActivity {
         setContentView(R.layout.activity_personal_center);
         getViews();
         registListeners();
+        preferencesEvent();
         getUserBasicMsg();//从user表中获取user_email  nickname points
 
 
@@ -69,6 +72,39 @@ public class PersonalCenter extends AppCompatActivity {
                 }
             }
         };
+
+    }
+
+    //prefer
+    private void preferencesEvent() {
+
+        //注销按钮的动态设置
+        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+        String s = pre.getString("user_nickname","");
+        if(s.equals("") || s == null){
+            SignOut.setText("去登录");
+            SignOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }else{
+            personal_center_user_email.setText(pre.getString("user_email",""));
+            personal_center_nickName.setText(pre.getString("user_nickname",""));
+            personal_center_user_points.setText(pre.getString("user_points",""));
+            SignOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                    pre.edit().clear().commit();
+                    finish();
+                    Toast.makeText(getApplicationContext(),"注销成功！",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
     }
 
@@ -92,7 +128,6 @@ public class PersonalCenter extends AppCompatActivity {
         personal_center_updateImg.setOnClickListener(listener);
         personal_center_updateNickname.setOnClickListener(listener);
         personal_center_more.setOnClickListener(listener);
-        SignOut.setOnClickListener(listener);
     }
 
 
@@ -116,8 +151,6 @@ public class PersonalCenter extends AppCompatActivity {
                 case R.id.personal_center_more://进入更多修改activity
                     Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
                     startActivity(intent3);
-                    break;
-                case R.id.personal_center_SignOut://注销登录
                     break;
             }
 

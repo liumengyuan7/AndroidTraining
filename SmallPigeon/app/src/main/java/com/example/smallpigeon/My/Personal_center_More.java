@@ -65,8 +65,7 @@ public class Personal_center_More extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.personal_center_more_back:
-                    Intent intent = new Intent(Personal_center_More.this, PersonalCenter.class);
-                    startActivity(intent);
+                    finish();
                     //返回到个人中心界面
                     break;
 

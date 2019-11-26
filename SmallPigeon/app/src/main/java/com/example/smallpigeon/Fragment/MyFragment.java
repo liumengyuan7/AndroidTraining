@@ -57,6 +57,7 @@ public class MyFragment extends Fragment {
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
         String nickname = pre.getString("user_nickname","");
         if(nickname.equals("") || nickname == null){
+            loginOrRegister.setText("登录/注册");
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

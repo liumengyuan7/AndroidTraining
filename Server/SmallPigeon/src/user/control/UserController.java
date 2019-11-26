@@ -1,13 +1,6 @@
 package user.control;
 
-import com.google.gson.Gson;
 import com.jfinal.core.Controller;
-
-import org.json.JSONObject;
-
-import java.util.List;
-
-import bean.User;
 import user.service.UserService;
 
 public class UserController extends Controller {
