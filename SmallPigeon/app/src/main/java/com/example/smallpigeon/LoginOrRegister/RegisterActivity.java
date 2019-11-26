@@ -211,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/SmallPigeon/user/Register?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&sexAndInterest="+str+"&&userSex="+sexstr);
+                            +":8080/smallpigeon/user/userRegister?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&userInterest="+str+"&&userSex="+sexstr);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
