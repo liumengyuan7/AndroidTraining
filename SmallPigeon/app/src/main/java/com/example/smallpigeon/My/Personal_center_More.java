@@ -26,40 +26,39 @@ public class Personal_center_More extends AppCompatActivity {
     private ImageView personal_center_more_back;
     private TextView personal_center_more_userSex;
     private TextView personal_center_more_userInterest;
-    private CustomeClickListener listener;
+    private CustomeClickListener listener=new CustomeClickListener();;
 
-    private Handler getUserSex;
-    private Handler getUserInterest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_center__more);
+
+        getViews();
+        registerListener();
+        getSexAndInterest();
+
+    }
+
+    //获取性别和爱好
+    private void getSexAndInterest(){
+        Intent intent = getIntent();
+        personal_center_more_userSex.setText(intent.getStringExtra("sex"));
+        personal_center_more_userInterest.setText(intent.getStringExtra("interest"));
+    }
+
+    //获取视图的控件
+    private void getViews() {
         personal_center_more_back=findViewById(R.id.personal_center_more_back);//返回控件
         personal_center_more_userSex=findViewById(R.id.personal_center_more_userSex);//性别控件
         personal_center_more_userInterest=findViewById(R.id.personal_center_more_userInterest);//兴趣爱好控件
-        listener=new CustomeClickListener();
-        personal_center_more_back.setOnClickListener(listener);
-        GetUserSex();
-        GetUserInterest();
-
-        getUserSex = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                String info = (String) msg.obj;
-                personal_center_more_userSex.setText(info);
-            }
-        };
-        getUserInterest = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                String info = (String) msg.obj;
-                personal_center_more_userInterest.setText(info);
-            }
-        };
     }
 
+    //注册监听器
+    private void registerListener(){
+        personal_center_more_back.setOnClickListener(listener);
+    }
+
+    //监听器类
     class CustomeClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -68,57 +67,8 @@ public class Personal_center_More extends AppCompatActivity {
                     finish();
                     //返回到个人中心界面
                     break;
-
-
             }
-
-
         }
-    }
-
-    public void GetUserSex(){
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/SmallPigeon/user/getUserSex?Tag=1");//服务端获取Tag Tag=1时查询性别
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String result = reader.readLine();
-                    Message message = new Message();
-                    message.obj = result;
-                    getUserSex.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-    public void GetUserInterest(){
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/SmallPigeon/user/getUserSex?Tag=2");//服务端获取Tag Tag=2时查询兴趣爱好
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String result = reader.readLine();
-                    Message message = new Message();
-                    message.obj = result;
-                    getUserInterest.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
 }

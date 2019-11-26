@@ -149,7 +149,10 @@ public class PersonalCenter extends AppCompatActivity {
                     startActivity(intent2);
                     break;
                 case R.id.personal_center_more://进入更多修改activity
+                    SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                     Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
+                    intent3.putExtra("sex",pre.getString("user_sex",""));
+                    intent3.putExtra("interest",pre.getString("user_interest",""));
                     startActivity(intent3);
                     break;
             }

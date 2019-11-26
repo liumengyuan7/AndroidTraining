@@ -44,11 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     private Handler handlerLogin = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            String result = msg.obj+"";
-            if(result.equals("false")){
+            String re = msg.obj+"";
+            if(re.equals("false")){
                 Toast.makeText(getApplicationContext(),"登录失败！",Toast.LENGTH_SHORT).show();
             }else{
                 try {
+                    String result = re.split(";")[0];
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject json1 = jsonArray.getJSONObject(0);
                     JSONObject json2 = new JSONObject(json1.getString("attrs"));
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user_register_time",json2.getString("user_register_time"));
                     editor.putString("user_phone",json2.getString("user_phone"));
                     editor.putString("user_points",json2.getString("user_points"));
+                    editor.putString("user_interest",re.split(";")[1]);
                     editor.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
