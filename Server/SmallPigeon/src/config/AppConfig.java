@@ -11,7 +11,9 @@ import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
 
+import bean.Interest;
 import bean.User;
+import interest.control.InterestController;
 import user.control.UserController;
 
 /**
@@ -30,6 +32,7 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configRoute(Routes routes) {
         routes.add("user",UserController.class);
+        routes.add("interest", InterestController.class);
     }
 
     @Override
@@ -39,12 +42,13 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configPlugin(Plugins plugins) {
-        DruidPlugin druidPlugin = new DruidPlugin("jdbc:mysql://localhost:3306/smallpigeon", "root", "");
+        DruidPlugin druidPlugin = new DruidPlugin("jdbc:mysql://localhost:3306/smallpigeon?useUnicode=true&amp;characterEncoding=UTF-8", "root", "");
         plugins.add(druidPlugin);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
 		plugins.add(arp);
 		arp.setDialect(new MysqlDialect());
 		arp.addMapping("user", User.class);
+		arp.addMapping("interest", Interest.class);
     }
 
     @Override

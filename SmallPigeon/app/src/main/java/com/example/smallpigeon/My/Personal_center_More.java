@@ -43,7 +43,12 @@ public class Personal_center_More extends AppCompatActivity {
     //获取性别和爱好以及注册时间输入到框里
     private void getSexAndInterest(){
         Intent intent = getIntent();
-        personal_center_more_userSex.setText(intent.getStringExtra("sex"));
+        String sex = intent.getStringExtra("sex");
+        if(sex.equals("man")){
+            personal_center_more_userSex.setText("男");
+        }else{
+            personal_center_more_userSex.setText("女");
+        }
         personal_center_more_userRegisterTime.setText(intent.getStringExtra("time"));
         personal_center_more_userInterest.setText(intent.getStringExtra("interest")
                 .substring(0,intent.getStringExtra("interest").length()-1));

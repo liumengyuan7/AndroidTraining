@@ -8,8 +8,8 @@ public class UserService {
 		return new UserDao().userLogin(email, password);
 	}
 
-	public boolean userRegister(){
-		return new UserDao().userRegister();
+	public boolean userRegister(String userEmail,String userPassword,String userNickname,String userSex,String userInterest){
+		return new UserDao().userRegister(userEmail,userPassword,userNickname,userSex,userInterest);
 	}
 
 }

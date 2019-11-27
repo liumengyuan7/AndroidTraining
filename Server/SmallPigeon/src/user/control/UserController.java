@@ -1,6 +1,10 @@
 package user.control;
 
 import com.jfinal.core.Controller;
+
+import java.io.UnsupportedEncodingException;
+
+import user.dao.UserDao;
 import user.service.UserService;
 
 public class UserController extends Controller {
@@ -19,12 +23,23 @@ public class UserController extends Controller {
 
 	//ÓÃ»§×¢²á
 	public void userRegister(){
-        String userEmail = getPara("userEmail");
+		try {
+			getRequest().setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String userEmail = getPara("userEmail");
         String userPassword = getPara("userPassword");
-        String userNicknam = getPara("userNickname");
+        String userNickname = getPara("userNickname");
         String userSex = getPara("userSex");
         String userInterest = getPara("userInterest");
-
+		boolean result = new UserService().userRegister(userEmail,userPassword,userNickname,userSex,userInterest);
+		if(result){
+			renderText("true");
+		}else{
+			renderText("false");
+		}
+		System.out.println(userInterest);
 	}
 	
 	

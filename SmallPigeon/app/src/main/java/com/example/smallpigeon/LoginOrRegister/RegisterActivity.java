@@ -26,9 +26,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button btn_FinishReg;
@@ -60,7 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
-                Toast.makeText(getApplicationContext(),"注册成功！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
+                finish();
             }else {
                 Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
             }
@@ -160,11 +164,11 @@ public class RegisterActivity extends AppCompatActivity {
                         if(RB.isChecked())
                         {
                             Log.e("单选按钮","性别："+RB.getText());
-                            if(RB.getText()=="男"){
-                                sexstr=sexstr+"Man;";
+                            if(RB.getText().equals("男")){
+                                sexstr=sexstr+"man";
                             }
                             else{
-                                sexstr=sexstr+"Woman;";
+                                sexstr=sexstr+"woman";
                             }
 
                         }
@@ -185,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
                         interesStr+="star,";
                     if(comic.isChecked())
                         interesStr+="comic,";
-                    if(sexstr==""||interesStr==""){
+                    if(sexstr.equals("")||interesStr.equals("")){
                         if(sexstr.length()==0&&interesStr.length()!=0)
                             Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
                         if(sexstr.length()!=0&&interesStr.length()==0)
@@ -198,10 +202,10 @@ public class RegisterActivity extends AppCompatActivity {
                         str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
                         Log.e("str1"," "+str1);
                         String userEmail = register_userEmail.getText().toString();
-                        String userPassword = register_userPassword.getText().toString();
                         String userNickname=register_userNickname.getText().toString();
                         String checkpwd=register_checkPwd.getText().toString();
-
+                        String userPassword = register_userPassword.getText().toString();
+                        
 
 
                         if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0||checkpwd.length()==0){
@@ -217,15 +221,19 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"注册信息不可为空~",Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            if(userPassword!=checkpwd){
+                            if(!userPassword.equals(checkpwd)){
                                 Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                userRegister(userEmail,userPassword,userNickname,str1,sexstr);
-
-                                Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                                finish();
+                                try {
+                                    MessageDigest md = MessageDigest.getInstance("MD5");
+                                    md.update(userPassword.getBytes());
+                                    userPassword = new BigInteger(1, md.digest()).toString(16);
+                                    Log.e("md5",userPassword);
+                                } catch (NoSuchAlgorithmException e) {
+                                    e.printStackTrace();
+                                }
+                                userRegister(userEmail,userPassword,userNickname,str1);
                             }
 
                         }
@@ -247,7 +255,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //用户的注册
-    public void userRegister(final String userEmail,final String userPassword,final String userNickname,final String str,final String sexstr){
+    public void userRegister(final String userEmail,final String userPassword,final String userNickname,final String str){
         new Thread(){
             @Override
             public void run() {
