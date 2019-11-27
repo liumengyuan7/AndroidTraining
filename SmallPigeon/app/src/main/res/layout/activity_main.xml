@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
     <LinearLayout
         android:id="@+id/tabs"
         android:background="@drawable/main"
@@ -49,14 +50,16 @@
                 android:id="@+id/img2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/runblack"/>
+                android:src="@drawable/rungreen"/>
 
             <TextView
                 android:id="@+id/tv_title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="开始跑"/>
+                android:text="开始跑步"
+                android:textColor="#259B24"/>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/tab3"
             android:layout_width="wrap_content"
@@ -89,13 +92,12 @@
                 android:id="@+id/img4"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/mygreen"/>
+                android:src="@drawable/myblack"/>
 
             <TextView
                 android:id="@+id/tv_title4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#259B24"
                 android:text="我的"/>
         </LinearLayout>
 

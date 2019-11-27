@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         runFragment = new RunFragment();
         chatFragment = new ChatFragment();
         myFragment=new MyFragment();
-        showFragment(myFragment);
+        showFragment(runFragment);
     }
 
     //获取所有视图控件的引用
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         ChatTab.setOnClickListener(myClickListener);
         MyTab.setOnClickListener(myClickListener);
     }
-
 
     private class MyClickListener implements View.OnClickListener{
 
