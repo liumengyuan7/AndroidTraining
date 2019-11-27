@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.R;
@@ -34,7 +37,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends AppCompatActivity {
-    private Button btn_FinishReg;
+    private ImageView btn_FinishReg;
     private CustomeClickListener listener;
     private RadioGroup radioGroup_userSex;
     private CheckBox outdoor;
@@ -56,7 +59,14 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText register_userNickname;
     private EditText register_checkPwd;
     private EditText register_checkCode;
-    private Button getCode;
+    private TextView check_email;
+    private TextView getCode;
+
+    private TextView pwd_length;
+    private TextView pwd_same;
+
+    private String check1;
+    private String check2;
 
     private Handler userRegister = new Handler(){
         @Override
@@ -65,23 +75,82 @@ public class RegisterActivity extends AppCompatActivity {
             if(result.equals("true")){
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
                 finish();
-            }else if(result.equals("repeat")){
-                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换个邮箱吧！",Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
             }
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getViews();
+        btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng1));
         setViews();//屏幕适配
         registListeners();
-    }
 
+        length();
+        same();
+
+    }
+    public void length(){
+        register_userPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String str=register_userPassword.getText().toString();
+                Log.e("密码"," "+str);
+                if(str.length()!=0&&str.length()<6){
+                    pwd_length.setText("密码长度不可小于6位");
+                }
+                else {
+                    pwd_length.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+    public void same(){
+       register_checkPwd.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+               String str=register_userPassword.getText().toString();
+               String str1=register_checkPwd.getText().toString();
+               if(str1.length()!=0){
+                   if(str1.equals(str)){
+                       pwd_same.setText("");
+                   }
+                   else{
+                       pwd_same.setText("两次密码输入不一致");
+                   }
+               }
+               else{
+                   pwd_same.setText("");
+               }
+
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+
+           }
+       });
+    }
     //动态设置控件
     private void setViews() {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -128,6 +197,10 @@ public class RegisterActivity extends AppCompatActivity {
         register_checkCode=findViewById(R.id.register_checkCode);
         getCode=findViewById(R.id.register_getCode);
 
+        pwd_length=findViewById(R.id.pwd_length);
+        pwd_same=findViewById(R.id.pwd_same);
+
+
 
     }
 
@@ -137,6 +210,7 @@ public class RegisterActivity extends AppCompatActivity {
         btn_FinishReg.setOnClickListener(listener);
         Register_Return.setOnClickListener(listener);
         getCode.setOnClickListener(listener);
+
 
     }
 
@@ -149,16 +223,19 @@ public class RegisterActivity extends AppCompatActivity {
             switch (v.getId()){
 
                 case R.id.register_getCode://发送验证码
+                    // 先检查邮箱是否被注册
+
 
                     break;
 
                 case R.id.btn_FinishReg:
+                    btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
 //                    String checkcode=register_checkCode.getText().toString();//获取用户输入的验证码
 //                    if(checkcode.equals("验证码")){
-//                        //提示注册成功  148行之后的代码挪至此处
+//                        //提示注册成功
 //                    }
 //                    else{
-//                        //提示错误
+//                        Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT).show();
 //
 //                    }
                     for(int i=0;i<radioGroup_userSex.getChildCount();i++){
@@ -207,7 +284,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String userNickname=register_userNickname.getText().toString();
                         String checkpwd=register_checkPwd.getText().toString();
                         String userPassword = register_userPassword.getText().toString();
-                        
+
 
 
                         if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0||checkpwd.length()==0){
@@ -279,5 +356,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }.start();
     }
+
+
 
 }
