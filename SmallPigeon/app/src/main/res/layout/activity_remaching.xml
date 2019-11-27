@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Run.MachingActivity">
+
+    <LinearLayout
+        android:background="#259B24"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/remaching_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/left"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_remachingUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击开始聊天进入聊天界面"
+        android:layout_below="@id/lv_remachingUsers"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
+
+</LinearLayout>

@@ -20,6 +20,9 @@
         <activity android:name=".LoginOrRegister.LoginActivity" />
         <activity android:name=".My.PersonalCenter" />
         <activity android:name=".My.UpdatePersonalMsg" />
+        <activity android:name=".Run.RemachingActivity"></activity>
+        <activity android:name=".Run.MachingActivity" />
+        <activity android:name=".Run.TracingActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
