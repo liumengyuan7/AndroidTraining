@@ -65,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity {
             if(result.equals("true")){
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
                 finish();
+            }else if(result.equals("repeat")){
+                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换个邮箱吧！",Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
             }
