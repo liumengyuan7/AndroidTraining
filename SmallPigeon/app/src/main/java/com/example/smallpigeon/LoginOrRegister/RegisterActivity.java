@@ -73,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
+                btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
                 finish();
             }else {
@@ -229,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btn_FinishReg:
-                    btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+
 //                    String checkcode=register_checkCode.getText().toString();//获取用户输入的验证码
 //                    if(checkcode.equals("验证码")){
 //                        //提示注册成功

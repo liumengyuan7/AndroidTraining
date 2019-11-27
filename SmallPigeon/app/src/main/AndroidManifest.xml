@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginOrRegister.ResetPwd"></activity>
+        <activity android:name=".My.anquan"></activity>
+        <activity android:name=".LoginOrRegister.ResetPwd" />
         <activity android:name=".LoginOrRegister.ForgetPassword" />
         <activity android:name=".My.Personal_center_More" />
         <activity android:name=".My.Personal_center_updateUserNickname" />
