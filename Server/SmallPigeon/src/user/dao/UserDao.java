@@ -48,8 +48,15 @@ public class UserDao {
 		boolean result = new User().set("user_email",userEmail)
 				.set("user_password",userPassword).set("user_nickname",userNickname)
 				.set("user_register_time",timestamp).set("user_sex",userSex).save();
-		new InterestService().insertInterest(userInterest
-				,new User().dao().find("select id from user where user_email=?",userEmail).get(0).getStr("id"));
+
+		String userId = new User().dao().find("select id from user where user_email=?",userEmail).get(0).getStr("id");
+		new Interest().set("user_id",userId).save();
+		String[] in = userInterest.split(",");
+		Interest interest = Interest.dao.findById(new Interest().dao().find("select id from interest where user_id=?",userId).get(0).getStr("id"));
+		for(int i=0;i<in.length;i++){
+			interest.set(in[i],1);
+		}
+		interest.update();
 		return result;
 	}
 

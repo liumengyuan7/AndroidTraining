@@ -3,6 +3,7 @@ package com.example.smallpigeon.My;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,16 +43,18 @@ public class Personal_center_More extends AppCompatActivity {
 
     //获取性别和爱好以及注册时间输入到框里
     private void getSexAndInterest(){
-        Intent intent = getIntent();
-        String sex = intent.getStringExtra("sex");
-        if(sex.equals("man")){
-            personal_center_more_userSex.setText("男");
-        }else{
-            personal_center_more_userSex.setText("女");
+        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+        String nickname = pre.getString("user_nickname","");
+        if(!nickname.equals("") && nickname!=null){
+            if(pre.getString("user_sex","").equals("man")){
+                personal_center_more_userSex.setText("男");
+            }else{
+                personal_center_more_userSex.setText("女");
+            }
+            personal_center_more_userRegisterTime.setText(pre.getString("user_register_time",""));
+            personal_center_more_userInterest.setText(pre.getString("user_interest","")
+                    .substring(0,pre.getString("user_interest","").length()-1));
         }
-        personal_center_more_userRegisterTime.setText(intent.getStringExtra("time"));
-        personal_center_more_userInterest.setText(intent.getStringExtra("interest")
-                .substring(0,intent.getStringExtra("interest").length()-1));
     }
 
     //获取视图的控件
