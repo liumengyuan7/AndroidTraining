@@ -51,9 +51,9 @@
                 android:layout_height="80dp"
                 android:src="@drawable/woman"
                 android:id="@+id/personal_center_userImg"
-                imagecontrol:border_inside_color="#F5F5F5"
+                imagecontrol:border_inside_color="#259B24"
                 imagecontrol:border_outside_color="#ffffff"
-                imagecontrol:border_thickness="4dp"/>
+                imagecontrol:border_thickness="1dp"/>
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="30dp"

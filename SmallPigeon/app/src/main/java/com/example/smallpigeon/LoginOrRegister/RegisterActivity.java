@@ -152,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 case R.id.btn_FinishReg:
 //                    String checkcode=register_checkCode.getText().toString();//获取用户输入的验证码
-//                    if(checkcode=="验证码"){
+//                    if(checkcode.equals("验证码")){
 //                        //提示注册成功  148行之后的代码挪至此处
 //                    }
 //                    else{
