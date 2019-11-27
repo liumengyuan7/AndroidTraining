@@ -35,6 +35,7 @@ public class PersonalCenter extends AppCompatActivity {
     private ImageView personal_center_updateNickname;
     private ImageView personal_center_more;
     private ImageView personal_center_back;
+    private  ImageView anquan;
 
     private TextView personal_center_user_email;
     private TextView personal_center_nickName;
@@ -119,7 +120,7 @@ public class PersonalCenter extends AppCompatActivity {
         personal_center_user_email=findViewById(R.id.personal_center_user_email);
         personal_center_nickName=findViewById(R.id.personal_center_nickName);
         personal_center_user_points=findViewById(R.id.personal_center_user_points);
-
+        anquan=findViewById(R.id.personal_center_anquan);
         SignOut=findViewById(R.id.personal_center_SignOut);
     }
 
@@ -129,6 +130,7 @@ public class PersonalCenter extends AppCompatActivity {
         personal_center_updateImg.setOnClickListener(listener);
         personal_center_updateNickname.setOnClickListener(listener);
         personal_center_more.setOnClickListener(listener);
+        anquan.setOnClickListener(listener);
     }
 
 
@@ -152,6 +154,10 @@ public class PersonalCenter extends AppCompatActivity {
                 case R.id.personal_center_more://进入更多修改activity
                     Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
                     startActivity(intent3);
+                    break;
+                case R.id.personal_center_anquan:
+                    Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
+                    startActivity(intent4);
                     break;
             }
 

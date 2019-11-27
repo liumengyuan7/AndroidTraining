@@ -77,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
+                btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
                 finish();
             }else {

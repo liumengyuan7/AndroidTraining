@@ -31,7 +31,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="300dp">
+        android:layout_height="350dp">
         <LinearLayout
             android:gravity="right"
             android:layout_width="match_parent"
@@ -201,6 +201,31 @@
             android:background="#fff"
 
             />
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="安全"
+                android:textSize="20sp"
+                android:layout_gravity="left"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                />
+            <ImageView
+                android:id="@+id/personal_center_anquan"
+                android:layout_gravity="right"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/right"
+                android:layout_marginTop="-28dp"
+                />
+
+
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
