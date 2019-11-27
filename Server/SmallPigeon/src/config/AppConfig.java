@@ -26,7 +26,8 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configConstant(Constants constants) {
-
+        constants.setEncoding("UTF-8");
+        constants.setEncoding("GB2312");
     }
 
     @Override

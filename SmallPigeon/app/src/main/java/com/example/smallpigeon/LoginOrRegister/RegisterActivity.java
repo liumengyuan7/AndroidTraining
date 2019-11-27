@@ -35,6 +35,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private ImageView btn_FinishReg;
@@ -67,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String check1;
     private String check2;
+    private String code;
 
     private Handler userRegister = new Handler(){
         @Override
@@ -81,6 +84,17 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
+    private Handler emailHandle = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj + "";
+            if(result.equals("true")){
+                Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +104,6 @@ public class RegisterActivity extends AppCompatActivity {
         btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng1));
         setViews();//屏幕适配
         registListeners();
-
         length();
         same();
 
@@ -224,8 +237,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                 case R.id.register_getCode://发送验证码
                     // 先检查邮箱是否被注册
-
-
+                    boolean is = isEmail(register_userEmail.getText().toString());
+                    if(is){ sendEmail(); }
+                    else{
+                        Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
 
                 case R.id.btn_FinishReg:
@@ -357,6 +373,42 @@ public class RegisterActivity extends AppCompatActivity {
         }.start();
     }
 
+    //邮箱的后台邮件发送
+    public void sendEmail(){
+        code = "";
+        for(int i = 0;i<4;i++){
+            code += (int)(Math.random()*10) + "";
+        }
+        Log.e("dsadsadsa",code);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/user/verifyCode?userEmail="+register_userEmail.getText().toString()
+                            +"&&code="+ code);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    emailHandle.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
 
+    //判断邮箱的格式正确与否
+    public boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
 
 }

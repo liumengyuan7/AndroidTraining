@@ -44,5 +44,15 @@ public class UserController extends Controller {
 		System.out.println(userInterest);
 	}
 	
-	
+	//验证码的接收
+	public void verifyCode(){
+		boolean result = new UserDao().emailSend(getPara("userEmail"),getPara("code"));
+
+		if(result){
+			renderText("true");
+		}else{
+			renderText("false");
+		}
+	}
+
 }

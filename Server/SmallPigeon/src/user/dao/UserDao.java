@@ -86,7 +86,7 @@ public class UserDao {
 	}
 
 	//邮件发送
-	public void emailSend(String userEmail,String code){
+	public boolean emailSend(String userEmail,String code){
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.163.com");
 		props.put("mail.smtp.auth", "true");
@@ -107,11 +107,13 @@ public class UserDao {
 			msg.setContent(mimeMultipart);
 			msg.setHeader("X-Mailer", "smtpsend");
 			Transport.send(msg);
+			return true;
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }
