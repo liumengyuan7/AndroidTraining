@@ -70,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String check1;
     private String check2;
     private String code;
+    private RadioButton RB;
 
     private Handler userRegister = new Handler(){
         @Override
@@ -246,93 +247,91 @@ public class RegisterActivity extends AppCompatActivity {
 
                 case R.id.btn_FinishReg:
                     btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
-//                    String checkcode=register_checkCode.getText().toString();//获取用户输入的验证码
-//                    if(checkcode.equals("验证码")){
-//                        //提示注册成功
-//                    }
-//                    else{
-//                        Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT).show();
-//
-//                    }
-                    for(int i=0;i<radioGroup_userSex.getChildCount();i++){
-                        RadioButton RB=(RadioButton) radioGroup_userSex.getChildAt(i);
-                        if(RB.isChecked())
-                        {
-                            Log.e("单选按钮","性别："+RB.getText());
-                            if(RB.getText().equals("男")){
-                                sexstr=sexstr+"man";
+                    String checkcode=register_checkCode.getText().toString();//获取用户输入的验证码
+                    if(checkcode.equals(code)){
+                        //提示注册成功
+                        for(int i=0;i<radioGroup_userSex.getChildCount();i++){
+                            RB=(RadioButton) radioGroup_userSex.getChildAt(i);
+                            if(RB.isChecked()) {
+                                Log.e("单选按钮","性别："+RB.getText());
+                                if(RB.getText().equals("男")){
+                                    sexstr=sexstr+"man";
+                                }
+                                else{
+                                    sexstr=sexstr+"woman";
+                                }
                             }
-                            else{
-                                sexstr=sexstr+"woman";
-                            }
-
                         }
-                    }
-                    if(outdoor.isChecked())
-                        interesStr=interesStr+"outdoor,";
-                    if(music.isChecked())
-                        interesStr+="music,";
-                    if(film.isChecked())
-                        interesStr+="film,";
-                    if(society.isChecked())
-                        interesStr+="society,";
-                    if(delicacy.isChecked())
-                        interesStr+="delicacy,";
-                    if(science.isChecked())
-                        interesStr+="science,";
-                    if(star.isChecked())
-                        interesStr+="star,";
-                    if(comic.isChecked())
-                        interesStr+="comic,";
-                    if(sexstr.equals("")||interesStr.equals("")){
-                        if(sexstr.length()==0&&interesStr.length()!=0)
-                            Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                        if(sexstr.length()!=0&&interesStr.length()==0)
-                            Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                        if(sexstr.length()==0&&interesStr.length()==0)
-                            Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Log.e("str"," "+interesStr);
-                        str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
-                        Log.e("str1"," "+str1);
-                        String userEmail = register_userEmail.getText().toString();
-                        String userNickname=register_userNickname.getText().toString();
-                        String checkpwd=register_checkPwd.getText().toString();
-                        String userPassword = register_userPassword.getText().toString();
-
-
-
-                        if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0||checkpwd.length()==0){
-                            if(userEmail.length()==0)
+                        if(outdoor.isChecked())
+                            interesStr=interesStr+"outdoor,";
+                        if(music.isChecked())
+                            interesStr+="music,";
+                        if(film.isChecked())
+                            interesStr+="film,";
+                        if(society.isChecked())
+                            interesStr+="society,";
+                        if(delicacy.isChecked())
+                            interesStr+="delicacy,";
+                        if(science.isChecked())
+                            interesStr+="science,";
+                        if(star.isChecked())
+                            interesStr+="star,";
+                        if(comic.isChecked())
+                            interesStr+="comic,";
+                        if(sexstr.equals("")||interesStr.equals("")){
+                            if(sexstr.length()==0&&interesStr.length()!=0)
                                 Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                            if(userPassword.length()==0)
+                            if(sexstr.length()!=0&&interesStr.length()==0)
                                 Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                            if(userNickname.length()==0)
+                            if(sexstr.length()==0&&interesStr.length()==0)
                                 Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                            if(register_checkPwd.length()==0)
-                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                            if(userEmail.length()==0&&userPassword.length()==0&&userNickname.length()==0)
-                                Toast.makeText(getApplicationContext(),"注册信息不可为空~",Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            if(!userPassword.equals(checkpwd)){
-                                Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT).show();
+                            Log.e("str"," "+interesStr);
+                            str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
+                            Log.e("str1"," "+str1);
+                            String userEmail = register_userEmail.getText().toString();
+                            String userNickname=register_userNickname.getText().toString();
+                            String checkpwd=register_checkPwd.getText().toString();
+                            String userPassword = register_userPassword.getText().toString();
+
+
+
+                            if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0||checkpwd.length()==0){
+                                if(userEmail.length()==0)
+                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                                if(userPassword.length()==0)
+                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                                if(userNickname.length()==0)
+                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                                if(register_checkPwd.length()==0)
+                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                                if(userEmail.length()==0&&userPassword.length()==0&&userNickname.length()==0)
+                                    Toast.makeText(getApplicationContext(),"注册信息不可为空~",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                try {
-                                    MessageDigest md = MessageDigest.getInstance("MD5");
-                                    md.update(userPassword.getBytes());
-                                    userPassword = new BigInteger(1, md.digest()).toString(16);
-                                    Log.e("md5",userPassword);
-                                } catch (NoSuchAlgorithmException e) {
-                                    e.printStackTrace();
+                                if(!userPassword.equals(checkpwd)){
+                                    Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT).show();
                                 }
-                                userRegister(userEmail,userPassword,userNickname,str1);
-                            }
+                                else{
+                                    try {
+                                        MessageDigest md = MessageDigest.getInstance("MD5");
+                                        md.update(userPassword.getBytes());
+                                        userPassword = new BigInteger(1, md.digest()).toString(16);
+                                        Log.e("md5",userPassword);
+                                    } catch (NoSuchAlgorithmException e) {
+                                        e.printStackTrace();
+                                    }
+                                    userRegister(userEmail,userPassword,userNickname,str1);
+                                }
 
+                            }
                         }
                     }
+                    else{
+                        Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT).show();
+                    }
+
 
                     break;
 
