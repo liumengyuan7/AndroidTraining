@@ -61,17 +61,17 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText register_userNickname;
     private EditText register_checkPwd;
     private EditText register_checkCode;
-    private TextView check_email;
     private TextView getCode;
 
     private TextView pwd_length;
     private TextView pwd_same;
 
-    private String check1;
-    private String check2;
     private String code;
     private RadioButton RB;
 
+    private String userEmail,userNickname,checkpwd,userPassword,checkcode;
+
+    //用户注册是否成功的handler
     private Handler userRegister = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -86,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
+    //发送邮件是否成功的handler
     private Handler emailHandle = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -110,6 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
         same();
 
     }
+
+    //动态判断密码的长度是否符合规范
     public void length(){
         register_userPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -135,6 +138,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+    //动态判断两次输入的密码是否一致
     public void same(){
        register_checkPwd.addTextChangedListener(new TextWatcher() {
            @Override
@@ -166,6 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
            }
        });
     }
+
     //动态设置控件
     private void setViews() {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -225,8 +231,6 @@ public class RegisterActivity extends AppCompatActivity {
         btn_FinishReg.setOnClickListener(listener);
         Register_Return.setOnClickListener(listener);
         getCode.setOnClickListener(listener);
-
-
     }
 
     //设置监听器
@@ -236,9 +240,7 @@ public class RegisterActivity extends AppCompatActivity {
             sexstr="";
             interesStr="";
             switch (v.getId()){
-
-                case R.id.register_getCode://发送验证码
-                    // 先检查邮箱是否被注册
+                case R.id.register_getCode:
                     boolean is = isEmail(register_userEmail.getText().toString());
                     if(is){ sendEmail(); }
                     else{
@@ -247,68 +249,17 @@ public class RegisterActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btn_FinishReg:
-                    btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
-                    String checkcode=register_checkCode.getText().toString();//获取用户输入的验证码
-                    if(checkcode.equals(code)){
-                        //提示注册成功
-                        for(int i=0;i<radioGroup_userSex.getChildCount();i++){
-                            RB=(RadioButton) radioGroup_userSex.getChildAt(i);
-                            if(RB.isChecked()) {
-                                Log.e("单选按钮","性别："+RB.getText());
-                                if(RB.getText().equals("男")){
-                                    sexstr=sexstr+"man";
-                                }
-                                else{
-                                    sexstr=sexstr+"woman";
-                                }
-                            }
-                        }
-                        if(outdoor.isChecked())
-                            interesStr=interesStr+"outdoor,";
-                        if(music.isChecked())
-                            interesStr+="music,";
-                        if(film.isChecked())
-                            interesStr+="film,";
-                        if(society.isChecked())
-                            interesStr+="society,";
-                        if(delicacy.isChecked())
-                            interesStr+="delicacy,";
-                        if(science.isChecked())
-                            interesStr+="science,";
-                        if(star.isChecked())
-                            interesStr+="star,";
-                        if(comic.isChecked())
-                            interesStr+="comic,";
-                        if(sexstr.equals("")||interesStr.equals("")){
-                            if(sexstr.length()==0&&interesStr.length()!=0)
-                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                            if(sexstr.length()!=0&&interesStr.length()==0)
-                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                            if(sexstr.length()==0&&interesStr.length()==0)
-                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                        }
-                        else{
+                    radioAndCheckbox();
+                    if(!confirmUserInfo()){
+                        Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                    }else{
+                        if(checkcode.equals(code)){
                             Log.e("str"," "+interesStr);
                             str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
                             Log.e("str1"," "+str1);
-                            String userEmail = register_userEmail.getText().toString();
-                            String userNickname=register_userNickname.getText().toString();
-                            String checkpwd=register_checkPwd.getText().toString();
-                            String userPassword = register_userPassword.getText().toString();
 
-
-
-                            if(userEmail.length()==0||userPassword.length()==0||userNickname.length()==0||checkpwd.length()==0){
-                                if(userEmail.length()==0)
-                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                                if(userPassword.length()==0)
-                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                                if(userNickname.length()==0)
-                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                                if(register_checkPwd.length()==0)
-                                    Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                                if(userEmail.length()==0&&userPassword.length()==0&&userNickname.length()==0)
-                                    Toast.makeText(getApplicationContext(),"注册信息不可为空~",Toast.LENGTH_SHORT).show();
+                            if(!confirmUserInfo()){
+                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
                             }
                             else{
                                 if(!userPassword.equals(checkpwd)){
@@ -325,55 +276,23 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                     userRegister(userEmail,userPassword,userNickname,str1);
                                 }
-
                             }
                         }
+                        else{
+                            Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else{
-                        Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT).show();
-                    }
-
 
                     break;
-
                 case R.id.Register_Return:
                     Intent intent3 = new Intent(RegisterActivity.this, LoginActivity.class);
                     finish();
                     break;
-
             }
-
-
-
-
         }
     }
 
-    //用户的注册
-    public void userRegister(final String userEmail,final String userPassword,final String userNickname,final String str){
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/userRegister?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&userInterest="+str+"&&userSex="+sexstr);
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String result = reader.readLine();
-                    Message message = new Message();
-                    message.obj = result;
-                    userRegister.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
-    //邮箱的后台邮件发送
+    //邮件通过后台发送
     public void sendEmail(){
         code = "";
         for(int i = 0;i<4;i++){
@@ -403,6 +322,20 @@ public class RegisterActivity extends AppCompatActivity {
         }.start();
     }
 
+    //用户登录信息输入是否为空的验证
+    public boolean confirmUserInfo(){
+        userEmail = register_userEmail.getText().toString();
+        userNickname=register_userNickname.getText().toString();
+        checkpwd=register_checkPwd.getText().toString();
+        userPassword = register_userPassword.getText().toString();
+        checkcode=register_checkCode.getText().toString();
+        if( userEmail.length()==0 || userPassword.length()==0
+                || userNickname.length()==0 || register_checkPwd.length()==0
+                || checkcode.length()==0 || sexstr.equals("")||interesStr.equals(""))
+            return false;
+        return true;
+    }
+
     //判断邮箱的格式正确与否
     public boolean isEmail(String email) {
         String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
@@ -410,5 +343,62 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher m = p.matcher(email);
         return m.matches();
     }
+
+    //单选框和复选框的点击事件
+    public void radioAndCheckbox(){
+        for(int i=0;i<radioGroup_userSex.getChildCount();i++){
+            RB=(RadioButton) radioGroup_userSex.getChildAt(i);
+            if(RB.isChecked()) {
+                Log.e("单选按钮","性别："+RB.getText());
+                if(RB.getText().equals("男")){
+                    sexstr=sexstr+"man";
+                }
+                else{
+                    sexstr=sexstr+"woman";
+                }
+            }
+        }
+        if(outdoor.isChecked())
+            interesStr=interesStr+"outdoor,";
+        if(music.isChecked())
+            interesStr+="music,";
+        if(film.isChecked())
+            interesStr+="film,";
+        if(society.isChecked())
+            interesStr+="society,";
+        if(delicacy.isChecked())
+            interesStr+="delicacy,";
+        if(science.isChecked())
+            interesStr+="science,";
+        if(star.isChecked())
+            interesStr+="star,";
+        if(comic.isChecked())
+            interesStr+="comic,";
+    }
+
+    //用户的注册
+    public void userRegister(final String userEmail,final String userPassword,final String userNickname,final String str){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/user/userRegister?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&userInterest="+str+"&&userSex="+sexstr);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    userRegister.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 
 }
