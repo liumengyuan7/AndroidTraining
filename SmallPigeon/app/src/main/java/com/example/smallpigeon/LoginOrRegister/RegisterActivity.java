@@ -80,7 +80,9 @@ public class RegisterActivity extends AppCompatActivity {
                 btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
                 finish();
-            }else {
+            }else if(result.equals("repeat")){
+                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~",Toast.LENGTH_SHORT).show();
+            }else{
                 Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
             }
         }
@@ -95,6 +97,22 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    //邮件的倒计时处理
+    private Handler secondHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String second = msg.obj + "";
+            if(!second.equals("0")){
+                getCode.setText(msg.obj + "秒后重新发送");
+                getCode.setOnClickListener(null);
+            }else{
+                code = "";
+                getCode.setText("获取验证码");
+                getCode.setOnClickListener(listener);
             }
         }
     };
@@ -241,40 +259,34 @@ public class RegisterActivity extends AppCompatActivity {
             interesStr="";
             switch (v.getId()){
                 case R.id.register_getCode:
-                    boolean is = isEmail(register_userEmail.getText().toString());
-                    if(is){ sendEmail(); }
-                    else{
-                        Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show();
+                    if(isEmail(register_userEmail.getText().toString())){
+                        sendEmail();
+                        secondDown();
                     }
+                    else{ Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show(); }
                     break;
-
                 case R.id.btn_FinishReg:
                     radioAndCheckbox();
-                    if(!confirmUserInfo()){
-                        Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                    }else{
+                    if(!confirmUserInfo()) {Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();}
+                    else{
                         if(checkcode.equals(code)){
                             Log.e("str"," "+interesStr);
                             str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
                             Log.e("str1"," "+str1);
-
-                            if(!confirmUserInfo()){
-                                Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
-                            }
+                            if(!confirmUserInfo()){ Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show(); }
                             else{
                                 if(!userPassword.equals(checkpwd)){
-                                    Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT).show();
-                                }
+                                    Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT).show(); }
                                 else{
                                     try {
                                         MessageDigest md = MessageDigest.getInstance("MD5");
                                         md.update(userPassword.getBytes());
                                         userPassword = new BigInteger(1, md.digest()).toString(16);
                                         Log.e("md5",userPassword);
+                                        userRegister(userEmail,userPassword,userNickname,str1);
                                     } catch (NoSuchAlgorithmException e) {
                                         e.printStackTrace();
                                     }
-                                    userRegister(userEmail,userPassword,userNickname,str1);
                                 }
                             }
                         }
@@ -322,26 +334,24 @@ public class RegisterActivity extends AppCompatActivity {
         }.start();
     }
 
-    //用户登录信息输入是否为空的验证
-    public boolean confirmUserInfo(){
-        userEmail = register_userEmail.getText().toString();
-        userNickname=register_userNickname.getText().toString();
-        checkpwd=register_checkPwd.getText().toString();
-        userPassword = register_userPassword.getText().toString();
-        checkcode=register_checkCode.getText().toString();
-        if( userEmail.length()==0 || userPassword.length()==0
-                || userNickname.length()==0 || register_checkPwd.length()==0
-                || checkcode.length()==0 || sexstr.equals("")||interesStr.equals(""))
-            return false;
-        return true;
-    }
-
-    //判断邮箱的格式正确与否
-    public boolean isEmail(String email) {
-        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
-        Pattern p = Pattern.compile(str);
-        Matcher m = p.matcher(email);
-        return m.matches();
+    //邮件的倒计时
+    public void secondDown(){
+        new Thread(){
+            @Override
+            public void run() {
+                for (int i=59;i>=0;i--){
+                    try {
+                        Message message = new Message();
+                        message.obj = i;
+                        message.what = 1;
+                        secondHandler.sendMessage(message);
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     //单选框和复选框的点击事件
@@ -374,6 +384,28 @@ public class RegisterActivity extends AppCompatActivity {
             interesStr+="star,";
         if(comic.isChecked())
             interesStr+="comic,";
+    }
+
+    //用户登录信息输入是否为空的验证
+    public boolean confirmUserInfo(){
+        userEmail = register_userEmail.getText().toString();
+        userNickname=register_userNickname.getText().toString();
+        checkpwd=register_checkPwd.getText().toString();
+        userPassword = register_userPassword.getText().toString();
+        checkcode=register_checkCode.getText().toString();
+        if( userEmail.length()==0 || userPassword.length()==0
+                || userNickname.length()==0 || register_checkPwd.length()==0
+                || checkcode.length()==0 || sexstr.equals("")||interesStr.equals(""))
+            return false;
+        return true;
+    }
+
+    //判断邮箱的格式正确与否
+    public boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 
     //用户的注册
