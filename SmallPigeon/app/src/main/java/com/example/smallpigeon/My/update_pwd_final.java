@@ -50,7 +50,7 @@ public class update_pwd_final extends AppCompatActivity {
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 pre.edit().clear().commit();
                 Intent intent3 = new Intent(update_pwd_final.this, LoginActivity.class);
-
+                startActivity(intent3);
                 finish();
             }else {
                 Toast.makeText(getApplicationContext(),"修改失败！",Toast.LENGTH_SHORT).show();
