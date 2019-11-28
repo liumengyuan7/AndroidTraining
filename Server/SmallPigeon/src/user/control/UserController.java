@@ -41,7 +41,7 @@ public class UserController extends Controller {
 		}else {
 			renderText("false");
 		}
-		System.out.println(userInterest);
+		System.out.println(userNickname);
 	}
 	
 	//验证码的接收
