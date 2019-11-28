@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".My.anquan"></activity>
+        <activity android:name=".My.update_pwd_final"></activity>
+        <activity android:name=".My.update_pwd" />
+        <activity android:name=".My.anquan" />
         <activity android:name=".LoginOrRegister.ResetPwd" />
         <activity android:name=".LoginOrRegister.ForgetPassword" />
         <activity android:name=".My.Personal_center_More" />
@@ -20,7 +22,7 @@
         <activity android:name=".LoginOrRegister.LoginActivity" />
         <activity android:name=".My.PersonalCenter" />
         <activity android:name=".My.UpdatePersonalMsg" />
-        <activity android:name=".Run.RemachingActivity"></activity>
+        <activity android:name=".Run.RemachingActivity" />
         <activity android:name=".Run.MachingActivity" />
         <activity android:name=".Run.TracingActivity" />
         <activity android:name=".MainActivity">

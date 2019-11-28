@@ -101,7 +101,7 @@ public class UserDao {
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
 			msg.setSubject("为保证您的账号安全请验证邮箱");
 			MimeBodyPart mbp1 = new MimeBodyPart();
-			mbp1.setContent("<h3>【小鸽快跑】</h3><p>您的验证码是"+code+",您正在进行邮箱验证注册,5分钟内有效。(请勿向任何人提供您收到的验证码)</p>","text/html;charset=UTF-8");
+			mbp1.setContent("<h3>【小鸽快跑】</h3><p>您的验证码是"+code+",您正在进行邮箱验证注册,1分钟内有效。(请勿向任何人提供您收到的验证码)</p>","text/html;charset=UTF-8");
 			MimeMultipart mimeMultipart = new MimeMultipart();
 			mimeMultipart.addBodyPart(mbp1);
 			msg.setContent(mimeMultipart);

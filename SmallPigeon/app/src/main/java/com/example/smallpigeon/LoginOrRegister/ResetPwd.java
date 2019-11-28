@@ -20,7 +20,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
+//忘记密码-》重置密码
 public class ResetPwd extends AppCompatActivity {
     private Button btn_resetBtn;
     private EditText resetPwd;

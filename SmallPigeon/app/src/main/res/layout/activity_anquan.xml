@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <ImageView
-            android:id="@+id/personal_center_updateNickname_back"
+            android:id="@+id/anquan_back"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/left"
@@ -27,19 +27,65 @@
             android:text="安全"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <Button
-            android:layout_marginLeft="180dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="保存"
-            android:id="@+id/personal_center_btnSaveNickname"
-            android:background="@drawable/circular"
-            />
     </LinearLayout>
     <LinearLayout
+
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="200dp">
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_weight="0.2"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:src="@drawable/mail"
+                />
 
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="换绑邮箱"
 
+                android:textSize="25sp"
+                />
+            <ImageView
+                android:id="@+id/update_email"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:src="@drawable/right"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_weight="0.267"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:src="@drawable/pwd"
+                />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改账户密码"
+
+                android:textSize="25sp"
+                />
+            <ImageView
+                android:id="@+id/update_password"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:src="@drawable/right"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
