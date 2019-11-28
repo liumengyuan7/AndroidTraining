@@ -124,7 +124,7 @@ public class update_pwd extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/updatePassword?userEmail="+userEmail.getText().toString()+"&&code="+code1);
+                            +":8080/smallpigeon/user/verifyCode?userEmail="+userEmail.getText().toString()+"&&code="+code1);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));

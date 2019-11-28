@@ -63,6 +63,7 @@
             android:layout_weight="0.1"
             android:text="获取验证码"
             android:textSize="14sp"
+
             />
     </LinearLayout>
 
@@ -95,10 +96,11 @@
             />
         <TextView
             android:layout_weight="0.2"
-            android:layout_width="95dp"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:text=""
             android:id="@+id/code_error"
+            android:textColor="#ff0000"
             />
     </LinearLayout>
 
