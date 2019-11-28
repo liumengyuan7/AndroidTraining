@@ -100,6 +100,7 @@ public class update_pwd extends AppCompatActivity {
                 if(code.getText().toString().equals(code1)){
                     Intent intent = new Intent(getApplicationContext(),update_pwd_final.class);
                     startActivity(intent);
+                    finish();
                 }else{
                     code_error.setText("验证码输入错误！");
                 }
@@ -124,7 +125,7 @@ public class update_pwd extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/updatePassword?userEmail="+userEmail.getText().toString()+"&&code="+code1);
+                            +":8080/smallpigeon/user/verifyCode?userEmail="+userEmail.getText().toString()+"&&code="+code1);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
@@ -139,6 +140,7 @@ public class update_pwd extends AppCompatActivity {
                 }
             }
         }.start();
+        secondDown();
     }
 
     //邮件的倒计时
