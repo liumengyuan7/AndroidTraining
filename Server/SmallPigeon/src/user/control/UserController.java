@@ -9,7 +9,7 @@ import user.service.UserService;
 
 public class UserController extends Controller {
 	
-	//ÓÃ»§µÇÂ¼
+	//ç”¨æˆ·ç™»å½•
 	public void userLogin() {
 		String email = getPara("useremail");
 		String password = getPara("password");
@@ -21,7 +21,7 @@ public class UserController extends Controller {
 		}
 	}
 
-	//ÓÃ»§×¢²á
+	//ç”¨æˆ·æ³¨å†Œ
 	public void userRegister(){
 		try {
 			getRequest().setCharacterEncoding("utf-8");
@@ -44,10 +44,22 @@ public class UserController extends Controller {
 		System.out.println(userInterest);
 	}
 	
-	//ÑéÖ¤ÂëµÄ½ÓÊÕ
+	//éªŒè¯ç çš„æ¥æ”¶
 	public void verifyCode(){
 		boolean result = new UserDao().emailSend(getPara("userEmail"),getPara("code"));
 
+		if(result){
+			renderText("true");
+		}else{
+			renderText("false");
+		}
+	}
+
+	//ç”¨æˆ·å¯†ç çš„ä¿®æ”¹
+	public void updatePassword(){
+		String id = getPara("userId");
+		String password = getPara("password");
+		boolean result = new UserService().updatePassword(id,password);
 		if(result){
 			renderText("true");
 		}else{

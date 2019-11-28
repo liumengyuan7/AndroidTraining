@@ -12,4 +12,8 @@ public class UserService {
 		return new UserDao().userRegister(userEmail,userPassword,userNickname,userSex,userInterest);
 	}
 
+	public boolean updatePassword(String id,String password){
+		return new UserDao().updatePassword(id,password);
+	}
+
 }

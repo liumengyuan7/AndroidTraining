@@ -116,4 +116,10 @@ public class UserDao {
 		return false;
 	}
 
+	//用户密码的修改
+	public boolean updatePassword(String id,String password){
+		boolean result = new User().findById(id).set("user_password",password).update();
+		return result;
+	}
+
 }

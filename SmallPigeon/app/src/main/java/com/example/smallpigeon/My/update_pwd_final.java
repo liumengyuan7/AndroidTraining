@@ -46,12 +46,11 @@ public class update_pwd_final extends AppCompatActivity {
             String result = msg.obj + "";
             if(result.equals("true")){
                 btn.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
-                Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"修改成功，请重新登录！",Toast.LENGTH_SHORT).show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 pre.edit().clear().commit();
                 Intent intent3 = new Intent(update_pwd_final.this, LoginActivity.class);
 
-                Toast.makeText(getApplicationContext(),"请重新登录！",Toast.LENGTH_SHORT).show();
                 finish();
             }else {
                 Toast.makeText(getApplicationContext(),"修改失败！",Toast.LENGTH_SHORT).show();
@@ -109,7 +108,7 @@ public class update_pwd_final extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/updatePassword?password="+pwd+"&userId="+userId);
+                            +":8080/smallpigeon/user/updatePassword?password="+pwd+"&&userId="+userId);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
