@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject json2 = new JSONObject(json1.getString("attrs"));
                     SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                     SharedPreferences.Editor editor = pre.edit();
-                    editor.putString("user_id",json2.getString("user_id"));
+                    editor.putString("user_id",json2.getString("id"));
                     editor.putString("user_nickname",json2.getString("user_nickname"));
                     editor.putString("user_sex",json2.getString("user_sex"));
                     editor.putString("user_email",json2.getString("user_email"));
