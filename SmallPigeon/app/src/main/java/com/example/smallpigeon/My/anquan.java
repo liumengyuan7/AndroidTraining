@@ -32,11 +32,12 @@ public class anquan extends AppCompatActivity {
 
 
         //点击进入修改绑定邮箱界面
-        update_pwd.setOnClickListener(new View.OnClickListener() {
+        update_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //暂未写
-                Toast.makeText(getApplicationContext(),"暂不支持更换邮箱",Toast.LENGTH_SHORT).show();
+                Intent intent4 = new Intent(anquan.this,update_email.class);
+                startActivity(intent4);
+                finish();
             }
         });
 
