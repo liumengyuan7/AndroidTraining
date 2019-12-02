@@ -25,8 +25,12 @@ public class anquan extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent4 = new Intent(anquan.this,PersonalCenter.class);
                 startActivity(intent4);
+                finish();
             }
         });
+
+
+
         //点击进入修改绑定邮箱界面
         update_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +46,7 @@ public class anquan extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent4 = new Intent(anquan.this,update_pwd.class);
                 startActivity(intent4);
+                finish();
             }
         });
 

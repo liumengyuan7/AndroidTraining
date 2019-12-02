@@ -150,14 +150,17 @@ public class PersonalCenter extends AppCompatActivity {
                 case R.id.personal_center_updateNickname://进入修改昵称activity
                     Intent intent2 = new Intent(PersonalCenter.this, Personal_center_updateUserNickname.class);
                     startActivity(intent2);
+                    finish();
                     break;
                 case R.id.personal_center_more://进入更多修改activity
                     Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
                     startActivity(intent3);
+                    finish();
                     break;
                 case R.id.personal_center_anquan:
                     Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
                     startActivity(intent4);
+                    finish();
                     break;
             }
 
