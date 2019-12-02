@@ -20,4 +20,8 @@ public class UserService {
 		return new UserDao().updateNickname(id,nickname);
 	}
 
+	public boolean updateEmail(String id,String userEmail){
+		return new UserDao().updateEmail(id,userEmail);
+	}
+
 }

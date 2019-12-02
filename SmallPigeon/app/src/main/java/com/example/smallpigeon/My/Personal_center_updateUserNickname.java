@@ -3,9 +3,11 @@ package com.example.smallpigeon.My;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,9 +35,13 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
     private Handler handleNickname = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            String result = msg + "";
+            String result = msg.obj + "";
             if(result.equals("true")){
                 Toast.makeText(getApplicationContext(),"修改成功！",Toast.LENGTH_SHORT).show();
+                SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                SharedPreferences.Editor editor = pre.edit();
+                editor.putString("user_nickname",edtNickname.getText().toString());
+                editor.commit();
                 finish();
             }else{
                 Toast.makeText(getApplicationContext(),"修改失败,请重新输入！",Toast.LENGTH_SHORT).show();

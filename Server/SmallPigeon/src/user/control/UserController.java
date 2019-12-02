@@ -86,7 +86,14 @@ public class UserController extends Controller {
 
 	//邮箱的更新
 	public void updateEmail(){
-
+		String id = getPara("userId");
+		String email = getPara("userEmail");
+		boolean result = new UserService().updateEmail(id,email);
+		if(result){
+			renderText("true");
+		}else{
+			renderText("false");
+		}
 	}
 
 }
