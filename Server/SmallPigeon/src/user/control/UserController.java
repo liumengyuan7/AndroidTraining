@@ -67,4 +67,15 @@ public class UserController extends Controller {
 		}
 	}
 
+	public void updateNickname(){
+		String id = getPara("userId");
+		String nickname = getPara("nickname");
+		boolean result = new UserService().updateNickname(id,nickname);
+		if(result){
+			renderText("true");
+		}else{
+			renderText("false");
+		}
+	}
+
 }

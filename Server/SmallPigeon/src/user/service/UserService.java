@@ -16,4 +16,8 @@ public class UserService {
 		return new UserDao().updatePassword(id,password);
 	}
 
+	public boolean updateNickname(String id,String nickname){
+		return new UserDao().updateNickname(id,nickname);
+	}
+
 }

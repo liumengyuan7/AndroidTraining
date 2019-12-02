@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,18 @@ public class ResetPwd extends AppCompatActivity {
     private EditText resetPwd;
     private EditText checkPwd;
     private ImageView resetImg;
+    private Handler handlePassword = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg + "";
+            if(result.equals("true")){
+                Toast.makeText(getApplicationContext(),"修改成功，请重新登录！",Toast.LENGTH_SHORT).show();
+                finish();
+            }else{
+                Toast.makeText(getApplicationContext(),"修改失败,请重新输入！",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +94,7 @@ public class ResetPwd extends AppCompatActivity {
                     String result = reader.readLine();
                     Message message = new Message();
                     message.obj = result;
-
+                    handlePassword.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

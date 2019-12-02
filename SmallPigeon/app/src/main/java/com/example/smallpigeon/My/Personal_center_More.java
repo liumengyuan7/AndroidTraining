@@ -52,7 +52,8 @@ public class Personal_center_More extends AppCompatActivity {
             }else{
                 personal_center_more_userSex.setText("女");
             }
-            personal_center_more_userRegisterTime.setText(pre.getString("user_register_time",""));
+            personal_center_more_userRegisterTime.setText(pre.getString("user_register_time","")
+                    .substring(0,pre.getString("user_register_time","").length()-2));
             personal_center_more_userInterest.setText(pre.getString("user_interest","")
                     .substring(0,pre.getString("user_interest","").length()-1));
         }

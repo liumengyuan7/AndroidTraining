@@ -35,7 +35,7 @@ public class PersonalCenter extends AppCompatActivity {
     private ImageView personal_center_updateNickname;
     private ImageView personal_center_more;
     private ImageView personal_center_back;
-    private  ImageView anquan;
+    private ImageView anquan;
 
     private TextView personal_center_user_email;
     private TextView personal_center_nickName;
@@ -76,6 +76,12 @@ public class PersonalCenter extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        preferencesEvent();
+    }
+
     //prefer
     private void preferencesEvent() {
 
@@ -83,6 +89,9 @@ public class PersonalCenter extends AppCompatActivity {
         SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
         String s = pre.getString("user_nickname","");
         if(s.equals("") || s == null){
+            personal_center_user_email.setText("");
+            personal_center_nickName.setText("");
+            personal_center_user_points.setText("");
             SignOut.setText("去登录");
             SignOut.setOnClickListener(new View.OnClickListener() {
                 @Override

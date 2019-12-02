@@ -30,6 +30,18 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
     private ImageView personal_center_updateNickname_back;
     private Button Personal_center_btnSaveNickname;
     private CustomeClickListener listener;
+    private Handler handleNickname = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg + "";
+            if(result.equals("true")){
+                Toast.makeText(getApplicationContext(),"修改成功！",Toast.LENGTH_SHORT).show();
+                finish();
+            }else{
+                Toast.makeText(getApplicationContext(),"修改失败,请重新输入！",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +69,13 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
                     //返回到个人中心界面
                     break;
                 case R.id.personal_center_btnSaveNickname:
-                    String user_new_Nickname=edtNickname.toString();
-                    //Send-to-mysql
-                    String edit_newNickname=edtNickname.getText().toString();
-                    updateUserNickname(edit_newNickname);//将新nickname传到sql
-                    Toast.makeText(getApplicationContext(),
-                            "修改成功",
+                    if(edtNickname.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(),
+                            "昵称不能为空哦！",
                             Toast.LENGTH_SHORT).show();
-
+                    }else{
+                        updateUserNickname();
+                    }
                     break;
 
             }
@@ -74,20 +85,21 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
     }
 
 
-    public void updateUserNickname(final String name){
+    public void updateUserNickname(){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/SmallPigeon/user/updateUserNickname?name="+name);
+                            +":8080/smallpigeon/user/updateNickname?nickname="+edtNickname.getText().toString()
+                            +"&&userId="+getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_id",""));
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String result = reader.readLine();
                     Message message = new Message();
                     message.obj = result;
-
+                    handleNickname.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

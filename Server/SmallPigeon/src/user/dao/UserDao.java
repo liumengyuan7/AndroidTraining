@@ -122,4 +122,10 @@ public class UserDao {
 		return result;
 	}
 
+	//用户昵称的修改
+	public boolean updateNickname(String id,String nickname){
+		boolean result = new User().findById(id).set("user_nickname",nickname).update();
+		return result;
+	}
+
 }
