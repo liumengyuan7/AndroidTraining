@@ -62,16 +62,19 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="170dp"
             android:text="注册时间"
             android:textColor="#000000"
             android:textSize="20sp" />
 
         <TextView
              android:id="@+id/personal_center_more_userRegisterTime"
-             android:layout_width="wrap_content"
+            android:gravity="center"
+             android:layout_weight="1"
+             android:layout_width="0dp"
              android:layout_height="wrap_content"
              android:text=""
              android:textSize="20sp"
