@@ -3,39 +3,58 @@ package com.example.smallpigeon.LoginOrRegister;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smallpigeon.My.update_pwd_final;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 //忘记密码-》重置密码
 public class ResetPwd extends AppCompatActivity {
-    private Button btn_resetBtn;
-    private EditText resetPwd;
+    private EditText pwd;
     private EditText checkPwd;
-    private ImageView resetImg;
-    private Handler handlePassword = new Handler(){
+    private TextView lengthError;
+    private TextView sameError;
+    private ImageView ok;
+    private ImageView back;
+    private  String pwd2;
+    private String userId;
+    private Handler updatePwd = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            String result = msg + "";
+            String result = msg.obj + "";
             if(result.equals("true")){
+                ok.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"修改成功，请重新登录！",Toast.LENGTH_SHORT).show();
+                SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                pre.edit().clear().commit();
+                Intent intent3 = new Intent(ResetPwd.this, LoginActivity.class);
+                startActivity(intent3);
                 finish();
-            }else{
-                Toast.makeText(getApplicationContext(),"修改失败,请重新输入！",Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(),"修改失败！",Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -44,57 +63,49 @@ public class ResetPwd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pwd);
         getViews();
-
-        resetImg.setOnClickListener(new View.OnClickListener() {
+        getId();
+        length();
+        same();
+        //返回到登录界面
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent3 = new Intent(ResetPwd.this, ForgetPassword.class);
-                startActivity(intent3);
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
-
-        btn_resetBtn.setOnClickListener(new View.OnClickListener() {
+        //将新密码发送方法
+        ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newPwd= resetPwd.getText().toString();
-                String checkNewPwd= checkPwd.getText().toString();
-                if(newPwd==checkNewPwd){
-                    ResetPassword(newPwd);
-                    Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
-                    Intent intent3 = new Intent(ResetPwd.this, LoginActivity.class);
-                    finish();
+                try {
+                    MessageDigest md = MessageDigest.getInstance("MD5");
+                    md.update(pwd2.getBytes());
+                    pwd2 = new BigInteger(1, md.digest()).toString(16);
+                    Log.e("md5",pwd2);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
                 }
-                else
-                    Toast.makeText(getApplicationContext(),"两次输入的密码不一致哦~请重新输入",Toast.LENGTH_SHORT).show();
-                    resetPwd.setText("");
-                    checkPwd.setText("");
+                updatePwd(pwd2,userId);
             }
         });
-    }
-
-    private void getViews() {
-        resetImg=findViewById(R.id.resetImg);
-        resetPwd=findViewById(R.id.resetPwd);
-        checkPwd=findViewById(R.id.checkPwd);
-        btn_resetBtn=findViewById(R.id.btn_resetBtn);
 
     }
-    //新密上传 未md5加密
-    public void ResetPassword(final String pwd){
+    public void updatePwd(final String pwd, final String userId){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/SmallPigeon/user/Register?newPwd="+pwd);
+                            +":8080/smallpigeon/user/updatePassword?password="+pwd+"&&userId="+userId);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String result = reader.readLine();
                     Message message = new Message();
                     message.obj = result;
-                    handlePassword.sendMessage(message);
+                    updatePwd.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -102,5 +113,71 @@ public class ResetPwd extends AppCompatActivity {
                 }
             }
         }.start();
+    }
+    private void getId() {
+        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+        String s = pre.getString("user_id","");
+        userId=s;
+    }
+    private void getViews() {
+    pwd=findViewById(R.id.forget_newPwd);
+    checkPwd=findViewById(R.id.forget_checkPwd);
+    lengthError=findViewById(R.id.length_error);
+    sameError=findViewById(R.id.same_error);
+    ok=findViewById(R.id.btn_FinishForget);
+    back=findViewById(R.id.forget_back);
+
+    }
+    public void length(){
+        pwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String str=pwd.getText().toString();
+                Log.e("密码"," "+str);
+                if(str.length()!=0&&str.length()<6){
+                    lengthError.setText("密码长度不可小于6位");
+                }
+                else {
+                    lengthError.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+    public void  same(){
+        checkPwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String str=checkPwd.getText().toString();
+                String str1=pwd.getText().toString();
+                Log.e("密码"," "+str);
+                if(!str.equals(str1)){
+                    sameError.setText("两次输入的密码不一致");
+                }
+                else {
+                    sameError.setText("");
+                    pwd2=str;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }

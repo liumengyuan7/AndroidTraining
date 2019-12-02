@@ -6,74 +6,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginOrRegister.ResetPwd">
+    tools:context=".My.update_pwd_final">
     <LinearLayout
-        android:gravity="center"
         android:background="#259B24"
+
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        >
+        android:layout_height="50dp">
         <ImageView
-            android:id="@+id/resetImg"
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
-            android:src="@mipmap/returnimage"/>
+            android:id="@+id/forget_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/left"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            />
         <TextView
+            android:layout_gravity="center"
+            android:textSize="27sp"
+            android:textColor="#fff"
+            android:text="忘了密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/circular"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/pwd"
+            />
+
+        <EditText
 
             android:gravity="center"
-            android:layout_marginLeft="-20dp"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="重置密码"
-            android:textSize="25dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="新密码："
-            android:textSize="25sp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/resetPwd"
-            android:hint="推荐特殊字符,字母,数字组成密码"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="确认密码："
-            android:textSize="25sp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkPwd"
-            android:hint="请再次输入密码"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_resetBtn"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circular"
-            android:text="修改完成"
+            android:id="@+id/forget_newPwd"
+            android:layout_weight="0.9"
+            android:layout_width="180dp"
+            android:layout_height="46dp"
+            android:hint="请输入新密码"
             android:textSize="20sp"
+            android:inputType="textPassword"
+            />
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/length_error"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#ff0000"
+        android:textSize="18sp"
+        />
+    <LinearLayout
+        android:background="@drawable/circular"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/pwd"
+            />
+
+        <EditText
+            android:gravity="center"
+            android:id="@+id/forget_checkPwd"
+            android:layout_weight="0.9"
+            android:layout_width="180dp"
+            android:layout_height="46dp"
+            android:hint="请再次输入密码"
+            android:textSize="20sp"
+            android:inputType="textPassword"
             />
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/same_error"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#ff0000"
+        android:textSize="18sp"
+        />
+    <ImageView
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/wancheng1"
+
+
+        android:id="@+id/btn_FinishForget"
+        />
 </LinearLayout>
