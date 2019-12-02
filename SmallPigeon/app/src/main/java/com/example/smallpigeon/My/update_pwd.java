@@ -38,6 +38,7 @@ public class update_pwd extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
+                secondDown();
                 Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
@@ -140,7 +141,6 @@ public class update_pwd extends AppCompatActivity {
                 }
             }
         }.start();
-        secondDown();
     }
 
     //邮件的倒计时

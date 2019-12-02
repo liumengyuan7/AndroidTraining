@@ -94,8 +94,11 @@ public class RegisterActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
+                secondDown();
                 Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
-            }else {
+            }else if(result.equals("repeat")){
+                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~！",Toast.LENGTH_SHORT).show();
+            }else{
                 Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
             }
         }
@@ -261,7 +264,6 @@ public class RegisterActivity extends AppCompatActivity {
                 case R.id.register_getCode:
                     if(isEmail(register_userEmail.getText().toString())){
                         sendEmail();
-                        secondDown();
                     }
                     else{ Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show(); }
                     break;
@@ -316,7 +318,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/verifyCode?userEmail="+register_userEmail.getText().toString()
+                            +":8080/smallpigeon/user/verifyCodeAndEmail?userEmail="+register_userEmail.getText().toString()
                             +"&&code="+ code);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

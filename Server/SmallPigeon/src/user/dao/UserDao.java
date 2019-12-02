@@ -31,7 +31,7 @@ public class UserDao {
 		List<User> list = User.dao.find("select * from user where user_email=? and user_password=?",email,password);
 		if(! list.isEmpty()) {
 		    List<User> list1 = User.dao.find("select interest.* from interest,user where user.id =?",list.get(0).getStr("id"));
-			User user = list1.get(0);
+		    User user = list1.get(0);
 			interestSet(user,"outdoor");
 			interestSet(user,"society");
 			interestSet(user,"music");
@@ -85,7 +85,21 @@ public class UserDao {
 		}
 	}
 
-	//邮件发送
+	//邮件发送和邮箱的重复确认
+	public String emailSendAndEmailConfirm(String userEmail,String code){
+		List<User> confirm = new User().dao().find("select * from user where user_email=?",userEmail);
+		if(confirm.isEmpty()){
+			if(emailSend(userEmail,code)){
+				return "true";
+			}else{
+				return "false";
+			}
+		}else{
+			return "repeat";
+		}
+	}
+
+	//邮件的发送
 	public boolean emailSend(String userEmail,String code){
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.163.com");
