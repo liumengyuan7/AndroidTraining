@@ -44,10 +44,20 @@ public class UserController extends Controller {
 		System.out.println(userNickname);
 	}
 	
+	//验证码的接收以及邮箱的验证
+	public void verifyCodeAndEmail(){
+		String result = new UserDao().emailSendAndEmailConfirm(getPara("userEmail"),getPara("code"));
+		renderText(result);
+	}
+
 	//验证码的接收
 	public void verifyCode(){
-		String result = new UserDao().emailSend(getPara("userEmail"),getPara("code"));
-		renderText(result);
+		boolean result = new UserDao().emailSend(getPara("userEmail"),getPara("code"));
+		if(result){
+			renderText("true");
+		}else{
+			renderText("false");
+		}
 	}
 
 	//用户密码的修改
@@ -72,6 +82,11 @@ public class UserController extends Controller {
 		}else{
 			renderText("false");
 		}
+	}
+
+	//邮箱的更新
+	public void updateEmail(){
+
 	}
 
 }

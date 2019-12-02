@@ -318,7 +318,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/verifyCode?userEmail="+register_userEmail.getText().toString()
+                            +":8080/smallpigeon/user/verifyCodeAndEmail?userEmail="+register_userEmail.getText().toString()
                             +"&&code="+ code);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".My.update_emai_final"></activity>
         <activity android:name=".My.update_email" />
         <activity android:name=".My.update_pwd_final" />
         <activity android:name=".My.update_pwd" />
