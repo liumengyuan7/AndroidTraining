@@ -142,4 +142,10 @@ public class UserDao {
 		return result;
 	}
 
+	//用户邮箱的修改
+	public boolean updateEmail(String id,String userEmail){
+		boolean result = new User().findById(id).set("user_email",userEmail).update();
+		return result;
+	}
+
 }

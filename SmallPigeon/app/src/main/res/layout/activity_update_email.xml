@@ -42,7 +42,7 @@
             android:src="@drawable/mail"
             />
 
-        <TextView
+        <EditText
             android:gravity="center"
             android:id="@+id/user_email"
             android:layout_weight="0.5"

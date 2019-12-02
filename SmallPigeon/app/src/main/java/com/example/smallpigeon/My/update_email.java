@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
@@ -29,7 +30,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class update_email extends AppCompatActivity {
-    private TextView userEmail;
+    private EditText userEmail;
     private TextView getCode;
     private TextView code_error;
     private EditText checkCode;
@@ -76,10 +77,15 @@ public class update_email extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
-
-                Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
+                btnFinish.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                Toast.makeText(getApplicationContext(),"邮箱更改成功！",Toast.LENGTH_SHORT).show();
+                SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                pre.edit().clear().commit();
+                Intent intent3 = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent3);
+                finish();
             } else{
-                Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"邮箱更改失败！",Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -89,8 +95,6 @@ public class update_email extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_email);
         getViews();
-        //获取用户已绑定的邮箱
-        getUserEmail();
         //控件的点击事件
         btnEvent();
 
@@ -118,10 +122,9 @@ public class update_email extends AppCompatActivity {
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkCode.getText().toString().equals("") ){
-                    Toast.makeText(getApplicationContext(),"验证码不能为空哦！",Toast.LENGTH_SHORT).show();
-                }else if(!checkCode.getText().toString().equals(code1)){
-                    Toast.makeText(getApplicationContext(),"输入的验证码不正确哦，请重新输入！",Toast.LENGTH_SHORT).show();
+                if(checkCode.getText().toString().equals("") || !isEmail(userEmail.getText().toString())
+                    || !checkCode.getText().toString().equals(code1)){
+                    Toast.makeText(getApplicationContext(),"请输入正确的信息哦！",Toast.LENGTH_SHORT).show();
                 }else{
                     updateEmail();
                 }
@@ -164,7 +167,8 @@ public class update_email extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/updateEmail?userEmail="+userEmail.getText().toString());
+                            +":8080/smallpigeon/user/updateEmail?userEmail="+userEmail.getText().toString()
+                            +"&&userId="+getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_id",""));
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
@@ -179,14 +183,6 @@ public class update_email extends AppCompatActivity {
                 }
             }
         }.start();
-    }
-
-    //判断邮箱的格式正确与否
-    public boolean isEmail(String email) {
-        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
-        Pattern p = Pattern.compile(str);
-        Matcher m = p.matcher(email);
-        return m.matches();
     }
 
     //邮件的倒计时
@@ -209,6 +205,14 @@ public class update_email extends AppCompatActivity {
         }.start();
     }
 
+    //判断邮箱的格式正确与否
+    public boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
     //获取视图的控件
     public void getViews(){
         userEmail=findViewById(R.id.user_email);
@@ -217,13 +221,6 @@ public class update_email extends AppCompatActivity {
         checkCode=findViewById(R.id.updemail_edt_code);
         back=findViewById(R.id.updpwd_back);
         btnFinish = findViewById(R.id.btn_Finish);
-    }
-
-    //获取用户的邮箱
-    public void getUserEmail(){
-        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
-        String s = pre.getString("user_email","");
-        userEmail.setText(s);
     }
 
 
