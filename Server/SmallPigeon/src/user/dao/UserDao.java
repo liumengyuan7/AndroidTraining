@@ -31,7 +31,7 @@ public class UserDao {
 		List<User> list = User.dao.find("select * from user where user_email=? and user_password=?",email,password);
 		if(! list.isEmpty()) {
 		    List<User> list1 = User.dao.find("select interest.* from interest,user where user.id =?",list.get(0).getStr("id"));
-			User user = list1.get(0);
+		    User user = list1.get(0);
 			interestSet(user,"outdoor");
 			interestSet(user,"society");
 			interestSet(user,"music");
@@ -86,34 +86,40 @@ public class UserDao {
 	}
 
 	//邮件发送
-	public boolean emailSend(String userEmail,String code){
-		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "smtp.163.com");
-		props.put("mail.smtp.auth", "true");
-		Session session = Session.getInstance(props, new Authenticator() {
-			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("qq2642611193@163.com", "qq1436630964");
+	public String emailSend(String userEmail,String code){
+		List<User> confirm = new User().dao().find("select * from user where user_email=?",userEmail);
+		if(confirm.isEmpty()){
+			Properties props = System.getProperties();
+			props.put("mail.smtp.host", "smtp.163.com");
+			props.put("mail.smtp.auth", "true");
+			Session session = Session.getInstance(props, new Authenticator() {
+				public PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("qq2642611193@163.com", "qq1436630964");
+				}
+			});
+			Message msg = new MimeMessage(session);
+			try {
+				msg.setFrom(new InternetAddress("qq2642611193@163.com","小鸽快跑","UTF-8"));
+				msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
+				msg.setSubject("为保证您的账号安全请验证邮箱");
+				MimeBodyPart mbp1 = new MimeBodyPart();
+				mbp1.setContent("<h3>【小鸽快跑】</h3><p>您的验证码是"+code+",您正在进行邮箱验证注册,1分钟内有效。(请勿向任何人提供您收到的验证码)</p>","text/html;charset=UTF-8");
+				MimeMultipart mimeMultipart = new MimeMultipart();
+				mimeMultipart.addBodyPart(mbp1);
+				msg.setContent(mimeMultipart);
+				msg.setHeader("X-Mailer", "smtpsend");
+				Transport.send(msg);
+				return "true";
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
 			}
-		});
-		Message msg = new MimeMessage(session);
-		try {
-			msg.setFrom(new InternetAddress("qq2642611193@163.com","小鸽快跑","UTF-8"));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
-			msg.setSubject("为保证您的账号安全请验证邮箱");
-			MimeBodyPart mbp1 = new MimeBodyPart();
-			mbp1.setContent("<h3>【小鸽快跑】</h3><p>您的验证码是"+code+",您正在进行邮箱验证注册,1分钟内有效。(请勿向任何人提供您收到的验证码)</p>","text/html;charset=UTF-8");
-			MimeMultipart mimeMultipart = new MimeMultipart();
-			mimeMultipart.addBodyPart(mbp1);
-			msg.setContent(mimeMultipart);
-			msg.setHeader("X-Mailer", "smtpsend");
-			Transport.send(msg);
-			return true;
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		}else{
+			return "repeat";
 		}
-		return false;
+
+		return "false";
 	}
 
 	//用户密码的修改

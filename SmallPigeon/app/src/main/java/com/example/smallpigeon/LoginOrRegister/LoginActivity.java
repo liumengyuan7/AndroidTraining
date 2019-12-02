@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = pre.edit();
                     editor.putString("user_id",json2.getString("id"));
                     editor.putString("user_nickname",json2.getString("user_nickname"));
+                    Log.e("sadsadsadsad",json2.getString("user_nickname"));
                     editor.putString("user_sex",json2.getString("user_sex"));
                     editor.putString("user_email",json2.getString("user_email"));
                     editor.putString("user_register_time",json2.getString("user_register_time"));

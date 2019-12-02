@@ -46,13 +46,8 @@ public class UserController extends Controller {
 	
 	//验证码的接收
 	public void verifyCode(){
-		boolean result = new UserDao().emailSend(getPara("userEmail"),getPara("code"));
-
-		if(result){
-			renderText("true");
-		}else{
-			renderText("false");
-		}
+		String result = new UserDao().emailSend(getPara("userEmail"),getPara("code"));
+		renderText(result);
 	}
 
 	//用户密码的修改
@@ -67,6 +62,7 @@ public class UserController extends Controller {
 		}
 	}
 
+	//用户昵称的修改
 	public void updateNickname(){
 		String id = getPara("userId");
 		String nickname = getPara("nickname");
