@@ -59,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/right_Authentication"
             android:background="#fff"
             android:layout_width="match_parent"
             android:gravity="left"
@@ -78,13 +79,13 @@
                 android:gravity="center"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:id="@+id/right_Authentication"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/right" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/right_community"
             android:layout_marginTop="1dp"
             android:background="#fff"
             android:layout_width="match_parent"
@@ -105,13 +106,13 @@
                 android:gravity="center"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:id="@+id/right_community"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/right" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/right_gradeRank"
             android:layout_marginTop="1dp"
             android:background="#fff"
             android:layout_width="match_parent"
@@ -132,13 +133,13 @@
                 android:gravity="center"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:id="@+id/right_gradeRank"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/right" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/right_plan"
             android:layout_marginTop="1dp"
             android:background="#fff"
             android:layout_width="match_parent"
@@ -159,7 +160,6 @@
                 android:gravity="center"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:id="@+id/right_plan"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/right" />
