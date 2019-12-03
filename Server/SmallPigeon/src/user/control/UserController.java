@@ -102,4 +102,9 @@ public class UserController extends Controller {
 		}
 	}
 
+	//积分榜
+	public void gradeRank(){
+
+	}
+
 }

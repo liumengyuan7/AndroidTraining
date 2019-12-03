@@ -32,7 +32,7 @@ import java.util.Map;
 public class Paihang extends AppCompatActivity {
     private Button goRun;
 
-    List<Map<String,Object>> information;
+    List<Map<String,String>> information;
     RankAdapter customAdapter1;
     String[] result1;
     String[] result2;
@@ -46,11 +46,11 @@ public class Paihang extends AppCompatActivity {
                 result1 = info.split(";");
                 int a=1;
                 for (int i = 0; i < result1.length; i++) {
-                    Map<String, Object> itemData = new HashMap<>();
+                    Map<String, String> itemData = new HashMap<>();
                     result2 = result1[i].split(",");
                     itemData.put("userName", result2[0]);
                     itemData.put("userPoints", result2[1]);
-                    itemData.put("rank",a);
+                    itemData.put("rank",a+"");
                     information.add(itemData);
                     a++;
                     customAdapter1.notifyDataSetChanged();
@@ -70,11 +70,16 @@ public class Paihang extends AppCompatActivity {
         findViews();
 
         information = new ArrayList<>();
+        Map<String,String> item = new HashMap<>();
+        item.put("userName","飞");
+        item.put("userPoints","100");
+        item.put("rank","1");
+        information.add(item);
         ListView listView1 = findViewById(R.id.rank_points);
         customAdapter1 = new RankAdapter(this,information,R.layout.grade_rank_listitem);
         listView1.setAdapter(customAdapter1);
 
-        getPoints();
+//        getPoints();
 
         //点击按钮进入跑步界面
         goRun.setOnClickListener(new View.OnClickListener() {

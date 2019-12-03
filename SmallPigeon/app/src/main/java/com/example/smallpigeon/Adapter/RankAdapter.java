@@ -16,10 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RankAdapter extends BaseAdapter{
     private AppCompatActivity context;
-    private List<Map<String,Object>> dataSourse;
+    private List<Map<String,String>> dataSourse;
     private int stringId;
 
-    public RankAdapter(AppCompatActivity context,List<Map<String,Object>> dataSourse,int id){
+    public RankAdapter(AppCompatActivity context,List<Map<String,String>> dataSourse,int id){
         this.context = context;
         this.dataSourse = dataSourse;
         this.stringId = id;
