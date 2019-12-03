@@ -1,5 +1,6 @@
 package com.example.smallpigeon.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,11 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RankAdapter extends BaseAdapter{
-    private AppCompatActivity context;
+    private Context context;
     private List<Map<String,String>> dataSourse;
     private int stringId;
 
-    public RankAdapter(AppCompatActivity context,List<Map<String,String>> dataSourse,int id){
+    public RankAdapter(Context context,List<Map<String,String>> dataSourse,int id){
         this.context = context;
         this.dataSourse = dataSourse;
         this.stringId = id;

@@ -17,6 +17,10 @@ import com.example.smallpigeon.Adapter.RankAdapter;
 import com.example.smallpigeon.Fragment.RunFragment;
 import com.example.smallpigeon.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,22 +45,28 @@ public class Paihang extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String info = (String) msg.obj;
-            if(!info.equals("false")) {
-                result1 = info.split(";");
-                int a=1;
-                for (int i = 0; i < result1.length; i++) {
-                    Map<String, String> itemData = new HashMap<>();
-                    result2 = result1[i].split(",");
-                    itemData.put("userName", result2[0]);
-                    itemData.put("userPoints", result2[1]);
-                    itemData.put("rank",a+"");
-                    information.add(itemData);
-                    a++;
-                    customAdapter1.notifyDataSetChanged();
+            String result = msg.obj + "";
+            if(!result.equals("false")){
+                try {
+                    information = new ArrayList<>();
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int i = 0;i<jsonArray.length();i++){
+                        JSONObject json1 = jsonArray.getJSONObject(i);
+                        JSONObject json2 = json1.getJSONObject("attrs");
+                        Log.e("dsadsadsa",json2.toString());
+                        Map<String, String> item = new HashMap<>();
+                        item.put("userName",json2.getString("user_nickname"));
+                        item.put("userPoints",json2.getString("user_points"));
+                        item.put("rank",i+1+"");
+                        information.add(item);
+                    }
+                    ListView listView1 = findViewById(R.id.rank_points);
+                    customAdapter1 = new RankAdapter(getApplicationContext(),information,R.layout.grade_rank_listitem);
+                    listView1.setAdapter(customAdapter1);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }
-            else {
+            }else {
                 Toast toastTip = Toast.makeText(getApplicationContext(),"获取排行榜失败！请检查网络！",Toast.LENGTH_LONG);
                 toastTip.setGravity(Gravity.CENTER, 0, 0);
                 toastTip.show();
@@ -69,17 +79,7 @@ public class Paihang extends AppCompatActivity {
         setContentView(R.layout.activity_paihang);
         findViews();
 
-        information = new ArrayList<>();
-        Map<String,String> item = new HashMap<>();
-        item.put("userName","飞");
-        item.put("userPoints","100");
-        item.put("rank","1");
-        information.add(item);
-        ListView listView1 = findViewById(R.id.rank_points);
-        customAdapter1 = new RankAdapter(this,information,R.layout.grade_rank_listitem);
-        listView1.setAdapter(customAdapter1);
-
-//        getPoints();
+        getPoints();
 
         //点击按钮进入跑步界面
         goRun.setOnClickListener(new View.OnClickListener() {

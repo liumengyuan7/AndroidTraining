@@ -24,4 +24,8 @@ public class UserService {
 		return new UserDao().updateEmail(id,userEmail);
 	}
 
+	public String gradeRank(){
+		return new UserDao().gradeRank();
+	}
+
 }

@@ -103,8 +103,16 @@ public class UserController extends Controller {
 	}
 
 	//积分榜
-	public void gradeRank(){
-
+	public void gradeRank() throws IOException {
+		String result = new UserService().gradeRank();
+		if(result == null || result.equals("")){
+			renderText("false");
+		}else{
+			HttpServletResponse response = getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write(result);
+			renderNull();
+		}
 	}
 
 }

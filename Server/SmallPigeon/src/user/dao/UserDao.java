@@ -148,6 +148,11 @@ public class UserDao {
 		return result;
 	}
 
-
+	//积分榜
+	public String gradeRank(){
+		List<User> list = new User().dao()
+				.find("select user_nickname,user_points from user order by user_points desc limit 0,10");
+		return new Gson().toJson(list);
+	}
 
 }
