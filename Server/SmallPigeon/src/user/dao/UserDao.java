@@ -30,7 +30,7 @@ public class UserDao {
 	public String userLogin(String email,String password) {
 		List<User> list = User.dao.find("select * from user where user_email=? and user_password=?",email,password);
 		if(! list.isEmpty()) {
-		    List<User> list1 = User.dao.find("select interest.* from interest,user where user.id =?",list.get(0).getStr("id"));
+		    List<User> list1 = User.dao.find("select * from interest where user_id =?",list.get(0).getStr("id"));
 		    User user = list1.get(0);
 			interestSet(user,"outdoor");
 			interestSet(user,"society");

@@ -29,6 +29,7 @@ public class Personal_center_More extends AppCompatActivity {
     private TextView personal_center_more_userSex;
     private TextView personal_center_more_userInterest;
     private TextView personal_center_more_userRegisterTime;
+    private String interestC = "";
     private CustomeClickListener listener=new CustomeClickListener();;
 
     @Override
@@ -52,10 +53,43 @@ public class Personal_center_More extends AppCompatActivity {
             }else{
                 personal_center_more_userSex.setText("女");
             }
+            getInterestTranslate(pre.getString("user_interest",""));
             personal_center_more_userRegisterTime.setText(pre.getString("user_register_time","")
                     .substring(0,pre.getString("user_register_time","").length()-2));
-            personal_center_more_userInterest.setText(pre.getString("user_interest","")
-                    .substring(0,pre.getString("user_interest","").length()-1));
+            personal_center_more_userInterest.setText(interestC.substring(0,interestC.length()-1));
+        }
+    }
+
+    //获取兴趣的翻译
+    private void getInterestTranslate(String interestE){
+        String[] in = interestE.split(",");
+        for(int i = 0;i<in.length;i++){
+            switch (in[i]){
+                case "outdoor":
+                    interestC += "户外,";
+                    break;
+                case "film":
+                    interestC += "电影,";
+                    break;
+                case "comic":
+                    interestC += "动漫,";
+                    break;
+                case "science":
+                    interestC += "科学,";
+                    break;
+                case "society":
+                    interestC += "社交,";
+                    break;
+                case "music":
+                    interestC += "音乐,";
+                    break;
+                case "star":
+                    interestC += "明星,";
+                    break;
+                case "delicacy":
+                    interestC += "美食,";
+                    break;
+            }
         }
     }
 
