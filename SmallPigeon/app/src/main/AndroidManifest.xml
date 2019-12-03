@@ -24,7 +24,6 @@
         <activity android:name=".LoginOrRegister.RegisterActivity" />
         <activity android:name=".LoginOrRegister.LoginActivity" />
         <activity android:name=".My.PersonalCenter" />
-        <activity android:name=".My.UpdatePersonalMsg" />
         <activity android:name=".Run.RemachingActivity" />
         <activity android:name=".Run.MachingActivity" />
         <activity android:name=".BaiduMap.activity.TracingActivity" />

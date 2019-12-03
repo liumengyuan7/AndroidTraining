@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,15 +17,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smallpigeon.Adapter.RankAdapter;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
-import com.example.smallpigeon.My.Grade_Rank;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
-import com.example.smallpigeon.My.UpdatePersonalMsg;
 import com.example.smallpigeon.R;
 
 
