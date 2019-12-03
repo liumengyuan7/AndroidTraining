@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:id="@+id/user_ranking"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+
+            />
+        <com.example.smallpigeon.RoundImageView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/woman"
+            android:id="@+id/gradeRank_userImg"
+            imagecontrol:border_inside_color="#259B24"
+            imagecontrol:border_outside_color="#ffffff"
+            imagecontrol:border_thickness="1dp"/>
+        <TextView
+
+            android:id="@+id/gradeRank_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="right"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="63965341"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:id="@+id/gradeRank_userPoints"
+            />
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text=" 分"
+            android:textColor="#000"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+</LinearLayout>
