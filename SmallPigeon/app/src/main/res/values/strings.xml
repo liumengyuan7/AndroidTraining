@@ -3,4 +3,34 @@
     <string name="ip_address">10.7.89.201</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TracingOptionActivity 主选项名称 -->
+    <string name="tracing_option_interval">采集、打包频率(单位:秒):</string>
+    <string name="tracing_option_location_mode">定位模式:</string>
+    <string name="tracing_option_object_save">对象存储:</string>
+
+    <!-- 定位模式子选项名称 -->
+    <string name="high_accuracy">高精度定位模式，GPS与网络综合定位</string>
+    <string name="battery_saving">低功耗定位模式，仅使用网络定位</string>
+    <string name="device_sensors">仅使用设备(GPS)定位</string>
+
+    <!-- 纠偏与数据分析子选项 -->
+    <string name="processed">纠偏</string>
+    <string name="denoise">去噪</string>
+    <string name="vacuate">抽稀</string>
+    <string name="mapmatch">绑路</string>
+    <!-- 交通方式子选项 -->
+    <string name="driving_mode">驾车</string>
+    <string name="riding_mode">骑行</string>
+    <string name="walking_mode">步行</string>
+    <!-- 追踪控制子选项 -->
+    <string name="start_trace">开启服务</string>
+    <string name="stop_trace">停止服务</string>
+    <string name="start_gather">开启采集</string>
+    <string name="stop_gather">结束</string>
+
+    <string name="no_track_data">未查询到轨迹</string>
+
+    <string name="loc_failed">定位失败</string>
+    <string name="font_type">微软雅黑</string>
 </resources>

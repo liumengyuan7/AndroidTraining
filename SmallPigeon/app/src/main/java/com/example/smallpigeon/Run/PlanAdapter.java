@@ -11,17 +11,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.Entity.PlanContent;
 import com.example.smallpigeon.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-/**
- * @Time: 2019/11/27
- * @Author: 程璐
- * @Descripe: 
- */
 public class PlanAdapter extends BaseAdapter {
     // 数据源
     private List<PlanContent> contents;
