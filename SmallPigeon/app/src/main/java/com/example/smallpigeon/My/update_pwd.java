@@ -59,6 +59,8 @@ public class update_pwd extends AppCompatActivity {
                 getCode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        getCode.setText("验证码发送中...");
+                        getCode.setOnClickListener(null);
                         sendEmailToServer();
                     }
                 });
@@ -79,6 +81,8 @@ public class update_pwd extends AppCompatActivity {
         getCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getCode.setText("验证码发送中...");
+                getCode.setOnClickListener(null);
                 sendEmailToServer();
             }
         });

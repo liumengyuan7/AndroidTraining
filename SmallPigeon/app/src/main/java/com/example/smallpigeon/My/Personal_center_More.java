@@ -5,24 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.smallpigeon.R;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Personal_center_More extends AppCompatActivity {
     private ImageView personal_center_more_back;
@@ -78,7 +65,7 @@ public class Personal_center_More extends AppCompatActivity {
                     interestC += "科学,";
                     break;
                 case "society":
-                    interestC += "社交,";
+                    interestC += "人文,";
                     break;
                 case "music":
                     interestC += "音乐,";

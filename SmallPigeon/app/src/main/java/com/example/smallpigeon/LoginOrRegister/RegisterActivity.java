@@ -97,8 +97,13 @@ public class RegisterActivity extends AppCompatActivity {
                 secondDown();
                 Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
             }else if(result.equals("repeat")){
+                getCode.setText("获取验证码");
+                getCode.setOnClickListener(listener);
                 Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~！",Toast.LENGTH_SHORT).show();
+
             }else{
+                getCode.setText("获取验证码");
+                getCode.setOnClickListener(listener);
                 Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
             }
         }
@@ -263,6 +268,8 @@ public class RegisterActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.register_getCode:
                     if(isEmail(register_userEmail.getText().toString())){
+                        getCode.setText("验证码发送中...");
+                        getCode.setOnClickListener(null);
                         sendEmail();
                     }
                     else{ Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show(); }

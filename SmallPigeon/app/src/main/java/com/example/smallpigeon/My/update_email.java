@@ -45,8 +45,10 @@ public class update_email extends AppCompatActivity {
                 secondDown();
                 Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
             }else if(result.equals("repeat")){
+                getEmailCode();
                 Toast.makeText(getApplicationContext(),"该邮箱已经被注册了哦，请换一个吧～",Toast.LENGTH_SHORT).show();
             }else{
+                getEmailCode();
                 Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
             }
         }
@@ -111,13 +113,7 @@ public class update_email extends AppCompatActivity {
                 finish();
             }
         });
-        //获取验证码
-        getCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendEmailToServer();
-            }
-        });
+        getEmailCode();
         //确认图片的点击事件
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +123,24 @@ public class update_email extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"请输入正确的信息哦！",Toast.LENGTH_SHORT).show();
                 }else{
                     updateEmail();
+                }
+            }
+        });
+    }
+
+    //获取邮件
+    public void getEmailCode(){
+        getCode.setText("获取验证码");
+        //获取验证码
+        getCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isEmail(userEmail.getText().toString())){
+                    Toast.makeText(getApplicationContext(),"请按正确的邮箱格式填写哦！",Toast.LENGTH_SHORT).show();
+                }else{
+                    getCode.setText("验证码发送中...");
+                    getCode.setOnClickListener(null);
+                    sendEmailToServer();
                 }
             }
         });
