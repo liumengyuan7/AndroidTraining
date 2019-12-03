@@ -76,7 +76,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/right"
                 android:layout_gravity="center"
-                android:layout_marginLeft="320dp"
+                android:layout_marginLeft="300dp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -104,7 +104,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/right"
                 android:layout_gravity="center"
-                android:layout_marginLeft="270dp"
+                android:layout_marginLeft="250dp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -132,7 +132,7 @@
             android:layout_height="30dp"
             android:src="@drawable/right"
             android:layout_gravity="center"
-            android:layout_marginLeft="245dp"
+            android:layout_marginLeft="225dp"
             />
     </LinearLayout>
         <LinearLayout
@@ -160,7 +160,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/right"
                 android:layout_gravity="center"
-                android:layout_marginLeft="270dp"
+                android:layout_marginLeft="250dp"
                 />
         </LinearLayout>
     </LinearLayout>
