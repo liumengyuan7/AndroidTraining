@@ -21,8 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smallpigeon.Adapter.RankAdapter;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.Grade_Rank;
+import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.My.UpdatePersonalMsg;
 import com.example.smallpigeon.R;
@@ -80,7 +82,7 @@ public class MyFragment extends Fragment {
                     break;
                 case R.id.right_gradeRank:
                     Toast.makeText(getContext(),"积分榜！",Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(getContext(), Grade_Rank.class);
+                    Intent intent1 = new Intent(getContext(), Paihang.class);
                     startActivity(intent1);
                     break;
                 case R.id.right_plan:

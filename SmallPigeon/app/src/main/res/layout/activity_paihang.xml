@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="#ededed"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".My.Grade_Rank">
+    <LinearLayout
+        android:background="#ededed"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/grade_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/left"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:textColor="#000"
+            android:text="跑步英雄榜"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rank"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="来自全国小鸽的积分排行榜哦"
+            android:textColor="#000"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+        <ListView
+            android:id="@+id/rank_points"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <Button
+            android:layout_gravity="center"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="去 跑 步"
+            android:background="@drawable/circular"
+            android:id="@+id/rank_GoRun"
+            />
+    </LinearLayout>
+</LinearLayout>
