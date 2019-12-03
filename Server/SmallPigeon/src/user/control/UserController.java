@@ -2,7 +2,10 @@ package user.control;
 
 import com.jfinal.core.Controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
+import javax.servlet.http.HttpServletResponse;
 
 import user.dao.UserDao;
 import user.service.UserService;
@@ -10,14 +13,17 @@ import user.service.UserService;
 public class UserController extends Controller {
 	
 	//用户登录
-	public void userLogin() {
+	public void userLogin() throws IOException {
 		String email = getPara("useremail");
 		String password = getPara("password");
 		String result = new UserService().userLogin(email, password);
 		if(result==null) {
 			renderText("false");
 		}else {
-			renderText(result);
+			HttpServletResponse response = getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write(result);
+			renderNull();
 		}
 	}
 
