@@ -10,7 +10,7 @@
     tools:context=".LoginOrRegister.RegisterActivity">
     <LinearLayout
         android:gravity="center"
-        android:background="#259B24"
+
         android:layout_width="match_parent"
         android:layout_height="50dp"
         >
@@ -226,88 +226,83 @@
         <LinearLayout
             android:id="@+id/register_Linear"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="147dp"
             android:orientation="vertical">
+
             <LinearLayout
 
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="兴  趣:"
-                    android:textSize="20sp" />
                 <CheckBox
+                    android:id="@+id/outdoor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="户外"
-                    android:textSize="20sp"
-                    android:id="@+id/outdoor"
-                    />
+                    android:textSize="20sp" />
+
                 <CheckBox
+                    android:id="@+id/music"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="音乐"
-                    android:textSize="20sp"
-                    android:id="@+id/music"
-                    />
+                    android:textSize="20sp" />
+
                 <CheckBox
+                    android:id="@+id/film"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="影视"
-                    android:textSize="20sp"
-                    android:id="@+id/film"
-                    />
+                    android:textSize="20sp" />
+
                 <CheckBox
+                    android:id="@+id/society"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="人文"
-                    android:textSize="20sp"
-                    android:id="@+id/society"
-                    />
-            </LinearLayout>
-            <LinearLayout
-
-                android:orientation="horizontal"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="兴  趣:"
-                    android:alpha="0"
                     android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <CheckBox
+                    android:id="@+id/delicacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="美食"
-                    android:textSize="20sp"
-                    android:id="@+id/delicacy"
-                    />
+                    android:textSize="20sp" />
+
                 <CheckBox
+                    android:id="@+id/science"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="科技"
-                    android:textSize="20sp"
-                    android:id="@+id/science"
-                    />
+                    android:textSize="20sp" />
+
                 <CheckBox
+                    android:id="@+id/star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="明星"
-                    android:textSize="20sp"
-                    android:id="@+id/star"
-                    />
+                    android:textSize="20sp" />
+
                 <CheckBox
+                    android:id="@+id/comic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="动漫"
-                    android:textSize="20sp"
-                    android:id="@+id/comic"
-                    />
+                    android:textSize="20sp" />
+
+
             </LinearLayout>
 
         </LinearLayout>

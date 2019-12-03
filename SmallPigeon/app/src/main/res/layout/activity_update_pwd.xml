@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".My.update_pwd">
     <LinearLayout
-        android:background="#259B24"
+
 
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -23,7 +23,7 @@
         <TextView
             android:layout_gravity="center"
             android:textSize="27sp"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:text="修改密码"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -52,18 +52,18 @@
             android:textSize="20sp"
             />
         <TextView
-            android:layout_width="5dp"
+            android:layout_width="2dp"
             android:layout_height="5dp"
             android:layout_weight="0.1"
             />
         <TextView
             android:id="@+id/updpwd_getcode"
-            android:layout_width="95dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:text="获取验证码"
             android:textSize="14sp"
-
+            android:textColor="#000"
             />
     </LinearLayout>
 

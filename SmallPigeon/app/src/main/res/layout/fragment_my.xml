@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="#ededed"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,12 +12,12 @@
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:gravity="center"
-        android:background="#259B24"
+
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
             android:textSize="25dp"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:text="我的"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -57,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:background="#fff"
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="50dp">
@@ -74,10 +76,17 @@
                 android:layout_height="30dp"
                 android:src="@drawable/right"
                 android:layout_gravity="center"
-                android:layout_marginLeft="300dp"
+                android:layout_marginLeft="320dp"
                 />
         </LinearLayout>
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ededed"
+
+            />
+        <LinearLayout
+            android:background="#fff"
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="50dp">
@@ -95,10 +104,17 @@
                 android:layout_height="30dp"
                 android:src="@drawable/right"
                 android:layout_gravity="center"
-                android:layout_marginLeft="250dp"
+                android:layout_marginLeft="270dp"
                 />
         </LinearLayout>
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ededed"
+
+            />
+        <LinearLayout
+            android:background="#fff"
         android:layout_width="match_parent"
         android:gravity="left"
         android:layout_height="50dp">
@@ -116,10 +132,17 @@
             android:layout_height="30dp"
             android:src="@drawable/right"
             android:layout_gravity="center"
-            android:layout_marginLeft="225dp"
+            android:layout_marginLeft="245dp"
             />
     </LinearLayout>
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ededed"
+
+            />
+        <LinearLayout
+            android:background="#fff"
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="50dp">
@@ -137,7 +160,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/right"
                 android:layout_gravity="center"
-                android:layout_marginLeft="250dp"
+                android:layout_marginLeft="270dp"
                 />
         </LinearLayout>
     </LinearLayout>

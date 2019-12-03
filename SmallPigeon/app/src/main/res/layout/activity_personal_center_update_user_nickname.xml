@@ -5,10 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="#ededed"
     android:layout_height="match_parent"
     tools:context=".My.Personal_center_updateUserNickname">
     <LinearLayout
-        android:background="#259B24"
+        android:background="#ededed"
 
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -23,37 +24,45 @@
         <TextView
             android:layout_gravity="center"
             android:textSize="25sp"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:text="修改昵称"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <Button
-            android:layout_marginLeft="180dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="保存"
-            android:id="@+id/personal_center_btnSaveNickname"
-            android:background="@drawable/circular"
-            />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+
+        >
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/circular"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:hint="请输入您的新昵称"
             android:id="@+id/edit_Nickname"
             android:textColor="#000000"
             />
         <TextView
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="好名字可以让你的朋友更容易记住你哦~"
+            android:text="好名字可以让你的朋友更容易记住你"
             />
-
     </LinearLayout>
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="保存"
+        android:id="@+id/personal_center_btnSaveNickname"
+        android:src="@drawable/wancheng1"
+        />
 </LinearLayout>

@@ -30,13 +30,14 @@ import java.util.Map;
 public class Personal_center_updateUserNickname extends AppCompatActivity {
     private EditText edtNickname;
     private ImageView personal_center_updateNickname_back;
-    private Button Personal_center_btnSaveNickname;
+    private ImageView Personal_center_btnSaveNickname;
     private CustomeClickListener listener;
     private Handler handleNickname = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
+                Personal_center_btnSaveNickname.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"修改成功！",Toast.LENGTH_SHORT).show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 SharedPreferences.Editor editor = pre.edit();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="#ededed"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
@@ -10,7 +11,7 @@
     tools:context=".My.PersonalCenter">
     <LinearLayout
 
-        android:background="#259B24"
+        android:background="#ededed"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <ImageView
@@ -24,16 +25,18 @@
             <TextView
                 android:layout_gravity="center"
                 android:textSize="25sp"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:text="个人信息"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="350dp">
         <LinearLayout
+            android:background="#fff"
             android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -66,10 +69,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#fff"
+            android:background="#ededed"
             />
 
         <LinearLayout
+            android:background="#fff"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:gravity="center"
@@ -91,15 +95,17 @@
                 android:textSize="20sp"
                 android:layout_marginTop="-28dp"
                 android:layout_gravity="right"
+                android:textColor="#000"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#fff"
+            android:background="#ededed"
             />
 
         <LinearLayout
+            android:background="#fff"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:gravity="center"
@@ -139,10 +145,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#fff"
+            android:background="#ededed"
 
             />
         <LinearLayout
+            android:background="#ffffff"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:gravity="center"
@@ -156,24 +163,26 @@
                 android:textColor="#000000"
                 android:layout_marginLeft="20dp"
                 />
+
             <TextView
                 android:id="@+id/personal_center_user_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="20sp"
-                android:layout_marginTop="-28dp"
                 android:layout_gravity="right"
+                android:layout_marginTop="-28dp"
                 android:layout_marginRight="20dp"
-                />
+                android:text=""
+                android:textColor="#000"
+                android:textSize="20sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#fff"
+            android:background="#ededed"
             />
 
         <LinearLayout
+            android:background="#fff"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:gravity="center"
@@ -197,13 +206,14 @@
                 />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ededed"
 
-            />
+        />
         <LinearLayout
             android:gravity="center"
+            android:background="#fff"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="50dp">

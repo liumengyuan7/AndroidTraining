@@ -8,12 +8,12 @@
     android:background="@drawable/zhuce"
     tools:context=".LoginOrRegister.LoginActivity">
     <LinearLayout
-
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#259B24">
+       >
         <ImageView
+
             android:id="@+id/loginReturn"
             android:layout_width="25dp"
 
@@ -30,22 +30,31 @@
             android:textSize="25dp"/>
     </LinearLayout>
     <EditText
+        android:layout_gravity="center"
+        android:alpha="0.5"
+        android:gravity="center"
+        android:background="@drawable/circular"
         android:id="@+id/username"
         android:hint="用户名/手机号"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
+        android:layout_marginTop="90dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"/>
     <EditText
+        android:layout_gravity="center"
+        android:background="@drawable/circular"
+        android:alpha="0.5"
+        android:gravity="center"
         android:id="@+id/password"
         android:hint="密码"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:inputType="textPassword"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="50dp"/>
     <Button
+        android:layout_gravity="center"
         android:id="@+id/user_login"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:alpha="0.6"
         android:background="@drawable/circular"
@@ -54,20 +63,37 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <TextView
             android:id="@+id/account_register"
             android:gravity="center"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="150dp"
+            android:layout_gravity="left"
+            android:textColor="#000"
             android:text="没有账号？点击注册"/>
 
         <TextView
+            android:layout_marginLeft="160dp"
             android:id="@+id/forget_password"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:gravity="center"
+            android:textColor="#000"
             android:text="忘记密码" />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="260dp"
+                android:layout_height="match_parent"
+                android:text="注册即代表同意用户协议和用户隐私政策"
+                />
     </LinearLayout>
 </LinearLayout>
