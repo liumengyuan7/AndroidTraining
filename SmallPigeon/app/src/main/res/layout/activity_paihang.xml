@@ -51,7 +51,7 @@
         android:orientation="horizontal"
         android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="500dp">
         <ListView
             android:id="@+id/rank_points"
             android:layout_width="match_parent"

@@ -71,8 +71,8 @@ public class Paihang extends AppCompatActivity {
 
         information = new ArrayList<>();
         Map<String,String> item = new HashMap<>();
-        item.put("userName","飞");
-        item.put("userPoints","100");
+        item.put("userName","没有感情的杀手");
+        item.put("userPoints","10230");
         item.put("rank","1");
         information.add(item);
         ListView listView1 = findViewById(R.id.rank_points);

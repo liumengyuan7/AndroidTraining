@@ -8,20 +8,20 @@
     <LinearLayout
         android:layout_weight="0.5"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="50dp">
         <ImageView
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             android:id="@+id/user_ranking"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
 
             />
         <com.example.smallpigeon.RoundImageView
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_gravity="center"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/woman"
             android:id="@+id/gradeRank_userImg"
             imagecontrol:border_inside_color="#259B24"
@@ -44,7 +44,7 @@
         android:gravity="right"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="50dp">
         <TextView
             android:layout_gravity="center"
             android:layout_width="wrap_content"
