@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.RankAdapter;
+import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.Fragment.RunFragment;
 import com.example.smallpigeon.R;
 
@@ -35,6 +37,7 @@ import java.util.Map;
 
 public class Paihang extends AppCompatActivity {
     private Button goRun;
+    private ImageView img;
 
     List<Map<String,String>> information;
     RankAdapter customAdapter1;
@@ -90,6 +93,15 @@ public class Paihang extends AppCompatActivity {
                 finish();
             }
         });
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Paihang.this, MyFragment.class);
+                startActivity(intent1);
+                finish();
+            }
+        });
     }
     //向后台获取分数
     public void getPoints(){
@@ -118,6 +130,6 @@ public class Paihang extends AppCompatActivity {
 
     public void findViews(){
         goRun=findViewById(R.id.rank_GoRun);
-
+        img=findViewById(R.id.grade_back);
     }
 }
