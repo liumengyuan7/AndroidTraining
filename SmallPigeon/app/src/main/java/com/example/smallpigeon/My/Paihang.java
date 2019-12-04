@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.smallpigeon.Adapter.RankAdapter;
 import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.Fragment.RunFragment;
+import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
 
 import org.json.JSONArray;
@@ -56,7 +57,6 @@ public class Paihang extends AppCompatActivity {
                     for (int i = 0;i<jsonArray.length();i++){
                         JSONObject json1 = jsonArray.getJSONObject(i);
                         JSONObject json2 = json1.getJSONObject("attrs");
-                        Log.e("dsadsadsa",json2.toString());
                         Map<String, String> item = new HashMap<>();
                         item.put("userName",json2.getString("user_nickname"));
                         item.put("userPoints",json2.getString("user_points"));
@@ -88,7 +88,7 @@ public class Paihang extends AppCompatActivity {
         goRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Paihang.this, RunFragment.class);
+                Intent intent = new Intent(Paihang.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -97,8 +97,6 @@ public class Paihang extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Paihang.this, MyFragment.class);
-                startActivity(intent1);
                 finish();
             }
         });

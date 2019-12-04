@@ -2,7 +2,6 @@
 <LinearLayout
     android:background="#ededed"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -35,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
         <LinearLayout
+            android:id="@+id/userChangeEmail"
             android:background="#ffffff"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
@@ -59,7 +59,6 @@
                 />
             <ImageView
                 android:layout_gravity="center"
-                android:id="@+id/update_email"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/right"
@@ -71,8 +70,8 @@
             android:background="#ededed"
             />
         <LinearLayout
+            android:id="@+id/userChangePassword"
             android:background="#fff"
-
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="40dp">
@@ -95,7 +94,6 @@
                 />
             <ImageView
                 android:layout_gravity="center"
-                android:id="@+id/update_password"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/right"
