@@ -64,17 +64,23 @@
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="50dp">
-
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/rz"
+                />
             <TextView
                 android:layout_width="0dp"
-                android:paddingLeft="15dp"
+                android:paddingLeft="5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:gravity="center_vertical"
                 android:text="认证"
                 android:textSize="18dp" />
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_height="match_parent">
@@ -91,17 +97,23 @@
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="50dp">
-
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/sq"
+                />
             <TextView
                 android:layout_width="0dp"
-                android:paddingLeft="15dp"
+                android:paddingLeft="5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:gravity="center_vertical"
                 android:text="我的社区"
                 android:textSize="18dp" />
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_height="match_parent">
@@ -118,17 +130,23 @@
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="50dp">
-
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/phb"
+                />
             <TextView
                 android:layout_width="0dp"
-                android:paddingLeft="15dp"
+                android:paddingLeft="5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:gravity="center_vertical"
                 android:text="积分排行榜"
                 android:textSize="18dp" />
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_height="match_parent">
@@ -145,17 +163,23 @@
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="50dp">
-
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/jh"
+                />
             <TextView
                 android:layout_width="0dp"
-                android:paddingLeft="15dp"
+                android:paddingLeft="5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:gravity="center_vertical"
                 android:text="我的计划"
                 android:textSize="18dp" />
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_height="match_parent">

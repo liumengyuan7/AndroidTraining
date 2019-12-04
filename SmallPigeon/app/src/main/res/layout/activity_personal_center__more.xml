@@ -15,15 +15,15 @@
         android:layout_height="50dp">
         <ImageView
             android:id="@+id/personal_center_more_back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/left"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             />
         <TextView
             android:layout_gravity="center"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textColor="#000"
             android:text="更多信息"
             android:layout_width="wrap_content"
@@ -44,8 +44,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="性别"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textColor="#000"
+            android:textSize="18dp" />
 
         <TextView
              android:layout_weight="2"
@@ -75,8 +75,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="注册时间"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textColor="#000"
+            android:textSize="18sp" />
 
         <TextView
              android:id="@+id/personal_center_more_userRegisterTime"
@@ -98,18 +98,20 @@
 
         />
     <LinearLayout
+
         android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
         >
         <TextView
+
             android:paddingLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="兴趣爱好"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textColor="#000"
+            android:textSize="18sp" />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -122,12 +124,12 @@
             android:layout_height="70dp">
             <TextView
                 android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="19dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="20sp"
-                android:textColor="#000000"
+                android:text="科学"
+                android:textSize="18sp"
+
                 android:id="@+id/personal_center_more_userInterest"
                 />
 

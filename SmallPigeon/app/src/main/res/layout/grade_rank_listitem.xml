@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_weight="0.5"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="50dp">
         <ImageView
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
@@ -49,7 +49,7 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:text="63965341"
+            android:text=""
             android:textColor="#000"
             android:textSize="20sp"
             android:id="@+id/gradeRank_userPoints"
