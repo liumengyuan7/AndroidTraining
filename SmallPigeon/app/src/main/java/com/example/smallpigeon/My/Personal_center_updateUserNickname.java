@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,6 +57,7 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_center_update_user_nickname);
+        setStatusBar();
         personal_center_updateNickname_back=findViewById(R.id.personal_center_updateNickname_back);
         edtNickname=findViewById(R.id.edit_Nickname);
         Personal_center_btnSaveNickname=findViewById(R.id.personal_center_btnSaveNickname);
@@ -66,6 +70,14 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
 
     }
 
+    //隐藏状态栏
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
+    }
 
     class CustomeClickListener implements View.OnClickListener {
         @Override

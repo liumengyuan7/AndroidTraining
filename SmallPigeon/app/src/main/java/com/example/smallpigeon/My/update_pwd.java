@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,10 +70,12 @@ public class update_pwd extends AppCompatActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_pwd);
+        setStatusBar();
         //获取视图控件
         getViews();
         //从本地获取用户存入的邮箱账号 为userEmail设置值
@@ -117,6 +122,15 @@ public class update_pwd extends AppCompatActivity {
             }
         });
 
+    }
+
+    //隐藏状态栏
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
     }
 
     //发送邮件的方法
@@ -174,10 +188,12 @@ public class update_pwd extends AppCompatActivity {
         code_error=findViewById(R.id.code_error);
         back=findViewById(R.id.updpwd_back);
     }
+
     //设置useremail的值
     public void getUserEmail(){
         SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
         String s = pre.getString("user_email","");
         userEmail.setText(s);
     }
+
 }

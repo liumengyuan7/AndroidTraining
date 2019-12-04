@@ -3,12 +3,15 @@ package com.example.smallpigeon.My;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -76,10 +79,12 @@ public class Paihang extends AppCompatActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paihang);
+        setStatusBar();
         findViews();
 
         getPoints();
@@ -101,6 +106,16 @@ public class Paihang extends AppCompatActivity {
             }
         });
     }
+
+    //隐藏状态栏
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
+    }
+
     //向后台获取分数
     public void getPoints(){
         new Thread(){
@@ -125,9 +140,9 @@ public class Paihang extends AppCompatActivity {
         }.start();
     }
 
-
     public void findViews(){
         goRun=findViewById(R.id.rank_GoRun);
         img=findViewById(R.id.grade_back);
     }
+
 }
