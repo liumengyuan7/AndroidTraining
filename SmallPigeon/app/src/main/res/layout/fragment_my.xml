@@ -11,16 +11,27 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:gravity="center"
-
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:background="#def5fd"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:layout_marginLeft="60dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:textSize="25dp"
             android:textColor="#000"
             android:text="我的"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/my_Settings"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/setting"
+            />
     </LinearLayout>
     <LinearLayout
         android:gravity="center"
@@ -44,15 +55,7 @@
             android:text="登录/注册"
             android:id="@+id/LoginOrRegister"
             />
-        <ImageView
-            android:layout_marginRight="10dp"
-            android:id="@+id/my_Settings"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/setting"
-            android:layout_gravity="right"
-            android:layout_marginTop="-160dp"
-            />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"

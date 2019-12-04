@@ -92,11 +92,11 @@
                 android:id="@+id/personal_center_user_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="888888@qq.com"
                 android:textSize="18sp"
                 android:layout_marginTop="-28dp"
                 android:layout_gravity="right"
-
+                android:layout_marginRight="10dp"
                 />
         </LinearLayout>
         <LinearLayout
