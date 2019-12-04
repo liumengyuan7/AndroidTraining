@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/pop_style"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="153dp">
+    <TextView
+        android:id="@+id/avatarCamera"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:text="拍照"/>
+    <TextView
+        android:id="@+id/avatarGallery"
+        android:layout_marginTop="1dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:text="从手机相册选择"/>
+    <TextView
+        android:id="@+id/popDismiss"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:text="取消"/>
+</LinearLayout>

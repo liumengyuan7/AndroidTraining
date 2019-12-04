@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,7 +39,7 @@ import java.util.Map;
 
 public class PersonalCenter extends AppCompatActivity {
     private ImageView personal_center_back;
-    private  ImageView user_Img;
+    private ImageView user_Img;
 
     private TextView personal_center_user_email;
     private TextView personal_center_nickName;
@@ -90,6 +92,10 @@ public class PersonalCenter extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         preferencesEvent();
+        String path = getFilesDir().getAbsolutePath()+"/avatar/"
+                +getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_email","")+".png";
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        user_Img.setImageBitmap(bitmap);
     }
 
     //隐藏状态栏

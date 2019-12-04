@@ -15,4 +15,10 @@
         <item name="colorAccent">@color/myColorBlue</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="popwin_anim_style" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popwindowstart</item>
+        <item name="android:windowExitAnimation">@anim/popwindowexit</item>
+    </style>
+
 </resources>

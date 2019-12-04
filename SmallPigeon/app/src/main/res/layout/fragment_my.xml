@@ -41,6 +41,7 @@
         android:layout_height="200dp">
 
         <com.example.smallpigeon.RoundImageView
+            android:id="@+id/myAvatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/woman"

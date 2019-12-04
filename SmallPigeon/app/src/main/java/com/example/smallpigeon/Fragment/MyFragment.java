@@ -3,6 +3,8 @@ package com.example.smallpigeon.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -23,9 +25,11 @@ import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.RoundImageView;
 
 
 public class MyFragment extends Fragment {
+    private RoundImageView myAvatar;
     private ImageView my_Settings;
     private Button loginOrRegister;
     private LinearLayout btnAuthenticate;
@@ -151,12 +155,17 @@ public class MyFragment extends Fragment {
         btnCommunity = view.findViewById(R.id.right_community);
         btnGradeRank = view.findViewById(R.id.right_gradeRank);
         btnPlan = view.findViewById(R.id.right_plan);
+        myAvatar = view.findViewById(R.id.myAvatar);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         loginEvent();
+        String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"
+                +getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","")+".png";
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        myAvatar.setImageBitmap(bitmap);
     }
 
 }
