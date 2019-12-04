@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forgetPassword;
     private EditText username;
     private EditText password;
-    private Button userLogin;
+    private ImageView userLogin;
     private String md5Pass;
     private Handler handlerLogin = new Handler(){
         @Override
@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                userLogin.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
                 finish();
             }
