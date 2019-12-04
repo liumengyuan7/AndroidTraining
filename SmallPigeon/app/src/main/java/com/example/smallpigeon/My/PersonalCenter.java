@@ -37,6 +37,7 @@ import java.util.Map;
 
 public class PersonalCenter extends AppCompatActivity {
     private ImageView personal_center_back;
+    private  ImageView user_Img;
 
     private TextView personal_center_user_email;
     private TextView personal_center_nickName;
@@ -151,6 +152,8 @@ public class PersonalCenter extends AppCompatActivity {
         userPointsLayout = findViewById(R.id.userPointsLayout);
         userMoreLayout = findViewById(R.id.userMoreLayout);
         userSecurityLayout = findViewById(R.id.userSecurityLayout);
+
+        user_Img=findViewById(R.id.user_Img);
     }
 
     private void registListeners() {
@@ -168,6 +171,9 @@ public class PersonalCenter extends AppCompatActivity {
         userMoreLayout.setOnTouchListener(listener);
         userSecurityLayout.setOnClickListener(listener);
         userSecurityLayout.setOnTouchListener(listener);
+        user_Img.setOnClickListener(listener);
+
+
     }
 
 
@@ -180,8 +186,9 @@ public class PersonalCenter extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.userImageLayout://进入修改头像activity
-                   // Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
-                    //startActivity(intent1);
+                    Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
+                    startActivity(intent1);
+                    finish();
                     break;
                 case R.id.userNicknameLayout://进入修改昵称activity
                     Intent intent2 = new Intent(PersonalCenter.this, Personal_center_updateUserNickname.class);
@@ -196,6 +203,11 @@ public class PersonalCenter extends AppCompatActivity {
                 case R.id.userSecurityLayout:
                     Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
                     startActivity(intent4);
+                    finish();
+                    break;
+                case R.id.user_Img:
+                    Intent intent5 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
+                    startActivity(intent5);
                     finish();
                     break;
             }
