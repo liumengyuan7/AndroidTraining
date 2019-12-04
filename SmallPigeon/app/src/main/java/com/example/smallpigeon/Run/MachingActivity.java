@@ -25,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MachingActivity extends AppCompatActivity {
 
     //未完成plan列表
-    private List<PlanContent> planContents = new ArrayList<>(  );;
+    private List<PlanContent> planContents = new ArrayList<>(  );
     //视图控件
     private ImageView machingBack;
     private ListView lvMatchingTask;

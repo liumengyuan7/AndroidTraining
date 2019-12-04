@@ -25,9 +25,9 @@
         android:id="@+id/lv_machingTask"
         android:layout_width="match_parent"
         android:layout_height="520dp"
+        android:layout_margin="10dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"
-        android:layout_margin="10dp"/>
+        android:dividerHeight="10dp" />
 
     <Button
         android:id="@+id/btn_rematch"
