@@ -2,6 +2,7 @@ package com.example.smallpigeon.My;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -28,6 +29,7 @@ import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -68,8 +70,6 @@ public class PersonalCenter extends AppCompatActivity {
         preferencesEvent();
         getUserBasicMsg();//从user表中获取user_email  nickname points
 
-
-
         getUserBasicMsgHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -92,10 +92,25 @@ public class PersonalCenter extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         preferencesEvent();
-        String path = getFilesDir().getAbsolutePath()+"/avatar/"
-                +getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_email","")+".png";
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        user_Img.setImageBitmap(bitmap);
+        getAvatar();
+    }
+
+    //获取头像
+    private void getAvatar(){
+        String email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
+        if(! email.equals("") && email != null){
+            String path = getFilesDir().getAbsolutePath()+"/avatar/"
+                    +email+".png";
+            File file = new File(path);
+            if(!file.exists()){
+                user_Img.setImageDrawable(getResources().getDrawable(R.drawable.woman));
+            }else{
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                user_Img.setImageBitmap(bitmap);
+            }
+        }else{
+            user_Img.setImageDrawable(getResources().getDrawable(R.drawable.woman));
+        }
     }
 
     //隐藏状态栏
@@ -162,6 +177,7 @@ public class PersonalCenter extends AppCompatActivity {
         user_Img=findViewById(R.id.user_Img);
     }
 
+    //注册监听器
     private void registListeners() {
         listener = new CustomClickListener();
         personal_center_back.setOnClickListener(listener);
@@ -177,12 +193,11 @@ public class PersonalCenter extends AppCompatActivity {
         userMoreLayout.setOnTouchListener(listener);
         userSecurityLayout.setOnClickListener(listener);
         userSecurityLayout.setOnTouchListener(listener);
-        user_Img.setOnClickListener(listener);
 
 
     }
 
-
+    //设置监听事件
     class CustomClickListener implements View.OnClickListener,View.OnTouchListener {
         @Override
         public void onClick(View v) {
@@ -192,9 +207,14 @@ public class PersonalCenter extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.userImageLayout://进入修改头像activity
-                    Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
-                    startActivity(intent1);
-                    finish();
+                    String email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
+                    if(!email.equals("") && email != null){
+                        Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
+                        startActivity(intent1);
+                        finish();
+                    } else{
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.userNicknameLayout://进入修改昵称activity
                     Intent intent2 = new Intent(PersonalCenter.this, Personal_center_updateUserNickname.class);
@@ -211,14 +231,7 @@ public class PersonalCenter extends AppCompatActivity {
                     startActivity(intent4);
                     finish();
                     break;
-                case R.id.user_Img:
-                    Intent intent5 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
-                    startActivity(intent5);
-                    finish();
-                    break;
             }
-
-
         }
 
         @Override

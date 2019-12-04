@@ -53,8 +53,13 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
         registerListener();
         String path = getFilesDir().getAbsolutePath()+"/avatar/"
                 +getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","")+".png";
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        userImg.setImageBitmap(bitmap);
+        File file = new File(path);
+        if(!file.exists()){
+            userImg.setImageDrawable(getResources().getDrawable(R.drawable.woman));
+        }else{
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            userImg.setImageBitmap(bitmap);
+        }
         //打开相机获取图片并上传新头像
         camera.setOnClickListener(new View.OnClickListener() {
             @Override

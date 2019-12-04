@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.RoundImageView;
+
+import java.io.File;
 
 
 public class MyFragment extends Fragment {
@@ -162,10 +165,25 @@ public class MyFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loginEvent();
-        String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"
-                +getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","")+".png";
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        myAvatar.setImageBitmap(bitmap);
+        getAvatar();
+    }
+
+    //获取头像
+    private void getAvatar(){
+        String email = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","");
+        if(! email.equals("") && email != null){
+            String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"
+                    +email+".png";
+            File file = new File(path);
+            if(!file.exists()){
+                myAvatar.setImageDrawable(getResources().getDrawable(R.drawable.woman));
+            }else{
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                myAvatar.setImageBitmap(bitmap);
+            }
+        }else{
+            myAvatar.setImageDrawable(getResources().getDrawable(R.drawable.woman));
+        }
     }
 
 }
