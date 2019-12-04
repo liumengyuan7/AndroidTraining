@@ -166,10 +166,13 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
             }
         }else if(requestCode == 3){
             if (data != null){
-                Bundle bundle = data.getExtras();
-                Bitmap bitmap = (Bitmap) bundle.get("data");
-                userImg.setImageBitmap(bitmap);
-                avatarStore();
+                if(data.getExtras() == null){ }
+                else{
+                    Bundle bundle = data.getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    userImg.setImageBitmap(bitmap);
+                    avatarStore();
+                }
             }
         }
     }
