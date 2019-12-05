@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
-        android:background="@drawable/circular"
+
         android:layout_marginTop="100dp"
         android:layout_gravity="center"
         android:layout_width="330dp"
@@ -37,8 +37,8 @@
         <ImageView
             android:layout_gravity="center"
             android:layout_weight="0.2"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/pwd"
             />
 
@@ -67,7 +67,7 @@
         android:textSize="18sp"
         />
     <LinearLayout
-        android:background="@drawable/circular"
+
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:layout_width="330dp"
@@ -75,9 +75,9 @@
         <ImageView
             android:layout_gravity="center"
             android:layout_weight="0.2"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/pwd"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/qq"
             />
 
         <EditText
@@ -86,7 +86,7 @@
             android:layout_weight="0.9"
             android:layout_width="180dp"
             android:layout_height="46dp"
-            android:hint="请再次输入密码"
+            android:hint="请再次确认密码"
             android:textSize="20sp"
             android:inputType="textPassword"
             />

@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/register_checkPwd"
-                android:hint="请再次输入密码"
+                android:hint="请再次确认密码"
                 android:inputType="textPassword"
                 android:gravity="center"
                 android:textSize="20sp"

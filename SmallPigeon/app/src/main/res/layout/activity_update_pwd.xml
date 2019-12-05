@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
-        android:background="@drawable/circular"
+
         android:layout_marginTop="100dp"
         android:layout_gravity="center"
         android:layout_width="match_parent"
@@ -68,7 +68,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/circular"
+
         android:layout_marginTop="100dp"
         android:layout_gravity="center"
         android:layout_width="match_parent"

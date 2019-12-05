@@ -41,7 +41,7 @@
         <EditText
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/circular"
+
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:hint="请输入您的新昵称"
