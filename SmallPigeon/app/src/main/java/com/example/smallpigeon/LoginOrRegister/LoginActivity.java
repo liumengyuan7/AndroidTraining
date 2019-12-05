@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user_points",json2.getString("user_points"));
                     editor.putString("user_interest",re.split(";")[1]);
                     editor.commit();
-                } catch (JSONException e) {
+                } catch (JSONException e){
                     e.printStackTrace();
                 }
                 userLogin.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
