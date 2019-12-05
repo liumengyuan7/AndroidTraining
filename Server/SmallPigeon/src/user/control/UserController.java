@@ -52,7 +52,7 @@ public class UserController extends Controller {
 	
 	//验证码的接收以及邮箱的验证
 	public void verifyCodeAndEmail(){
-		String result = new UserDao().emailSendAndEmailConfirm(getPara("userEmail"),getPara("code"));
+		String result = new UserDao().emailSendAndEmailConfirm(getPara("userEmail"),getPara("code"),getPara("tag"));
 		renderText(result);
 	}
 
@@ -83,6 +83,18 @@ public class UserController extends Controller {
 		String id = getPara("userId");
 		String nickname = getPara("nickname");
 		boolean result = new UserService().updateNickname(id,nickname);
+		if(result){
+			renderText("true");
+		}else{
+			renderText("false");
+		}
+	}
+
+	//用户忘记密码
+	public void forgetPassword(){
+		String email = getPara("userEmail");
+		String password = getPara("password");
+		boolean result = new UserService().forgetPassword(email,password);
 		if(result){
 			renderText("true");
 		}else{

@@ -56,9 +56,6 @@ public class PersonalCenter extends AppCompatActivity {
     private LinearLayout userSecurityLayout;
 
     private Button SignOut;
-    private Handler getUserBasicMsgHandler;
-    String[] result1;
-    String[] result2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,23 +65,6 @@ public class PersonalCenter extends AppCompatActivity {
         getViews();
         registListeners();
         preferencesEvent();
-        getUserBasicMsg();//从user表中获取user_email  nickname points
-
-        getUserBasicMsgHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                String info = (String) msg.obj;
-                result1 = info.split(";");
-                for (int i = 0; i < result1.length; i++) {
-                    Map<String, Object> itemData = new HashMap<>();
-                    result2 = result1[i].split(",");
-                    personal_center_user_email.setText(result2[0]);
-                    personal_center_nickName.setText(result2[1]);
-                    personal_center_user_points.setText(result2[2]);
-                }
-            }
-        };
 
     }
 
@@ -97,10 +77,9 @@ public class PersonalCenter extends AppCompatActivity {
 
     //获取头像
     private void getAvatar(){
-        String email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
-        if(! email.equals("") && email != null){
-            String path = getFilesDir().getAbsolutePath()+"/avatar/"
-                    +email+".png";
+        String id = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_id","");
+        if(! id.equals("") && id != null){
+            String path = getFilesDir().getAbsolutePath()+"/avatar/"+id+".png";
             File file = new File(path);
             if(!file.exists()){
                 user_Img.setImageDrawable(getResources().getDrawable(R.drawable.woman));
@@ -272,31 +251,6 @@ public class PersonalCenter extends AppCompatActivity {
                 break;
         }
     }
-
-    //从user表中获取user_email  nickname points
-    public void getUserBasicMsg(){
-            new Thread(){
-                @Override
-                public void run() {
-                    try {
-                        URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                                +":8080/SmallPigeon/user/getUserBasicMsg");
-                        URLConnection conn = url.openConnection();
-                        InputStream in = conn.getInputStream();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                        String result = reader.readLine();
-                        Message message = new Message();
-                        message.obj = result;
-                        getUserBasicMsgHandler.sendMessage(message);
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
-        }
-
 
 }
 

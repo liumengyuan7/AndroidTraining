@@ -24,6 +24,10 @@ public class UserService {
 		return new UserDao().updateEmail(id,userEmail);
 	}
 
+	public boolean forgetPassword(String email,String password){
+		return new UserDao().forgetPassword(email, password);
+	}
+
 	public String gradeRank(){
 		return new UserDao().gradeRank();
 	}

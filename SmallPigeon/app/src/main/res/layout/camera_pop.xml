@@ -11,7 +11,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:textColor="#000"
         android:text="拍照"/>
     <TextView
@@ -21,7 +21,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:textColor="#000"
         android:text="从手机相册选择"/>
     <TextView
@@ -31,7 +31,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:textColor="#000"
         android:text="取消"/>
 </LinearLayout>
