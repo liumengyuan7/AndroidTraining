@@ -86,17 +86,32 @@ public class UserDao {
 	}
 
 	//邮件发送和邮箱的重复确认
-	public String emailSendAndEmailConfirm(String userEmail,String code){
+	public String emailSendAndEmailConfirm(String userEmail,String code,String tag){
+		//tag判断是注册或者换绑邮箱还是忘记密码
 		List<User> confirm = new User().dao().find("select * from user where user_email=?",userEmail);
-		if(confirm.isEmpty()){
-			if(emailSend(userEmail,code)){
-				return "true";
+		if(tag.equals("nr")){
+			if(confirm.isEmpty()){
+				if(emailSend(userEmail,code)){
+					return "true";
+				}else{
+					return "false";
+				}
 			}else{
-				return "false";
+				return "repeat";
 			}
-		}else{
-			return "repeat";
+		}else if(tag.equals("re")){
+			if(confirm.isEmpty()){
+				return "notRepeat";
+			}else{
+				if(emailSend(userEmail,code)){
+					return "true";
+				}else{
+					return "false";
+				}
+			}
 		}
+
+		return "false";
 	}
 
 	//邮件的发送
@@ -140,6 +155,16 @@ public class UserDao {
 	public boolean updateNickname(String id,String nickname){
 		boolean result = new User().findById(id).set("user_nickname",nickname).update();
 		return result;
+	}
+
+	//用户忘记密码
+	public boolean forgetPassword(String email,String password){
+		String id = new User().dao().find("select id from user where user_email=?",email).get(0).getStr("id");
+		if(updatePassword(id,password)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	//用户邮箱的修改

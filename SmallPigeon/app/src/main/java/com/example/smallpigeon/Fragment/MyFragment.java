@@ -40,7 +40,6 @@ public class MyFragment extends Fragment {
     private LinearLayout btnGradeRank;
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
-    private boolean is = false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -170,10 +169,9 @@ public class MyFragment extends Fragment {
 
     //获取头像
     private void getAvatar(){
-        String email = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","");
-        if(! email.equals("") && email != null){
-            String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"
-                    +email+".png";
+        String id = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_id","");
+        if(! id.equals("") && id != null){
+            String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+id+".png";
             File file = new File(path);
             if(!file.exists()){
                 myAvatar.setImageDrawable(getResources().getDrawable(R.drawable.woman));

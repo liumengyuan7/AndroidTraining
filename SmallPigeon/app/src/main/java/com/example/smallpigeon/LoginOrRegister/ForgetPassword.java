@@ -24,22 +24,30 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ForgetPassword extends AppCompatActivity {
-        private ImageView back;
-        private  EditText userEmail;
-        private  EditText checkCode;
-        private TextView getCode;
-        private  TextView code_error;
-        private String code1;
+
+    private ImageView back;
+    private  EditText userEmail;
+    private  EditText checkCode;
+    private TextView getCode;
+    private  TextView code_error;
+    private String code1;
 
     private Handler sendEmail = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
-            if(result.equals("true")){
+            if(result.equals("notRepeat")){
+                Toast.makeText(getApplicationContext(),"该邮箱没有注册信息哦！",Toast.LENGTH_SHORT).show();
+                getCodeEvent();
+            }else if(result.equals("true")){
+                secondDown();
                 Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
-            }else {
+            }else{
+                getCodeEvent();
                 Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
             }
         }
@@ -55,12 +63,7 @@ public class ForgetPassword extends AppCompatActivity {
             }else{
                 code1 = "";
                 getCode.setText("获取验证码");
-                getCode.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sendEmailToServer();
-                    }
-                });
+                getCodeEvent();
             }
         }
     };
@@ -82,13 +85,10 @@ public class ForgetPassword extends AppCompatActivity {
                 finish();
             }
         });
+
         //获取验证码
-        getCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendEmailToServer();
-            }
-        });
+        getCodeEvent();
+
         //检查验证码是否正确
         checkCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -100,6 +100,7 @@ public class ForgetPassword extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(checkCode.getText().toString().equals(code1)){
                     Intent intent = new Intent(getApplicationContext(), ResetPwd.class);
+                    intent.putExtra("user_email",userEmail.getText().toString());
                     startActivity(intent);
                     finish();
                 }else{
@@ -115,6 +116,23 @@ public class ForgetPassword extends AppCompatActivity {
 
     }
 
+    //获取验证码的点击事件
+    private void getCodeEvent(){
+        getCode.setText("获取验证码");
+        getCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isEmail(userEmail.getText().toString())){
+                    Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式哦！",Toast.LENGTH_SHORT).show();
+                }else{
+                    getCode.setText("验证码发送中...");
+                    getCode.setOnClickListener(null);
+                    sendEmailToServer();
+                }
+            }
+        });
+    }
+
     //发送邮件的方法
     public void sendEmailToServer(){
         code1 = "";
@@ -126,7 +144,8 @@ public class ForgetPassword extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/verifyCode?userEmail="+userEmail.getText().toString()+"&&code="+code1);
+                            +":8080/smallpigeon/user/verifyCodeAndEmail?userEmail="+userEmail.getText().toString()
+                            +"&&code="+code1+"&&tag=re");
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
@@ -141,7 +160,6 @@ public class ForgetPassword extends AppCompatActivity {
                 }
             }
         }.start();
-        secondDown();
     }
 
     //邮件的倒计时
@@ -170,6 +188,14 @@ public class ForgetPassword extends AppCompatActivity {
         checkCode=findViewById(R.id.resetPwd_edt_code);
         getCode=findViewById(R.id.resetPwd_getcode);
         code_error=findViewById(R.id.code_error);
+    }
+
+    //判断邮箱的格式正确与否
+    public boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 
 }

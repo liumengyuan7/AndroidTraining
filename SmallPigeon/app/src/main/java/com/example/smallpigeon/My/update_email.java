@@ -170,7 +170,8 @@ public class update_email extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/verifyCodeAndEmail?userEmail="+userEmail.getText().toString()+"&&code="+code1);
+                            +":8080/smallpigeon/user/verifyCodeAndEmail?userEmail="+userEmail.getText().toString()
+                            +"&&code="+code1+"&&tag=nr");
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));

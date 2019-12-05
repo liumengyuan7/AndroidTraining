@@ -52,7 +52,7 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
         getViews();
         registerListener();
         String path = getFilesDir().getAbsolutePath()+"/avatar/"
-                +getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","")+".png";
+                +getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_id","")+".png";
         File file = new File(path);
         if(!file.exists()){
             userImg.setImageDrawable(getResources().getDrawable(R.drawable.woman));
@@ -185,7 +185,7 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
     //头像的存储
     private void avatarStore(){
         String path = getFilesDir().getAbsolutePath()+"/avatar/"
-                +getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_email","")+".png";
+                +getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_id","")+".png";
         File file = new File(path);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdir();
@@ -194,6 +194,7 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
+
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(out.toByteArray());
             out.flush();

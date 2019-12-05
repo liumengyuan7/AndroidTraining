@@ -39,8 +39,9 @@ public class ResetPwd extends AppCompatActivity {
     private TextView sameError;
     private ImageView ok;
     private ImageView back;
-    private  String pwd2;
+    private String pwd2;
     private String userId;
+    private String userEmail;
     private Handler updatePwd = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -63,7 +64,6 @@ public class ResetPwd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pwd);
         getViews();
-        getId();
         length();
         same();
         //返回到登录界面
@@ -80,6 +80,8 @@ public class ResetPwd extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    Intent intent = getIntent();
+                    userEmail = intent.getStringExtra("user_email");
                     MessageDigest md = MessageDigest.getInstance("MD5");
                     md.update(pwd2.getBytes());
                     pwd2 = new BigInteger(1, md.digest()).toString(16);
@@ -87,18 +89,18 @@ public class ResetPwd extends AppCompatActivity {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                updatePwd(pwd2,userId);
+                updatePwd();
             }
         });
 
     }
-    public void updatePwd(final String pwd, final String userId){
+    public void updatePwd(){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/updatePassword?password="+pwd+"&&userId="+userId);
+                            +":8080/smallpigeon/user/forgetPassword?password="+pwd2+"&&userEmail="+userEmail);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
@@ -113,11 +115,6 @@ public class ResetPwd extends AppCompatActivity {
                 }
             }
         }.start();
-    }
-    private void getId() {
-        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
-        String s = pre.getString("user_id","");
-        userId=s;
     }
     private void getViews() {
     pwd=findViewById(R.id.forget_newPwd);
