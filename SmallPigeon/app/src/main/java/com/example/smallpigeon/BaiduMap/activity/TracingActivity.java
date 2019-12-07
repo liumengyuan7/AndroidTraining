@@ -742,7 +742,7 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     Notification notification = new Notification.Builder(trackApp)
 //                            .setContentTitle(getResources().getString(R.string.alarm_push_title))
                             .setContentText(alarmInfo.toString())
-                            .setSmallIcon(R.mipmap.icon_app)
+                            .setSmallIcon(R.mipmap.biao)
                             .setWhen(System.currentTimeMillis()).build();
                     notificationManager.notify(notifyId++, notification);
                 }
