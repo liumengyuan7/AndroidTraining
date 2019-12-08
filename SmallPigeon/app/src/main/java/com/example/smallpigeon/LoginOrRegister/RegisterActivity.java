@@ -1,15 +1,27 @@
 package com.example.smallpigeon.LoginOrRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -28,9 +40,13 @@ import android.widget.Toast;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -81,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
             if(result.equals("true")){
                 btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
+
                 finish();
             }else if(result.equals("repeat")){
                 Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~",Toast.LENGTH_SHORT).show();
@@ -434,6 +451,8 @@ public class RegisterActivity extends AppCompatActivity {
         new Thread(){
             @Override
             public void run() {
+                createAvatar(userEmail);
+                sendPicture(userEmail);
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
                             +":8080/smallpigeon/user/userRegister?userEmail="+userEmail+"&&userPassword="+userPassword+"&&userNickname="+userNickname+"&&userInterest="+str+"&&userSex="+sexstr);
@@ -453,5 +472,45 @@ public class RegisterActivity extends AppCompatActivity {
         }.start();
     }
 
+    //创建头像文件
+    private void createAvatar(String userEmail){
+        try {
+            String path = getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
+            Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(R.drawable.woman)).getBitmap();
+            OutputStream outputStream = new FileOutputStream(path);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+            outputStream.close();
+            File file = new File(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //头像的发送
+    private void sendPicture(String userEmail){
+        String path = getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
+        String url = "http://"+getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/user/getPicture";
+        File file = new File(path);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file",file.getName(),
+                        RequestBody.create(MediaType.parse("application/octet-stream"),file)).build();
+        Request request = new Request.Builder().url(url).post(requestBody).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
 
 }

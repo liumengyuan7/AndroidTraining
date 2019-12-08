@@ -1,6 +1,14 @@
 package com.example.smallpigeon.My;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import android.content.Context;
 import android.content.Intent;
@@ -52,7 +60,7 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
         getViews();
         registerListener();
         String path = getFilesDir().getAbsolutePath()+"/avatar/"
-                +getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_id","")+".png";
+                +getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","")+".jpg";
         File file = new File(path);
         if(!file.exists()){
             userImg.setImageDrawable(getResources().getDrawable(R.drawable.woman));
@@ -165,18 +173,24 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
             // 从相册返回的数据
             if (data != null) {
                 // 得到图片的全路径
+                String userEmail = getSharedPreferences("userInfo",MODE_PRIVATE)
+                            .getString("user_email","");
                 Uri uri = data.getData();
                 userImg.setImageURI(uri);
                 avatarStore();
+                sendPicture(userEmail);
             }
         }else if(requestCode == 3){
             if (data != null){
                 if(data.getExtras() == null){ }
                 else{
+                    String userEmail = getSharedPreferences("userInfo",MODE_PRIVATE)
+                            .getString("user_email","");
                     Bundle bundle = data.getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     userImg.setImageBitmap(bitmap);
                     avatarStore();
+                    sendPicture(userEmail);
                 }
             }
         }
@@ -185,7 +199,7 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
     //头像的存储
     private void avatarStore(){
         String path = getFilesDir().getAbsolutePath()+"/avatar/"
-                +getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_id","")+".png";
+                +getSharedPreferences("userInfo",MODE_PRIVATE).getString("user_email","")+".jpg";
         File file = new File(path);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdir();
@@ -224,5 +238,29 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
         camera=findViewById(R.id.xiangji);
     }
 
+    //头像的发送
+    private void sendPicture(String userEmail){
+        String path = getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
+        String url = "http://"+getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/user/getPicture";
+        File file = new File(path);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file",file.getName(),
+                        RequestBody.create(MediaType.parse("application/octet-stream"),file)).build();
+        Request request = new Request.Builder().url(url).post(requestBody).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
 
 }

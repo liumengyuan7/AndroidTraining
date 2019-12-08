@@ -23,6 +23,8 @@ import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.Fragment.PeopleFragment;
 import com.example.smallpigeon.Fragment.RunFragment;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout PeopleTab;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         setStatusBar();
         findViews();
         setListeners();
+        //创建avatar文件夹
+        createAvatar();
         //创建FragmentManager对象
         fragmentManager = getSupportFragmentManager();
         //初始化内容页对应的Fragment
@@ -64,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
         chatFragment = new ChatFragment();
         myFragment=new MyFragment();
         showFragment(runFragment);
+    }
+
+    //创建avatar文件夹
+    private void createAvatar() {
+        String path = getFilesDir().getAbsolutePath()+"/avatar";
+        File file = new File(path);
+        if(!file.exists()){
+            file.mkdir();
+        }
     }
 
     //隐藏状态栏

@@ -1,9 +1,20 @@
 package user.control;
 
 import com.jfinal.core.Controller;
+import com.jfinal.kit.PathKit;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -125,6 +136,25 @@ public class UserController extends Controller {
 			response.getWriter().write(result);
 			renderNull();
 		}
+	}
+
+	//获取的图片存入out中
+	public void getPicture() throws Exception {
+		String path = PathKit.getWebRootPath()+"\\avatar\\";
+        FileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        List<FileItem> items = upload.parseRequest(getRequest());
+        FileItem item = items.get(0);
+        String email = getPara("userEmail");
+		item.write(new File(path+item.getName()));
+		renderText("true");
+	}
+
+	//post图片
+	public void postPicture(){
+		String path = PathKit.getWebRootPath()+"\\avatar\\"+getPara("userEmail")+".jpg";
+		File file = new File(path);
+		renderFile(file);
 	}
 
 }

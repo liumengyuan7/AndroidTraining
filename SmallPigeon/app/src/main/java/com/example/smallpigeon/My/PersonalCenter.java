@@ -77,9 +77,9 @@ public class PersonalCenter extends AppCompatActivity {
 
     //获取头像
     private void getAvatar(){
-        String id = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_id","");
-        if(! id.equals("") && id != null){
-            String path = getFilesDir().getAbsolutePath()+"/avatar/"+id+".png";
+        String userEmail = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
+        if(! userEmail.equals("") && userEmail != null){
+            String path = getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
             File file = new File(path);
             if(!file.exists()){
                 user_Img.setImageDrawable(getResources().getDrawable(R.drawable.woman));
@@ -128,6 +128,11 @@ public class PersonalCenter extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                    String path = getFilesDir().getAbsolutePath()+"/avatar/"+pre.getString("user_email","")+".jpg";
+                    File file = new File(path);
+                    if(file.exists()){
+                        file.delete();
+                    }
                     pre.edit().clear().commit();
                     finish();
                     Toast.makeText(getApplicationContext(),"注销成功！",Toast.LENGTH_SHORT).show();

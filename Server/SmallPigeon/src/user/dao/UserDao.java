@@ -1,7 +1,9 @@
 package user.dao;
 
 import com.google.gson.Gson;
+import com.jfinal.kit.PathKit;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -117,16 +119,16 @@ public class UserDao {
 	//邮件的发送
 	public boolean emailSend(String userEmail,String code){
 		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "smtp.163.com");
+		props.put("mail.smtp.host", "smtp.qq.com");
 		props.put("mail.smtp.auth", "true");
 		Session session = Session.getInstance(props, new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("qq2642611193@163.com", "qq1436630964");
+				return new PasswordAuthentication("2642611193@qq.com", "tvmwxbsavkdvecga"); //tvmwxbsavkdvecga   18731180200
 			}
 		});
 		Message msg = new MimeMessage(session);
 		try {
-			msg.setFrom(new InternetAddress("qq2642611193@163.com","小鸽快跑","UTF-8"));
+			msg.setFrom(new InternetAddress("2642611193@qq.com","小鸽快跑","UTF-8"));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
 			msg.setSubject("为保证您的账号安全请验证邮箱");
 			MimeBodyPart mbp1 = new MimeBodyPart();
@@ -169,6 +171,11 @@ public class UserDao {
 
 	//用户邮箱的修改
 	public boolean updateEmail(String id,String userEmail){
+		List<User> list = User.dao.find("select * from user where id=?",id);
+		String yPath = PathKit.getWebRootPath()+"\\avatar\\"+list.get(0).getStr("user_email")+".jpg";
+		String nPath = PathKit.getWebRootPath()+"\\avatar\\"+userEmail+".jpg";
+		File file = new File(yPath);
+		file.renameTo(new File(nPath));
 		boolean result = new User().findById(id).set("user_email",userEmail).update();
 		return result;
 	}

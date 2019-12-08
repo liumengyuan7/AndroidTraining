@@ -27,8 +27,16 @@ import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.RoundImageView;
+import com.example.smallpigeon.Utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 
 public class MyFragment extends Fragment {
@@ -169,12 +177,12 @@ public class MyFragment extends Fragment {
 
     //获取头像
     private void getAvatar(){
-        String id = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_id","");
-        if(! id.equals("") && id != null){
-            String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+id+".png";
+        String userEmail = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","");
+        if(! userEmail.equals("") && userEmail != null){
+            String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
             File file = new File(path);
             if(!file.exists()){
-                myAvatar.setImageDrawable(getResources().getDrawable(R.drawable.woman));
+                getPictureAndSave(path,userEmail);
             }else{
                 Bitmap bitmap = BitmapFactory.decodeFile(path);
                 myAvatar.setImageBitmap(bitmap);
@@ -182,6 +190,32 @@ public class MyFragment extends Fragment {
         }else{
             myAvatar.setImageDrawable(getResources().getDrawable(R.drawable.woman));
         }
+    }
+
+    //设置头像，并保存到本地
+    private void getPictureAndSave(final String path, final String userEmail){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/user/postPicture?userEmail="+userEmail);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    OutputStream outputStream = new FileOutputStream(path);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+                    myAvatar.setImageBitmap(bitmap);
+                    outputStream.close();
+                    in.close();
+                    File file = new File(path);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
 }
