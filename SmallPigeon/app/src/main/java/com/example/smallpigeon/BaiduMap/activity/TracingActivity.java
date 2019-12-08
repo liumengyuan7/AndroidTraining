@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -53,11 +54,13 @@ import com.example.smallpigeon.BaiduMap.utils.MapUtil;
 import com.example.smallpigeon.BaiduMap.utils.ViewUtil;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Run.FinishRunActivity;
 import com.example.smallpigeon.TrackApplication;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -74,10 +77,12 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
             super.handleMessage(msg);
             if (msg.what == 1){
                 long t = (long) msg.obj;
-                tvTime.setText("用时："+getFormat(t));
+                currentSecond = t;
+                tvTime.setText("用时："+getFormat(currentSecond));
             }
         }
     };
+    private String lock = "";
     private long currentSecond = 0;
     private MyRunnable myRunnable;
     private Thread thread;
@@ -166,6 +171,7 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
 
     private ImageView btn_activity_options;
 
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -196,7 +202,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_tracing );
 
-//        setOnClickListener(this);
 
         init();
 
@@ -243,8 +248,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
 
         //初始化轨迹点集合
         trackPoints = new ArrayList<>();
-//        trackApp.mClient.startTrace(trackApp.mTrace, traceListener);
-//        Toast.makeText(getApplicationContext(),"开启startTrace",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -261,41 +264,31 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     trackApp.mClient.startTrace(trackApp.mTrace, traceListener);
                     startRealTimeLoc(packInterval);
                     trackApp.mClient.startGather(traceListener);//开始采集
+
                 }else {
-                   /* if (trackApp.isTraceStarted && trackApp.isGatherStarted) {
-                        trackApp.mClient.stopTrace(trackApp.mTrace, traceListener);//停止服务
-                        trackApp.mClient.stopGather(traceListener);//停止采集
-                        stopRealTimeLoc();
-                        Log.e("暂停onclick1","暂停");
-                    }*/
                     trackApp.mClient.stopTrace(trackApp.mTrace, traceListener);//停止服务
                     trackApp.mClient.stopGather(traceListener);//停止采集
                     stopRealTimeLoc();
                     Log.e("暂停onclick","暂停");
-                  /*  LinearLayout bottom = findViewById(R.id.layout_tracing_bottom);
-                    bottom.setVisibility(View.INVISIBLE);
-                    LinearLayout bottom1 = findViewById(R.id.layout_tracing_bottom1);
-                    bottom1.setVisibility(View.VISIBLE);*/
-
                 }
 
                 break;
 
             case R.id.btn_gather://结束按钮，服务采集已经全部关闭
                 //点击结束按钮显示分享和返回按钮
-                isPause = true;
+                thread.interrupt();
+                Intent intent = new Intent(TracingActivity.this, FinishRunActivity.class);
+                intent.putExtra("distance",tvDistance.getText().toString());
+                intent.putExtra("speed",tvSpeed.getText().toString());
+                intent.putExtra("time",tvTime.getText().toString());
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) trackPoints);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.btn_trace1://继续按钮
-                trackApp.mClient.startGather(traceListener);//开始采集
                 trackApp.mClient.startTrace(trackApp.mTrace, traceListener);
                 startRealTimeLoc(packInterval);
-
-               /* LinearLayout bottom = findViewById(R.id.layout_tracing_bottom);
-                bottom.setVisibility(View.VISIBLE);
-                LinearLayout bottom1 = findViewById(R.id.layout_tracing_bottom1);
-                bottom1.setVisibility(View.INVISIBLE);
-                traceBtn.setText("暂停");*/
-
+                trackApp.mClient.startGather(traceListener);//开始采集
                 break;
 
             default:
@@ -388,51 +381,35 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
     private void setTraceBtnStyle() {
         boolean isTraceStarted = trackApp.trackConf.getBoolean("is_trace_started", false);
         if (isTraceStarted && traceBtn.getText().equals("开始")) {
-//            traceBtn.setText(R.string.stop_trace);
             LinearLayout show = findViewById(R.id.layout_tracing_show);
             show.setVisibility(View.VISIBLE);
             traceBtn.setText("暂停");
             traceBtn.setTextColor(ResourcesCompat.getColor(getResources(), R.color
                     .white, null));
             myRunnable = new MyRunnable();
-            new Thread(myRunnable).start();
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                traceBtn.setBackgroundColor(Color.parseColor("#008577"));
-//            } else {
-////                traceBtn.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(),
-////                        R.mipmap.bg_btn_sure, null));
-//                traceBtn.setBackgroundColor(Color.parseColor("#008577"));
-//            }
-//            gatherBtn.setVisibility(View.VISIBLE);
+            thread = new Thread(myRunnable);
+            thread.start();
 
         }else if(!isTraceStarted && traceBtn.getText().equals("暂停")){
             LinearLayout bottom = findViewById(R.id.layout_tracing_bottom);
             bottom.setVisibility(View.INVISIBLE);
             LinearLayout bottom1 = findViewById(R.id.layout_tracing_bottom1);
             bottom1.setVisibility(View.VISIBLE);
-            Log.e("暂停","暂停"+isPause);
+            Log.e("zt","暂停"+isPause);
             isPause = true;
         }else if(isTraceStarted && continueBtn.getText().equals("继续")){
             LinearLayout bottom = findViewById(R.id.layout_tracing_bottom);
             bottom.setVisibility(View.VISIBLE);
             LinearLayout bottom1 = findViewById(R.id.layout_tracing_bottom1);
             bottom1.setVisibility(View.INVISIBLE);
-//            new Thread(myRunnable).start();
-            Log.e("继续","暂停"+isPause);
+            Log.e("zt","继续"+isPause);
             isPause = false;
-            Log.e("继续","暂停"+isPause);
-            new Thread(myRunnable).start();
+            new Thread(new MyRunnable()).start();
+            Log.e("zt","继续"+isPause);
         } else {
-//            traceBtn.setText(R.string.start_trace);
             traceBtn.setText("开始");
             traceBtn.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
             Log.e("else","暂停");
-
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                traceBtn.setBackgroundColor(Color.parseColor("#008577"));
-//            } else {
-//                traceBtn.setBackgroundColor(Color.parseColor("#008577"));
-//            }
         }
     }
 
@@ -444,23 +421,9 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         if (isGatherStarted) {
             gatherBtn.setText(R.string.stop_gather);
             gatherBtn.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                gatherBtn.setBackground(ResourcesCompat.getDrawable(getResources(),
-//                        R.mipmap.bg_btn_sure, null));
-//            } else {
-//                gatherBtn.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(),
-//                        R.mipmap.bg_btn_sure, null));
-//            }
         } else {
             gatherBtn.setText(R.string.stop_gather);
             gatherBtn.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                gatherBtn.setBackground(ResourcesCompat.getDrawable(getResources(),
-//                        R.mipmap.bg_btn_cancel, null));
-//            } else {
-//                gatherBtn.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(),
-//                        R.mipmap.bg_btn_cancel, null));
-//            }
         }
     }
 
@@ -481,8 +444,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         public void run() {
             if (isRealTimeRunning) {
                 trackApp.getCurrentLocation(entityListener, trackListener);
-
-
                 realTimeHandler.postDelayed(this, interval * 1000);
             }
         }
@@ -526,9 +487,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
             trackApp.mClient.setInterval(gatherInterval, packInterval);
         }
 
-//                if (data.hasExtra("supplementMode")) {
-//                    mSupplementMode = SupplementMode.valueOf(data.getStringExtra("supplementMode"));
-//                }
     }
 
     private void initListener() {
@@ -537,32 +495,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onHistoryTrackCallback(HistoryTrackResponse historyTrackResponse) {
-//                super.onHistoryTrackCallback(historyTrackResponse);
-//                queryDistances();
-
-           /*     int total = historyTrackResponse.getTotal();
-                if (StatusCodes.SUCCESS != historyTrackResponse.getStatus()) {
-                    viewUtil.showToast(TracingActivity.this, historyTrackResponse.getMessage());
-                } else if (0 == total) {
-                    viewUtil.showToast(TracingActivity.this, getString(R.string.no_track_data));
-                } else {
-                    List<TrackPoint> points = historyTrackResponse.getTrackPoints();
-                    if (null != points) {
-                        for (TrackPoint trackPoint : points) {
-                            if (!CommonUtil.isZeroPoint(trackPoint.getLocation().getLatitude(),
-                                    trackPoint.getLocation().getLongitude())) {
-                                trackPoints.add(MapUtil.convertTrace2Map(trackPoint.getLocation()));
-                            }
-                        }
-                    }
-                }
-                //查找下一页数据
-                if (total > Constants.PAGE_SIZE * pageIndex) {
-                    historyTrackRequest.setPageIndex(++pageIndex);
-                    queryHistoryTrack();
-                } else {
-                    mapUtil.drawHistoryTrack(trackPoints, SortType.asc);//画轨迹
-                }*/
                 queryDistances();//查询里程
             }
 
@@ -573,9 +505,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
              */
             @Override
             public void onDistanceCallback(DistanceResponse distanceResponse) {
-//                super.onDistanceCallback(distanceResponse);
-
-//                viewUtil.showToast(TracingActivity.this, "里程：" + distanceResponse.getDistance());
                 double distance = distanceResponse.getDistance()/1000;//里程，单位：米
                 double speed = distance/(endTime-startTime)*3600;
                 Log.e("zt","里程数："+distanceResponse.getDistance()+"速度："+speed+"时间："+(endTime-startTime));
@@ -620,7 +549,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 trackPoints.add(currentLatLng);
                 endTime = CommonUtil.getCurrentTime();
-//                Toast.makeText(TracingActivity.this, "差值：" + (endTime - startTime));
                 queryHistoryTrack();//通过查询历史轨迹筛选轨迹点进行绘制
                 mapUtil.drawHistoryTrack(trackPoints, SortType.asc);// 时时动态的画出运动轨迹
 
@@ -814,7 +742,7 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     Notification notification = new Notification.Builder(trackApp)
 //                            .setContentTitle(getResources().getString(R.string.alarm_push_title))
                             .setContentText(alarmInfo.toString())
-                            .setSmallIcon(R.mipmap.icon_app)
+                            .setSmallIcon(R.mipmap.biao)
                             .setWhen(System.currentTimeMillis()).build();
                     notificationManager.notify(notifyId++, notification);
                 }
@@ -934,14 +862,15 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         public void run() {
             currentSecond = currentSecond + 1000;
-//            tvTime.setText(getFormat(currentSecond));
-
             Message message = new Message();
             message.what = 1;
             message.obj = currentSecond;
             handler.sendMessage(message);
+
+            Log.e("zt","线程启动");
             if (!isPause){
                 handler.postDelayed(this,1000);
+                Log.e("zt","handler"+isPause);
             }
         }
     }
