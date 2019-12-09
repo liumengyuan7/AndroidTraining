@@ -42,6 +42,7 @@ public class RunFragment extends Fragment {
             switch (v.getId()){
                 case R.id.PersonalButton:
                     //个人模式
+                    //TODO:先判断用户是否登陆，若没有登陆则提示用户先登录，用户登陆后才能进行跳转
                     Intent intentP = new Intent( getContext(), TracingActivity.class );
                     startActivity( intentP );
                     break;

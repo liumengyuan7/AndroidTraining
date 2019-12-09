@@ -61,6 +61,8 @@ public class FinishRunActivity extends AppCompatActivity {
         Log.e("zt",lists.toString()+lists.size());
 
         drawLine(lists);
+
+
     }
     private void registerListeners() {
         listener = new CustomOnClickListener();

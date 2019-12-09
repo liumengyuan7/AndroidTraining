@@ -58,7 +58,9 @@ import com.example.smallpigeon.Run.FinishRunActivity;
 import com.example.smallpigeon.TrackApplication;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
@@ -161,7 +163,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
 
     private boolean firstLocate = true;
     private SDKReceiver mReceiver;
-    private String oid;
     private int mCurrentDirection = 0;
 
     //获取TextView
@@ -170,6 +171,10 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
     private TextView tvSpeed;
 
     private ImageView btn_activity_options;
+
+    private double distance = 0;//公里数
+    private double speed = 0;//速度
+    private long time;//本次跑步时长
 
 
     @Override
@@ -274,7 +279,12 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
 
                 break;
 
-            case R.id.btn_gather://结束按钮，服务采集已经全部关闭
+            case R.id.btn_gather:
+                //结束按钮，关闭采集追踪服务并将跑步信息插入到数据库中
+                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                //TODO：将此次跑步的相关信息插入到数据库中，包括用户id、本次跑步时长(time)、公里数(dstance)、速度(speed)、当前日期(date)、本次跑步积分
+
+
                 //点击结束按钮显示分享和返回按钮
                 thread.interrupt();
                 Intent intent = new Intent(TracingActivity.this, FinishRunActivity.class);
@@ -505,8 +515,9 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
              */
             @Override
             public void onDistanceCallback(DistanceResponse distanceResponse) {
-                double distance = distanceResponse.getDistance()/1000;//里程，单位：米
-                double speed = distance/(endTime-startTime)*3600;
+                distance = distanceResponse.getDistance()/1000;//里程，单位：米
+                speed = distance/(endTime-startTime)*3600;
+                time = endTime - startTime;
                 Log.e("zt","里程数："+distanceResponse.getDistance()+"速度："+speed+"时间："+(endTime-startTime));
                 tvDistance.setText("里程："+doubleToString(distance)+"KM");
                 tvSpeed.setText("速度："+doubleToString(speed)+"KM/h");
