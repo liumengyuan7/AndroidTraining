@@ -50,12 +50,12 @@ public class UserController extends Controller {
         String userSex = getPara("userSex");
         String userInterest = getPara("userInterest");
 		String result = new UserService().userRegister(userEmail,userPassword,userNickname,userSex,userInterest);
-		if(result.equals("true")){
-			renderText("true");
-		}else if(result.equals("repeat")){
+		if(result.equals("repeat")){
 			renderText("repeat");
-		}else {
+		}else if(result.equals("false")){
 			renderText("false");
+		}else {
+			renderText(result);
 		}
 		System.out.println(userNickname);
 	}

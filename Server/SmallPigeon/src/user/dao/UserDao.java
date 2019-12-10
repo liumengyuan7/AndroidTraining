@@ -81,7 +81,7 @@ public class UserDao {
 		}
 		interest.update();
 		if(result){
-			return "true";
+			return userId;
 		}else{
 			return "false";
 		}

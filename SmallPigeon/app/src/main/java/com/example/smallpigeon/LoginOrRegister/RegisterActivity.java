@@ -94,15 +94,14 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
-            if(result.equals("true")){
+            if(result.equals("repeat")){
+                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~",Toast.LENGTH_SHORT).show();
+            }else if(result.equals("false")){
+                Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
+            }else{
                 btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
-
                 finish();
-            }else if(result.equals("repeat")){
-                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~",Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
             }
         }
     };

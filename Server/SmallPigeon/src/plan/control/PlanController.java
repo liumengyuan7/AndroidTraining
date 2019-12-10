@@ -11,6 +11,6 @@ import com.jfinal.core.Controller;
 public class PlanController extends Controller {
     //获取用户的计划
     public void getPlan(){
-
+        
     }
 }
