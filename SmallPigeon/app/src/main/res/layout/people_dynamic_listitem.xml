@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/zh"/>
+        <TextView
+            android:id="@+id/tv_nickName"
+            android:layout_toRightOf="@id/iv_icon"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:textSize="50px"
+            android:textColor="@color/black"
+            android:text="用户昵称"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_marginTop="2dp"
+            android:text="xxxx年xx月xx日"
+            android:layout_below="@id/tv_nickName"
+            android:layout_alignLeft="@id/tv_nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/from"
+            android:text="来自"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="3dp"
+            android:layout_below="@id/tv_nickName"
+            android:layout_toRightOf="@id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/device"
+            android:text="VIVO X23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_nickName"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/from"
+            android:textColor="#6477e4" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/dynamic_item_txt"
+            android:text="此次跑步分享内容"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/dynamic_item_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="5dp"
+            android:adjustViewBounds="true"
+            android:maxHeight="150dp"
+            android:maxWidth="300dp"
+            android:src="@drawable/man"/>
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#6e6e6e"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:id="@+id/iv_unfold"
+            android:src="@drawable/transmit"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:layout_marginLeft="3dp"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:text="转发"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
+        <ImageView
+            android:id="@+id/iv_comment"
+            android:layout_marginLeft="70dp"
+            android:src="@drawable/comment"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:id="@+id/tv_comment_num"
+            android:layout_marginLeft="3dp"
+            android:text="评论"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
+        <ImageView
+            android:src="@drawable/good"
+            android:id="@+id/iv_praise"
+            android:layout_marginLeft="70dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:id="@+id/tv_praise_num"
+            android:layout_marginLeft="3dp"
+            android:text="赞"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/ll_comment"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="30dp">
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="8"
+            android:background="@drawable/edit_style"
+            android:hint="说点什么吧..." />
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:text="发送"
+            android:layout_height="30dp"
+            android:background="@drawable/edit_style"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+</LinearLayout>
