@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.tab1:
                     //显示Fragment
-                    //showFragment(peopleFragment);
+//                    showFragment(peopleFragment);
                     Toast toastTip = Toast.makeText(MainActivity.this,"程序员们正在努力开发，敬请期待！",Toast.LENGTH_LONG);
                     toastTip.setGravity(Gravity.CENTER, 0, 0);
                     toastTip.show();
