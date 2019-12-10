@@ -6,22 +6,22 @@
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
-
     android:layout_height="match_parent"
     tools:context=".My.PersonalCenter">
-    <LinearLayout
 
+    <LinearLayout
         android:background="#ededed"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <ImageView
             android:id="@+id/personal_center_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/left"
             android:layout_marginLeft="10dp"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
+
             <TextView
                 android:layout_gravity="center"
                 android:textSize="20sp"
@@ -30,48 +30,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
-    <LinearLayout
 
+    <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="380dp">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
             android:id="@+id/userImageLayout"
             android:background="#fff"
-            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="80dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="头像"
                 android:textColor="#000"
-                android:layout_gravity="center"
-                android:layout_marginRight="250dp"
                 android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"/>
 
-                />
-            <com.example.smallpigeon.RoundImageView
-                android:id="@+id/user_Img"
-                android:layout_gravity="center"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/woman"
-                imagecontrol:border_inside_color="#259B24"
-                imagecontrol:border_outside_color="#ffffff"
-                imagecontrol:border_thickness="1dp"/>
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/right"
-                />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <com.example.smallpigeon.RoundImageView
+                    android:id="@+id/user_Img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/woman"
+                    imagecontrol:border_inside_color="#259B24"
+                    imagecontrol:border_outside_color="#ffffff"
+                    imagecontrol:border_thickness="1dp"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/right"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:background="#ededed"
-            />
+            android:background="#ededed" />
 
         <LinearLayout
             android:id="@+id/userEmailLayout"
@@ -87,8 +96,7 @@
                 android:textSize="18sp"
                 android:layout_gravity="left"
                 android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                />
+                android:layout_marginLeft="20dp" />
             <TextView
                 android:id="@+id/personal_center_user_email"
                 android:layout_width="wrap_content"
@@ -97,14 +105,13 @@
                 android:textSize="18sp"
                 android:layout_marginTop="-28dp"
                 android:layout_gravity="right"
-                android:layout_marginRight="10dp"
-                />
+                android:layout_marginRight="10dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#ededed"
-            />
+            android:background="#ededed" />
 
         <LinearLayout
             android:id="@+id/userNicknameLayout"
@@ -113,6 +120,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,8 +128,8 @@
                 android:textSize="18sp"
                 android:layout_gravity="left"
                 android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                />
+                android:layout_marginLeft="20dp" />
+
             <TextView
                 android:id="@+id/personal_center_nickName"
                 android:layout_width="wrap_content"
@@ -130,20 +138,16 @@
                 android:textSize="18sp"
                 android:layout_marginTop="-26dp"
                 android:layout_marginRight="30dp"
-                android:layout_gravity="right"
-
-                />
+                android:layout_gravity="right" />
 
                 <ImageView
                     android:layout_gravity="right"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/right"
-                    android:layout_marginTop="-25dp"
-                    />
-
-
+                    android:layout_marginTop="-25dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
