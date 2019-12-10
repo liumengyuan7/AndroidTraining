@@ -12,8 +12,10 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
 
 import bean.Interest;
+import bean.Plan;
 import bean.User;
 import interest.control.InterestController;
+import plan.control.PlanController;
 import user.control.UserController;
 
 /**
@@ -34,6 +36,7 @@ public class AppConfig extends JFinalConfig {
     public void configRoute(Routes routes) {
         routes.add("user",UserController.class);
         routes.add("interest", InterestController.class);
+        routes.add("plan", PlanController.class);
     }
 
     @Override
@@ -50,6 +53,7 @@ public class AppConfig extends JFinalConfig {
 		arp.setDialect(new MysqlDialect());
 		arp.addMapping("user", User.class);
 		arp.addMapping("interest", Interest.class);
+		arp.addMapping("plan", Plan.class);
     }
 
     @Override

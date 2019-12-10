@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:background="#ededed"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Run.MachingActivity">
 
     <LinearLayout
-        android:background="#259B24"
+
+        android:background="#ededed"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -19,21 +23,177 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center" />
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/lv_remachingUsers"
+    <LinearLayout
+        android:background="#fff"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"
-        android:layout_margin="10dp"/>
+        android:layout_height="300dp">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="-50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户信息"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="点击开始聊天进入聊天界面"
-        android:layout_below="@id/lv_remachingUsers"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
+
+            </LinearLayout>
+
+            <com.example.smallpigeon.RoundImageView
+                android:layout_marginTop="50dp"
+                android:id="@+id/match_userImg"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:src="@drawable/woman"
+                imagecontrol:border_inside_color="#259B24"
+                imagecontrol:border_outside_color="#ffffff"
+                imagecontrol:border_thickness="1dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="昵称："
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    />
+                <TextView
+                    android:id="@+id/match_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="性别："
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    />
+                <TextView
+                    android:id="@+id/match_userSex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分："
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    />
+                <TextView
+                    android:id="@+id/match_userPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="喜好："
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    />
+                <TextView
+                    android:id="@+id/match_userInteres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="账号："
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    />
+                <TextView
+                    android:id="@+id/match_userEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+      android:gravity="right"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Button
+            android:id="@+id/match_goChat"
+           android:background="@drawable/circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始聊天"
+            />
+
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

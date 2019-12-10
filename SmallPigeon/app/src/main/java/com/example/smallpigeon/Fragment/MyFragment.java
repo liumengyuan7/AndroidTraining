@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,6 +50,23 @@ public class MyFragment extends Fragment {
     private LinearLayout btnGradeRank;
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
+    private String path;
+    private Handler handleImage = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            try {
+                Bitmap bitmap = (Bitmap) msg.obj;
+                OutputStream outputStream = new FileOutputStream(path);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+                myAvatar.setImageBitmap(bitmap);
+                outputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    };
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -179,10 +198,10 @@ public class MyFragment extends Fragment {
     private void getAvatar(){
         String userEmail = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","");
         if(! userEmail.equals("") && userEmail != null){
-            String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
+            path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
             File file = new File(path);
             if(!file.exists()){
-                getPictureAndSave(path,userEmail);
+                getPictureAndSave(userEmail);
             }else{
                 Bitmap bitmap = BitmapFactory.decodeFile(path);
                 myAvatar.setImageBitmap(bitmap);
@@ -193,7 +212,7 @@ public class MyFragment extends Fragment {
     }
 
     //设置头像，并保存到本地
-    private void getPictureAndSave(final String path, final String userEmail){
+    private void getPictureAndSave(final String userEmail){
         new Thread(){
             @Override
             public void run() {
@@ -203,12 +222,10 @@ public class MyFragment extends Fragment {
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    OutputStream outputStream = new FileOutputStream(path);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-                    myAvatar.setImageBitmap(bitmap);
-                    outputStream.close();
                     in.close();
-                    File file = new File(path);
+                    Message message = new Message();
+                    message.obj = bitmap;
+                    handleImage.sendMessage(message);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

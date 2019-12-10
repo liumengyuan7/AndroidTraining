@@ -1,23 +1,22 @@
 package user.control;
 
+import com.google.gson.Gson;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PathKit;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import bean.User;
 import user.dao.UserDao;
 import user.service.UserService;
 
@@ -156,5 +155,35 @@ public class UserController extends Controller {
 		File file = new File(path);
 		renderFile(file);
 	}
+
+	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，
+	//并将matcher与对应的人的matcher标为未匹配状态
+	public void randomMatchFirst(){
+        String id = getPara("id");
+        new User().findById(id).set("matcher","yes").update();
+        List<User> list = new User().dao.find("select * from user where matcher=?",id);
+        if(list.isEmpty()){
+            renderText("empty");
+        }else{
+        	new User().findById(list.get(0).getStr("id")).set("matcher","no").update();
+            new User().findById(id).set("matcher","no").update();
+            renderText(new Gson().toJson(list));
+        }
+    }
+
+    //获取出自己以外的正在匹配的人的信息，并返回给客户端
+    public void randomMatchSecond(){
+        String id = getPara("id");
+        List<User> list = new User().dao
+                .find("select * from user where matcher=? and id!=?","yes",id);
+        if(list.isEmpty()){
+            renderText("no");
+        }else{
+            String u = list.get(0).getStr("id");  //此处应为随机。
+            new User().findById(id).set("matcher",u).update();
+            renderText(new Gson().toJson(list));
+        }
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package com.example.smallpigeon.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
@@ -43,15 +46,34 @@ public class RunFragment extends Fragment {
                 case R.id.PersonalButton:
                     //个人模式
                     //TODO:先判断用户是否登陆，若没有登陆则提示用户先登录，用户登陆后才能进行跳转
-                    Intent intentP = new Intent( getContext(), TracingActivity.class );
-                    startActivity( intentP );
+                    if(loginOrNot()){
+                        Intent intentP = new Intent( getContext(), TracingActivity.class );
+                        startActivity( intentP );
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.MatchingButton:
                     //匹配模式
-                    Intent intentM = new Intent( getContext(), MachingActivity.class );
-                    startActivity( intentM );
+                    if(loginOrNot()){
+                        Intent intentM = new Intent( getContext(), MachingActivity.class );
+                        startActivity( intentM );
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
+        }
+    }
+
+    //判断是否登录的方法
+    private boolean loginOrNot(){
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
         }
     }
 
