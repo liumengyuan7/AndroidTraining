@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,7 @@ public class PersonalCenter extends AppCompatActivity {
     private TextView personal_center_user_points;
     private CustomClickListener listener;
 
-    private LinearLayout userImageLayout;
+    private RelativeLayout userImageLayout;
     private LinearLayout userEmailLayout;
     private LinearLayout userNicknameLayout;
     private LinearLayout userPointsLayout;
