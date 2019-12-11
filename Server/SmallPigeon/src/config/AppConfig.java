@@ -11,9 +11,11 @@ import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
 
+import bean.Friend;
 import bean.Interest;
 import bean.Plan;
 import bean.User;
+import friend.control.FriendController;
 import interest.control.InterestController;
 import plan.control.PlanController;
 import user.control.UserController;
@@ -37,6 +39,7 @@ public class AppConfig extends JFinalConfig {
         routes.add("user",UserController.class);
         routes.add("interest", InterestController.class);
         routes.add("plan", PlanController.class);
+        routes.add("friend", FriendController.class);
     }
 
     @Override
@@ -46,7 +49,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configPlugin(Plugins plugins) {
-        DruidPlugin druidPlugin = new DruidPlugin("jdbc:mysql://localhost:3306/smallpigeon?useUnicode=true&characterEncoding=utf8", "root", "");
+        DruidPlugin druidPlugin = new DruidPlugin("jdbc:mysql://localhost:3306/smallpigeon?useUnicode=true&characterEncoding=utf8", "root", "123456");
         plugins.add(druidPlugin);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
 		plugins.add(arp);
@@ -54,6 +57,7 @@ public class AppConfig extends JFinalConfig {
 		arp.addMapping("user", User.class);
 		arp.addMapping("interest", Interest.class);
 		arp.addMapping("plan", Plan.class);
+		arp.addMapping("friends", Friend.class);
     }
 
     @Override

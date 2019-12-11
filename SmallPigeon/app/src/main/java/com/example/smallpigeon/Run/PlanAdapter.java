@@ -1,6 +1,5 @@
 package com.example.smallpigeon.Run;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,78 +8,64 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
-import com.example.smallpigeon.Entity.PlanContent;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Run.TracingActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
-public class PlanAdapter extends BaseAdapter {
-    // 数据源
-    private List<PlanContent> contents;
-    private int itemLayoutId;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class PlanAdapter extends BaseAdapter{
     private Context context;
+    private List<Map<String,String>> dataSourse;
+    private int stringId;
 
-    //构造方法
-    public PlanAdapter(List<PlanContent> contents, int itemLayoutId, Context context) {
-        this.contents = contents;
-        this.itemLayoutId = itemLayoutId;
+    public PlanAdapter(Context context,List<Map<String,String>> dataSourse,int id){
         this.context = context;
-    }
-
-
-    @Override
-    //数据条数
-    public int getCount(){
-        if (null != contents){
-            return contents.size();
-        }
-        else{
-            return 0;
-        }
+        this.dataSourse = dataSourse;
+        this.stringId = id;
     }
 
     @Override
-    //每一项要显示的数据
-    public Object getItem(int position){
-        if (null != contents){
-            return contents.get(position);
-        }
-        else{
-            return null;
-        }
+    public int getCount() {
+        return dataSourse.size();
     }
 
     @Override
-    //获得id参数值
+    public Object getItem(int position) {
+        return dataSourse.get(position);
+    }
+
+    @Override
     public long getItemId(int position) {
         return position;
     }
 
     @Override
-    //加载item布局文件，生成每项item对应的视图对象
-    public View getView(final int position, View convertView, ViewGroup parent){
-        //加载item对应的布局文件
-        if (null == convertView){
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (null == convertView) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(itemLayoutId,null);
+            convertView = inflater.inflate(stringId, null);
         }
-        //获取每个item中各种视图控件的对象
-        TextView tvStatus = convertView.findViewById( R.id.tv_status );
-        TextView tvTime = convertView.findViewById( R.id.tv_time );
-        TextView tvAddress = convertView.findViewById( R.id.tv_address );
-        TextView tvCompanion = convertView.findViewById( R.id.tv_companion );
-        Button btnToFinish = convertView.findViewById( R.id.btn_toFinish );
-        //显示
-        PlanContent planContent = contents.get( position );
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-        tvTime.setText( formatter.format( planContent.getPlanTime() ) );
-        tvAddress.setText( planContent.getPlanAddress() );
-        //todo 此处应该从数据库查询出伙伴的用户名
-        tvCompanion.setText( planContent.getCompanion_id()+"" );
+        //获取控件id
+        TextView plan_time = convertView.findViewById( R.id.plan_time );
+        TextView plan_address = convertView.findViewById( R.id.plan_matchAddress );
+        TextView plan_email = convertView.findViewById( R.id.plan_matchEmail );
+        TextView plan_nickname = convertView.findViewById( R.id.plan_matchNickname );
+        Button btnToFinish = convertView.findViewById( R.id.goFinish );
+        //添加数据
+        plan_time.setText(dataSourse.get(position).get("plan_time").toString());
+        plan_address.setText(dataSourse.get(position).get("plan_address").toString());
+        plan_email.setText(dataSourse.get(position).get("plan_email").toString());
+        plan_nickname.setText(dataSourse.get(position).get("plan_nickname").toString());
+
+
+
         //添加按钮点击的事件
         btnToFinish.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -89,6 +74,7 @@ public class PlanAdapter extends BaseAdapter {
                 showAlertDialog();
             }
         } );
+        notifyDataSetChanged();
         return convertView;
     }
 
@@ -125,5 +111,4 @@ public class PlanAdapter extends BaseAdapter {
         AlertDialog alertDialog = builder.create( );
         alertDialog.show();
     }
-
 }
