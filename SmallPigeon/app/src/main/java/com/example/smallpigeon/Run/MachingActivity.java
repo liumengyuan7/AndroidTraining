@@ -116,10 +116,10 @@ public class MachingActivity extends AppCompatActivity {
         listener = new MyClickListener();
         registerListener();
         //获取未完成计划的方法
-        String result=new Utils().getConnectionResult("plan","getUnfinishedPlan");
-        Message message = new Message();
-        message.obj = result;
-        handler.sendMessage(message);
+//        String result=new Utils().getConnectionResult("plan","getUnfinishedPlan");
+//        Message message = new Message();
+//        message.obj = result;
+//        handler.sendMessage(message);
 
 
     }
@@ -190,4 +190,5 @@ public class MachingActivity extends AppCompatActivity {
             }
         }.start();
     }
+
 }

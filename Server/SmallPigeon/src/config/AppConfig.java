@@ -39,7 +39,7 @@ public class AppConfig extends JFinalConfig {
         routes.add("user",UserController.class);
         routes.add("interest", InterestController.class);
         routes.add("plan", PlanController.class);
-        routes.add("friend", FriendController.class);
+//        routes.add("friend", FriendController.class);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configPlugin(Plugins plugins) {
-        DruidPlugin druidPlugin = new DruidPlugin("jdbc:mysql://localhost:3306/smallpigeon?useUnicode=true&characterEncoding=utf8", "root", "123456");
+        DruidPlugin druidPlugin = new DruidPlugin("jdbc:mysql://localhost:3306/smallpigeon?useUnicode=true&characterEncoding=utf8", "root", "");
         plugins.add(druidPlugin);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
 		plugins.add(arp);
@@ -57,7 +57,7 @@ public class AppConfig extends JFinalConfig {
 		arp.addMapping("user", User.class);
 		arp.addMapping("interest", Interest.class);
 		arp.addMapping("plan", Plan.class);
-		arp.addMapping("friends", Friend.class);
+//		arp.addMapping("friends", Friend.class);
     }
 
     @Override
