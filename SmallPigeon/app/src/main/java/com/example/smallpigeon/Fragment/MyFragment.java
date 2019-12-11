@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,8 @@ import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.RoundImageView;
 import com.example.smallpigeon.Utils;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -157,6 +160,7 @@ public class MyFragment extends Fragment {
         //跳转登录界面
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
         String nickname = pre.getString("user_nickname","");
+        String useId = pre.getString("user_id","");
         if(nickname.equals("") || nickname == null){
             loginOrRegister.setText("登录/注册");
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +171,7 @@ public class MyFragment extends Fragment {
                 }
             });
         }else{
+            signIn(useId);
             loginOrRegister.setText("欢迎登录："+nickname);
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -234,5 +239,23 @@ public class MyFragment extends Fragment {
             }
         }.start();
     }
+    /*
+     * 登录  异步
+     * */
+    private void signIn(String userId) {
+        EMClient.getInstance().login(userId, userId, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                Log.e("MyFragment环信登录","登录成功");
+            }
+            @Override
+            public void onError(int i, String s) {
+                Log.e("MyFragment环信登录","登录失败"+i+","+s);
+            }
+            @Override
+            public void onProgress(int i, String s) {
 
+            }
+        });
+    }
 }

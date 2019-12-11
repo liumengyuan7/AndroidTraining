@@ -38,6 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.R;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -100,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
             }else{
                 btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                signUp(result);
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -461,6 +464,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String result = reader.readLine();
                     Message message = new Message();
                     message.obj = result;
+                    Log.e("返回的数据",result);
                     userRegister.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -511,5 +515,20 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void signUp(String result) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("yuanyuan7",result+","+ result);
+                try {
+                    EMClient.getInstance().createAccount(result,result);//同步方法
+                    Log.e("yuanyuan7","注册成功"+result+","+
+                            register_userPassword.getText().toString().trim());
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                    Log.e("注册失败",e.getErrorCode()+e.getDescription());
+                }
+            }
+        }).start();
+    }
 }

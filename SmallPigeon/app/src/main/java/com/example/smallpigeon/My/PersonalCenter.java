@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.R;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -135,6 +137,7 @@ public class PersonalCenter extends AppCompatActivity {
                         file.delete();
                     }
                     pre.edit().clear().commit();
+                    signOut();//环信退出登录
                     finish();
                     Toast.makeText(getApplicationContext(),"注销成功！",Toast.LENGTH_SHORT).show();
                 }
@@ -142,7 +145,28 @@ public class PersonalCenter extends AppCompatActivity {
         }
 
     }
+    //环信退出登录
+    private void signOut() {
+        EMClient.getInstance().logout(true, new EMCallBack() {
 
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+                Log.e("退出成功","退出登录");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                // TODO Auto-generated method stub
+                Log.e("退出失败",code+","+message);
+            }
+        });
+    }
     //获取视图的控件
     private void getViews() {
         personal_center_back=findViewById(R.id.personal_center_back);
