@@ -1,7 +1,11 @@
 package com.example.smallpigeon.Run;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,6 +14,11 @@ import android.widget.ListView;
 import com.example.smallpigeon.Entity.PlanContent;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -32,6 +41,29 @@ public class MachingActivity extends AppCompatActivity {
     private Button btnRematch;
 
     private MyClickListener listener;
+
+    private Handler matchHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            try {
+                String re = msg.obj + "";
+                String result = re.split(";")[0];
+                JSONArray jsonArray = new JSONArray(result);
+                JSONObject json1 = jsonArray.getJSONObject(0);
+                JSONObject json2 = new JSONObject(json1.getString("attrs"));
+                Intent intent = new Intent(getApplicationContext(),RemachingActivity.class);
+                intent.putExtra("user_nickname",json2.getString("user_nickname"));
+                intent.putExtra("user_sex",json2.getString("user_sex"));
+                intent.putExtra("user_points",json2.getString("user_points"));
+                intent.putExtra("user_interest",re.split(";")[1]);
+                intent.putExtra("user_email",json2.getString("user_email"));
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +109,49 @@ public class MachingActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.btn_rematch:
                     //重新匹配按钮
-                    Intent intent1 = new Intent( MachingActivity.this, RemachingActivity.class );
-                    startActivity( intent1 );
+                    randomMatch();
                     break;
                 case R.id.maching_back:
                     //返回按钮
-                    Intent intent2 = new Intent( MachingActivity.this, MainActivity.class );
-                    startActivity( intent2 );
+                    finish();
                     break;
             }
         }
+    }
+
+    private void randomMatch(){
+        new Thread(){
+            @Override
+            public void run() {
+                SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                String id = pre.getString("user_id","");
+                for(int i=0;i<10;i++){
+                    String result = new Utils().getConnectionResult("user","randomMatchFirst","id="+id);
+                    Log.e("result",result);
+                    if(result.equals("empty")){
+                        String r = new Utils().getConnectionResult("user","randomMatchSecond","id="+id);
+                        Log.e("r",r);
+                        if(r.equals("no")){
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            continue;
+                        }else{
+                            Message message = new Message();
+                            message.obj = r;
+                            matchHandler.sendMessage(message);
+                            break;
+                        }
+                    }else{
+                        Message message = new Message();
+                        message.obj = result;
+                        matchHandler.sendMessage(message);
+                        break;
+                    }
+                }
+            }
+        }.start();
     }
 }

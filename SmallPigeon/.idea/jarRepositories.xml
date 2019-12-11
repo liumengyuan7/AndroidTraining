@@ -41,5 +41,10 @@
       <option name="name" value="E:\Software\Software\Idea\AndroidSDK\extras\android\m2repository" />
       <option name="url" value="file:/$PROJECT_DIR$/../../../../Idea/AndroidSDK/extras/android/m2repository/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Google2" />
+      <option name="name" value="Google2" />
+      <option name="url" value="https://maven.google.com/" />
+    </remote-repository>
   </component>
 </project>
