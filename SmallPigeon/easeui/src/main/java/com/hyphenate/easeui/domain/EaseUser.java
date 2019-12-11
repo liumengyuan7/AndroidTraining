@@ -26,7 +26,11 @@ public class EaseUser extends EMContact {
 	 * avatar of the user
 	 */
 	protected String avatar;
-	
+
+	public EaseUser(){
+
+	}
+
 	public EaseUser(String username){
 	    this.username = username;
 	}
@@ -67,5 +71,70 @@ public class EaseUser extends EMContact {
 	@Override
 	public String toString() {
 		return nick == null ? username : nick;
+	}
+
+
+
+	private  int id;
+	private String userPassword;
+	private String userSex;
+	private String userEmail;
+	private String userImage;
+	private String userSno;
+	private int userPoints;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+
+	public String getUserSex() {
+		return userSex;
+	}
+
+	public void setUserSex(String userSex) {
+		this.userSex = userSex;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
+
+	public String getUserSno() {
+		return userSno;
+	}
+
+	public void setUserSno(String userSno) {
+		this.userSno = userSno;
+	}
+
+	public int getUserPoints() {
+		return userPoints;
+	}
+
+	public void setUserPoints(int userPoints) {
+		this.userPoints = userPoints;
 	}
 }

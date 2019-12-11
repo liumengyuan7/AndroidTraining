@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.example.smallpigeon.Conversation.DemoHelper;
+import com.example.smallpigeon.Chat.ChatHelper;
+//import com.example.smallpigeon.Chat.DemoHelper;
 import com.example.smallpigeon.R;
 import com.hyphenate.chat.EMClient;
 //import com.hyphenate.chatuidemo.DemoHelper;
@@ -53,6 +55,15 @@ public class AddContactActivity extends EaseBaseActivity {
 		searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
 		nameText = (TextView) findViewById(R.id.name);
 		searchBtn = (Button) findViewById(R.id.search);
+		searchBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ChatHelper.getInstance().sendMessageToServer(getApplicationContext());
+				searchContact(v);
+
+
+			}
+		});
 	}
 	
 	
@@ -72,10 +83,14 @@ public class AddContactActivity extends EaseBaseActivity {
 			}
 			
 			// TODO you can search the user from your app server here.
-			
+			if(ChatHelper.getInstance().getContactList().containsValue(toAddUsername)){
+				searchedUserLayout.setVisibility(View.VISIBLE);
+				nameText.setText(toAddUsername);
+			}
 			//show the userame and add button if user exist
-			searchedUserLayout.setVisibility(View.VISIBLE);
-			nameText.setText(toAddUsername);
+
+//			searchedUserLayout.setVisibility(View.VISIBLE);
+//			nameText.setText(toAddUsername);
 			
 		} 
 	}	
@@ -90,16 +105,13 @@ public class AddContactActivity extends EaseBaseActivity {
 			return;
 		}
 		
-//		if(DemoHelper.getInstance().getContactList().containsKey(nameText.getText().toString())){
+//		if(ChatHelper.getInstance().getContactList().containsKey(nameText.getText().toString())){
 //		    //let the user know the contact already in your contact list
-//		    if(EMClient.getInstance().contactManager().getBlackListUsernames().contains(nameText.getText().toString())){
-//		        new EaseAlertDialog(this, R.string.user_already_in_contactlist).show();
-//		        return;
-//		    }
+//
 //			new EaseAlertDialog(this, R.string.This_user_is_already_your_friend).show();
 //			return;
 //		}
-//
+
 		progressDialog = new ProgressDialog(this);
 		String stri = getResources().getString(R.string.Is_sending_a_request);
 		progressDialog.setMessage(stri);
