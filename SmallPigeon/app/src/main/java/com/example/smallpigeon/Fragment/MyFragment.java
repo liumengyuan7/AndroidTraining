@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
+import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.R;
@@ -118,6 +119,8 @@ public class MyFragment extends Fragment {
                     break;
                 case R.id.right_plan:
                     Toast.makeText(getContext(),"计划！",Toast.LENGTH_SHORT).show();
+                    Intent intent2 = new Intent(getContext(), MyPlan.class);
+                    startActivity(intent2);
                     break;
             }
         }

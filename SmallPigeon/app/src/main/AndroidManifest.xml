@@ -62,8 +62,6 @@
             android:screenOrientation="portrait"/><!--只允许竖屏显示-->
         <activity android:name=".BaiduMap.activity.TracingOptionsActivity" />
         <activity android:name=".BaiduMap.activity.BaseActivity" />
-        <activity android:name=".Chat.activity.AddContactActivity" />
-        <activity android:name=".Chat.activity.ChatActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

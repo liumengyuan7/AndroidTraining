@@ -2,10 +2,18 @@ package com.example.smallpigeon.Run;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import android.os.Build;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,6 +23,7 @@ import android.widget.Toast;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,37 +49,15 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class RemachingActivity extends AppCompatActivity {
     private ImageView remachingBack;
-    private String interestC = "";
     private ImageView match_userImg;
     private TextView match_userName;
     private TextView match_userSex;
     private TextView match_userPoints;
-    private TextView match_userInteres;
+    private TextView match_userInterest;
     private TextView match_userEmail;
     private Button goChat;
-    private Handler matchHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            String re = msg.obj+"";
-            if(re.equals("false")){
-                Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT).show();
-            }else{
-                try {
-                    String result = re.split(";")[0];
-                    JSONArray jsonArray = new JSONArray(result);
-                    JSONObject json1 = jsonArray.getJSONObject(0);
-                    JSONObject json2 = new JSONObject(json1.getString("attrs"));
-                    match_userName.setText(json2.getString("user_nickname"));
-                    match_userEmail.setText(json2.getString("user_email"));
-                    match_userInteres.setText(re.split(";")[1]);
-                    match_userPoints.setText(json2.getString("user_points"));
-                    match_userSex.setText(json2.getString("user_sex"));
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -78,10 +65,10 @@ public class RemachingActivity extends AppCompatActivity {
 
         //获取视图控件
         getViews();
-        //获取用户的兴趣爱好用于匹配
-        getInteres();
-        //匹配方法
-        getCompany(interestC);
+        //状态栏隐藏
+        setStatusBar();
+        getCompany();
+        getAvatar();
 
         //去聊天方法
         goChat.setOnClickListener(new View.OnClickListener() {
@@ -95,47 +82,49 @@ public class RemachingActivity extends AppCompatActivity {
         remachingBack.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( RemachingActivity.this, MachingActivity.class );
-                startActivity( intent );
+                finish();
             }
         } );
 
 
-
     }
 
 
-
-    private void getCompany(final String interest) {
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/match/matchUser?interest="+interest);
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String result = reader.readLine();
-                    Message message = new Message();
-                    message.obj = result;
-                    matchHandler.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
     }
 
 
+    //获取匹配对象的头像
+    private void getAvatar(){
+        try {
+            URL url = new URL("http://" + getResources().getString(R.string.ip_address) + ":8080/" +
+                    "smallpigeon/user/postPicture");
+            URLConnection conn = url.openConnection();
+            InputStream in = conn.getInputStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(in);
+            match_userImg.setImageBitmap(bitmap);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+        //获取匹配对象的信息
+    private void getCompany() {
+        Intent intent = getIntent();
+        String interest = getInterestTranslate(intent.getStringExtra("user_interest"));
+        match_userName.setText(intent.getStringExtra("user_nickname"));
+        match_userSex.setText(intent.getStringExtra("user_sex"));
+        match_userPoints.setText(intent.getStringExtra("user_points"));
+        match_userInterest.setText(interest.substring(0,interest.length()-1));
+        match_userEmail.setText(intent.getStringExtra("user_email"));
 
-
-
-
-
-
+    }
 
     /**
      * @Descripe: 获取视图控件id
@@ -146,45 +135,44 @@ public class RemachingActivity extends AppCompatActivity {
         match_userName=findViewById(R.id.match_userName);
         match_userSex=findViewById(R.id.match_userSex);
         match_userPoints=findViewById(R.id.match_userPoints);
-        match_userInteres=findViewById(R.id.match_userInteres);
+        match_userInterest=findViewById(R.id.match_userInteres);
         match_userEmail=findViewById(R.id.match_userEmail);
         goChat=findViewById(R.id.match_goChat);
 
     }
-    private void getInteres() {
-        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
-        getInterestTranslate(pre.getString("user_interest",""));
-    }
+
     //获取兴趣的翻译
-    private void getInterestTranslate(String interestE){
+    private String getInterestTranslate(String interestE){
         String[] in = interestE.split(",");
+        String interest = "";
         for(int i = 0;i<in.length;i++){
             switch (in[i]){
                 case "outdoor":
-                    interestC += "outdoor,";
+                    interest += "户外,";
                     break;
                 case "film":
-                    interestC += "film,";
+                    interest += "电影,";
                     break;
                 case "comic":
-                    interestC += "comic,";
+                    interest += "动漫,";
                     break;
                 case "science":
-                    interestC += "science,";
+                    interest += "科学,";
                     break;
                 case "society":
-                    interestC += "society,";
+                    interest += "人文,";
                     break;
                 case "music":
-                    interestC += "music,";
+                    interest += "音乐,";
                     break;
                 case "star":
-                    interestC += "star,";
+                    interest += "明星,";
                     break;
                 case "delicacy":
-                    interestC += "delicacy,";
+                    interest += "美食,";
                     break;
             }
         }
+        return interest;
     }
 }

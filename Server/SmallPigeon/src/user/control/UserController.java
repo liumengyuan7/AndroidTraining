@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -158,30 +159,45 @@ public class UserController extends Controller {
 
 	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，
 	//并将matcher与对应的人的matcher标为未匹配状态
-	public void randomMatchFirst(){
+	public void randomMatchFirst() throws IOException {
         String id = getPara("id");
         new User().findById(id).set("matcher","yes").update();
         List<User> list = new User().dao.find("select * from user where matcher=?",id);
         if(list.isEmpty()){
             renderText("empty");
         }else{
-        	new User().findById(list.get(0).getStr("id")).set("matcher","no").update();
+        	User user = list.get(0);
+        	new User().findById(user.getStr("id")).set("matcher","no").update();
             new User().findById(id).set("matcher","no").update();
-            renderText(new Gson().toJson(list));
+            String result = new UserService().userLogin(user.getStr("user_email"),user.getStr("user_password"));
+            HttpServletResponse response = getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write(result);
+			renderNull();
         }
     }
 
     //获取出自己以外的正在匹配的人的信息，并返回给客户端
-    public void randomMatchSecond(){
+    public void randomMatchSecond() throws IOException {
         String id = getPara("id");
         List<User> list = new User().dao
                 .find("select * from user where matcher=? and id!=?","yes",id);
         if(list.isEmpty()){
             renderText("no");
         }else{
-            String u = list.get(0).getStr("id");  //此处应为随机。
-            new User().findById(id).set("matcher",u).update();
-            renderText(new Gson().toJson(list));
+        	User user = null;
+        	if(list.size()==1){
+        		user = list.get(0);  //此处应为随机。
+			}else{
+        		int s = new Random().nextInt(list.size());
+        		user = list.get(s);
+			}
+            new User().findById(id).set("matcher",user.getStr("id")).update();
+            String result = new UserService().userLogin(user.getStr("user_email"),user.getStr("user_password"));
+            HttpServletResponse response = getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write(result);
+			renderNull();
         }
     }
 

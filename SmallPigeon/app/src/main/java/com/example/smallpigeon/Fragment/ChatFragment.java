@@ -30,16 +30,16 @@ import com.hyphenate.chat.EMClient;
 
 
 public class ChatFragment extends Fragment {
+    private ImageView addFriends;
+    private View view;
+    private FragmentManager fragmentManager;
     private ConversationListFragment conversationListFragment;
     private ContactListFragment listFragment;
+    private Fragment currentFragment = new Fragment();
     private TextView tvHuihua;
     private TextView tvFriends;
     private LinearLayout tabHuihua;
     private LinearLayout tabFriends;
-    private Fragment currentFragment = new Fragment();
-    private FragmentManager fragmentManager;
-    private View view;
-    private ImageView addFriends;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,15 +52,12 @@ public class ChatFragment extends Fragment {
                 startActivity(intent);
             }
         });
-//        SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
-//        String nickname = pre.getString("user_nickname","");
-//        String useId = pre.getString("user_id","");
-//        if(!nickname.equals("") && nickname != null){
-//            signIn(useId);
-//        }
-//        else{
-//            signOut();
-//        }
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
+        String nickname = pre.getString("user_nickname","");
+        String useId = pre.getString("user_id","");
+        if(!nickname.equals("") && nickname != null){
+            signIn(useId);
+        }
         return view;
     }
 
