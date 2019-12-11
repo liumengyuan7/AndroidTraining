@@ -2,18 +2,30 @@ package com.example.smallpigeon.Run;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.smallpigeon.Adapter.RankAdapter;
 import com.example.smallpigeon.Entity.PlanContent;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,9 +42,45 @@ public class MachingActivity extends AppCompatActivity {
     private ImageView machingBack;
     private ListView lvMatchingTask;
     private Button btnRematch;
-
     private MyClickListener listener;
 
+    List<Map<String,String>> information;
+    PlanAdapter customAdapter1;
+    String[] result1;
+    String[] result2;
+
+    private Handler handler=new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result = msg.obj + "";
+            if(!result.equals("false")){
+                try {
+                    information = new ArrayList<>();
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int i = 0;i<jsonArray.length();i++){
+                        JSONObject json1 = jsonArray.getJSONObject(i);
+                        JSONObject json2 = json1.getJSONObject("attrs");
+                        Map<String, String> item = new HashMap<>();
+                        item.put("plan_time",json2.getString("plan_time"));
+                        item.put("plan_address",json2.getString("plan_address"));
+                        item.put("plan_email",json2.getString("plan_email"));
+                        item.put("plan_nickname",json2.getString("plan_nickname"));
+                        information.add(item);
+                    }
+                    ListView listView1 = findViewById(R.id.lv_machingTask);
+                    customAdapter1 = new PlanAdapter(getApplicationContext(),information,R.layout.run_maching_listitem);
+                    listView1.setAdapter(customAdapter1);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                Toast toastTip = Toast.makeText(getApplicationContext(),"获取失败！请检查网络！",Toast.LENGTH_LONG);
+                toastTip.setGravity(Gravity.CENTER, 0, 0);
+                toastTip.show();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -43,17 +91,13 @@ public class MachingActivity extends AppCompatActivity {
         //注册监听器
         listener = new MyClickListener();
         registerListener();
+        //获取未完成计划的方法
+        String result=new Utils().getConnectionResult("plan","getUnfinishedPlan");
+        Message message = new Message();
+        message.obj = result;
+        handler.sendMessage(message);
 
-        //获取数据源
-        //todo 此处应该从数据库查询当前用户的所有未完成计划
-        PlanContent planContent1 = new PlanContent( 1, 1, 1, new Date(System.currentTimeMillis()), "河北师范大学", "未完成" );
-        PlanContent planContent2 = new PlanContent( 2, 2, 2, new Date(System.currentTimeMillis()), "河北师范大学", "未完成" );
-        planContents.add( planContent1 );
-        planContents.add( planContent2 );
 
-        //加载未完成任务列表Adapter
-        PlanAdapter planAdapter = new PlanAdapter( planContents, R.layout.run_maching_listitem, this);
-        lvMatchingTask.setAdapter(planAdapter);
     }
 
     private void registerListener() {

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".My.Plan.MyPlan">
+    tools:context=".My.MyPlan">
     <LinearLayout
         android:background="#ededed"
         android:layout_width="match_parent"
