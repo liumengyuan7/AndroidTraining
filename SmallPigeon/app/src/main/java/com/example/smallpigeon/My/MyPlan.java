@@ -2,11 +2,14 @@ package com.example.smallpigeon.My;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,6 +61,8 @@ public class MyPlan extends AppCompatActivity {
                         item.put("plan_address",json2.getString("plan_address"));
                         item.put("plan_email",json2.getString("plan_email"));
                         item.put("plan_nickname",json2.getString("plan_nickname"));
+                        //状态：0表示未完成 1表示完成
+                        item.put("plan_status",json2.getString("plan_status"));
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.plan_list);
@@ -84,6 +89,7 @@ public class MyPlan extends AppCompatActivity {
         Message message = new Message();
         message.obj = result;
         handler.sendMessage(message);
+        setStatusBar();//状态栏隐藏
 
         plan_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,5 +104,12 @@ public class MyPlan extends AppCompatActivity {
     public void getViews(){
         plan_back=findViewById(R.id.myplan_back);
 
+    }
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
     }
 }

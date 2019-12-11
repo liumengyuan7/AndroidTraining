@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.R;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user_register_time",json2.getString("user_register_time"));
                     editor.putString("user_points",json2.getString("user_points"));
                     editor.putString("user_interest",re.split(";")[1]);
+                    signIn(json2.getString("id"));
                     editor.commit();
                 } catch (JSONException e){
                     e.printStackTrace();
@@ -179,5 +182,23 @@ public class LoginActivity extends AppCompatActivity {
             window.setStatusBarColor(getResources().getColor(R.color.black));
         }
     }
+    /*
+     * 登录  异步
+     * */
+    private void signIn(String userId) {
+        EMClient.getInstance().login(userId, password.getText().toString().trim(), new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                Log.e("环信登录","登录成功");
+            }
+            @Override
+            public void onError(int i, String s) {
+                Log.e("环信登录","登录失败"+i+","+s);
+            }
+            @Override
+            public void onProgress(int i, String s) {
 
+            }
+        });
+    }
 }

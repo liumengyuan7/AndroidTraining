@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/top_bar_normal_bg"
+        android:background="@color/green"
         android:gravity="center_vertical">
 
         <include layout="@layout/ease_commom_back_btn" />
