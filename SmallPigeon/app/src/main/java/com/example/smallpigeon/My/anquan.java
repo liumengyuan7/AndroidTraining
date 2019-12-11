@@ -70,7 +70,7 @@ public class anquan extends AppCompatActivity {
                         startActivity(intent1);
                         finish();
                     } else{
-                        Toast.makeText(getApplicationContext(),"您还未登录，请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case R.id.userChangePassword:
@@ -79,7 +79,7 @@ public class anquan extends AppCompatActivity {
                         startActivity(intent2);
                         finish();
                     } else{
-                        Toast.makeText(getApplicationContext(),"您还未登录，请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
