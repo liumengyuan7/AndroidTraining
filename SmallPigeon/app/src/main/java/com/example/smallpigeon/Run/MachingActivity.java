@@ -1,11 +1,14 @@
 package com.example.smallpigeon.Run;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -91,6 +94,7 @@ public class MachingActivity extends AppCompatActivity {
         //注册监听器
         listener = new MyClickListener();
         registerListener();
+        setStatusBar();//状态栏隐藏
         //获取未完成计划的方法
         String result=new Utils().getConnectionResult("plan","getUnfinishedPlan");
         Message message = new Message();
@@ -98,6 +102,13 @@ public class MachingActivity extends AppCompatActivity {
         handler.sendMessage(message);
 
 
+    }
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
     }
 
     private void registerListener() {
