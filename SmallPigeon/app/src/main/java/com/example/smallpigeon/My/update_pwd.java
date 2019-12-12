@@ -57,7 +57,7 @@ public class update_pwd extends AppCompatActivity {
                 getCode.setText(msg.obj + "秒后重新发送");
                 getCode.setOnClickListener(null);
             }else{
-                code1 = "";
+                code1 = null;
                 getCode.setText("获取验证码");
                 getCode.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -112,7 +112,11 @@ public class update_pwd extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else{
-                    code_error.setText("验证码输入错误！");
+                    if(code.getText().toString().equals("")){
+                        code_error.setText("");
+                    }else{
+                        code_error.setText("验证码输入错误！");
+                    }
                 }
             }
 

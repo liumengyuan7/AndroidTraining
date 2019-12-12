@@ -1,5 +1,6 @@
 package com.example.smallpigeon.Run;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.Build;
@@ -12,11 +13,14 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.RankAdapter;
@@ -44,13 +48,12 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class MachingActivity extends AppCompatActivity {
 
-    //未完成plan列表
-    private List<PlanContent> planContents = new ArrayList<>(  );
     //视图控件
     private ImageView machingBack;
-    private ListView lvMatchingTask;
     private Button btnRematch;
     private MyClickListener listener;
+    private PopupWindow pop;
+    private TextView secondDown;
 
     private Handler matchHandler = new Handler(){
         @Override
@@ -76,14 +79,14 @@ public class MachingActivity extends AppCompatActivity {
     };
 
     private List<Map<String,String>> information;
-    private PlanAdapter customAdapter1;
+    private PlanAdapter planAdapter;
 
     private Handler handler=new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String result = msg.obj + "";
-            if(!result.equals("false")){
+            if(!result.equals("empty")){
                 try {
                     information = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(result);
@@ -98,8 +101,8 @@ public class MachingActivity extends AppCompatActivity {
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.lv_machingTask);
-                    customAdapter1 = new PlanAdapter(getApplicationContext(),information,R.layout.run_maching_listitem);
-                    listView1.setAdapter(customAdapter1);
+                    planAdapter = new PlanAdapter(getApplicationContext(),information,R.layout.run_maching_listitem);
+                    listView1.setAdapter(planAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -107,6 +110,19 @@ public class MachingActivity extends AppCompatActivity {
                 Toast toastTip = Toast.makeText(getApplicationContext(),"获取失败！请检查网络！",Toast.LENGTH_LONG);
                 toastTip.setGravity(Gravity.CENTER, 0, 0);
                 toastTip.show();
+            }
+        }
+    };
+
+    private Handler handleSecond = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String second = msg.obj + "";
+            if(second.equals("0")){
+                pop.dismiss();
+                Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT).show();
+            }else{
+                secondDown.setText("正在匹配中... "+second+"秒");
             }
         }
     };
@@ -121,15 +137,13 @@ public class MachingActivity extends AppCompatActivity {
         //注册监听器
         listener = new MyClickListener();
         registerListener();
-        setStatusBar();//状态栏隐藏
+        //状态栏隐藏
+        setStatusBar();
         //获取未完成计划的方法
-//        String result=new Utils().getConnectionResult("plan","getUnfinishedPlan");
-//        Message message = new Message();
-//        message.obj = result;
-//        handler.sendMessage(message);
-
-
+        getUserUnfinishedPlan();
     }
+
+    //设置手机的状态栏
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -138,6 +152,7 @@ public class MachingActivity extends AppCompatActivity {
         }
     }
 
+    //注册监听器
     private void registerListener() {
         btnRematch.setOnClickListener( listener );
         machingBack.setOnClickListener( listener );
@@ -147,7 +162,6 @@ public class MachingActivity extends AppCompatActivity {
      * @Descripe: 获取视图控件id
      */
     private void getViews() {
-        lvMatchingTask = findViewById( R.id.lv_machingTask );
         btnRematch = findViewById( R.id.btn_rematch );
         machingBack = findViewById( R.id.maching_back );
     }
@@ -158,6 +172,8 @@ public class MachingActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.btn_rematch:
+                    //popupwindow的显示
+                    appearPopupWindow();
                     //重新匹配按钮
                     randomMatch();
                     break;
@@ -169,6 +185,7 @@ public class MachingActivity extends AppCompatActivity {
         }
     }
 
+    //随机匹配
     private void randomMatch(){
         new Thread(){
             @Override
@@ -189,16 +206,84 @@ public class MachingActivity extends AppCompatActivity {
                             }
                             continue;
                         }else{
+                            secondDown.setText("匹配成功！");
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            pop.dismiss();
                             Message message = new Message();
                             message.obj = r;
                             matchHandler.sendMessage(message);
                             break;
                         }
                     }else{
+                        secondDown.setText("匹配成功！");
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        pop.dismiss();
                         Message message = new Message();
                         message.obj = result;
                         matchHandler.sendMessage(message);
                         break;
+                    }
+                }
+            }
+        }.start();
+    }
+
+    //获取用户未完成的计划
+    private void getUserUnfinishedPlan(){
+        new Thread(){
+            @Override
+            public void run() {
+                SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                String userId = pre.getString("user_id","");
+                String result=new Utils().getConnectionResult("plan","getUnfinishedPlan","userId="+userId);
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
+
+    //popupwindow的显示
+    private void appearPopupWindow(){
+        View popView = getLayoutInflater().inflate(R.layout.match_pop,null);
+        pop = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,false);
+        pop.setAnimationStyle(R.style.popmatch_anim_style);
+        pop.setOutsideTouchable(false);
+        pop.showAtLocation(getWindow().getDecorView(),Gravity.CENTER,0,0);
+        secondDown = popView.findViewById(R.id.secondDown);
+        secondDown();
+        final WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.4f;
+        getWindow().setAttributes(lp);
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
+        }});
+    }
+
+    //处理倒计时的方法
+    private void secondDown(){
+        new Thread(){
+            @Override
+            public void run() {
+                for(int i = 10;i>=0;i--){
+                    try {
+                        Message message = new Message();
+                        message.obj = i;
+                        handleSecond.sendMessage(message);
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }

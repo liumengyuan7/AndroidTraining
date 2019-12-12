@@ -118,7 +118,6 @@ public class MyFragment extends Fragment {
                     startActivity(intent1);
                     break;
                 case R.id.right_plan:
-                    Toast.makeText(getContext(),"计划！",Toast.LENGTH_SHORT).show();
                     Intent intent2 = new Intent(getContext(), MyPlan.class);
                     startActivity(intent2);
                     break;

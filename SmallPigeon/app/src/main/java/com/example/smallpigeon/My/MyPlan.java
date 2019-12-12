@@ -2,6 +2,8 @@ package com.example.smallpigeon.My;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,25 +33,15 @@ import java.util.List;
 import java.util.Map;
 
 public class MyPlan extends AppCompatActivity {
-    private TextView plan_status;
-    private TextView plan_time;
-    private TextView plan_address;
-    private TextView plan_email;
-    private TextView plan_nickname;
-    private ImageView delete;
+
     private ImageView plan_back;
-
-
-    List<Map<String,String>> information;
-    MyplanAdapter customAdapter1;
-    String[] result1;
-    String[] result2;
+    private List<Map<String,String>> information;
+    private MyplanAdapter myplanAdapter;
     private Handler handler=new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
             String result = msg.obj + "";
-            if(!result.equals("false")){
+            if(!result.equals("empty")){
                 try {
                     information = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(result);
@@ -57,6 +49,7 @@ public class MyPlan extends AppCompatActivity {
                         JSONObject json1 = jsonArray.getJSONObject(i);
                         JSONObject json2 = json1.getJSONObject("attrs");
                         Map<String, String> item = new HashMap<>();
+                        item.put("plan_id",json2.getString("id"));
                         item.put("plan_time",json2.getString("plan_time"));
                         item.put("plan_address",json2.getString("plan_address"));
                         item.put("plan_email",json2.getString("plan_email"));
@@ -66,8 +59,8 @@ public class MyPlan extends AppCompatActivity {
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.plan_list);
-                    customAdapter1 = new MyplanAdapter(getApplicationContext(),information,R.layout.layout_plan_listitem);
-                    listView1.setAdapter(customAdapter1);
+                    myplanAdapter = new MyplanAdapter(getApplicationContext(),information,R.layout.layout_plan_listitem);
+                    listView1.setAdapter(myplanAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -84,11 +77,7 @@ public class MyPlan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plan);
         getViews();
-        //获取未完成计划的方法
-//        String result=new Utils().getConnectionResult("plan","getAllPlans");
-//        Message message = new Message();
-//        message.obj = result;
-//        handler.sendMessage(message);
+        getMyAllPlan();
         setStatusBar();//状态栏隐藏
 
         plan_back.setOnClickListener(new View.OnClickListener() {
@@ -101,10 +90,29 @@ public class MyPlan extends AppCompatActivity {
 
     }
 
+    //向后台发送请求，获取所有未完成的计划
+    private void getMyAllPlan() {
+        new Thread(){
+            @Override
+            public void run() {
+                SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                String userId = pre.getString("user_id","");
+                //获取未完成计划的方法
+                String result=new Utils().getConnectionResult("plan","getAllPlan","userId="+userId);
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
+
+    //获取视图的控件
     public void getViews(){
         plan_back=findViewById(R.id.myplan_back);
 
     }
+
+    //设置手机的状态栏
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -112,4 +120,5 @@ public class MyPlan extends AppCompatActivity {
             window.setStatusBarColor(getResources().getColor(R.color.black));
         }
     }
+
 }
