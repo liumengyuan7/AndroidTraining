@@ -71,6 +71,7 @@ public class MachingActivity extends AppCompatActivity {
                 intent.putExtra("user_interest",re.split(";")[1]);
                 intent.putExtra("user_email",json2.getString("user_email"));
                 startActivity(intent);
+                finish();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -121,6 +122,8 @@ public class MachingActivity extends AppCompatActivity {
             if(second.equals("0")){
                 pop.dismiss();
                 Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT).show();
+            }else if(secondDown.getText().toString().equals("匹配成功！")){
+
             }else{
                 secondDown.setText("正在匹配中... "+second+"秒");
             }
@@ -212,7 +215,6 @@ public class MachingActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            pop.dismiss();
                             Message message = new Message();
                             message.obj = r;
                             matchHandler.sendMessage(message);
@@ -225,7 +227,6 @@ public class MachingActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        pop.dismiss();
                         Message message = new Message();
                         message.obj = result;
                         matchHandler.sendMessage(message);
