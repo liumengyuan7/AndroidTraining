@@ -59,6 +59,7 @@ public class PersonalCenter extends AppCompatActivity {
     private LinearLayout userSecurityLayout;
 
     private Button SignOut;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,13 +211,13 @@ public class PersonalCenter extends AppCompatActivity {
     class CustomClickListener implements View.OnClickListener,View.OnTouchListener {
         @Override
         public void onClick(View v) {
+            email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
             switch (v.getId()){
                 case R.id.personal_center_back://个人信息页面返回到-我的-activity
-                    Intent intent = new Intent(PersonalCenter.this, MyFragment.class);
                     finish();
                     break;
                 case R.id.userImageLayout://进入修改头像activity
-                    String email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
+
                     if(!email.equals("") && email != null){
                         Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
                         startActivity(intent1);
@@ -226,9 +227,13 @@ public class PersonalCenter extends AppCompatActivity {
                     }
                     break;
                 case R.id.userNicknameLayout://进入修改昵称activity
+                    if(!email.equals("") && email != null){
                     Intent intent2 = new Intent(PersonalCenter.this, Personal_center_updateUserNickname.class);
                     startActivity(intent2);
                     finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.userMoreLayout://进入更多修改activity
                     Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);

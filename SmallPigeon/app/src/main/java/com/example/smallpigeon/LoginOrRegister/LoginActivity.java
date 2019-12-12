@@ -157,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
                             +":8080/smallpigeon/user/userLogin?useremail="+username.getText().toString()
                             +"&&password="+md5Pass);
+                    Log.e("url",url.toString());
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));

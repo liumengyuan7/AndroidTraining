@@ -74,7 +74,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Chat.activity.ChatActivity"/>
+        <activity android:name=".Chat.activity.AddContactActivity"/>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="tGSM2HnpdI65l0aTDEaUpn81WzDUtvOo" />

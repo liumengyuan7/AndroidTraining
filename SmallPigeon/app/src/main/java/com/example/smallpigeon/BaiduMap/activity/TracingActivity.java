@@ -57,6 +57,14 @@ import com.example.smallpigeon.R;
 import com.example.smallpigeon.Run.FinishRunActivity;
 import com.example.smallpigeon.TrackApplication;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,6 +89,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                 long t = (long) msg.obj;
                 currentSecond = t;
                 tvTime.setText("用时："+getFormat(currentSecond));
+            }else if (msg.what==2){
+
             }
         }
     };
@@ -281,12 +291,10 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.btn_gather:
                 //结束按钮，关闭采集追踪服务并将跑步信息插入到数据库中
-                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                //TODO：将此次跑步的相关信息插入到数据库中，包括用户id、本次跑步时长(time)、公里数(dstance)、速度(speed)、当前日期(date)、本次跑步积分
-
-
                 //点击结束按钮显示分享和返回按钮
                 thread.interrupt();
+                //将跑步记录插入数据库中
+                insertRunMsg();
                 Intent intent = new Intent(TracingActivity.this, FinishRunActivity.class);
                 intent.putExtra("distance",tvDistance.getText().toString());
                 intent.putExtra("speed",tvSpeed.getText().toString());
@@ -305,6 +313,35 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
 
+    }
+
+    private void insertRunMsg() {
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        int id = Integer.parseInt(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id",""));
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    //TODO：将此次跑步的相关信息插入到数据库中，包括用户id、本次跑步时长(time)、公里数(dstance)、速度(speed)、当前日期(date)、本次跑步积分
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/user");
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 2;
+                    handler.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     /**

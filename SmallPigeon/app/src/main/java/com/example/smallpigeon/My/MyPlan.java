@@ -85,10 +85,10 @@ public class MyPlan extends AppCompatActivity {
         setContentView(R.layout.activity_my_plan);
         getViews();
         //获取未完成计划的方法
-        String result=new Utils().getConnectionResult("plan","getAllPlans");
-        Message message = new Message();
-        message.obj = result;
-        handler.sendMessage(message);
+//        String result=new Utils().getConnectionResult("plan","getAllPlans");
+//        Message message = new Message();
+//        message.obj = result;
+//        handler.sendMessage(message);
         setStatusBar();//状态栏隐藏
 
         plan_back.setOnClickListener(new View.OnClickListener() {
