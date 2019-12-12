@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/a"
+    android:alpha="0.9"
     tools:context=".LoginOrRegister.RegisterActivity">
     <LinearLayout
         android:gravity="center"
@@ -42,7 +43,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content">
             <EditText
-                android:alpha="0.5"
+                android:alpha="0.7"
                 android:gravity="center"
                 android:background="@drawable/circular"
                 android:layout_width="match_parent"
@@ -73,7 +74,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:alpha="0.5"
+                android:alpha="0.7"
                 android:gravity="center"
                 android:background="@drawable/circular"
                 android:inputType="textPassword"
@@ -110,7 +111,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:alpha="0.5"
+                android:alpha="0.7"
                 android:background="@drawable/circular"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -146,7 +147,7 @@
 
             <EditText
                 android:background="@drawable/circular"
-                android:alpha="0.5"
+                android:alpha="0.7"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -164,7 +165,7 @@
         <LinearLayout
             android:layout_gravity="center"
             android:background="@drawable/circular"
-            android:alpha="0.5"
+            android:alpha="0.7"
             android:orientation="horizontal"
             android:layout_width="300dp"
             android:layout_height="wrap_content">
@@ -172,7 +173,7 @@
                 android:gravity="center"
                 android:layout_width="150dp"
                 android:layout_marginLeft="15dp"
-                android:alpha="0.5"
+                android:alpha="0.7"
                 android:layout_height="50dp"
                 android:id="@+id/register_checkCode"
                 android:hint="输入验证码"
