@@ -122,8 +122,6 @@ public class MachingActivity extends AppCompatActivity {
             if(second.equals("0")){
                 pop.dismiss();
                 Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT).show();
-            }else if(secondDown.getText().toString().equals("匹配成功！")){
-
             }else{
                 secondDown.setText("正在匹配中... "+second+"秒");
             }
@@ -134,7 +132,6 @@ public class MachingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_maching );
-
         //获取视图控件
         getViews();
         //注册监听器
@@ -197,10 +194,8 @@ public class MachingActivity extends AppCompatActivity {
                 String id = pre.getString("user_id","");
                 for(int i=0;i<10;i++){
                     String result = new Utils().getConnectionResult("user","randomMatchFirst","id="+id);
-                    Log.e("result",result);
                     if(result.equals("empty")){
                         String r = new Utils().getConnectionResult("user","randomMatchSecond","id="+id);
-                        Log.e("r",r);
                         if(r.equals("no")){
                             try {
                                 Thread.sleep(1000);
@@ -279,9 +274,13 @@ public class MachingActivity extends AppCompatActivity {
             public void run() {
                 for(int i = 10;i>=0;i--){
                     try {
-                        Message message = new Message();
-                        message.obj = i;
-                        handleSecond.sendMessage(message);
+                        if(secondDown.getText().toString().equals("匹配成功！")){
+                            break;
+                        }else{
+                            Message message = new Message();
+                            message.obj = i;
+                            handleSecond.sendMessage(message);
+                        }
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -289,6 +288,11 @@ public class MachingActivity extends AppCompatActivity {
                 }
             }
         }.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
 }

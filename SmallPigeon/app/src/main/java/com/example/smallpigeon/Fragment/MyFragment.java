@@ -107,19 +107,26 @@ public class MyFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.right_Authentication:
-                    Toast.makeText(getContext(),"认证！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.right_community:
-                    Toast.makeText(getContext(),"社区！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.right_gradeRank:
-                    Toast.makeText(getContext(),"积分榜！",Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(getContext(), Paihang.class);
-                    startActivity(intent1);
+                    if(loginOrNot()){
+                        Intent intent1 = new Intent(getContext(), Paihang.class);
+                        startActivity(intent1);
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.right_plan:
-                    Intent intent2 = new Intent(getContext(), MyPlan.class);
-                    startActivity(intent2);
+                    if(loginOrNot()){
+                        Intent intent2 = new Intent(getContext(), MyPlan.class);
+                        startActivity(intent2);
+                    }else {
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
@@ -143,6 +150,17 @@ public class MyFragment extends Fragment {
             return false;
         }
 
+    }
+
+    //判断是否登录的方法
+    private boolean loginOrNot(){
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     //动态事件

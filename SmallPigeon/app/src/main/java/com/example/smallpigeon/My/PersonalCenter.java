@@ -236,14 +236,22 @@ public class PersonalCenter extends AppCompatActivity {
                     }
                     break;
                 case R.id.userMoreLayout://进入更多修改activity
-                    Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
-                    startActivity(intent3);
-                    finish();
+                    if(loginOrNot()){
+                        Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
+                        startActivity(intent3);
+                        finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.userSecurityLayout:
-                    Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
-                    startActivity(intent4);
-                    finish();
+                    if(loginOrNot()){
+                        Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
+                        startActivity(intent4);
+                        finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
@@ -273,6 +281,17 @@ public class PersonalCenter extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    //判断是否登录的方法
+    private boolean loginOrNot(){
+        SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     //动态事件
