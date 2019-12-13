@@ -23,10 +23,12 @@ public class FriendController extends Controller {
 ////        List<Integer> friends = gson.fromJson(contactList,type);
 ////
 ////    }
-    //查找所有用户信息
+    //查找相关用户信息
 	public void searchAllUser() throws IOException {
 	    System.out.println("zhixing");
-		String result = new FriendService().searchAllUser();
+//	    String userAccount = getPara("userAccount");
+//		String result = new FriendService().searchAllUser(userAccount);
+        String result = new FriendService().searchAllUser();
 		if(result==null) {
 			renderText("false");
 		}else {

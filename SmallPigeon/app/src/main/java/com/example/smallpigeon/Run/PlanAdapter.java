@@ -59,10 +59,10 @@ public class PlanAdapter extends BaseAdapter{
         TextView plan_nickname = convertView.findViewById( R.id.plan_matchNickname );
         Button btnToFinish = convertView.findViewById( R.id.goFinish );
         //添加数据
-        plan_time.setText(dataSourse.get(position).get("plan_time").toString());
-        plan_address.setText(dataSourse.get(position).get("plan_address").toString());
-        plan_email.setText(dataSourse.get(position).get("plan_email").toString());
-        plan_nickname.setText(dataSourse.get(position).get("plan_nickname").toString());
+        plan_time.setText(dataSourse.get(position).get("plan_time"));
+        plan_address.setText(dataSourse.get(position).get("plan_address"));
+        plan_email.setText(dataSourse.get(position).get("plan_email"));
+        plan_nickname.setText(dataSourse.get(position).get("plan_nickname"));
 
 
 

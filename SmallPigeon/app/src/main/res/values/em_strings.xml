@@ -138,6 +138,7 @@
     <string name="To_join_the_chat">Join the group</string>
     <string name="login">Login</string>
     <string name="user_name">User name</string>
+   <string name="user_email">User Email</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="confirmpassword">Confirm password</string>

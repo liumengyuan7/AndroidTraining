@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:background="@drawable/match_pop_style"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="200dp" >
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/mpigeon"/>
+        <TextView
+            android:id="@+id/secondDown"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="正在匹配中..."
+            android:textSize="18dp" />
+    </LinearLayout>
+</LinearLayout>

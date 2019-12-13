@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.smallpigeon.Chat.ChatHelper;
 import com.example.smallpigeon.Chat.activity.AddContactActivity;
 import com.example.smallpigeon.Chat.fragment.ContactListFragment;
 import com.example.smallpigeon.Chat.fragment.ConversationListFragment;
@@ -40,6 +41,7 @@ public class ChatFragment extends Fragment {
     private TextView tvFriends;
     private LinearLayout tabHuihua;
     private LinearLayout tabFriends;
+    private String useId="";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,16 +50,18 @@ public class ChatFragment extends Fragment {
         addFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ChatHelper.getInstance().sendMessageToSearchAllUser(getContext());
                 Intent intent = new Intent(getContext(), AddContactActivity.class);
                 startActivity(intent);
             }
         });
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
         String nickname = pre.getString("user_nickname","");
-        String useId = pre.getString("user_id","");
+        useId = pre.getString("user_id","");
         if(!nickname.equals("") && nickname != null){
             signIn(useId);
         }
+        ChatHelper.getInstance().sendMessageToGetContactList(getContext(), Integer.parseInt(useId));
         return view;
     }
 
@@ -103,6 +107,7 @@ public class ChatFragment extends Fragment {
                     tvFriends.setTextColor(Color.parseColor("#737373"));
                     break;
                 case R.id.tabFriends:
+
                     showFragment(listFragment);
                     currentFragment = listFragment;
                     tvHuihua.setTextColor(Color.parseColor("#737373"));
