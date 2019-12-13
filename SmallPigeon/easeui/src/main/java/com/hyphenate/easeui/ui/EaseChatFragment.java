@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -69,6 +71,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
@@ -85,6 +88,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected static final int REQUEST_CODE_CAMERA = 2;
     protected static final int REQUEST_CODE_LOCAL = 3;
     protected static final int REQUEST_CODE_DING_MSG = 4;
+//    protected static final int REQUEST_CODE_PLAN = 5;
 
     protected static final int MSG_TYPING_BEGIN = 0;
     protected static final int MSG_TYPING_END = 1;
@@ -126,11 +130,18 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     static final int ITEM_TAKE_PICTURE = 1;
     static final int ITEM_PICTURE = 2;
     static final int ITEM_LOCATION = 3;
+//    static final int ITEM_PLAN = 4;
     
-    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
+//    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location,R.string.attach_take_plan };
+//    protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
+//            R.drawable.ease_chat_location_selector,R.drawable.ease_chat_plan_selector};
+//    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION,ITEM_PLAN};
+
+    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location};
     protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
-            R.drawable.ease_chat_location_selector };
-    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
+            R.drawable.ease_chat_location_selector};
+    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION};
+
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
     protected boolean isRoaming = false;
@@ -593,9 +604,33 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 EMMessage dingMsg = EaseDingMessageHelper.get().createDingMessage(toChatUsername, msgContent);
                 sendMessage(dingMsg);
             }
+//            else if(requestCode == REQUEST_CODE_PLAN){
+//                addCake();
+//            }
         }
     }
+    /*
+     * 新增计划信息
+     * */
+    private void addCake() {
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.activity_add_cake, null);
+        final EditText edtTime = layout.findViewById(R.id.edtTime);
+        final EditText edtAddress = layout.findViewById(R.id.edtAddress);
+        alertBuilder.setView(layout);
+        alertBuilder.setNegativeButton("取消", null);
+        alertBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               String addTime = edtTime.getText().toString().trim();
+               String addAddress = edtAddress.getText().toString().trim();
 
+//                addCake(addName, addSize, addPrice);
+            }
+        });
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
+    }
 
     @Override
     public void onResume() {

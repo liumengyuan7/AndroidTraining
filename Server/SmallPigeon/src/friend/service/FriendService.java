@@ -5,7 +5,10 @@ import friend.dao.FriendDao;
 
 public class FriendService {
     //查询所有用户信息
-    public String searchAllUser() {
+//    public String searchAllUser(String userAccount) {
+//		return new FriendDao().searchAllUser(userAccount);
+//	}
+     public String searchAllUser() {
 		return new FriendDao().searchAllUser();
 	}
 	//添加好友

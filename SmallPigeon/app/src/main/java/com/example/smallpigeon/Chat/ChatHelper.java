@@ -28,9 +28,7 @@ public class ChatHelper {
     private static ChatHelper instance = null;
     private ChatModel chatModel = new ChatModel();
     private Map<String, EaseUser> contactList;
-//private Map<String, UserContent> contactList;
-//    private List<UserContent> contactList;
-    private Context appContext;
+    private Map<String, EaseUser> allUser;
     public synchronized static ChatHelper getInstance() {
         if (instance == null) {
             instance = new ChatHelper();
@@ -38,7 +36,7 @@ public class ChatHelper {
         return instance;
     }
     /**
-     * get contact list
+     * get contact list 好友列表
      *
      * @return
      */
@@ -53,17 +51,20 @@ public class ChatHelper {
 
         return contactList;
     }
-//        public Map<String, UserContent> getContactList() {
-//        if (isLoggedIn() && contactList == null) {
-//            contactList = chatModel.getContactList();
-//        }
-//        // return a empty non-null object to avoid app crash
-//        if(contactList == null){
-//            return new Hashtable<String, UserContent>();
-//        }
-//
-//        return contactList;
-//    }
+    /*
+    * 所有用户
+    * */
+    public Map<String, EaseUser> getAllUser() {
+        if (isLoggedIn() && allUser == null) {
+            allUser = chatModel.getAllUser();
+        }
+        // return a empty non-null object to avoid app crash
+        if(allUser == null){
+            return new Hashtable<String, EaseUser>();
+        }
+
+        return allUser;
+    }
     /**
      * if ever logged in
      *
@@ -72,8 +73,15 @@ public class ChatHelper {
     public boolean isLoggedIn() {
         return EMClient.getInstance().isLoggedInBefore();
     }
-    public void sendMessageToServer(Context context){
-        chatModel.sendMessageToServer(context);
+    //向服务器发送查找我的好友的数据
+    public void sendMessageToGetContactList(Context context,int myId){
+        chatModel.sendMessageToGetContactList(context,myId);
     }
-
+    //查找所有用户
+    public void sendMessageToSearchAllUser(Context context){
+        chatModel.sendMessageToSearchAllUser(context);
+    }
+    public void deleteContact(Context context,int myId,int friendId){
+        chatModel.deleteContact(context,myId,friendId);
+    }
 }
