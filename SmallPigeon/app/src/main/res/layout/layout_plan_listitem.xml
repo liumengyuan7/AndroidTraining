@@ -57,7 +57,7 @@
             android:gravity="top"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="170dp">
+            android:layout_height="200dp">
             <LinearLayout
                 android:gravity="center"
                 android:layout_weight="3.5"
