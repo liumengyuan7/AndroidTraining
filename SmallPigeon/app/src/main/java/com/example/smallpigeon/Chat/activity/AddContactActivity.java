@@ -14,24 +14,29 @@
 package com.example.smallpigeon.Chat.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-//import com.example.smallpigeon.Conversation.DemoHelper;
+import com.example.smallpigeon.Adapter.FindfriendAdapter;
 import com.example.smallpigeon.Chat.ChatHelper;
-//import com.example.smallpigeon.Chat.DemoHelper;
 import com.example.smallpigeon.R;
-import com.hyphenate.chat.EMClient;
-//import com.hyphenate.chatuidemo.DemoHelper;
-//import com.hyphenate.chatuidemo.R;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class AddContactActivity extends EaseBaseActivity {
 	private EditText editText;
@@ -40,17 +45,57 @@ public class AddContactActivity extends EaseBaseActivity {
 	private Button searchBtn;
 	private String toAddUsername;
 	private ProgressDialog progressDialog;
-
+	private List<EaseUser> userList=new ArrayList<>();
+	private ListView listView;
+	private FindfriendAdapter adapter;
+	private String myId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.em_activity_add_contact);
+		SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+		String myEmail = pre.getString("user_email","");
+		myId = pre.getString("user_id","");
 		TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
-		
+		listView = findViewById(R.id.addFriendList);
+//		if(!myId.equals("") && myId!=null) {
+			adapter = new FindfriendAdapter(getApplicationContext(), R.layout.list_item_addcontact, userList, Integer.parseInt(myId), myEmail);
+			listView.setAdapter(adapter);
+//		}
 		editText = (EditText) findViewById(R.id.edit_note);
+
+		ChatHelper.getInstance().sendMessageToSearchAllUser(getApplicationContext());
+
+		Log.e("得到的好友数据",userList.toString());
+		editText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				editText.getText().toString();
+				userList.clear();
+				Map<String, EaseUser> users = ChatHelper.getInstance().getAllUser();
+				for (int i=0;i<users.size();i++){
+					EaseUser user = users.get("easeUI"+i);
+					userList.add(user);
+				}
+				Log.e("出来的好友列表",userList.toString());
+				adapter.notifyDataSetChanged();
+//				searchedUserLayout.setVisibility(View.VISIBLE);
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
 		String strAdd = getResources().getString(R.string.add_friend);
 		mTextView.setText(strAdd);
-		String strUserName = getResources().getString(R.string.user_name);
+		String strUserName = getResources().getString(R.string.user_email);
 		editText.setHint(strUserName);
 		searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
 		nameText = (TextView) findViewById(R.id.name);
@@ -58,12 +103,13 @@ public class AddContactActivity extends EaseBaseActivity {
 		searchBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ChatHelper.getInstance().sendMessageToServer(getApplicationContext());
+				if(!editText.getText().toString().equals("") && editText.getText().toString()!=null) {
+				}
+
 				searchContact(v);
-
-
 			}
 		});
+
 	}
 	
 	
@@ -76,17 +122,18 @@ public class AddContactActivity extends EaseBaseActivity {
 		String saveText = searchBtn.getText().toString();
 		
 		if (getString(R.string.button_search).equals(saveText)) {
-			toAddUsername = name;
+//			toAddUsername = name;
 			if(TextUtils.isEmpty(name)) {
 				new EaseAlertDialog(this, R.string.Please_enter_a_username).show();
 				return;
 			}
-			
-			// TODO you can search the user from your app server here.
-			if(ChatHelper.getInstance().getContactList().containsValue(toAddUsername)){
-				searchedUserLayout.setVisibility(View.VISIBLE);
-				nameText.setText(toAddUsername);
-			}
+//			Log.e("添加好友界面",ChatHelper.getInstance().getContactList().toString());
+//			// TODO you can search the user from your app server here.
+//			if(ChatHelper.getInstance().getContactList().containsValue(toAddUsername)){
+//				searchedUserLayout.setVisibility(View.VISIBLE);
+//				nameText.setText(toAddUsername);
+//			}
+
 			//show the userame and add button if user exist
 
 //			searchedUserLayout.setVisibility(View.VISIBLE);
@@ -95,57 +142,10 @@ public class AddContactActivity extends EaseBaseActivity {
 		} 
 	}	
 	
-	/**
-	 *  add contact
-	 * @param view
-	 */
-	public void addContact(View view){
-		if(EMClient.getInstance().getCurrentUser().equals(nameText.getText().toString())){
-			new EaseAlertDialog(this, R.string.not_add_myself).show();
-			return;
-		}
-		
-//		if(ChatHelper.getInstance().getContactList().containsKey(nameText.getText().toString())){
-//		    //let the user know the contact already in your contact list
-//
-//			new EaseAlertDialog(this, R.string.This_user_is_already_your_friend).show();
-//			return;
-//		}
-
-		progressDialog = new ProgressDialog(this);
-		String stri = getResources().getString(R.string.Is_sending_a_request);
-		progressDialog.setMessage(stri);
-		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.show();
-		
-		new Thread(new Runnable() {
-			public void run() {
-				
-				try {
-					//demo use a hardcode reason here, you need let user to input if you like
-					String s = getResources().getString(R.string.Add_a_friend);
-					EMClient.getInstance().contactManager().addContact(toAddUsername, s);
-					runOnUiThread(new Runnable() {
-						public void run() {
-							progressDialog.dismiss();
-							String s1 = getResources().getString(R.string.send_successful);
-							Toast.makeText(getApplicationContext(), s1, Toast.LENGTH_LONG).show();
-						}
-					});
-				} catch (final Exception e) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							progressDialog.dismiss();
-							String s2 = getResources().getString(R.string.Request_add_buddy_failure);
-							Toast.makeText(getApplicationContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
-						}
-					});
-				}
-			}
-		}).start();
-	}
-	
 	public void back(View v) {
+//		if(!myId.equals("") && myId!=null) {
+			ChatHelper.getInstance().sendMessageToGetContactList(getApplicationContext(), Integer.parseInt(myId));
+//		}
 		finish();
 	}
 }

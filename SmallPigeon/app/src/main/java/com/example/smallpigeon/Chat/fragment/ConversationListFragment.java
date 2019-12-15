@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.example.smallpigeon.Conversation.activity.ChatActivity;
 import com.example.smallpigeon.Chat.activity.ChatActivity;
 import com.example.smallpigeon.R;
 import com.hyphenate.chat.EMClient;

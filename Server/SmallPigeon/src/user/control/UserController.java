@@ -187,7 +187,7 @@ public class UserController extends Controller {
         }else{
         	User user = null;
         	if(list.size()==1){
-        		user = list.get(0);  //此处应为随机。
+        		user = list.get(0);
 			}else{
         		int s = new Random().nextInt(list.size());
         		user = list.get(s);

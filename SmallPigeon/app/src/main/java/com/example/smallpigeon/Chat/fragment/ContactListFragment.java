@@ -14,12 +14,13 @@
 package com.example.smallpigeon.Chat.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -29,25 +30,12 @@ import android.widget.Toast;
 
 import com.example.smallpigeon.Chat.ChatHelper;
 import com.example.smallpigeon.Chat.activity.ChatActivity;
-import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.R;
-import com.hyphenate.chat.EMClient;
-//import com.hyphenate.chatuidemo.Constant;
-//import com.hyphenate.chatuidemo.DemoHelper;
-//import com.hyphenate.chatuidemo.DemoHelper.DataSyncListener;
-//import com.hyphenate.chatuidemo.R;
-//import com.hyphenate.chatuidemo.conference.ConferenceActivity;
-//import com.hyphenate.chatuidemo.db.InviteMessgeDao;
-//import com.hyphenate.chatuidemo.db.UserDao;
-//import com.hyphenate.chatuidemo.widget.ContactItemView;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
-import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
-import com.hyphenate.util.NetUtils;
 
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,8 +50,9 @@ public class ContactListFragment extends EaseContactListFragment {
 //    private ContactInfoSyncListener contactInfoSyncListener;//同步联系人信息监听
     private View loadingView;
     private ContactItemView applicationItem;
+    private String myId;
 //    private InviteMessgeDao inviteMessgeDao;
-
+    private Map<String, EaseUser> m;
     @SuppressLint("InflateParams")
     @Override
     protected void initView() {
@@ -72,27 +61,38 @@ public class ContactListFragment extends EaseContactListFragment {
         HeaderItemClickListener clickListener = new HeaderItemClickListener();
         applicationItem = (ContactItemView) headerView.findViewById(R.id.application_item);
         applicationItem.setOnClickListener(clickListener);
-//        headerView.findViewById(R.id.group_item).setOnClickListener(clickListener);
-//        headerView.findViewById(R.id.chat_room_item).setOnClickListener(clickListener);
-//        headerView.findViewById(R.id.robot_item).setOnClickListener(clickListener);
-//        headerView.findViewById(R.id.conference_item).setOnClickListener(clickListener);
         listView.addHeaderView(headerView);
         //add loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
         contentContainer.addView(loadingView);
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        myId = pre.getString("user_id","");
+//        ChatHelper.getInstance().sendMessageToGetContactList(getContext(), myId);
+        if(!myId.equals("") && myId!=null){
+            ChatHelper.getInstance().sendMessageToGetContactList(getContext(), Integer.parseInt(myId));
+        }else{
 
+        }
         registerForContextMenu(listView);
     }
 
 //    @Override
-//    public void refresh() {
-//        Map<String, EaseUser> m = DemoHelper.getInstance().getContactList();
-//        if (m instanceof Hashtable<?, ?>) {
-//            //noinspection unchecked
-//            m = (Map<String, EaseUser>) ((Hashtable<String, EaseUser>)m).clone();
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        if (myId != 0) {
+//            ChatHelper.getInstance().sendMessageToGetContactList(getContext(), myId);
 //        }
-//        setContactsMap(m);
-//        super.refresh();
+//    }
+
+    @Override
+    public void refresh() {
+        m = ChatHelper.getInstance().getContactList();
+        if (m instanceof Hashtable<?, ?>) {
+            //noinspection unchecked
+            m = (Map<String, EaseUser>) ((Hashtable<String, EaseUser>)m).clone();
+        }
+        setContactsMap(m);
+        super.refresh();
 //        if(inviteMessgeDao == null){
 //            inviteMessgeDao = new InviteMessgeDao(getActivity());
 //        }
@@ -101,20 +101,16 @@ public class ContactListFragment extends EaseContactListFragment {
 //        }else{
 //            applicationItem.hideUnreadMsgView();
 //        }
-//    }
-//
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     protected void setUpView() {
         //设置联系人数据
-        Map<String, EaseUser> m = ChatHelper.getInstance().getContactList();
-//        Map<String, UserContent> m = ChatHelper.getInstance().getContactList();
+        m = ChatHelper.getInstance().getContactList();
         if (m instanceof Hashtable<?, ?>) {
             m = (Map<String, EaseUser>) ((Hashtable<String, EaseUser>)m).clone();
         }
-//        if (m instanceof Hashtable<?, ?>) {
-//            m = (Map<String, UserContent>) ((Hashtable<String, UserContent>)m).clone();
-//        }
         setContactsMap(m);
         super.setUpView();
         listView.setOnItemClickListener(new OnItemClickListener() {
@@ -122,12 +118,14 @@ public class ContactListFragment extends EaseContactListFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EaseUser user = (EaseUser)listView.getItemAtPosition(position);
-//                UserContent user = (UserContent)listView.getItemAtPosition(position);
                 if (user != null) {
 //                    String username = user.getUsername();
-                    String username = user.getNickname();
+                    String userNickname = user.getNickname();
+                    String userId = String.valueOf(user.getId());
                     // demo中直接进入聊天页面，实际一般是进入用户详情页
-                    startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", username));
+                    startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", userId)
+                            .putExtra("userNickName",userNickname)
+                            .putExtra("myId",myId));
                 }
             }
         });
@@ -180,9 +178,6 @@ public class ContactListFragment extends EaseContactListFragment {
 //			try {
 //                // delete contact
 //                deleteContact(toBeProcessUser);
-//                // remove invitation message
-//                InviteMessgeDao dao = new InviteMessgeDao(getActivity());
-//                dao.deleteMessage(toBeProcessUser.getUsername());
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
@@ -193,8 +188,8 @@ public class ContactListFragment extends EaseContactListFragment {
 //		}
 //		return super.onContextItemSelected(item);
 //	}
-//
-//
+
+
 //	/**
 //	 * delete contact
 //	 *
@@ -210,17 +205,13 @@ public class ContactListFragment extends EaseContactListFragment {
 //		new Thread(new Runnable() {
 //			public void run() {
 //				try {
-//					EMClient.getInstance().contactManager().deleteContact(tobeDeleteUser.getUsername());
-//					// remove user from memory and database
-//					UserDao dao = new UserDao(getActivity());
-//					dao.deleteContact(tobeDeleteUser.getUsername());
-//					DemoHelper.getInstance().getContactList().remove(tobeDeleteUser.getUsername());
+//					EMClient.getInstance().contactManager().deleteContact(tobeDeleteUser.getId()+"");
+//					ChatHelper.getInstance().deleteContact(getContext(),myId,tobeDeleteUser.getId());
 //					getActivity().runOnUiThread(new Runnable() {
 //						public void run() {
 //							pd.dismiss();
 //							contactList.remove(tobeDeleteUser);
 //							contactListLayout.refresh();
-//
 //						}
 //					});
 //				} catch (final Exception e) {
@@ -237,7 +228,7 @@ public class ContactListFragment extends EaseContactListFragment {
 //		}).start();
 //
 //	}
-//
+
 	class ContactSyncListener implements ChatHelper.DataSyncListener {
         @Override
         public void onSyncComplete(final boolean success) {

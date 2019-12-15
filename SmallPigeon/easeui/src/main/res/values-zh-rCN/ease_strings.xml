@@ -10,6 +10,7 @@
     <string name="attach_smile">表情</string>
     <string name="attach_picture">图片</string>
     <string name="attach_take_pic">拍照</string>
+    <string name="attach_take_plan">计划</string>
     <string name="attach_location">位置</string>
     <string name="attach_video">视频</string>
     <string name="attach_file">文件</string>
@@ -110,6 +111,7 @@
     <string name="To_join_the_chat">加入群聊</string>
     <string name="login">登录</string>
     <string name="user_name">用户名</string>
+    <string name="user_email">用户账号</string>
     <string name="password">密码</string>
     <string name="register">注册</string>
     <string name="confirmpassword">确认密码</string>

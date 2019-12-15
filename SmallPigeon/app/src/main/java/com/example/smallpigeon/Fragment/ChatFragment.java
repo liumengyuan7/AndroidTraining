@@ -20,7 +20,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.smallpigeon.Chat.ChatHelper;
 import com.example.smallpigeon.Chat.activity.AddContactActivity;
 import com.example.smallpigeon.Chat.fragment.ContactListFragment;
 import com.example.smallpigeon.Chat.fragment.ConversationListFragment;
@@ -40,23 +42,17 @@ public class ChatFragment extends Fragment {
     private TextView tvFriends;
     private LinearLayout tabHuihua;
     private LinearLayout tabFriends;
+    private String useId="";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chat,container,false);
-        addFriends = view.findViewById(R.id.addFriends);
-        addFriends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AddContactActivity.class);
-                startActivity(intent);
-            }
-        });
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
         String nickname = pre.getString("user_nickname","");
-        String useId = pre.getString("user_id","");
+        useId = pre.getString("user_id","");
         if(!nickname.equals("") && nickname != null){
             signIn(useId);
+            ChatHelper.getInstance().sendMessageToGetContactList(getContext(), Integer.parseInt(useId));
         }
         return view;
     }
@@ -86,11 +82,13 @@ public class ChatFragment extends Fragment {
         tabFriends = view.findViewById(R.id.tabFriends);
         tvHuihua = view.findViewById(R.id.tvHuihua);
         tvFriends = view.findViewById(R.id.tvFriends);
+        addFriends = view.findViewById(R.id.addFriends);
     }
     private void setListeners() {
         MyClickListener myClickListener = new MyClickListener();
         tabHuihua.setOnClickListener(myClickListener);
         tabFriends.setOnClickListener(myClickListener);
+        addFriends.setOnClickListener(myClickListener);
     }
     private class MyClickListener implements View.OnClickListener{
 
@@ -103,10 +101,21 @@ public class ChatFragment extends Fragment {
                     tvFriends.setTextColor(Color.parseColor("#737373"));
                     break;
                 case R.id.tabFriends:
+
                     showFragment(listFragment);
                     currentFragment = listFragment;
                     tvHuihua.setTextColor(Color.parseColor("#737373"));
                     tvFriends.setTextColor(Color.parseColor("#259B24"));
+                    break;
+                case R.id.addFriends:
+                    //TODO:先判断用户是否登陆，若没有登陆则提示用户先登录，用户登陆后才能进行跳转
+                    if(loginOrNot()){
+                        ChatHelper.getInstance().sendMessageToSearchAllUser(getContext());
+                        Intent intent = new Intent(getContext(), AddContactActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
@@ -138,5 +147,15 @@ public class ChatFragment extends Fragment {
 
             }
         });
+    }
+    //判断是否登录的方法
+    private boolean loginOrNot(){
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

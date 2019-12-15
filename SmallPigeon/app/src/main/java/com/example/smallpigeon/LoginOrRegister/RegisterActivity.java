@@ -519,14 +519,13 @@ public class RegisterActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.e("yuanyuan7",result+","+ result);
                 try {
                     EMClient.getInstance().createAccount(result,result);//同步方法
-                    Log.e("yuanyuan7","注册成功"+result+","+
-                            register_userPassword.getText().toString().trim());
+                    Log.e("RegisterActivity注册成功","注册成功"+result+","+
+                            result);
                 } catch (HyphenateException e) {
                     e.printStackTrace();
-                    Log.e("注册失败",e.getErrorCode()+e.getDescription());
+                    Log.e("RegisterActivity注册失败",e.getErrorCode()+e.getDescription());
                 }
             }
         }).start();

@@ -187,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
      * 登录  异步
      * */
     private void signIn(String userId) {
-        EMClient.getInstance().login(userId, password.getText().toString().trim(), new EMCallBack() {
+        EMClient.getInstance().login(userId, userId, new EMCallBack() {
             @Override
             public void onSuccess() {
                 Log.e("环信登录","登录成功");
