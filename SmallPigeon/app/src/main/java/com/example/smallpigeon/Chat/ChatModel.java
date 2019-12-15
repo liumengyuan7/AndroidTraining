@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChatModel {
-    private Utils utils = new Utils();
     private Context context;
     private Map<String,EaseUser> allUser = new HashMap<>();
     private Map<String,EaseUser> contactList = new HashMap<>();

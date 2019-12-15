@@ -1,5 +1,7 @@
 package plan.service;
 
+import java.text.ParseException;
+
 import plan.dao.PlanDao;
 
 /**
@@ -20,5 +22,9 @@ public class PlanService {
 
     public boolean deleteUserPlan(String planId){
         return new PlanDao().deleteUserPlan(planId);
+    }
+
+    public boolean addUserPlan(int userId,int friendId,String datetime,String address) throws ParseException {
+        return new PlanDao().addUserPlan(userId,friendId,datetime,address);
     }
 }

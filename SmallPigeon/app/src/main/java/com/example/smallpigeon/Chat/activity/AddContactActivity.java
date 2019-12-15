@@ -48,18 +48,20 @@ public class AddContactActivity extends EaseBaseActivity {
 	private List<EaseUser> userList=new ArrayList<>();
 	private ListView listView;
 	private FindfriendAdapter adapter;
-	private int myId;
+	private String myId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.em_activity_add_contact);
 		SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		String myEmail = pre.getString("user_email","");
-		myId = Integer.parseInt(pre.getString("user_id",""));
+		myId = pre.getString("user_id","");
 		TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
 		listView = findViewById(R.id.addFriendList);
-		adapter = new FindfriendAdapter(getApplicationContext(),R.layout.list_item_addcontact,userList,myId,myEmail);
-		listView.setAdapter(adapter);
+//		if(!myId.equals("") && myId!=null) {
+			adapter = new FindfriendAdapter(getApplicationContext(), R.layout.list_item_addcontact, userList, Integer.parseInt(myId), myEmail);
+			listView.setAdapter(adapter);
+//		}
 		editText = (EditText) findViewById(R.id.edit_note);
 
 		ChatHelper.getInstance().sendMessageToSearchAllUser(getApplicationContext());
@@ -141,7 +143,9 @@ public class AddContactActivity extends EaseBaseActivity {
 	}	
 	
 	public void back(View v) {
-		ChatHelper.getInstance().sendMessageToGetContactList(getApplicationContext(), myId);
+//		if(!myId.equals("") && myId!=null) {
+			ChatHelper.getInstance().sendMessageToGetContactList(getApplicationContext(), Integer.parseInt(myId));
+//		}
 		finish();
 	}
 }

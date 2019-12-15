@@ -50,9 +50,9 @@ public class ContactListFragment extends EaseContactListFragment {
 //    private ContactInfoSyncListener contactInfoSyncListener;//同步联系人信息监听
     private View loadingView;
     private ContactItemView applicationItem;
-    private int myId;
+    private String myId;
 //    private InviteMessgeDao inviteMessgeDao;
-
+    private Map<String, EaseUser> m;
     @SuppressLint("InflateParams")
     @Override
     protected void initView() {
@@ -66,20 +66,27 @@ public class ContactListFragment extends EaseContactListFragment {
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
         contentContainer.addView(loadingView);
         SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        myId = Integer.parseInt(pre.getString("user_id",""));
+        myId = pre.getString("user_id","");
 //        ChatHelper.getInstance().sendMessageToGetContactList(getContext(), myId);
+        if(!myId.equals("") && myId!=null){
+            ChatHelper.getInstance().sendMessageToGetContactList(getContext(), Integer.parseInt(myId));
+        }else{
+
+        }
         registerForContextMenu(listView);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ChatHelper.getInstance().sendMessageToGetContactList(getContext(), myId);
-    }
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        if (myId != 0) {
+//            ChatHelper.getInstance().sendMessageToGetContactList(getContext(), myId);
+//        }
+//    }
 
     @Override
     public void refresh() {
-        Map<String, EaseUser> m = ChatHelper.getInstance().getContactList();
+        m = ChatHelper.getInstance().getContactList();
         if (m instanceof Hashtable<?, ?>) {
             //noinspection unchecked
             m = (Map<String, EaseUser>) ((Hashtable<String, EaseUser>)m).clone();
@@ -100,7 +107,7 @@ public class ContactListFragment extends EaseContactListFragment {
     @Override
     protected void setUpView() {
         //设置联系人数据
-        Map<String, EaseUser> m = ChatHelper.getInstance().getContactList();
+        m = ChatHelper.getInstance().getContactList();
         if (m instanceof Hashtable<?, ?>) {
             m = (Map<String, EaseUser>) ((Hashtable<String, EaseUser>)m).clone();
         }
@@ -116,7 +123,9 @@ public class ContactListFragment extends EaseContactListFragment {
                     String userNickname = user.getNickname();
                     String userId = String.valueOf(user.getId());
                     // demo中直接进入聊天页面，实际一般是进入用户详情页
-                    startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", userId).putExtra("userNickName",userNickname));
+                    startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", userId)
+                            .putExtra("userNickName",userNickname)
+                            .putExtra("myId",myId));
                 }
             }
         });

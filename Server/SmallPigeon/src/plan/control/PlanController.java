@@ -3,9 +3,13 @@ package plan.control;
 import com.jfinal.core.Controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Plan;
 import plan.service.PlanService;
 
 /**
@@ -47,6 +51,17 @@ public class PlanController extends Controller {
             renderText("false");
         }
     }
-
+    public void addUserPlan() throws ParseException {
+        int userId= Integer.parseInt(getPara("myId"));
+        int friendId = Integer.parseInt(getPara("friendId"));
+        String datetime = getPara("datetime");
+        String address = getPara("address");
+        boolean result = new PlanService().addUserPlan(userId,friendId,datetime,address);
+        if(result){
+            renderText("true");
+        }else{
+            renderText("false");
+        }
+    }
 
 }
