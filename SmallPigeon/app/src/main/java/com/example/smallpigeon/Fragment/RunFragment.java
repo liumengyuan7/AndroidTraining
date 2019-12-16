@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +21,33 @@ import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Run.MachingActivity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class RunFragment extends Fragment {
 
     private Button btnPersonal;
     private Button btnMatching;
-
+    private Button TodayNum;//今日总公里数
     private MyClickListener listener;
+    private Handler handler  = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1){
+
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -34,7 +56,37 @@ public class RunFragment extends Fragment {
         getViews(view);
         listener = new MyClickListener();
         registerListener();
+        //TODO:从数据库中查询今日该用户的总公里数
+        selectLength();
         return view;
+    }
+
+    private void selectLength() {
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    //TODO：根据日期查询该用户跑步的总公里数
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/user");
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 1;
+                    handler.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
 
@@ -45,7 +97,6 @@ public class RunFragment extends Fragment {
             switch (v.getId()){
                 case R.id.PersonalButton:
                     //个人模式
-                    //TODO:先判断用户是否登陆，若没有登陆则提示用户先登录，用户登陆后才能进行跳转
                     if(loginOrNot()){
                         Intent intentP = new Intent( getContext(), TracingActivity.class );
                         startActivity( intentP );
@@ -87,5 +138,6 @@ public class RunFragment extends Fragment {
     private void getViews(View view) {
         btnPersonal = view.findViewById( R.id.PersonalButton );
         btnMatching = view.findViewById( R.id.MatchingButton );
+        TodayNum = view.findViewById(R.id.TodayNum);
     }
 }
