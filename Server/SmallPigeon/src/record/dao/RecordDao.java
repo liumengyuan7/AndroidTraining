@@ -28,7 +28,6 @@ public class RecordDao {
 
     //获取总的公里数
     public String getTotalKm(String id){
-        System.out.println("111111111111");
         List<Record> list = Record.dao.find("select sum(record_distance) 'distance' from record " +
                 "where substr(adddate(now(),-1),0,10)=substr(record_date,0,10) and user_id=?",id);
         return list.get(0).getStr("distance");

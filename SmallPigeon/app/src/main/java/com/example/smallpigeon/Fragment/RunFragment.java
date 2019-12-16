@@ -45,7 +45,12 @@ public class RunFragment extends Fragment {
     private Handler handler  = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            TodayNum.setText(msg.obj+"");
+            String result = msg.obj+"";
+            if(result==null || result.equals("null")){
+                TodayNum.setText("0.0");
+            }else{
+                TodayNum.setText(result);
+            }
         }
     };
 
