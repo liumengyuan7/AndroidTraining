@@ -64,6 +64,7 @@ public class RunFragment extends Fragment {
         new Thread(){
             @Override
             public void run() {
+                //TODO：根据日期查询该用户跑步的总公里数
                 String id = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id","");
                 String result = new Utils().getConnectionResult("record","getTotalKm","id="+id);
                 Message message = new Message();

@@ -326,11 +326,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void run() {
                 //TODO：将此次跑步的相关信息插入到数据库中，包括用户id、本次跑步时长(time)、公里数(distance)、速度(speed)、当前日期(date)、本次跑步积分
-                String params = "id="+id+"&&time="+tvTime.getText().toString()+"&&distance="+tvDistance.getText().toString()+"&&speed="+
-                        tvSpeed.getText().toString();
+                String params = "id="+id+"&&time="+time+"&&distance="+distance+"&&speed="+speed;
                 String result = new Utils().getConnectionResult("record","addUserRecord",params);
-
-                
             }
         }.start();
     }
