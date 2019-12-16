@@ -12,6 +12,7 @@ import record.service.RecordService;
 
 public class RecordController extends Controller {
 
+    //添加用户的跑步记录
     public void addUserRecord(){
         String id = getPara("id");
         String distance = getPara("distance");
@@ -23,6 +24,12 @@ public class RecordController extends Controller {
         }else{
             renderText("false");
         }
+    }
+
+    //获取总的公里数
+    public void getTotalKm(){
+        String id = getPara("id");
+        renderText(new RecordService().getTotalKm(id));
     }
 
 }

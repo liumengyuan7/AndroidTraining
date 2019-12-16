@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Run.MachingActivity;
+import com.example.smallpigeon.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,10 +44,7 @@ public class RunFragment extends Fragment {
     private Handler handler  = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1){
-
-            }
+            TodayNum.setText(msg.obj+"");
         }
     };
 
@@ -63,29 +61,14 @@ public class RunFragment extends Fragment {
     }
 
     private void selectLength() {
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         new Thread(){
             @Override
             public void run() {
-                try {
-                    //TODO：根据日期查询该用户跑步的总公里数
-                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user");
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String result = reader.readLine();
-                    Message message = new Message();
-                    message.obj = result;
-                    message.what = 1;
-                    handler.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                String id = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id","");
+                String result = new Utils().getConnectionResult("record","getTotalKm","id="+id);
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
             }
         }.start();
     }

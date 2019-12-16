@@ -14,4 +14,8 @@ public class RecordService {
         return new RecordDao().addUserRecord(id,distance,time,speed);
     }
 
+    public String getTotalKm(String id){
+        return new RecordDao().getTotalKm(id);
+    }
+
 }

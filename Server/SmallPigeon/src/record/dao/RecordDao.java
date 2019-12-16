@@ -2,6 +2,7 @@ package record.dao;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import bean.Record;
 import bean.User;
@@ -14,6 +15,7 @@ import bean.User;
 
 public class RecordDao {
 
+    //添加用户的记录
     public boolean addUserRecord(String id,String distance,String time,String speed){
         Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
@@ -22,6 +24,13 @@ public class RecordDao {
         boolean result = new Record().set("user_id",id).set("record_time",time).set("record_distance",distance)
                 .set("record_speed",speed).set("record_date",timestamp).set("record_points",6).save();
         return result;
+    }
+
+    //获取总的公里数
+    public String getTotalKm(String id){
+        List<Record> list = Record.dao.find("select sum(record_distance) 'distance' from record " +
+                "where substr(adddate(now(),-1),0,10)=substr(record_date,0,10) and user_id=?",id);
+        return list.get(0).getStr("distance");
     }
 
 }
