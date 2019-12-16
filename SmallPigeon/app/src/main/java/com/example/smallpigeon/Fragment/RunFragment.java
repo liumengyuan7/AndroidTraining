@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
@@ -37,7 +38,7 @@ public class RunFragment extends Fragment {
 
     private Button btnPersonal;
     private Button btnMatching;
-    private Button TodayNum;//今日总公里数
+    private TextView TodayNum;//今日总公里数
     private MyClickListener listener;
     private Handler handler  = new Handler(){
         @Override

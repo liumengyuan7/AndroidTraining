@@ -106,6 +106,7 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
     private Button traceBtn = null;//开始/暂停按钮
     private Button continueBtn = null;//继续按钮
     private Button gatherBtn = null;//停止按钮
+    private ImageView tracing_back = null;//返回按钮
 
     private NotificationManager notificationManager = null;
 
@@ -245,10 +246,12 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         traceBtn = (Button) findViewById(R.id.btn_trace);
         gatherBtn = (Button) findViewById(R.id.btn_gather);
         continueBtn = findViewById(R.id.btn_trace1);
+        tracing_back = findViewById(R.id.tracing_back);
 
         traceBtn.setOnClickListener(this);
         gatherBtn.setOnClickListener(this);
         continueBtn.setOnClickListener(this);
+        tracing_back.setOnClickListener(this);
         setTraceBtnStyle();
 //        setGatherBtnStyle();
 
@@ -308,7 +311,9 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                 startRealTimeLoc(packInterval);
                 trackApp.mClient.startGather(traceListener);//开始采集
                 break;
-
+            case R.id.tracing_back:
+                finish();
+                break;
             default:
                 break;
         }
