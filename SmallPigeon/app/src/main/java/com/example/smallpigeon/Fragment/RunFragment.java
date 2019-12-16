@@ -40,15 +40,6 @@ public class RunFragment extends Fragment {
     private Button btnMatching;
     private TextView TodayNum;//今日总公里数
     private MyClickListener listener;
-    private Handler handler  = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1){
-
-            }
-        }
-    };
 
     @Nullable
     @Override
@@ -63,29 +54,10 @@ public class RunFragment extends Fragment {
     }
 
     private void selectLength() {
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         new Thread(){
             @Override
             public void run() {
-                try {
-                    //TODO：根据日期查询该用户跑步的总公里数
-                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user");
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String result = reader.readLine();
-                    Message message = new Message();
-                    message.obj = result;
-                    message.what = 1;
-                    handler.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //TODO：根据日期查询该用户跑步的总公里数
             }
         }.start();
     }
