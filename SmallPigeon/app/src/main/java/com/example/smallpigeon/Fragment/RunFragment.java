@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,12 @@ public class RunFragment extends Fragment {
     private Handler handler  = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            TodayNum.setText(msg.obj+"");
+            String result = msg.obj+"";
+            if(result==null || result.equals("null")){
+                TodayNum.setText("0.0");
+            }else{
+                TodayNum.setText(result);
+            }
         }
     };
 
@@ -55,8 +61,10 @@ public class RunFragment extends Fragment {
         getViews(view);
         listener = new MyClickListener();
         registerListener();
-        //TODO:从数据库中查询今日该用户的总公里数
-        selectLength();
+        if(loginOrNot()){
+            //TODO:从数据库中查询今日该用户的总公里数
+            selectLength();
+        }else { }
         return view;
     }
 
@@ -66,6 +74,7 @@ public class RunFragment extends Fragment {
             public void run() {
                 //TODO：根据日期查询该用户跑步的总公里数
                 String id = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id","");
+                Log.e("dsadsadsadas",id);
                 String result = new Utils().getConnectionResult("record","getTotalKm","id="+id);
                 Message message = new Message();
                 message.obj = result;
@@ -124,5 +133,14 @@ public class RunFragment extends Fragment {
         btnPersonal = view.findViewById( R.id.PersonalButton );
         btnMatching = view.findViewById( R.id.MatchingButton );
         TodayNum = view.findViewById(R.id.TodayNum);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(loginOrNot()){
+            //TODO:从数据库中查询今日该用户的总公里数
+            selectLength();
+        }else { }
     }
 }

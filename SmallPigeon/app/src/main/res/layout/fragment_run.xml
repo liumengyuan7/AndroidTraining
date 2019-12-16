@@ -23,7 +23,10 @@
             android:text="今日公里数"
             android:textColor="#259B24"
             android:textSize="20sp" />
-
+        <LinearLayout
+            android:layout_marginLeft="11dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/TodayNum"
             android:layout_width="wrap_content"
@@ -34,13 +37,15 @@
             android:layout_gravity="center" />
 
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
+            android:layout_gravity="center"
             android:text="KM"
-            android:layout_marginTop="-45dp"
             android:textColor="#259B24"
             android:textSize="20sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
