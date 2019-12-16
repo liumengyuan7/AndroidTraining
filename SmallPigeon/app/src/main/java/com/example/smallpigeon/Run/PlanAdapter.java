@@ -1,5 +1,6 @@
 package com.example.smallpigeon.Run;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,17 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
-import com.example.smallpigeon.Run.TracingActivity;
 
 import java.util.List;
 import java.util.Map;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class PlanAdapter extends BaseAdapter{
     private Context context;
@@ -74,7 +71,7 @@ public class PlanAdapter extends BaseAdapter{
                 showAlertDialog();
             }
         } );
-        notifyDataSetChanged();
+
         return convertView;
     }
 

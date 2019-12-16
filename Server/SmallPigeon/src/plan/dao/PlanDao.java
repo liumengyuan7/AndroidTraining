@@ -45,6 +45,7 @@ public class PlanDao {
         boolean result = Plan.dao.deleteById(planId);
         return result;
     }
+
     //添加用户计划
     public boolean addUserPlan(int userId,int friendId,String datetime,String address) throws ParseException {
         String year = datetime.substring(0, datetime.indexOf("年"));
@@ -70,4 +71,5 @@ public class PlanDao {
             return false;
         }
     }
+
 }

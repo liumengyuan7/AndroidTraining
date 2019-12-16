@@ -65,7 +65,7 @@ public class MyPlan extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }else {
-                Toast toastTip = Toast.makeText(getApplicationContext(),"获取失败！请检查网络！",Toast.LENGTH_LONG);
+                Toast toastTip = Toast.makeText(getApplicationContext(),"你的计划为空哦！",Toast.LENGTH_LONG);
                 toastTip.setGravity(Gravity.CENTER, 0, 0);
                 toastTip.show();
             }

@@ -99,7 +99,7 @@ public class MachingActivity extends AppCompatActivity {
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.lv_machingTask);
-                    planAdapter = new PlanAdapter(getApplicationContext(),information,R.layout.run_maching_listitem);
+                    planAdapter = new PlanAdapter(MachingActivity.this,information,R.layout.run_maching_listitem);
                     listView1.setAdapter(planAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

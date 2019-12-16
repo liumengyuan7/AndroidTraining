@@ -51,6 +51,8 @@ public class PlanController extends Controller {
             renderText("false");
         }
     }
+
+    //添加用户的计划
     public void addUserPlan() throws ParseException {
         int userId= Integer.parseInt(getPara("myId"));
         int friendId = Integer.parseInt(getPara("friendId"));

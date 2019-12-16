@@ -2,8 +2,6 @@ package com.example.smallpigeon.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -12,26 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidubce.http.HttpMethodName;
 import com.example.smallpigeon.R;
-import com.example.smallpigeon.RoundImageView;
 import com.example.smallpigeon.Run.MachingActivity;
-import com.example.smallpigeon.Run.TracingActivity;
 import com.example.smallpigeon.Utils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MyplanAdapter extends BaseAdapter{
     private Context context;
