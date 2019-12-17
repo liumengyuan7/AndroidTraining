@@ -325,7 +325,6 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         new Thread(){
             @Override
             public void run() {
-                //TODO：将此次跑步的相关信息插入到数据库中，包括用户id、本次跑步时长(time)、公里数(distance)、速度(speed)、当前日期(date)、本次跑步积分
                 String params = "id="+id+"&&time="+time+"&&distance="+distance+"&&speed="+speed;
                 String result = new Utils().getConnectionResult("record","addUserRecord",params);
             }
@@ -662,8 +661,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     setTraceBtnStyle();
                     registerReceiver();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStartTraceCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStartTraceCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
@@ -691,8 +690,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     setGatherBtnStyle();
                     unregisterPowerReceiver();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStopTraceCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStopTraceCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
@@ -714,8 +713,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     editor.apply();
                     setGatherBtnStyle();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStartGatherCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStartGatherCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
@@ -737,8 +736,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     editor.apply();
                     setGatherBtnStyle();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStopGatherCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStopGatherCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
