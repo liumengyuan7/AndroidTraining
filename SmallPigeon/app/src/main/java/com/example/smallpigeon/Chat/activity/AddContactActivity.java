@@ -65,179 +65,69 @@ public class AddContactActivity extends EaseBaseActivity {
 	private ListView listView;
 	private FindfriendAdapter adapter;
 	private String myId;
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.em_activity_add_contact);
-//		SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-//		String myEmail = pre.getString("user_email","");
-//		myId = pre.getString("user_id","");
-//		TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
-//		listView = findViewById(R.id.addFriendList);
-////		if(!myId.equals("") && myId!=null) {
-//			adapter = new FindfriendAdapter(getApplicationContext(), R.layout.list_item_addcontact, userList, Integer.parseInt(myId), myEmail);
-//			listView.setAdapter(adapter);
-////		}
-//		editText = (EditText) findViewById(R.id.edit_note);
-//
-//		ChatHelper.getInstance().sendMessageToSearchAllUser(getApplicationContext());
-//
-//		Log.e("得到的好友数据",userList.toString());
-//		editText.addTextChangedListener(new TextWatcher() {
-//			@Override
-//			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//			}
-//
-//			@Override
-//			public void onTextChanged(CharSequence s, int start, int before, int count) {
-//				editText.getText().toString();
-//				userList.clear();
-//				Map<String, EaseUser> users = ChatHelper.getInstance().getAllUser();
-//				for (int i=0;i<users.size();i++){
-//					EaseUser user = users.get("easeUI"+i);
-//					userList.add(user);
-//				}
-//				Log.e("出来的好友列表",userList.toString());
-//				adapter.notifyDataSetChanged();
-////				searchedUserLayout.setVisibility(View.VISIBLE);
-//
-//			}
-//
-//			@Override
-//			public void afterTextChanged(Editable s) {
-//
-//			}
-//		});
-//		String strAdd = getResources().getString(R.string.add_friend);
-//		mTextView.setText(strAdd);
-//		String strUserName = getResources().getString(R.string.user_email);
-//		editText.setHint(strUserName);
-//		searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
-//		nameText = (TextView) findViewById(R.id.name);
-//		searchBtn = (Button) findViewById(R.id.search);
-//		searchBtn.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if(!editText.getText().toString().equals("") && editText.getText().toString()!=null) {
-//				}
-//
-//				searchContact(v);
-//			}
-//		});
-//
-//	}
-//
-//
-//	/**
-//	 * search contact
-//	 * @param v
-//	 */
-//	public void searchContact(View v) {
-//		final String name = editText.getText().toString();
-//		String saveText = searchBtn.getText().toString();
-//
-//		if (getString(R.string.button_search).equals(saveText)) {
-////			toAddUsername = name;
-//			if(TextUtils.isEmpty(name)) {
-//				new EaseAlertDialog(this, R.string.Please_enter_a_username).show();
-//				return;
-//			}
-////			Log.e("添加好友界面",ChatHelper.getInstance().getContactList().toString());
-////			// TODO you can search the user from your app server here.
-////			if(ChatHelper.getInstance().getContactList().containsValue(toAddUsername)){
-////				searchedUserLayout.setVisibility(View.VISIBLE);
-////				nameText.setText(toAddUsername);
-////			}
-//
-//			//show the userame and add button if user exist
-//
-////			searchedUserLayout.setVisibility(View.VISIBLE);
-////			nameText.setText(toAddUsername);
-//
-//		}
-//	}
-//
-//	public void back(View v) {
-////		if(!myId.equals("") && myId!=null) {
-////			ChatHelper.getInstance().sendMessageToGetContactList(getApplicationContext(), Integer.parseInt(myId));
-////		}
-//		finish();
-//	}
-private Map<String,EaseUser> contactLikeList = new HashMap<>();
-private Handler handlerLogin;
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.em_activity_add_contact);
+	private Map<String,EaseUser> contactLikeList = new HashMap<>();
+	private Handler handlerLogin;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.em_activity_add_contact);
 
-	SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-	String myEmail = pre.getString("user_email","");
-	myId = pre.getString("user_id","");
+		SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+		String myEmail = pre.getString("user_email","");
+		myId = pre.getString("user_id","");
 
-	TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
-	listView = findViewById(R.id.addFriendList);
-	adapter = new FindfriendAdapter(getApplicationContext(), R.layout.list_item_addcontact, userList, Integer.parseInt(myId), myEmail);
-	listView.setAdapter(adapter);
+		TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
+		listView = findViewById(R.id.addFriendList);
+		adapter = new FindfriendAdapter(getApplicationContext(), R.layout.list_item_addcontact, userList, Integer.parseInt(myId), myEmail);
+		listView.setAdapter(adapter);
 
-	handlerLogin = new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			userList.clear();
-			String like = msg.obj.toString();
-			if (like.equals("false")) {
-				Toast.makeText(getApplicationContext(),"该用户不存在,请再次确认！",Toast.LENGTH_SHORT).show();
-			} else {
-				try {
-					JSONArray jsonArray = new JSONArray(like);
-					for (int i = 0; i < jsonArray.length(); i++) {
-						JSONObject jsonObject = jsonArray.getJSONObject(i);
-						JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
-						EaseUser likeContent = new EaseUser(jsonObject1.get("user_nickname").toString());
-						likeContent.setId(Integer.parseInt(jsonObject1.get("id").toString()));
-						likeContent.setUserEmail(jsonObject1.get("user_email").toString());
-						likeContent.setNickname(jsonObject1.get("user_nickname").toString());
-						likeContent.setUserSex(jsonObject1.get("user_sex").toString());
-						likeContent.setUserPoints(Integer.parseInt(jsonObject1.get("user_points").toString()));
-//							contactLikeList.put("easeUI"+i,likeContent);
-						userList.add(likeContent);
-						adapter.notifyDataSetChanged();
+		handlerLogin = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				userList.clear();
+				String like = msg.obj.toString();
+				if (like.equals("false")) {
+					Toast.makeText(getApplicationContext(),"该用户不存在,请再次确认！",Toast.LENGTH_SHORT).show();
+				} else {
+					try {
+						JSONArray jsonArray = new JSONArray(like);
+						for (int i = 0; i < jsonArray.length(); i++) {
+							JSONObject jsonObject = jsonArray.getJSONObject(i);
+							JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
+							EaseUser likeContent = new EaseUser(jsonObject1.get("user_nickname").toString());
+							likeContent.setId(Integer.parseInt(jsonObject1.get("id").toString()));
+							likeContent.setUserEmail(jsonObject1.get("user_email").toString());
+							likeContent.setNickname(jsonObject1.get("user_nickname").toString());
+							likeContent.setUserSex(jsonObject1.get("user_sex").toString());
+							likeContent.setUserPoints(Integer.parseInt(jsonObject1.get("user_points").toString()));
+	//							contactLikeList.put("easeUI"+i,likeContent);
+							userList.add(likeContent);
+							adapter.notifyDataSetChanged();
+						}
+						Log.e("模糊查询得到数据", userList.toString());
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
-					Log.e("模糊查询得到数据", userList.toString());
-				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
-		}
-	};
-	editText = (EditText) findViewById(R.id.edit_note);
-	String strAdd = getResources().getString(R.string.add_friend);
-	mTextView.setText(strAdd);
-	String strUserName = getResources().getString(R.string.user_email);
-	editText.setHint(strUserName);
-//	searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
-	nameText = (TextView) findViewById(R.id.name);
-	searchBtn = (Button) findViewById(R.id.search);
-	searchBtn.setOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			if(!editText.getText().toString().equals("") && editText.getText().toString()!=null) {
-//				userList.clear();
-				sendMessageToGetLikeContactList(editText.getText().toString());
-//				for (int i=0;i<contactLikeList.size();i++){
-//					Log.e("ssssssssss",contactLikeList.size()+"");
-//					EaseUser user = contactLikeList.get("easeUI"+i);
-//					userList.add(user);
-//				}
-				Log.e("出来的好友列表",userList.toString());
-//				adapter.notifyDataSetChanged();
-			}else{
-
+		};
+		editText = (EditText) findViewById(R.id.edit_note);
+		String strAdd = getResources().getString(R.string.add_friend);
+		mTextView.setText(strAdd);
+		String strUserName = getResources().getString(R.string.user_email);
+		editText.setHint(strUserName);
+		nameText = (TextView) findViewById(R.id.name);
+		searchBtn = (Button) findViewById(R.id.search);
+		searchBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(!editText.getText().toString().equals("") && editText.getText().toString()!=null) {
+					sendMessageToGetLikeContactList(editText.getText().toString());
+					Log.e("出来的好友列表",userList.toString());}
+				searchContact(v);
 			}
-			searchContact(v);
-		}
-	});
-}
+		});
+	}
 
 
 	/**

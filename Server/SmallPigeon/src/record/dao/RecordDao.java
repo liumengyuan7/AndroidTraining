@@ -20,7 +20,7 @@ public class RecordDao {
         Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
 		int point = Integer.parseInt(User.dao.find("select * from user where id=?",id).get(0).getStr("user_points"));
-		new User().set("user_points",point+6).update();
+		new User().findById(id).set("user_points",point+6).update();
         boolean result = new Record().set("user_id",id).set("record_time",time).set("record_distance",distance)
                 .set("record_speed",speed).set("record_date",timestamp).set("record_points",6).save();
         return result;

@@ -1,10 +1,13 @@
 package com.hyphenate.easeui.ui;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,8 +29,20 @@ import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.widget.EaseConversationList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,7 +63,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected FrameLayout errorItemContainer;
 
     protected boolean isConflict;
-    
+
     protected EMConversationListener convListener = new EMConversationListener(){
 
 		@Override
@@ -69,7 +84,6 @@ public class EaseConversationListFragment extends EaseBaseFragment{
             return;
         super.onActivityCreated(savedInstanceState);
     }
-
     @Override
     protected void initView() {
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -83,7 +97,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     @Override
     protected void setUpView() {
         conversationList.addAll(loadConversationList());
-        conversationListView.init(conversationList);
+        conversationListView.init(conversationList,null);
         
         if(listItemClickListener != null){
             conversationListView.setOnItemClickListener(new OnItemClickListener() {

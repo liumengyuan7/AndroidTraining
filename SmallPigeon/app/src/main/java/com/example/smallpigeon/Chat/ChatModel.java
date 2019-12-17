@@ -142,7 +142,7 @@ public class ChatModel {
         }.start();
     }
 
-    //向服务器发送模糊查找好友的数据
+    //向服务器发送查找好友的数据
     public void sendMessageToSearchAllUser(Context context){
         new Thread(){
             @Override

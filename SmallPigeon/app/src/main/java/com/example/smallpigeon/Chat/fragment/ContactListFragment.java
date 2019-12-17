@@ -135,7 +135,7 @@ public class ContactListFragment extends EaseContactListFragment {
 //        }
         registerForContextMenu(listView);
 
-        contactListLayout.refresh();
+//        contactListLayout.refresh();
     }
 
     @Override

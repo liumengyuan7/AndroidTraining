@@ -47,13 +47,7 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chat,container,false);
-        SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
-        String nickname = pre.getString("user_nickname","");
-        useId = pre.getString("user_id","");
-        if(!nickname.equals("") && nickname != null){
-            signIn(useId);
-            ChatHelper.getInstance().sendMessageToGetContactList(getContext(), Integer.parseInt(useId));
-        }
+
         return view;
     }
 
@@ -69,6 +63,13 @@ public class ChatFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
+        String nickname = pre.getString("user_nickname","");
+        useId = pre.getString("user_id","");
+        if(!nickname.equals("") && nickname != null){
+            signIn(useId);
+            ChatHelper.getInstance().sendMessageToGetContactList(getContext(), Integer.parseInt(useId));
+        }
         findById();
         setListeners();
         fragmentManager = getChildFragmentManager();
