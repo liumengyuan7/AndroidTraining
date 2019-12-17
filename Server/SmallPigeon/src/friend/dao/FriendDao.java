@@ -10,31 +10,6 @@ import bean.User;
 
 
 public class FriendDao {
-//    //添加好友
-//     public String saveContactList(int myselfId,int friendId) {
-//         List<Friend> list = Friend.dao.find("select * from friends where friend_id=?",friendId);
-//        if(list.isEmpty()){
-//            return "false";
-//        }else{
-//            boolean result = new Friend().set("my_id",myselfId).set("friend_id",friendId).save();
-//            if(result){
-//                return "true";
-//            }else{
-//                return "false";
-//            }
-//        }
-//     }
-
-	//添加时查找所有用户
-//	public String searchAllUser(String userAccount) {
-//		List<User> list = User.dao.find("select * from user where user_eamil like ?",userAccount);
-//		if(! list.isEmpty()) {
-//			Gson gson = new Gson();
-//			System.out.println(gson.toJson(list));
-//			return gson.toJson(list);
-//		}
-//		return null;
-//	}
     //查找所有用户
     public String searchAllUser() {
         List<User> list = User.dao.find("select * from user");
@@ -75,8 +50,14 @@ public class FriendDao {
          }
          return null;
     }
-    //删除好友
-//    public String deleteContact(int myId,int friendId){
-//        boolean result = Friend.dao.find("select *"myId,friendId);
-//    }
+     //模糊查询用户
+    public String getLikeUser(String userEmail){
+        List<User> list = User.dao.find("select * from user where user_email like '%"+userEmail+"%'");
+		if(! list.isEmpty()) {
+			Gson gson = new Gson();
+			System.out.println(gson.toJson(list));
+			return gson.toJson(list);
+		}
+		return null;
+    }
 }

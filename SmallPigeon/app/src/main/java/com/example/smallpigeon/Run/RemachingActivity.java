@@ -1,5 +1,6 @@
 package com.example.smallpigeon.Run;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smallpigeon.Chat.activity.ChatActivity;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
@@ -56,6 +58,9 @@ public class RemachingActivity extends AppCompatActivity {
     private TextView match_userInterest;
     private TextView match_userEmail;
     private Button goChat;
+    private String myId;
+    private String userId;
+    private String userNickName;
     private Handler handleAvatar = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -76,12 +81,25 @@ public class RemachingActivity extends AppCompatActivity {
         setStatusBar();
         getCompany();
         getAvatar();
+        SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        myId = pre.getString("user_id","");
+//        ChatHelper.getInstance().sendMessageToGetContactList(getContext(), myId);
+//        if(!myId.equals("") && myId!=null) {
+//
+//        }
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("user_id");
+        userNickName = intent.getStringExtra("user_nickname");
+//        myId = intent.getStringExtra("");
 
         //去聊天方法
         goChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra("userId", userId)
+                        .putExtra("myId",myId).putExtra("userNickName",userNickName));
+                finish();
             }
         });
 

@@ -212,7 +212,7 @@
     <string name="Login_failed">登录失败:</string>
     <string name="receive_the_passthrough">收到透传：action：</string>
     <string name="have_you_removed">已把你从他好友列表里移除</string>
-    <string name="can_not_connect_chat_server_connection">连接不到聊天服务器</string>
+    <string name="can_not_connect_chat_server_connection">您未登录，请先登录</string>
     <string name="the_current_network">当前网络不可用，请检查网络设置</string>
     <string name="Invite_you_to_join_a_group_chat">邀请你加入了群聊</string>
     <string name="Agreed_to_your_group_chat_application">同意了你的群聊申请</string>

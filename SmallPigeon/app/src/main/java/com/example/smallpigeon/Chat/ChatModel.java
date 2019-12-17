@@ -26,6 +26,7 @@ public class ChatModel {
     private Context context;
     private Map<String,EaseUser> allUser = new HashMap<>();
     private Map<String,EaseUser> contactList = new HashMap<>();
+    private Map<String,EaseUser> contactLikeList = new HashMap<>();
     private Handler handlerLogin = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -76,6 +77,30 @@ public class ChatModel {
                         }
                     }
                     break;
+                case 3:
+                    String like = msg.obj.toString();
+                    if (like.equals("false")) {
+                        Log.e("没有查到用户数据", "用户数据");
+                    } else {
+                        try {
+                            JSONArray jsonArray = new JSONArray(like);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
+                                EaseUser likeContent = new EaseUser(jsonObject1.get("user_nickname").toString());
+                                likeContent.setId(Integer.parseInt(jsonObject1.get("id").toString()));
+                                likeContent.setUserEmail(jsonObject1.get("user_email").toString());
+                                likeContent.setNickname(jsonObject1.get("user_nickname").toString());
+                                likeContent.setUserSex(jsonObject1.get("user_sex").toString());
+                                likeContent.setUserPoints(Integer.parseInt(jsonObject1.get("user_points").toString()));
+                                contactLikeList.put("easeUI"+i,likeContent);
+                            }
+                            Log.e("模糊查询得到数据", contactLikeList.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
             }
         }
     };
@@ -85,7 +110,9 @@ public class ChatModel {
     public Map<String, EaseUser> getContactList(){
         return contactList;
     }
-
+    public Map<String, EaseUser> getLikeContactList(){
+        return contactLikeList;
+    }
 
     //向服务器发送查找我的好友的数据
     public void sendMessageToGetContactList(Context context,int myId){
@@ -114,6 +141,7 @@ public class ChatModel {
             }
         }.start();
     }
+
     //向服务器发送模糊查找好友的数据
     public void sendMessageToSearchAllUser(Context context){
         new Thread(){
@@ -140,7 +168,33 @@ public class ChatModel {
             }
         }.start();
     }
-
+    //向服务器发送模糊查询好友
+    public void sendMessageToGetLikeContactList(Context context,String userEmail){
+        new Thread(){
+            @Override
+            public void run() {
+//                String s = utils.getConnectionResult("friend","getContactList");
+                try {
+                    URL url = new URL("http://"+context.getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/friend/getLikeContactList?userEmail="+userEmail);
+                    Log.e("url",url.toString());
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 3;
+                    Log.e("模糊查询得到数据",result);
+                    handlerLogin.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
     public void deleteContact(Context context,int myId,int friendId){
         new Thread(){
             @Override
