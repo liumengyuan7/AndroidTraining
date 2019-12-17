@@ -29,6 +29,7 @@ public class ChatHelper {
     private ChatModel chatModel = new ChatModel();
     private Map<String, EaseUser> contactList;
     private Map<String, EaseUser> allUser;
+    private Map<String, EaseUser> likeUser;
     public synchronized static ChatHelper getInstance() {
         if (instance == null) {
             instance = new ChatHelper();
@@ -65,6 +66,20 @@ public class ChatHelper {
 
         return allUser;
     }
+    /*
+     * 模糊查询用户
+     * */
+    public Map<String, EaseUser> getLikeUser() {
+        if (isLoggedIn() && likeUser == null) {
+            likeUser = chatModel.getLikeContactList();
+        }
+        // return a empty non-null object to avoid app crash
+        if(likeUser == null){
+            return new Hashtable<String, EaseUser>();
+        }
+
+        return likeUser;
+    }
     /**
      * if ever logged in
      *
@@ -83,5 +98,9 @@ public class ChatHelper {
     }
     public void deleteContact(Context context,int myId,int friendId){
         chatModel.deleteContact(context,myId,friendId);
+    }
+    //模糊查询用户
+    public void sendMessageToGetLikeContactList(Context context,String userEmail){
+        chatModel.sendMessageToGetLikeContactList(context,userEmail);
     }
 }

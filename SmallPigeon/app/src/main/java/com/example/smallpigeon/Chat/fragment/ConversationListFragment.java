@@ -1,6 +1,7 @@
 package com.example.smallpigeon.Chat.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +14,18 @@ import com.example.smallpigeon.Chat.activity.ChatActivity;
 import com.example.smallpigeon.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
+
+import java.util.List;
+
+import static com.hyphenate.easeui.utils.EaseUserUtils.getUserInfo;
+
 public class ConversationListFragment extends EaseConversationListFragment {
     private TextView errorText;
     @Override
@@ -38,7 +46,15 @@ public class ConversationListFragment extends EaseConversationListFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EMConversation conversation = conversationListView.getItem(position);
+                List<EMMessage> list = conversation.getAllMessages();
+               for(int i = 0;i<list.size();i++){
+                   Log.e("ConversationLi",list.get(i).getMsgId());
+                   Log.e("Second",list.get(i).conversationId());
+                   Log.e("Thried",list.get(i).getUserName());
+               }
                 String username = conversation.conversationId();
+//                String nickName = user.getNickname();
+                Log.e("EaseCon username",getUserInfo(username)+",");
                 if (username.equals(EMClient.getInstance().getCurrentUser()))
                     Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
                 else {
@@ -91,11 +107,11 @@ public class ConversationListFragment extends EaseConversationListFragment {
             EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
         }
         try {
-//            // delete conversation
-//            EMClient.getInstance().chatManager().deleteConversation(tobeDeleteCons.conversationId(), deleteMessage);
+            // delete conversation
+            EMClient.getInstance().chatManager().deleteConversation(tobeDeleteCons.conversationId(), deleteMessage);
 //            InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
 //            inviteMessgeDao.deleteMessage(tobeDeleteCons.conversationId());
-            // To delete the native stored adked users in this conversation.
+//             To delete the native stored adked users in this conversation.
             if (deleteMessage) {
                 EaseDingMessageHelper.get().delete(tobeDeleteCons);
             }

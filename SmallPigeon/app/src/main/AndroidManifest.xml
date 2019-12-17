@@ -48,6 +48,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Run.FinishRunActivity"></activity>
         <activity android:name=".My.MyPlan"/>00
+        <activity android:name=".My.MyPlan"/>
         <activity android:name=".My.Paihang" />
         <activity android:name=".My.update_email" />
         <activity android:name=".My.update_pwd_final" />

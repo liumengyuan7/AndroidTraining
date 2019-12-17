@@ -5,9 +5,6 @@ import friend.dao.FriendDao;
 
 public class FriendService {
     //查询所有用户信息
-//    public String searchAllUser(String userAccount) {
-//		return new FriendDao().searchAllUser(userAccount);
-//	}
      public String searchAllUser() {
 		return new FriendDao().searchAllUser();
 	}
@@ -19,4 +16,8 @@ public class FriendService {
     public String getContactList(int myId){
         return new FriendDao().getContactList(myId);
     }
+    //模糊查询用户
+     public String getLikeUser(String userEmail){
+         return new FriendDao().getLikeUser(userEmail);
+     }
 }
