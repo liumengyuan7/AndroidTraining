@@ -14,10 +14,12 @@ import com.jfinal.template.Engine;
 import bean.Friend;
 import bean.Interest;
 import bean.Plan;
+import bean.Record;
 import bean.User;
 import friend.control.FriendController;
 import interest.control.InterestController;
 import plan.control.PlanController;
+import record.control.RecordController;
 import user.control.UserController;
 
 /**
@@ -40,6 +42,7 @@ public class AppConfig extends JFinalConfig {
         routes.add("interest", InterestController.class);
         routes.add("plan", PlanController.class);
         routes.add("friend", FriendController.class);
+        routes.add("record", RecordController.class);
     }
 
     @Override
@@ -59,6 +62,7 @@ public class AppConfig extends JFinalConfig {
 		arp.addMapping("interest", Interest.class);
 		arp.addMapping("plan", Plan.class);
 		arp.addMapping("friend", Friend.class);
+		arp.addMapping("record", Record.class);
     }
 
     @Override

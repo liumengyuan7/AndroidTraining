@@ -201,4 +201,11 @@ public class UserController extends Controller {
         }
     }
 
+    //修改匹配的状态
+	public void fixMatcherStatus(){
+		String id = getPara("id");
+		boolean x = new User().findById(id).set("matcher","no").update();
+		System.out.println(x);
+	}
+
 }

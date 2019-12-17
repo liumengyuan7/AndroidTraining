@@ -23,9 +23,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smallpigeon.Adapter.RankAdapter;
-import com.example.smallpigeon.Entity.PlanContent;
-import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
 
@@ -33,7 +30,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +50,7 @@ public class MachingActivity extends AppCompatActivity {
     private MyClickListener listener;
     private PopupWindow pop;
     private TextView secondDown;
+    private boolean flag = true;
 
     private Handler matchHandler = new Handler(){
         @Override
@@ -103,13 +100,13 @@ public class MachingActivity extends AppCompatActivity {
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.lv_machingTask);
-                    planAdapter = new PlanAdapter(getApplicationContext(),information,R.layout.run_maching_listitem);
+                    planAdapter = new PlanAdapter(MachingActivity.this,information,R.layout.run_maching_listitem);
                     listView1.setAdapter(planAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }else {
-                Toast toastTip = Toast.makeText(getApplicationContext(),"获取失败！请检查网络！",Toast.LENGTH_LONG);
+                Toast toastTip = Toast.makeText(getApplicationContext(),"你的计划为空哦！",Toast.LENGTH_LONG);
                 toastTip.setGravity(Gravity.CENTER, 0, 0);
                 toastTip.show();
             }
@@ -194,16 +191,29 @@ public class MachingActivity extends AppCompatActivity {
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 String id = pre.getString("user_id","");
                 for(int i=0;i<10;i++){
-                    String result = new Utils().getConnectionResult("user","randomMatchFirst","id="+id);
-                    if(result.equals("empty")){
-                        String r = new Utils().getConnectionResult("user","randomMatchSecond","id="+id);
-                        if(r.equals("no")){
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                    if(flag){
+                        String result = new Utils().getConnectionResult("user","randomMatchFirst","id="+id);
+                        if(result.equals("empty")){
+                            String r = new Utils().getConnectionResult("user","randomMatchSecond","id="+id);
+                            if(r.equals("no")){
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                continue;
+                            }else{
+                                secondDown.setText("匹配成功！");
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Message message = new Message();
+                                message.obj = r;
+                                matchHandler.sendMessage(message);
+                                break;
                             }
-                            continue;
                         }else{
                             secondDown.setText("匹配成功！");
                             try {
@@ -212,21 +222,10 @@ public class MachingActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             Message message = new Message();
-                            message.obj = r;
+                            message.obj = result;
                             matchHandler.sendMessage(message);
                             break;
                         }
-                    }else{
-                        secondDown.setText("匹配成功！");
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Message message = new Message();
-                        message.obj = result;
-                        matchHandler.sendMessage(message);
-                        break;
                     }
                 }
             }
@@ -250,8 +249,9 @@ public class MachingActivity extends AppCompatActivity {
 
     //popupwindow的显示
     private void appearPopupWindow(){
+        flag = true;
         View popView = getLayoutInflater().inflate(R.layout.match_pop,null);
-        pop = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,false);
+        pop = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,true);
         pop.setAnimationStyle(R.style.popmatch_anim_style);
         pop.setOutsideTouchable(false);
         pop.showAtLocation(getWindow().getDecorView(),Gravity.CENTER,0,0);
@@ -263,6 +263,16 @@ public class MachingActivity extends AppCompatActivity {
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                flag = false;
+                new Thread(){
+                    @Override
+                    public void run() {
+                        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                        String id = pre.getString("user_id","");
+                        new Utils().getConnectionResult("user","fixMatcherStatus","id="+id);
+                    }
+                }.start();
+                Toast.makeText(getApplicationContext(),"取消匹配！",Toast.LENGTH_SHORT).show();
                 lp.alpha = 1f;
                 getWindow().setAttributes(lp);
         }});
@@ -274,26 +284,23 @@ public class MachingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 for(int i = 10;i>=0;i--){
-                    try {
-                        if(secondDown.getText().toString().equals("匹配成功！")){
-                            break;
-                        }else{
-                            Message message = new Message();
-                            message.obj = i;
-                            handleSecond.sendMessage(message);
+                    if(flag){
+                        try {
+                            if(secondDown.getText().toString().equals("匹配成功！")){
+                                break;
+                            }else{
+                                Message message = new Message();
+                                message.obj = i;
+                                handleSecond.sendMessage(message);
+                            }
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
             }
         }.start();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
 }

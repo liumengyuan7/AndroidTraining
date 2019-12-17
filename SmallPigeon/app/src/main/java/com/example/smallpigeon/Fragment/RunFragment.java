@@ -9,23 +9,50 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Run.MachingActivity;
+import com.example.smallpigeon.Utils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class RunFragment extends Fragment {
 
     private Button btnPersonal;
     private Button btnMatching;
-
+    private TextView TodayNum;//今日总公里数
     private MyClickListener listener;
+    private Handler handler  = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj+"";
+            if(result==null || result.equals("null")){
+                TodayNum.setText("0.0");
+            }else{
+                TodayNum.setText(result);
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -34,7 +61,26 @@ public class RunFragment extends Fragment {
         getViews(view);
         listener = new MyClickListener();
         registerListener();
+        if(loginOrNot()){
+            //TODO:从数据库中查询今日该用户的总公里数
+            selectLength();
+        }else { }
         return view;
+    }
+
+    private void selectLength() {
+        new Thread(){
+            @Override
+            public void run() {
+                //TODO：根据日期查询该用户跑步的总公里数
+                String id = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id","");
+                Log.e("dsadsadsadas",id);
+                String result = new Utils().getConnectionResult("record","getTotalKm","id="+id);
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 
 
@@ -45,7 +91,6 @@ public class RunFragment extends Fragment {
             switch (v.getId()){
                 case R.id.PersonalButton:
                     //个人模式
-                    //TODO:先判断用户是否登陆，若没有登陆则提示用户先登录，用户登陆后才能进行跳转
                     if(loginOrNot()){
                         Intent intentP = new Intent( getContext(), TracingActivity.class );
                         startActivity( intentP );
@@ -87,5 +132,15 @@ public class RunFragment extends Fragment {
     private void getViews(View view) {
         btnPersonal = view.findViewById( R.id.PersonalButton );
         btnMatching = view.findViewById( R.id.MatchingButton );
+        TodayNum = view.findViewById(R.id.TodayNum);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(loginOrNot()){
+            //TODO:从数据库中查询今日该用户的总公里数
+            selectLength();
+        }else { }
     }
 }

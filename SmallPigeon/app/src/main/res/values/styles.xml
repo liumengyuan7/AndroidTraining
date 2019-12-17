@@ -24,5 +24,6 @@
     <style name="popmatch_anim_style" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/matchpopupwindowstart</item>
         <item name="android:windowExitAnimation">@anim/popwindowexit</item>
+
     </style>
 </resources>
