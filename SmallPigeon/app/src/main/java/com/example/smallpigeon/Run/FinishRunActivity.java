@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -24,8 +26,10 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
+import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.TrackApplication;
 
 import java.util.List;
 
@@ -41,8 +45,9 @@ public class FinishRunActivity extends AppCompatActivity {
     private List<LatLng> lists;//轨迹点集合
     private BaiduMap baiduMap;
     private MapView mapView;
-
+    private MapStatusUpdate msUpdate = null;
     private CustomOnClickListener listener;
+    private MapStatus mapStatus = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class FinishRunActivity extends AppCompatActivity {
 
         mapView = findViewById(R.id.mapView);
         baiduMap = mapView.getMap();
+        zoomLevelOp();
         setStatusBar();
         initView();
         registerListeners();
@@ -63,9 +69,11 @@ public class FinishRunActivity extends AppCompatActivity {
         lists = intent.getParcelableArrayListExtra("list");
         Log.e("zt",lists.toString()+lists.size());
 
+
+        for (int i=0;i<lists.size();i++){
+            setMapStatus(lists.get(i), 18);
+        }
         drawLine(lists);
-
-
     }
     //隐藏状态栏
     protected void setStatusBar() {
@@ -92,7 +100,15 @@ public class FinishRunActivity extends AppCompatActivity {
     }
 
     private void drawLine(List<LatLng> lists) {
-        Log.e("ztt",lists.toString()+lists.size());
+        zoomLevelOp();
+        if (lists.size() == 1) {
+            OverlayOptions startOptions = new MarkerOptions().position(lists.get(0))
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_start))
+                    .zIndex(9).draggable(true);
+            baiduMap.addOverlay(startOptions);
+            animateMapStatus(lists.get(0), 18.0f);
+            return;
+        }
         // 添加起点图标
         OverlayOptions startOptions = new MarkerOptions()
                 .position(lists.get(0))
@@ -121,8 +137,28 @@ public class FinishRunActivity extends AppCompatActivity {
         for (LatLng point : points) {
             builder.include(point);
         }
-        MapStatusUpdate msUpdate = MapStatusUpdateFactory.newLatLngBounds(builder.build());
+        msUpdate = MapStatusUpdateFactory.zoomTo(18.0f);
+        msUpdate = MapStatusUpdateFactory.newLatLngBounds(builder.build());
         baiduMap.animateMapStatus(msUpdate);
+    }
+
+    public void setMapStatus(LatLng point, float zoom) {
+        MapStatus.Builder builder = new MapStatus.Builder();
+        mapStatus = builder.target(point).zoom(zoom).build();
+        baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatus));
+    }
+
+    public void animateMapStatus(LatLng point, float zoom) {
+        MapStatus.Builder builder = new MapStatus.Builder();
+        mapStatus = builder.target(point).zoom(zoom).build();
+        baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatus));
+    }
+
+    private void zoomLevelOp() {
+        baiduMap.setMaxAndMinZoomLevel(21,15);
+        //设置默认比例为100m
+        MapStatusUpdate mpu = MapStatusUpdateFactory.zoomTo(21);
+        baiduMap.setMapStatus(mpu);
     }
 
     class CustomOnClickListener implements View.OnClickListener{
