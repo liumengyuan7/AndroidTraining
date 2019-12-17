@@ -81,7 +81,7 @@ public class UserDao {
 		}
 		interest.update();
 		if(result){
-			return "true";
+			return userId;
 		}else{
 			return "false";
 		}
@@ -119,16 +119,16 @@ public class UserDao {
 	//邮件的发送
 	public boolean emailSend(String userEmail,String code){
 		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "smtp.qq.com");
+		props.put("mail.smtp.host", "smtp.163.com");
 		props.put("mail.smtp.auth", "true");
 		Session session = Session.getInstance(props, new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("2642611193@qq.com", "tvmwxbsavkdvecga"); //tvmwxbsavkdvecga   18731180200
+				return new PasswordAuthentication("qq2642611193@163.com", "qq2642611193"); //tvmwxbsavkdvecga   18731180200
 			}
 		});
 		Message msg = new MimeMessage(session);
 		try {
-			msg.setFrom(new InternetAddress("2642611193@qq.com","小鸽快跑","UTF-8"));
+			msg.setFrom(new InternetAddress("qq2642611193@163.com","小鸽快跑","UTF-8"));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
 			msg.setSubject("为保证您的账号安全请验证邮箱");
 			MimeBodyPart mbp1 = new MimeBodyPart();

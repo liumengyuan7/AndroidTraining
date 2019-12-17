@@ -6,21 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/a"
+    android:alpha="0.9"
     tools:context=".LoginOrRegister.LoginActivity">
+
     <LinearLayout
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-       >
+        android:layout_height="50dp">
         <ImageView
-
             android:id="@+id/loginReturn"
             android:layout_width="25dp"
-
             android:layout_height="match_parent"
             android:src="@mipmap/returnimage"/>
-        <TextView
 
+        <TextView
             android:gravity="center"
             android:layout_marginLeft="-10dp"
             android:layout_weight="1"
@@ -29,6 +28,7 @@
             android:text="登录/注册"
             android:textSize="25dp"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="90dp"
         android:layout_gravity="center"
@@ -36,15 +36,15 @@
         android:layout_width="350dp"
         android:alpha="0.5"
         android:layout_height="50dp"
-        android:background="@drawable/circular"
-        >
+        android:background="@drawable/circular">
+
         <ImageView
             android:layout_marginLeft="15dp"
             android:layout_gravity="center"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/zh"
-            />
+            android:src="@drawable/zh" />
+
         <EditText
             android:layout_marginLeft="5dp"
             android:alpha="0.5"
@@ -54,6 +54,7 @@
             android:layout_width="300dp"
             android:layout_height="50dp"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="30dp"
         android:background="@drawable/circular"
@@ -62,14 +63,14 @@
         android:alpha="0.5"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/pwd"
-            android:layout_marginLeft="10dp"
-            />
+            android:layout_marginLeft="10dp" />
+
         <EditText
             android:layout_marginLeft="5dp"
             android:layout_gravity="center"
@@ -87,44 +88,44 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:alpha="0.6"
-        android:src="@drawable/wancheng1"
+        android:src="@drawable/wancheng1" />
 
-        />
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <TextView
             android:id="@+id/account_register"
             android:gravity="center"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
+            android:layout_marginLeft="30dp"
+            android:layout_alignParentLeft="true"
             android:textColor="#000"
             android:text="没有账号？点击注册"/>
 
         <TextView
-            android:layout_marginLeft="160dp"
             android:id="@+id/forget_password"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
             android:gravity="center"
             android:textColor="#000"
             android:text="忘记密码" />
-    </LinearLayout>
+    </RelativeLayout>
+
     <LinearLayout
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="30dp">
 
-            <TextView
-                android:gravity="center"
-                android:layout_width="270dp"
-                android:layout_height="match_parent"
-                android:text="注册即代表同意用户协议和用户隐私政策"
-                />
+        <TextView
+            android:gravity="center"
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:text="注册即代表同意用户协议和用户隐私政策" />
     </LinearLayout>
+
 </LinearLayout>

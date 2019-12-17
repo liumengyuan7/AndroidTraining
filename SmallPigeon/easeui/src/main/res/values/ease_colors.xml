@@ -22,6 +22,9 @@
     <color name="btn_white_pressed">#b5b5b6</color>
     <color name="btn_green_noraml">#68C270</color>
     <color name="btn_green_pressed">#6FCD78</color>
+
+    <color name="green">#008577</color>
+
     <color name="btn_gray_normal">#c0c0c0</color>
     <color name="btn_gray_pressed_status">#b5b5b6</color>
     <color name="btn_gray_pressed">#666667</color>

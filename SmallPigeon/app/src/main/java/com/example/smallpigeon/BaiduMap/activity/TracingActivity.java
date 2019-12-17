@@ -56,7 +56,16 @@ import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Run.FinishRunActivity;
 import com.example.smallpigeon.TrackApplication;
+import com.example.smallpigeon.Utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,6 +90,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                 long t = (long) msg.obj;
                 currentSecond = t;
                 tvTime.setText("用时："+getFormat(currentSecond));
+            }else if (msg.what==2){
+
             }
         }
     };
@@ -96,6 +107,7 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
     private Button traceBtn = null;//开始/暂停按钮
     private Button continueBtn = null;//继续按钮
     private Button gatherBtn = null;//停止按钮
+    private ImageView tracing_back = null;//返回按钮
 
     private NotificationManager notificationManager = null;
 
@@ -215,8 +227,7 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         tracingBack.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( TracingActivity.this, MainActivity.class );
-                startActivity( intent );
+                finish();
             }
         } );
     }
@@ -235,10 +246,12 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
         traceBtn = (Button) findViewById(R.id.btn_trace);
         gatherBtn = (Button) findViewById(R.id.btn_gather);
         continueBtn = findViewById(R.id.btn_trace1);
+        tracing_back = findViewById(R.id.tracing_back);
 
         traceBtn.setOnClickListener(this);
         gatherBtn.setOnClickListener(this);
         continueBtn.setOnClickListener(this);
+        tracing_back.setOnClickListener(this);
         setTraceBtnStyle();
 //        setGatherBtnStyle();
 
@@ -281,12 +294,10 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.btn_gather:
                 //结束按钮，关闭采集追踪服务并将跑步信息插入到数据库中
-                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                //TODO：将此次跑步的相关信息插入到数据库中，包括用户id、本次跑步时长(time)、公里数(dstance)、速度(speed)、当前日期(date)、本次跑步积分
-
-
                 //点击结束按钮显示分享和返回按钮
                 thread.interrupt();
+                //将跑步记录插入数据库中
+                insertRunMsg();
                 Intent intent = new Intent(TracingActivity.this, FinishRunActivity.class);
                 intent.putExtra("distance",tvDistance.getText().toString());
                 intent.putExtra("speed",tvSpeed.getText().toString());
@@ -300,11 +311,24 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                 startRealTimeLoc(packInterval);
                 trackApp.mClient.startGather(traceListener);//开始采集
                 break;
-
+            case R.id.tracing_back:
+                finish();
+                break;
             default:
                 break;
         }
 
+    }
+
+    private void insertRunMsg() {
+        String id = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id","");
+        new Thread(){
+            @Override
+            public void run() {
+                String params = "id="+id+"&&time="+time+"&&distance="+distance+"&&speed="+speed;
+                String result = new Utils().getConnectionResult("record","addUserRecord",params);
+            }
+        }.start();
     }
 
     /**
@@ -637,8 +661,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     setTraceBtnStyle();
                     registerReceiver();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStartTraceCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStartTraceCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
@@ -666,8 +690,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     setGatherBtnStyle();
                     unregisterPowerReceiver();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStopTraceCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStopTraceCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
@@ -689,8 +713,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     editor.apply();
                     setGatherBtnStyle();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStartGatherCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStartGatherCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
@@ -712,8 +736,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                     editor.apply();
                     setGatherBtnStyle();
                 }
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onStopGatherCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onStopGatherCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**

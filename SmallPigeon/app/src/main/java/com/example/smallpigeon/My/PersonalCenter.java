@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.R;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,6 +59,7 @@ public class PersonalCenter extends AppCompatActivity {
     private LinearLayout userSecurityLayout;
 
     private Button SignOut;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +138,7 @@ public class PersonalCenter extends AppCompatActivity {
                         file.delete();
                     }
                     pre.edit().clear().commit();
+                    signOut();//环信退出登录
                     finish();
                     Toast.makeText(getApplicationContext(),"注销成功！",Toast.LENGTH_SHORT).show();
                 }
@@ -142,7 +146,28 @@ public class PersonalCenter extends AppCompatActivity {
         }
 
     }
+    //环信退出登录
+    private void signOut() {
+        EMClient.getInstance().logout(true, new EMCallBack() {
 
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+                Log.e("退出成功","退出登录");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                // TODO Auto-generated method stub
+                Log.e("退出失败",code+","+message);
+            }
+        });
+    }
     //获取视图的控件
     private void getViews() {
         personal_center_back=findViewById(R.id.personal_center_back);
@@ -186,13 +211,13 @@ public class PersonalCenter extends AppCompatActivity {
     class CustomClickListener implements View.OnClickListener,View.OnTouchListener {
         @Override
         public void onClick(View v) {
+            email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
             switch (v.getId()){
                 case R.id.personal_center_back://个人信息页面返回到-我的-activity
-                    Intent intent = new Intent(PersonalCenter.this, MyFragment.class);
                     finish();
                     break;
                 case R.id.userImageLayout://进入修改头像activity
-                    String email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
+
                     if(!email.equals("") && email != null){
                         Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
                         startActivity(intent1);
@@ -202,19 +227,31 @@ public class PersonalCenter extends AppCompatActivity {
                     }
                     break;
                 case R.id.userNicknameLayout://进入修改昵称activity
+                    if(!email.equals("") && email != null){
                     Intent intent2 = new Intent(PersonalCenter.this, Personal_center_updateUserNickname.class);
                     startActivity(intent2);
                     finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.userMoreLayout://进入更多修改activity
-                    Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
-                    startActivity(intent3);
-                    finish();
+                    if(loginOrNot()){
+                        Intent intent3 = new Intent(PersonalCenter.this, Personal_center_More.class);
+                        startActivity(intent3);
+                        finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.userSecurityLayout:
-                    Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
-                    startActivity(intent4);
-                    finish();
+                    if(loginOrNot()){
+                        Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
+                        startActivity(intent4);
+                        finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
@@ -244,6 +281,17 @@ public class PersonalCenter extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    //判断是否登录的方法
+    private boolean loginOrNot(){
+        SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     //动态事件

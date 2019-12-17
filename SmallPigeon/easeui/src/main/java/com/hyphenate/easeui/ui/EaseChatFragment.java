@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -64,11 +66,21 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
@@ -85,6 +97,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected static final int REQUEST_CODE_CAMERA = 2;
     protected static final int REQUEST_CODE_LOCAL = 3;
     protected static final int REQUEST_CODE_DING_MSG = 4;
+    protected static final int REQUEST_CODE_PLAN = 5;
+    private Map<String,String> plan = new HashMap<>();
 
     protected static final int MSG_TYPING_BEGIN = 0;
     protected static final int MSG_TYPING_END = 1;
@@ -100,6 +114,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected Bundle fragmentArgs;
     protected int chatType;
     protected String toChatUsername;
+    protected String myId;
+    private String friendNickName;
     protected EaseChatMessageList messageList;
     protected EaseChatInputMenu inputMenu;
 
@@ -126,11 +142,18 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     static final int ITEM_TAKE_PICTURE = 1;
     static final int ITEM_PICTURE = 2;
     static final int ITEM_LOCATION = 3;
+    static final int ITEM_PLAN = 4;
     
-    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
+    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location,R.string.attach_take_plan };
     protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
-            R.drawable.ease_chat_location_selector };
-    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
+            R.drawable.ease_chat_location_selector,R.drawable.ease_chat_plan_selector};
+    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION,ITEM_PLAN};
+
+//    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location};
+//    protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
+//            R.drawable.ease_chat_location_selector};
+//    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION};
+
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
     protected boolean isRoaming = false;
@@ -139,6 +162,14 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     private Handler typingHandler = null;
     // "正在输入"功能的开关，打开后本设备发送消息将持续发送cmd类型消息通知对方"正在输入"
     private boolean turnOnTyping;
+
+    public Map<String, String> getPlan() {
+        return plan;
+    }
+
+    public void setPlan(Map<String, String> plan) {
+        this.plan = plan;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -158,7 +189,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         chatType = fragmentArgs.getInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
         // userId you are chat with or group id
         toChatUsername = fragmentArgs.getString(EaseConstant.EXTRA_USER_ID);
-
+        friendNickName = fragmentArgs.getString(EaseConstant.EXTRA_FRIEND_NICKNAME);
+        myId = fragmentArgs.getString(EaseConstant.EXTRA_MY_ID);
         this.turnOnTyping = turnOnTyping();
 
         super.onActivityCreated(savedInstanceState);
@@ -286,6 +318,13 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                         endMsg.setTo(toChatUsername);
                         EMClient.getInstance().chatManager().sendMessage(endMsg);
                         break;
+                    case 100:
+                        String result = msg.obj.toString();
+                        if (result.equals("false")) {
+                            Toast.makeText(getContext(),"计划生成失败",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getContext(),"计划生成成功，一起去跑步吧！",Toast.LENGTH_SHORT).show();
+                        }
                     default:
                         super.handleMessage(msg);
                         break;
@@ -296,7 +335,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     protected void setUpView() {
-        titleBar.setTitle(toChatUsername);
+//        titleBar.setTitle(toChatUsername);friendNickName
+        titleBar.setTitle(friendNickName);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){
@@ -593,6 +633,9 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 EMMessage dingMsg = EaseDingMessageHelper.get().createDingMessage(toChatUsername, msgContent);
                 sendMessage(dingMsg);
             }
+//            else if(requestCode == REQUEST_CODE_PLAN){
+//                addCake();
+//            }
         }
     }
 
@@ -673,7 +716,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                             titleBar.setTitle(room.getName());
                             EMLog.d(TAG, "join room success : " + room.getName());
                         } else {
-                            titleBar.setTitle(toChatUsername);
+//                            titleBar.setTitle(toChatUsername);
+                            titleBar.setTitle(friendNickName);
                         }
                         onConversationInit();
                         onMessageListInit();
@@ -732,7 +776,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     if (ACTION_TYPING_BEGIN.equals(body.action()) && msg.getFrom().equals(toChatUsername)) {
                         titleBar.setTitle(getString(R.string.alert_during_typing));
                     } else if (ACTION_TYPING_END.equals(body.action()) && msg.getFrom().equals(toChatUsername)) {
-                        titleBar.setTitle(toChatUsername);
+//                        titleBar.setTitle(toChatUsername);
+                        titleBar.setTitle(friendNickName);
                     }
                 }
             });
@@ -800,7 +845,9 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 //            case ITEM_LOCATION:
 //                startActivityForResult(new Intent(getActivity(), EaseBaiduMapActivity.class), REQUEST_CODE_MAP);
 //                break;
-
+                case ITEM_PLAN:
+                    selectPicFromPlan();
+                    break;
             default:
                 break;
             }
@@ -1041,7 +1088,57 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         startActivityForResult(intent, REQUEST_CODE_LOCAL);
     }
 
-
+    /*
+    * create plan                     自己写的
+    * */
+    protected void selectPicFromPlan(){
+            final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+            View layout = LayoutInflater.from(getContext()).inflate(R.layout.activity_add_cake, null);
+            final EditText edtTime = layout.findViewById(R.id.edtTime);
+            final EditText edtAddress = layout.findViewById(R.id.edtAddress);
+            alertBuilder.setView(layout);
+            alertBuilder.setNegativeButton("取消", null);
+            alertBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String addTime = edtTime.getText().toString().trim();
+                    String addAddress = edtAddress.getText().toString().trim();
+                    if(!addTime.equals("") && !addAddress.equals("") && addAddress!=null && addTime!=null){
+                        plan.put("time",addTime);
+                        plan.put("address",addAddress);
+                        sendMessageToAddPlan(addTime,addAddress);
+                    }
+                }
+            });
+            AlertDialog alertDialog = alertBuilder.create();
+            alertDialog.show();
+    }
+    //向服务器发送模糊查找好友的数据
+    public void sendMessageToAddPlan(final String addTime, final String addAddress){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getContext().getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/plan/addUserPlan?myId="+myId+"&friendId="+toChatUsername+"&datetime="+addTime+"&address="+addAddress);
+                    Log.e("url",url.toString());
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 100;
+                    Log.e("生成计划",result);
+                    typingHandler.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
 
     /**
      * clear the conversation history

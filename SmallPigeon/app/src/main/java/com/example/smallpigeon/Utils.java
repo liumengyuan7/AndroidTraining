@@ -2,6 +2,7 @@ package com.example.smallpigeon;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -23,7 +24,7 @@ public class Utils {
 
     private String result;
     private Bitmap bitmapResult;
-    public static final String ip = "192.168.1.100";
+    public static final String ip = "10.7.89.223";
     public static final String project = "smallpigeon";
 
     //不需要参数的数据传输
@@ -31,9 +32,12 @@ public class Utils {
         try {
             URL url = new URL("http://"+ip+":8080/"+project+"/"+controller+"/"+method);
             URLConnection conn = url.openConnection();
+            Log.e("Utils发送数据in 之前","fasong shux ");
             InputStream in = conn.getInputStream();
+            Log.e("Utils发送数据in 之后","fasong shux ");
             BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
             result = reader.readLine();
+            Log.e("Utils发送数据in 之前",result);
             reader.close();
             in.close();
         } catch (MalformedURLException e) {
@@ -90,6 +94,7 @@ public class Utils {
             URLConnection conn = url.openConnection();
             InputStream in = conn.getInputStream();
 
+            /*其中一种解析数据流获取图片的方法
             byte[] buffer = new byte[1024];
             int len = -1;
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -98,7 +103,10 @@ public class Utils {
             }
             byte[] data = outStream.toByteArray();
             bitmapResult = BitmapFactory.decodeByteArray(data,0,data.length);
-            outStream.close();
+            outStream.close();*/
+
+            //另外一种方法
+            bitmapResult = BitmapFactory.decodeStream(in);
             in.close();
         } catch (MalformedURLException e) {
             e.printStackTrace();

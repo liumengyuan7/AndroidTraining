@@ -23,7 +23,6 @@
     <!-- Required -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <!--    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
     <!--    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />-->
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -31,6 +30,12 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="com.miui.whetstone.permission.ACCESS_PROVIDER" />
 
     <application
         android:name=".TrackApplication"
@@ -42,6 +47,7 @@
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Run.FinishRunActivity"></activity>
+        <activity android:name=".My.MyPlan"/>
         <activity android:name=".My.Paihang" />
         <activity android:name=".My.update_email" />
         <activity android:name=".My.update_pwd_final" />
@@ -68,7 +74,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Chat.activity.ChatActivity"/>
+        <activity android:name=".Chat.activity.AddContactActivity"/>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="tGSM2HnpdI65l0aTDEaUpn81WzDUtvOo" />

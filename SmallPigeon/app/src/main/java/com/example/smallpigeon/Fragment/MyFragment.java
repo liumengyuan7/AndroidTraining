@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,11 +26,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
+import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.RoundImageView;
 import com.example.smallpigeon.Utils;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,6 +54,23 @@ public class MyFragment extends Fragment {
     private LinearLayout btnGradeRank;
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
+    private String path;
+    private Handler handleImage = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            try {
+                Bitmap bitmap = (Bitmap) msg.obj;
+                OutputStream outputStream = new FileOutputStream(path);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+                myAvatar.setImageBitmap(bitmap);
+                outputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    };
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,18 +107,26 @@ public class MyFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.right_Authentication:
-                    Toast.makeText(getContext(),"认证！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.right_community:
-                    Toast.makeText(getContext(),"社区！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.right_gradeRank:
-                    Toast.makeText(getContext(),"积分榜！",Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(getContext(), Paihang.class);
-                    startActivity(intent1);
+                    if(loginOrNot()){
+                        Intent intent1 = new Intent(getContext(), Paihang.class);
+                        startActivity(intent1);
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.right_plan:
-                    Toast.makeText(getContext(),"计划！",Toast.LENGTH_SHORT).show();
+                    if(loginOrNot()){
+                        Intent intent2 = new Intent(getContext(), MyPlan.class);
+                        startActivity(intent2);
+                    }else {
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
@@ -121,6 +152,17 @@ public class MyFragment extends Fragment {
 
     }
 
+    //判断是否登录的方法
+    private boolean loginOrNot(){
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     //动态事件
     private void motionEvent(View view,MotionEvent event){
         switch (event.getAction()){
@@ -138,6 +180,7 @@ public class MyFragment extends Fragment {
         //跳转登录界面
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
         String nickname = pre.getString("user_nickname","");
+        String useId = pre.getString("user_id","");
         if(nickname.equals("") || nickname == null){
             loginOrRegister.setText("登录/注册");
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +191,7 @@ public class MyFragment extends Fragment {
                 }
             });
         }else{
+            signIn(useId);
             loginOrRegister.setText("欢迎登录："+nickname);
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -179,10 +223,10 @@ public class MyFragment extends Fragment {
     private void getAvatar(){
         String userEmail = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","");
         if(! userEmail.equals("") && userEmail != null){
-            String path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
+            path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
             File file = new File(path);
             if(!file.exists()){
-                getPictureAndSave(path,userEmail);
+                getPictureAndSave(userEmail);
             }else{
                 Bitmap bitmap = BitmapFactory.decodeFile(path);
                 myAvatar.setImageBitmap(bitmap);
@@ -193,7 +237,7 @@ public class MyFragment extends Fragment {
     }
 
     //设置头像，并保存到本地
-    private void getPictureAndSave(final String path, final String userEmail){
+    private void getPictureAndSave(final String userEmail){
         new Thread(){
             @Override
             public void run() {
@@ -203,12 +247,10 @@ public class MyFragment extends Fragment {
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    OutputStream outputStream = new FileOutputStream(path);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-                    myAvatar.setImageBitmap(bitmap);
-                    outputStream.close();
                     in.close();
-                    File file = new File(path);
+                    Message message = new Message();
+                    message.obj = bitmap;
+                    handleImage.sendMessage(message);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -217,5 +259,23 @@ public class MyFragment extends Fragment {
             }
         }.start();
     }
+    /*
+     * 登录  异步
+     * */
+    private void signIn(String userId) {
+        EMClient.getInstance().login(userId, userId, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                Log.e("MyFragment环信登录","登录成功");
+            }
+            @Override
+            public void onError(int i, String s) {
+                Log.e("MyFragment环信登录","登录失败"+i+","+s);
+            }
+            @Override
+            public void onProgress(int i, String s) {
 
+            }
+        });
+    }
 }
