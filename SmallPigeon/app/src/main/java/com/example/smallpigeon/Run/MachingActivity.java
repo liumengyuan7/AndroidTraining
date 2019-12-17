@@ -67,6 +67,7 @@ public class MachingActivity extends AppCompatActivity {
                 intent.putExtra("user_points",json2.getString("user_points"));
                 intent.putExtra("user_interest",re.split(";")[1]);
                 intent.putExtra("user_email",json2.getString("user_email"));
+                intent.putExtra("user_id",json2.getString("id"));
                 startActivity(intent);
                 finish();
             } catch (JSONException e) {

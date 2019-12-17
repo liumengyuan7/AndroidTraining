@@ -115,6 +115,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected int chatType;
     protected String toChatUsername;
     protected String myId;
+    private String friendNickName;
     protected EaseChatMessageList messageList;
     protected EaseChatInputMenu inputMenu;
 
@@ -188,7 +189,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         chatType = fragmentArgs.getInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
         // userId you are chat with or group id
         toChatUsername = fragmentArgs.getString(EaseConstant.EXTRA_USER_ID);
-
+        friendNickName = fragmentArgs.getString(EaseConstant.EXTRA_FRIEND_NICKNAME);
         myId = fragmentArgs.getString(EaseConstant.EXTRA_MY_ID);
         this.turnOnTyping = turnOnTyping();
 
@@ -334,7 +335,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     protected void setUpView() {
-        titleBar.setTitle(toChatUsername);
+//        titleBar.setTitle(toChatUsername);friendNickName
+        titleBar.setTitle(friendNickName);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){
@@ -714,7 +716,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                             titleBar.setTitle(room.getName());
                             EMLog.d(TAG, "join room success : " + room.getName());
                         } else {
-                            titleBar.setTitle(toChatUsername);
+//                            titleBar.setTitle(toChatUsername);
+                            titleBar.setTitle(friendNickName);
                         }
                         onConversationInit();
                         onMessageListInit();
@@ -773,7 +776,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     if (ACTION_TYPING_BEGIN.equals(body.action()) && msg.getFrom().equals(toChatUsername)) {
                         titleBar.setTitle(getString(R.string.alert_during_typing));
                     } else if (ACTION_TYPING_END.equals(body.action()) && msg.getFrom().equals(toChatUsername)) {
-                        titleBar.setTitle(toChatUsername);
+//                        titleBar.setTitle(toChatUsername);
+                        titleBar.setTitle(friendNickName);
                     }
                 }
             });

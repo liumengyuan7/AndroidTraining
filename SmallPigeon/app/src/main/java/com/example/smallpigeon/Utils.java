@@ -94,6 +94,7 @@ public class Utils {
             URLConnection conn = url.openConnection();
             InputStream in = conn.getInputStream();
 
+            /*其中一种解析数据流获取图片的方法
             byte[] buffer = new byte[1024];
             int len = -1;
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -102,7 +103,10 @@ public class Utils {
             }
             byte[] data = outStream.toByteArray();
             bitmapResult = BitmapFactory.decodeByteArray(data,0,data.length);
-            outStream.close();
+            outStream.close();*/
+
+            //另外一种方法
+            bitmapResult = BitmapFactory.decodeStream(in);
             in.close();
         } catch (MalformedURLException e) {
             e.printStackTrace();

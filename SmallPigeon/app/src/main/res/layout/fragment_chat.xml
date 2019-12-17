@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/addFriends"
             android:layout_alignParentRight="true"
-            android:src="@drawable/em_add"
+            android:src="@drawable/icon_add_contact"
             android:layout_width="32dp"
             android:layout_height="32dp"/>
     </RelativeLayout>

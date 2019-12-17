@@ -101,7 +101,6 @@ public class ChatFragment extends Fragment {
                     tvFriends.setTextColor(Color.parseColor("#737373"));
                     break;
                 case R.id.tabFriends:
-
                     showFragment(listFragment);
                     currentFragment = listFragment;
                     tvHuihua.setTextColor(Color.parseColor("#737373"));
@@ -110,7 +109,7 @@ public class ChatFragment extends Fragment {
                 case R.id.addFriends:
                     //TODO:先判断用户是否登陆，若没有登陆则提示用户先登录，用户登陆后才能进行跳转
                     if(loginOrNot()){
-                        ChatHelper.getInstance().sendMessageToSearchAllUser(getContext());
+//                        ChatHelper.getInstance().sendMessageToSearchAllUser(getContext());
                         Intent intent = new Intent(getContext(), AddContactActivity.class);
                         startActivity(intent);
                     }else{

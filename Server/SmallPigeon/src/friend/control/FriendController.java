@@ -16,18 +16,8 @@ import user.service.UserService;
  */
 
 public class FriendController extends Controller {
-    //   public void saveContactList(){
-////        Gson gson = new Gson();
-////        String contactList = getPara("contactList");
-////        Type type = new TypeToken<List<Integer>>(){}.getType();
-////        List<Integer> friends = gson.fromJson(contactList,type);
-////
-////    }
     //查找相关用户信息
 	public void searchAllUser() throws IOException {
-	    System.out.println("zhixing");
-//	    String userAccount = getPara("userAccount");
-//		String result = new FriendService().searchAllUser(userAccount);
         String result = new FriendService().searchAllUser();
 		if(result==null) {
 			renderText("false");
@@ -52,6 +42,7 @@ public class FriendController extends Controller {
 	//得到我的好友列表
     public void getContactList() throws IOException {
 	    int myId = Integer.parseInt(getPara("myId"));
+	    System.out.println("我的id去找好友列表"+myId);
 	    String result = new FriendService().getContactList(myId);
 	    if(result==null) {
 			renderText("false");
@@ -59,6 +50,22 @@ public class FriendController extends Controller {
 			HttpServletResponse response = getResponse();
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().write(result);
+			System.out.println("好友列表"+result);
+			renderNull();
+		}
+	}
+	//模糊查询用户
+    public void getLikeContactList() throws IOException {
+	    String userEmail = getPara("userEmail");
+	    System.out.println("模糊查询账号"+userEmail);
+	    String result = new FriendService().getLikeUser(userEmail);
+	    if(result==null) {
+			renderText("false");
+		}else {
+			HttpServletResponse response = getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().write(result);
+			System.out.println("模糊查询结果"+result);
 			renderNull();
 		}
 	}
