@@ -633,8 +633,8 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
              */
             @Override
             public void onBindServiceCallback(int errorNo, String message) {
-                viewUtil.showToast(TracingActivity.this,
-                        String.format("onBindServiceCallback, errorNo:%d, message:%s ", errorNo, message));
+//                viewUtil.showToast(TracingActivity.this,
+//                        String.format("onBindServiceCallback, errorNo:%d, message:%s ", errorNo, message));
             }
 
             /**
