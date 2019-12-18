@@ -95,8 +95,7 @@ public class update_pwd extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent4 = new Intent(update_pwd.this,anquan.class);
-                startActivity(intent4);
+                finish();
             }
         });
         code.addTextChangedListener(new TextWatcher() {
