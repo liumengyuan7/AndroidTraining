@@ -8,20 +8,18 @@ import androidx.fragment.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.smallpigeon.Fragment.ChatFragment;
 import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.Fragment.PeopleFragment;
 import com.example.smallpigeon.Fragment.RunFragment;
+import com.example.smallpigeon.Fragment.PeopleFragment;
 
 import java.io.File;
 

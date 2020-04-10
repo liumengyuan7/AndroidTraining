@@ -5,14 +5,26 @@ public class DynamicContent {
     private String date;
     private String device;
     private String content;
+    private String img;
+    private int zan_num;
 
     public DynamicContent(){}
 
-    public DynamicContent(UserContent userContent, String date, String device, String content) {
-        this.userContent = userContent;
-        this.date = date;
-        this.device = device;
-        this.content = content;
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public void setZan_num(int zan_num) {
+        this.zan_num = zan_num;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public int getZan_num() {
+        return zan_num;
     }
 
     public UserContent getUserContent() {
