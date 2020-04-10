@@ -1,4 +1,4 @@
-﻿package com.example.smallpigeon.My;
+package com.example.smallpigeon.My;
 
 import androidx.appcompat.app.AppCompatActivity;
 

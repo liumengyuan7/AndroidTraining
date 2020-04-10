@@ -59,7 +59,7 @@ public class PeopleFragment extends Fragment {
     }
 
     private void registerListener() {
-
+        iv_add_Message.setOnClickListener(listener);
     }
 
     private void getViews(View view) {
@@ -75,8 +75,8 @@ public class PeopleFragment extends Fragment {
                     //TODO:添加新的动态
                     //TODO:如果已登录，跳转发表动态
 //                    if (loginOrNot()){
-                        Intent intent = new Intent( getContext(), ReleaseDynamic.class );
-                        startActivity( intent );
+                        Intent intent = new Intent(getContext(),ReleaseDynamic.class);
+                        startActivity(intent);
 //                    } else {
 //                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
 //                    }
