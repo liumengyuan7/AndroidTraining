@@ -18,7 +18,6 @@ import com.example.smallpigeon.Adapter.PeopleAdapter;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.Fragment.Dynamic.ReleaseDynamic;
-import com.example.smallpigeon.People.ReleaseActivity;
 import com.example.smallpigeon.R;
 
 import java.text.SimpleDateFormat;

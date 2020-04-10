@@ -18,8 +18,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.RankAdapter;
-import com.example.smallpigeon.Fragment.MyFragment;
-import com.example.smallpigeon.Fragment.RunFragment;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
 
