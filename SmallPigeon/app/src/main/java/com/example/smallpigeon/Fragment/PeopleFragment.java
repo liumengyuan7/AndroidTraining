@@ -1,8 +1,6 @@
 package com.example.smallpigeon.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -13,15 +11,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.smallpigeon.Adapter.PeopleAdapter;
 import com.example.smallpigeon.Entity.DynamicContent;
-import com.example.smallpigeon.Entity.PlanContent;
 import com.example.smallpigeon.Entity.UserContent;
+import com.example.smallpigeon.People.ReleaseActivity;
 import com.example.smallpigeon.R;
 
 import java.text.SimpleDateFormat;
@@ -34,10 +30,10 @@ public class PeopleFragment extends Fragment {
     private ListView dynamic_list;
     private ImageView iv_add_Message;//发表动态，右上角加号
 
-
     private MyClickListener listener;
     private PeopleAdapter adapter;
     private List<DynamicContent> list = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +41,8 @@ public class PeopleFragment extends Fragment {
         getViews(view);
         listener = new MyClickListener();
         registerListener();
+
+        iv_add_Message.setOnClickListener( listener );
 
         DynamicContent content = new DynamicContent();
         UserContent userContent = new UserContent();
@@ -61,6 +59,7 @@ public class PeopleFragment extends Fragment {
     }
 
     private void registerListener() {
+
     }
 
     private void getViews(View view) {
@@ -72,6 +71,16 @@ public class PeopleFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
+                case R.id.iv_add_Message:
+                    //TODO:添加新的动态
+                    //TODO:如果已登录，跳转发表动态
+//                    if (loginOrNot()){
+                        Intent intent = new Intent( getContext(), ReleaseActivity.class );
+                        startActivity( intent );
+//                    } else {
+//                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+//                    }
+                    break;
                 case R.id.iv_unfold:
                     //TODO:点击转发时可以转发
                     break;
