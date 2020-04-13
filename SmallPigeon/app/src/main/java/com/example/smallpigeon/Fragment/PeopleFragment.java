@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.smallpigeon.Adapter.PeopleAdapter;
+import com.example.smallpigeon.Community.ReleaseDynamic.ReleaseDynamic;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.UserContent;
-import com.example.smallpigeon.Fragment.Dynamic.ReleaseDynamic;
 import com.example.smallpigeon.R;
 
 import java.text.SimpleDateFormat;
@@ -75,7 +75,7 @@ public class PeopleFragment extends Fragment {
                     //TODO:添加新的动态
                     //TODO:如果已登录，跳转发表动态
 //                    if (loginOrNot()){
-                        Intent intent = new Intent(getContext(),ReleaseDynamic.class);
+                        Intent intent = new Intent(getContext(), ReleaseDynamic.class);
                         startActivity(intent);
 //                    } else {
 //                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();

@@ -46,7 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Fragment.Dynamic.ReleaseDynamic"/>
+        <activity android:name=".Community.ReleaseDynamic.ReleaseDynamic"/>
         <activity android:name=".Run.FinishRunActivity"></activity>
         <activity android:name=".My.MyPlan"/>
         <activity android:name=".My.Paihang" />

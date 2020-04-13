@@ -1,4 +1,4 @@
-package com.example.smallpigeon.Fragment.Dynamic;
+package com.example.smallpigeon.Community.ReleaseDynamic;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
