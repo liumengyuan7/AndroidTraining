@@ -31,8 +31,6 @@ public class PeopleAdapter extends BaseAdapter {
     private int itemLayoutID;
     private List<DynamicContent> list = new ArrayList<>();
 
-    private PopupWindow mPopWindow;
-
     public PeopleAdapter(Context context, int itemLayoutID, List<DynamicContent> list) {
         this.context = context;
         this.itemLayoutID = itemLayoutID;
@@ -88,43 +86,10 @@ public class PeopleAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Log.e( "erro2", "error?" );
-                showPopupWindow();
             }
         } );
 
         return convertView;
-    }
-
-    @SuppressLint("WrongConstant")
-    private void showPopupWindow() {
-        //设置contentView
-        View contentView = LayoutInflater.from(context).inflate(R.layout.comment_popuwindow, null);
-        mPopWindow = new PopupWindow(contentView,
-                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        mPopWindow.setContentView(contentView);
-        //防止PopupWindow被软件盘挡住（可能只要下面一句，可能需要这两句）
-        mPopWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
-        mPopWindow.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        //设置软键盘弹出
-        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInput(1000, InputMethodManager.HIDE_NOT_ALWAYS);//这里给它设置了弹出的时间
-        //设置各个控件的点击响应
-//        final EditText editText = contentView.findViewById(R.id.pop_editText);
-//        Button btn = contentView.findViewById(R.id.pop_btn);
-
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String inputString = editText.getText().toString();
-//                Toast.makeText( getContext(), inputString, Toast.LENGTH_SHORT).show();
-//                mPopWindow.dismiss();//让PopupWindow消失
-//            }
-//        });
-        //是否具有获取焦点的能力
-        mPopWindow.setFocusable(true);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(context).inflate(R.layout.activity_main, null);
-        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
 
     static class ViewHolder{

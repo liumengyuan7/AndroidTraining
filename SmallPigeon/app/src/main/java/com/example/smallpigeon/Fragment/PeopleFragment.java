@@ -31,6 +31,7 @@ import com.example.smallpigeon.Adapter.PeopleAdapter;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.Fragment.Dynamic.ReleaseDynamic;
+import com.example.smallpigeon.InputTextMsgDialog;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
 
@@ -43,10 +44,6 @@ import java.util.List;
 public class PeopleFragment extends Fragment {
     private ListView dynamic_list;
     private ImageView iv_add_Message;//发表动态，右上角加号
-
-    private LinearLayout ll_toComment;
-
-    private PopupWindow mPopWindow;
 
     private MyClickListener listener;
     private PeopleAdapter adapter;
@@ -78,14 +75,11 @@ public class PeopleFragment extends Fragment {
 
     private void registerListener() {
         iv_add_Message.setOnClickListener( listener );
-        ll_toComment.setOnClickListener( listener );
     }
 
     private void getViews(View view) {
         dynamic_list = view.findViewById( R.id.dynamic_list );
         iv_add_Message = view.findViewById( R.id.iv_add_Message );
-        ll_toComment = view.findViewById( R.id.ll_toComment );
-
     }
 
     class MyClickListener implements View.OnClickListener {
@@ -107,7 +101,6 @@ public class PeopleFragment extends Fragment {
                     break;
                 case R.id.ll_toComment:
                     //TODO：点击评论可以进行评论
-                    showPopupWindow();
                     break;
                 case R.id.iv_praise:
                     //TODO:赞
@@ -118,35 +111,4 @@ public class PeopleFragment extends Fragment {
         }
     }
 
-    @SuppressLint("WrongConstant")
-    private void showPopupWindow() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_popuwindow, null);
-        mPopWindow = new PopupWindow(contentView,
-                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        mPopWindow.setContentView(contentView);
-        //防止PopupWindow被软件盘挡住（可能只要下面一句，可能需要这两句）
-        mPopWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
-        mPopWindow.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        //设置软键盘弹出
-        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInput(1000, InputMethodManager.HIDE_NOT_ALWAYS);//这里给它设置了弹出的时间
-        //设置各个控件的点击响应
-//        final EditText editText = contentView.findViewById(R.id.pop_editText);
-//        Button btn = contentView.findViewById(R.id.pop_btn);
-
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String inputString = editText.getText().toString();
-//                Toast.makeText( getContext(), inputString, Toast.LENGTH_SHORT).show();
-//                mPopWindow.dismiss();//让PopupWindow消失
-//            }
-//        });
-        //是否具有获取焦点的能力
-        mPopWindow.setFocusable(true);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getContext()).inflate(R.layout.activity_main, null);
-        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
-    }
 }
