@@ -25,6 +25,7 @@ import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.Fragment.PeopleFragment;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.BitmapCompat;
 
 public class ReleaseDynamic extends AppCompatActivity {
     private static final int IMG_COUNT = 3;
@@ -46,6 +48,7 @@ public class ReleaseDynamic extends AppCompatActivity {
     private EditText dynamic_content;
     //imgInfo为传入所有图片的名称，各个图片名中间用空格隔开
     private  String imgInfo;
+    private Utils utils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,8 +74,8 @@ public class ReleaseDynamic extends AppCompatActivity {
                 dynamicContent.setDevice(Build.MODEL);
                 dynamicContent.setImg(imgInfo);
                 //TODO:将动态信息插入数据库
-                Intent intent = new Intent(getApplicationContext(), PeopleFragment.class);
-                startActivity(intent);
+
+                finish();
             }
         });
         initData();
@@ -80,13 +83,16 @@ public class ReleaseDynamic extends AppCompatActivity {
     private void upLoad() {
         Bitmap bitmap;
         Bitmap bmpCompressed;
+        utils = new Utils();
         for (int i = 0; i < list.size() - 1; i++) {
             bitmap = BitmapFactory.decodeFile(list.get(i));
-            bmpCompressed = Bitmap.createScaledBitmap(bitmap, 640, 480, true);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            //将缩略图进行扩大
+            bmpCompressed = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
+            utils.postPictureServer("releaseDynamic","", bmpCompressed);
+            /*ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bmpCompressed.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             byte[] data = bos.toByteArray();
-            System.out.println("upload:"+data);
+            System.out.println("upload:"+data);*/
         }
 
     }
@@ -192,7 +198,11 @@ public class ReleaseDynamic extends AppCompatActivity {
             cursor.moveToFirst();
             String imgPath = cursor.getString(1); //图片文件路径
             String imgName = cursor.getString(3); //图片文件名
-            imgInfo = imgInfo+imgName+" ";
+            if (imgInfo==null || imgInfo.equals("")){
+                imgInfo = imgName;
+            }else {
+                imgInfo = imgInfo+";"+imgName;
+            }
             System.out.println("imgInfo:"+imgInfo);
             System.out.println("imgPath:"+imgPath+", imgName:"+imgName);
             String path = ImageTool.getImageAbsolutePath(this, uri);
