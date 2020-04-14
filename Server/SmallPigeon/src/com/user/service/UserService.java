@@ -4,6 +4,7 @@ import com.entity.Interest;
 import com.entity.User;
 import com.google.gson.Gson;
 import com.interest.dao.InterestMapper;
+import com.interest.service.InterestService;
 import com.user.dao.UserMapper;
 
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class UserService {
 	@Resource
 	private UserMapper userMapper;
 	@Resource
-	private InterestMapper interestMapper;
+	private InterestService interestService;
 	@Resource
 	private ServletContext servletContext;
 	private String interestString = "";
@@ -49,27 +50,28 @@ public class UserService {
 	//用户的登录操作
 	public String userLogin(String email, String password) {
 		Map user = this.userMapper.selectUserByEmailAndPassword(email, password); //查询是否存在用户
-		List<Map> userList = new ArrayList<>();
-		userList.add(user);
 		if(user != null){
+			List<Map> userList = new ArrayList<>();
+			userList.add(user);
 			//根据用户的id查询用户的所有的兴趣，按照逗号将所有的兴趣拼接起来
-			Interest interest = this.interestMapper.selectInterestByUserId(Integer.parseInt(user.get("id")+""));
-			interestSet(interest.getOutdoor());
-			interestSet(interest.getSociety());
-			interestSet(interest.getMusic());
-			interestSet(interest.getStar());
-			interestSet(interest.getScience());
-			interestSet(interest.getFilm());
-			interestSet(interest.getComic());
-			interestSet(interest.getDelicacy());
+			Interest interest = this.interestService.selectInterestByUserId(Integer.parseInt(user.get("id")+""));
+			interestSet(interest.getOutdoor(),"outdoor");
+			interestSet(interest.getSociety(),"society");
+			interestSet(interest.getMusic(),"music");
+			interestSet(interest.getStar(),"star");
+			interestSet(interest.getScience(),"science");
+			interestSet(interest.getFilm(),"film");
+			interestSet(interest.getComic(),"comic");
+			interestSet(interest.getDelicacy(),"delicacy");
+			//返回用户信息和兴趣的字符串
+			return new Gson().toJson(userList)+";"+interestString;
 		}
-		//返回用户信息和兴趣的字符串
-		return new Gson().toJson(userList)+";"+interestString;
+		return null;
 	}
 
 	//用户兴趣字符串的拼接
-	private void interestSet(int interest){
-		if(interest == 1){
+	private void interestSet(int interestState,String interest){
+		if(interestState == 1){
 			interestString += interest+",";
 		}
 	}
@@ -88,11 +90,8 @@ public class UserService {
 			int result1 = this.userMapper.insertUserInfo(user);
 
 			//为用户添加兴趣
-			int result2 = this.interestMapper.insertInterestInfo(user.getId());
-			String[] in = userInterest.split(",");
-			for(int i = 0;i<in.length;i++){
-				this.interestMapper.updateInterestState(in[i],user.getId());
-			}
+			String[] interests = userInterest.split(",");
+			int result2 = this.interestService.insertInterestInfo(interests,user.getId());
 			if(result1>0 && result2>0) return user.getId()+"";
 			else return "false";
 		}else {

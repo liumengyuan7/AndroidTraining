@@ -20,4 +20,5 @@ public interface InterestMapper {
     public int insertInterestInfo(int userId);
 
     public int updateInterestState(@Param("interest") String interest, @Param("userId") int userId);
+
 }

@@ -39,6 +39,7 @@ public class UserController {
 		if(result==null) {
 			return "false";
 		}else {
+			System.out.println(result);
 			return result;
 		}
 	}
@@ -51,7 +52,7 @@ public class UserController {
 							   @RequestParam("userNickname") String userNickname,
 							   @RequestParam("userSex") String userSex,
 							   @RequestParam("userInterest") String userInterest) {
-		System.out.println(userEmail+userPassword+userNickname+userSex);
+		System.out.println(userEmail+userPassword+userNickname+userSex+userInterest);
 		String result = this.userService.userRegister(userEmail,userPassword,userNickname,userSex,userInterest);
 		if(result.equals("repeat")){
 			return "repeat";

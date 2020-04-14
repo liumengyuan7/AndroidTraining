@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plan.dao.PlanMapper">
+    <resultMap id="planMap" type="com.entity.Plan">
+        <result property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="companionId" column="companion_id" />
+        <result property="planTime" column="plan_time" />
+        <result property="planAddress" column="plan_address" />
+        <result property="planStatus" column="plan_status" />
+    </resultMap>
+    <select id="getMyAllPlanByUserId" resultType="java.util.Map">
+        select plan.*,user.user_email 'plan_email',user.user_nickname 'plan_nickname'
+        from plan,user where plan.companion_id=user.id and user_id=#{userId}
+    </select>
+    <select id="getMyAllUnfinishedPlanByUserId" resultType="java.util.Map">
+        select plan.*,user.user_email 'plan_email',user.user_nickname 'plan_nickname'
+        from plan,user where plan.companion_id=user.id and user_id=#{userId} and plan_status=0
+    </select>
+    <insert id="insertPlanInfo" parameterType="com.entity.Plan">
+        insert into plan('user_id','companion_id','plan_time','plan_address','plan_status')
+        values (#{userId},#{companionId},#{planTime},#{planAddress},#{planStatus})
+    </insert>
+    <delete id="deletePlanById" parameterType="com.entity.Plan">
+        delete from plan where id=#{planId}
+    </delete>
+</mapper>

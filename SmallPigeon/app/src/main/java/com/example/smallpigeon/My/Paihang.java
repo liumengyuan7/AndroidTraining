@@ -59,8 +59,8 @@ public class Paihang extends AppCompatActivity {
                         JSONObject json1 = jsonArray.getJSONObject(i);
                         JSONObject json2 = json1.getJSONObject("attrs");
                         Map<String, String> item = new HashMap<>();
-                        item.put("userName",json2.getString("userNickname"));
-                        item.put("userPoints",json2.getString("userPoints"));
+                        item.put("userName",json2.getString("user_nickname"));
+                        item.put("userPoints",json2.getString("user_points"));
                         item.put("rank",i+1+"");
                         information.add(item);
                     }

@@ -55,18 +55,17 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     String result = re.split(";")[0];
                     JSONArray jsonArray = new JSONArray(result);
-                    JSONObject json1 = jsonArray.getJSONObject(0);
-                    JSONObject json2 = new JSONObject(json1.getString("attrs"));
+                    JSONObject json = jsonArray.getJSONObject(0);
                     SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                     SharedPreferences.Editor editor = pre.edit();
-                    editor.putString("user_id",json2.getString("id"));
-                    editor.putString("user_nickname",json2.getString("user_nickname"));
-                    editor.putString("user_sex",json2.getString("user_sex"));
-                    editor.putString("user_email",json2.getString("user_email"));
-                    editor.putString("user_register_time",json2.getString("user_register_time"));
-                    editor.putString("user_points",json2.getString("user_points"));
+                    editor.putString("user_id",json.getString("id"));
+                    editor.putString("user_nickname",json.getString("user_nickname"));
+                    editor.putString("user_sex",json.getString("user_sex"));
+                    editor.putString("user_email",json.getString("user_email"));
+                    editor.putString("user_register_time",json.getString("user_register_time"));
+                    editor.putString("user_points",json.getString("user_points"));
                     editor.putString("user_interest",re.split(";")[1]);
-                    signIn(json2.getString("id"));
+                    signIn(json.getString("id"));
                     editor.commit();
                 } catch (JSONException e){
                     e.printStackTrace();
