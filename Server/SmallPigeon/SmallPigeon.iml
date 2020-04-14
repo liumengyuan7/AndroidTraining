@@ -11,27 +11,32 @@
         </webroots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
   </component>
   <component name="NewModuleRootManager">
-    <output url="file://$MODULE_DIR$/web/WEB-INF/classes" />
-    <output-test url="file://$MODULE_DIR$/web/WEB-INF/classes" />
+    <output url="file://$MODULE_DIR$/out" />
+    <output-test url="file://$MODULE_DIR$/out" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 9.0.0.M4" level="application_server_libraries" />
+    <orderEntry type="library" name="Spring" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/web/WEB-INF/lib" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/web/WEB-INF/lib" />
+        </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/web/WEB-INF/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/web/WEB-INF/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.5.49" level="application_server_libraries" />
   </component>
 </module>

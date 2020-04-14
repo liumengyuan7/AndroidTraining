@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.interest.dao.InterestMapper">
+    <resultMap id="interestMap" type="com.entity.Interest">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="outdoor" column="outdoor"/>
+        <result property="music" column="music"/>
+        <result property="film" column="film"/>
+        <result property="society" column="society"/>
+        <result property="delicacy" column="delicacy"/>
+        <result property="science" column="science"/>
+        <result property="star" column="star"/>
+        <result property="comic" column="comic"/>
+    </resultMap>
+    <select id="selectInterestByUserId" resultMap="interestMap">
+        select * from interest where user_id=#{userId}
+    </select>
+    <insert id="insertInterestInfo" useGeneratedKeys="true" keyProperty="id" parameterType="com.entity.Interest">
+        insert into interest(user_id) values (#{userId})
+    </insert>
+    <update id="updateInterestState" parameterType="com.entity.Interest">
+        update interest set
+        <choose>
+            <when test="interest == 'outdoor'">
+                outdoor=1
+            </when>
+            <when test="interest == 'music'">
+                music=1
+            </when>
+            <when test="interest == 'film'">
+                film=1
+            </when>
+            <when test="interest == 'society'">
+                society=1
+            </when>
+            <when test="interest == 'delicacy'">
+                delicacy=1
+            </when>
+            <when test="interest == 'science'">
+                science=1
+            </when>
+            <when test="interest == 'star'">
+                star=1
+            </when>
+            <when test="interest == 'comic'">
+                comic=1
+            </when>
+        </choose>
+        where user_id=#{userId}
+    </update>
+</mapper>

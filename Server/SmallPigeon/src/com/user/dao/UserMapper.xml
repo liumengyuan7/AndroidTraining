@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.user.dao.UserMapper">
+	<resultMap type="com.entity.User" id="userMap">
+        <result property="id" column="id"/>
+		<result property="userName" column="user_name"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userSex" column="user_sex"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userRegisterTime" column="user_register_time"/>
+        <result property="userPoints" column="user_points"/>
+        <result property="userMatcher" column="matcher"/>
+    </resultMap>
+	<select id="selectUserByEmailAndPassword" resultType="java.util.Map">
+        select * from user where user_email=#{userEmail} and user_password=#{userPassword}
+	</select>
+    <select id="selectUserByEmail" resultType="java.util.Map">
+        select * from user where user_email=#{userEmail}
+    </select>
+    <select id="selectUserById" resultType="java.util.Map">
+        select * from user where id=#{id}
+    </select>
+    <select id="selectUserByMatcher" resultType="java.util.Map">
+        select * from user where matcher=#{matcher}
+    </select>
+    <select id="selectAllUserForPoints" resultType="java.util.Map">
+        select * from user order by user_points desc limit 0,10
+    </select>
+    <select id="selectUserByMatcherAndId" resultType="java.util.Map">
+        select * from user where matcher=#{matcher} and id!=#{id}"
+    </select>
+    <select id="selectAllUser" resultType="java.util.Map">
+        select * from user
+    </select>
+    <select id="selectUserByEmailLike" resultType="java.util.Map">
+        select * from user where user_email like "%"#{userEmailLike}"%"
+    </select>
+    <insert id="insertUserInfo" useGeneratedKeys="true" keyProperty="id" parameterType="com.entity.User">
+        insert into user(user_nickname,user_password,user_sex,user_email,user_register_time)
+        values (#{userNickname},#{userPassword},#{userSex},#{userEmail},#{userRegisterTime})
+    </insert>
+    <update id="updateUserPasswordById" parameterType="com.entity.User">
+        update user set user_password=#{userPassword} where id=#{userId}
+    </update>
+    <update id="updateUserNicknameById" parameterType="com.entity.User">
+        update user set user_nickname=#{userNickname} where id=#{userId}
+    </update>
+    <update id="updateUserEmailById" parameterType="com.entity.User">
+        update user set user_email=#{userEmail} where id=#{userId}
+    </update>
+    <update id="updateUserMatcherStateById" parameterType="com.entity.User">
+        update user set matcher=#{state} where id=#{id}
+    </update>
+    <update id="updateUserPointsById" parameterType="com.entity.User">
+        update user set user_points=#{point} where id=#{userId}
+    </update>
+</mapper>
