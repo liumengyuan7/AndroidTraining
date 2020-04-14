@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -152,8 +156,9 @@ public class UserController {
 	//获取的图片存入out中
 	@ResponseBody
 	@RequestMapping("getPicture")
-	public String getPicture(HttpServletRequest request,@RequestParam("userEmail") String email) throws Exception {
+	public String getPicture(HttpServletRequest request) throws Exception {
 		String path = servletContext.getRealPath("")+"avatar\\";
+		System.out.println(path);
         FileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
         List<FileItem> items = upload.parseRequest(request);
@@ -165,10 +170,21 @@ public class UserController {
 	//post图片
 	@ResponseBody
 	@RequestMapping("postPicture")
-	public File postPicture(@RequestParam("userEmail") String userEmail){
+	public File postPicture(@RequestParam("userEmail") String userEmail,
+							HttpServletResponse response) throws IOException {
 		String path = servletContext.getRealPath("")+"avatar\\"+userEmail+".jpg";
-		File file = new File(path);
-		return file;
+		response.setContentType(servletContext.getMimeType(userEmail+".jpg"));
+		response.setHeader("Content-Disposition","attachment;fileName="+userEmail+".jpg");
+		InputStream in = new FileInputStream(path);
+		OutputStream out = response.getOutputStream();
+		int n = -1;
+		while ((n=in.read())!=-1){
+			out.write(n);
+			out.flush();
+		}
+		in.close();
+		out.close();
+		return null;
 	}
 
 	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，

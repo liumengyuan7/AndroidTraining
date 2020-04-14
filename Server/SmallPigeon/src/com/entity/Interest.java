@@ -99,4 +99,19 @@ public class Interest {
         this.comic = comic;
     }
 
+    @Override
+    public String toString() {
+        return "Interest{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", outdoor=" + outdoor +
+                ", music=" + music +
+                ", film=" + film +
+                ", society=" + society +
+                ", delicacy=" + delicacy +
+                ", science=" + science +
+                ", star=" + star +
+                ", comic=" + comic +
+                '}';
+    }
 }
