@@ -95,6 +95,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/iv_unfold"
                 android:src="@drawable/transmit"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
@@ -114,6 +115,7 @@
             android:layout_marginLeft="60dp">
 
             <ImageView
+                android:id="@+id/iv_comment"
                 android:src="@drawable/comment"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
@@ -133,6 +135,7 @@
             android:layout_marginLeft="60dp">
 
             <ImageView
+                android:id="@+id/iv_praise"
                 android:src="@drawable/good"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />

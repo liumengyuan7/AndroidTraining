@@ -32,7 +32,9 @@ import java.util.List;
 public class PeopleFragment extends Fragment {
     private ListView dynamic_list;
     private ImageView iv_add_Message;//发表动态，右上角加号
-
+    private ImageView iv_unfold;
+    private  ImageView iv_comment;
+    private ImageView iv_praise;
     private MyClickListener listener;
     private PeopleAdapter adapter;
     private List<DynamicContent> list = new ArrayList<>();
