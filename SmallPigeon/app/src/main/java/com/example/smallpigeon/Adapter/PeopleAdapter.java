@@ -1,16 +1,24 @@
 package com.example.smallpigeon.Adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smallpigeon.Community.Comment.CommentAdapter;
+import com.example.smallpigeon.Entity.CommentContent;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.R;
 
@@ -22,6 +30,14 @@ public class PeopleAdapter extends BaseAdapter {
     private int itemLayoutID;
     private List<DynamicContent> list = new ArrayList<>();
     private MyClickListener listener = new MyClickListener();
+    private RelativeLayout rl_comment;
+    private ImageView hide_down;
+    private EditText comment_content;
+    private Button comment_send;
+
+    private CommentAdapter commentAdapter;
+
+    private String comment = null;
 
     public PeopleAdapter(Context context, int itemLayoutID, List<DynamicContent> list) {
         this.context = context;
@@ -60,10 +76,18 @@ public class PeopleAdapter extends BaseAdapter {
             holder.ll_forward = convertView.findViewById( R.id.ll_forward );
             holder.ll_toComment = convertView.findViewById( R.id.ll_toComment );
             holder.ll_like = convertView.findViewById( R.id.ll_like );
+            holder.rl_comment = convertView.findViewById( R.id.rl_comment );
+            holder.hide_down = convertView.findViewById( R.id.hide_down );
+            holder.comment_send = convertView.findViewById( R.id.comment_send );
+            holder.comment_content = convertView.findViewById( R.id.comment_content );
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
+        rl_comment = holder.rl_comment;
+        hide_down = holder.hide_down;
+        comment_send = holder.comment_send;
+        comment_content = holder.comment_content;
 
         DynamicContent dynamicContent = list.get(position);
         holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
@@ -71,11 +95,30 @@ public class PeopleAdapter extends BaseAdapter {
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
 
+
+//        comment_content.addTextChangedListener( new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                Log.e("content7", comment_content.getText().toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                Log.e("content8", comment_content.getText().toString());
+//                comment = comment_content.getText().toString();
+//            }
+//        } );
+
         //点击事件
         holder.ll_forward.setOnClickListener( listener );
         holder.ll_toComment.setOnClickListener( listener );
         holder.ll_like.setOnClickListener( listener );
-
+        holder.rl_comment.setOnClickListener( listener );
+        holder.hide_down.setOnClickListener( listener );
+        holder.comment_send.setOnClickListener( listener );
         return convertView;
     }
 
@@ -90,10 +133,28 @@ public class PeopleAdapter extends BaseAdapter {
                 case R.id.ll_toComment:
                     //TODO：评论
                     Toast.makeText( context, "评论", Toast.LENGTH_SHORT ).show();
+                    // 弹出输入法
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    // 显示评论框
+                    rl_comment.setVisibility(View.VISIBLE);
                     break;
                 case R.id.ll_like:
-                    //TODO：点赞
+                    //TODO:点赞
                     Toast.makeText( context, "点赞", Toast.LENGTH_SHORT ).show();
+                    break;
+                case R.id.hide_down:
+                    //TODO:隐藏评论框
+                    Toast.makeText( context, "weishenme", Toast.LENGTH_SHORT ).show();
+                    //fixme:实现失败
+                    rl_comment.setVisibility(View.GONE);
+                    // 隐藏输入法，然后暂存当前输入框的内容，方便下次使用
+                    InputMethodManager im = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
+                    break;
+                case R.id.comment_send:
+                    //TODO：发送评论
+                    sendComment();
                     break;
             }
         }
@@ -109,5 +170,30 @@ public class PeopleAdapter extends BaseAdapter {
         LinearLayout ll_forward;//转发
         LinearLayout ll_toComment;//评论
         LinearLayout ll_like;//赞
+        RelativeLayout rl_comment;//评论框
+        ImageView hide_down;//隐藏评论框
+        Button comment_send;//发送评论
+        EditText comment_content;//评论内容
+    }
+
+    //发送评论
+    public void sendComment(){
+        //FIXME:获取不到实时更改的评论内容
+        Log.e("content2", comment_content.getText().toString());
+        Log.e("error", "111");
+        if(comment_content.getText().toString().equals("")){
+            Toast.makeText(context, "评论不能为空！", Toast.LENGTH_SHORT).show();
+        } else{
+            //TODO:与后台交互，获取评论人的id，被评论的动态id
+            //生成评论数据
+//            CommentContent comment = new CommentContent();
+//            comment.setUser_id( "1" );
+//            comment.setDynamics_id( 1 );
+//            comment.setComment_content( "评论的内容为哈哈哈哈哈" );
+//            commentAdapter.addComment(comment);
+//            // 发送完，清空输入框
+//            comment_content.setText("");
+            Toast.makeText(context, "评论成功！", Toast.LENGTH_SHORT).show();
+        }
     }
 }

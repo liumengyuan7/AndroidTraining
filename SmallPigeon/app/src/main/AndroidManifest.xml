@@ -45,7 +45,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustPan">
         <activity android:name=".Community.ReleaseDynamic.ReleaseDynamic"/>
         <activity android:name=".Run.FinishRunActivity"></activity>
         <activity android:name=".My.MyPlan"/>
@@ -68,7 +69,8 @@
             android:screenOrientation="portrait"/><!--只允许竖屏显示-->
         <activity android:name=".BaiduMap.activity.TracingOptionsActivity" />
         <activity android:name=".BaiduMap.activity.BaseActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

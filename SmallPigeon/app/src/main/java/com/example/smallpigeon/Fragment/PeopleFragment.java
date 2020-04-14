@@ -106,17 +106,6 @@ public class PeopleFragment extends Fragment {
 //                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
 //                    }
                     break;
-                case R.id.iv_unfold:
-                    //TODO:点击转发时可以转发
-                    break;
-                case R.id.iv_comment:
-                    //TODO：点击评论可以进行评论
-                    break;
-                case R.id.iv_praise:
-                    //TODO:赞
-
-                    break;
-
             }
         }
     }
