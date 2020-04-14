@@ -95,17 +95,16 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_unfold"
                 android:src="@drawable/transmit"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
                 android:layout_marginLeft="3dp"
                 android:textSize="18dp"
                 android:textColor="#000"
-                android:text="转发"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp" />
+                android:text="转发"/>
         </LinearLayout>
 
         <LinearLayout
@@ -115,12 +114,10 @@
             android:layout_marginLeft="60dp">
 
             <ImageView
-                android:id="@+id/iv_comment"
                 android:src="@drawable/comment"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
-                android:id="@+id/tv_comment_num"
                 android:layout_marginLeft="3dp"
                 android:text="评论"
                 android:textSize="18dp"
@@ -137,11 +134,9 @@
 
             <ImageView
                 android:src="@drawable/good"
-                android:id="@+id/iv_praise"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
-                android:id="@+id/tv_praise_num"
                 android:layout_marginLeft="3dp"
                 android:text="赞"
                 android:textSize="18dp"
