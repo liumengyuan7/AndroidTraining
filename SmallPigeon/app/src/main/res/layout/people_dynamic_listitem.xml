@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -81,54 +81,73 @@
             android:layout_height="1dp"
             android:background="#6e6e6e"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_gravity="center"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp">
-        <ImageView
-            android:id="@+id/iv_unfold"
-            android:src="@drawable/transmit"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
-        <TextView
-            android:layout_marginLeft="3dp"
-            android:textSize="18dp"
-            android:textColor="#000"
-            android:text="转发"
+
+        <LinearLayout
+            android:id="@+id/ll_forward"
             android:layout_width="wrap_content"
-            android:layout_height="25dp" />
-        <ImageView
-            android:id="@+id/iv_comment"
-            android:layout_marginLeft="70dp"
-            android:src="@drawable/comment"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
-        <TextView
-            android:id="@+id/tv_comment_num"
-            android:layout_marginLeft="3dp"
-            android:text="评论"
-            android:textSize="18dp"
-            android:textColor="#000"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/transmit"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="3dp"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:text="转发"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_toComment"
             android:layout_width="wrap_content"
-            android:layout_height="25dp" />
-        <ImageView
-            android:src="@drawable/good"
-            android:id="@+id/iv_praise"
-            android:layout_marginLeft="70dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
-        <TextView
-            android:id="@+id/tv_praise_num"
-            android:layout_marginLeft="3dp"
-            android:text="赞"
-            android:textSize="18dp"
-            android:textColor="#000"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp">
+
+            <ImageView
+                android:src="@drawable/comment"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:text="评论"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_like"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp">
+
+            <ImageView
+                android:src="@drawable/good"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:text="赞"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:visibility="invisible"
         android:id="@+id/ll_comment"

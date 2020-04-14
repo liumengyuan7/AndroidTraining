@@ -118,4 +118,5 @@ public class PeopleFragment extends Fragment {
             }
         }
     }
+
 }
