@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.example.smallpigeon.Community.ReleaseDynamic.ReleaseDynamic;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +36,13 @@ public class PeopleFragment extends Fragment {
     private MyClickListener listener;
     private PeopleAdapter adapter;
     private List<DynamicContent> list = new ArrayList<>();
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj+"";
+        }
+    };
 
     @Nullable
     @Override
@@ -52,10 +62,23 @@ public class PeopleFragment extends Fragment {
         content.setContent("今日跑步分享");
         content.setDevice(Build.MODEL);
         list.add(content);
+        //selectDynamic();
         adapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
         dynamic_list.setAdapter(adapter);
 
         return view;
+    }
+    //查出所有动态
+    private void selectDynamic() {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("","");
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 
     private void registerListener() {
