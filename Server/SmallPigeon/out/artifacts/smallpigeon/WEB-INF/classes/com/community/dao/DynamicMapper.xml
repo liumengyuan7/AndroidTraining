@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.dao.DynamicMapper">
+    <resultMap id="dynamicMap" type="com.entity.Dynamic">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="pushTime" column="push_time" />
+        <result property="pushContent" column="push_content" />
+        <result property="pushImage" column="push_image" />
+        <result property="zanNum" column="zan_num" />
+        <result property="forwardId" column="forward_id"/>
+    </resultMap>
+    <insert id="insertDynamic">
+        insert into dynamics(user_id, push_time, push_content, push_image)
+        values(#{userId},#{pushTime},#{pushContent},#{pushImg})
+    </insert>
+</mapper>
