@@ -95,6 +95,7 @@ public class PeopleAdapter extends BaseAdapter {
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
 
+        rl_comment.setVisibility(View.GONE);
 
 //        comment_content.addTextChangedListener( new TextWatcher() {
 //            @Override
@@ -126,18 +127,19 @@ public class PeopleAdapter extends BaseAdapter {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.ll_forward:
+                /*case R.id.ll_forward:
                     //TODO:转发
                     Toast.makeText( context, "转发", Toast.LENGTH_SHORT ).show();
                     break;
                 case R.id.ll_toComment:
                     //TODO：评论
                     Toast.makeText( context, "评论", Toast.LENGTH_SHORT ).show();
+                    // 显示评论框
+                    rl_comment.setVisibility(View.VISIBLE);
                     // 弹出输入法
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                    // 显示评论框
-                    rl_comment.setVisibility(View.VISIBLE);
+
                     break;
                 case R.id.ll_like:
                     //TODO:点赞
@@ -155,7 +157,7 @@ public class PeopleAdapter extends BaseAdapter {
                 case R.id.comment_send:
                     //TODO：发送评论
                     sendComment();
-                    break;
+                    break;*/
             }
         }
     }
