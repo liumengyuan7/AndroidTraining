@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +31,23 @@ import com.example.smallpigeon.Fragment.PeopleFragment;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +56,14 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.BitmapCompat;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ReleaseDynamic extends AppCompatActivity {
     private static final int IMG_COUNT = 3;
@@ -45,11 +73,22 @@ public class ReleaseDynamic extends AppCompatActivity {
     private TextView textView;
     private ImageView img;
     private List<String> list;
+//    private List<String> bitmaps = new ArrayList<>();
     private EditText dynamic_content;
     //imgInfo为传入所有图片的名称，各个图片名中间用空格隔开
     private  String imgInfo;
     private Utils utils;
-
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj+"";
+            if(result.equals("true")){
+                Toast.makeText(getApplicationContext(),"动态发布成功，快去看看叭",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(),"动态发布失败，请重新发布",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +102,9 @@ public class ReleaseDynamic extends AppCompatActivity {
                 System.out.println("发送：" + Integer.toString(list.size() - 1));
                 System.out.println("发送"+dynamic_content.getText().toString());
                 upLoad();
-                //TODO:插入动态的信息以及用户信息
+
                 String id = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id","");
-                UserContent userContent = new UserContent();//TODO：从数据库中查出用户信息
+                UserContent userContent = new UserContent();
                 DynamicContent dynamicContent = new DynamicContent();
                 dynamicContent.setUserContent(userContent);
                 dynamicContent.setContent(dynamic_content.getText().toString());
@@ -73,28 +112,69 @@ public class ReleaseDynamic extends AppCompatActivity {
                 dynamicContent.setZan_num(0);
                 dynamicContent.setDevice(Build.MODEL);
                 dynamicContent.setImg(imgInfo);
-                //TODO:将动态信息插入数据库
 
+                //将动态信息插入数据库
+                Timestamp pushTime = new Timestamp(new Date().getTime());
+                sendMessageToServer(id,dynamic_content.getText().toString(),pushTime);
                 finish();
             }
         });
         initData();
     }
+    //上传图片到后台
     private void upLoad() {
         Bitmap bitmap;
         Bitmap bmpCompressed;
         utils = new Utils();
-        for (int i = 0; i < list.size() - 1; i++) {
-            bitmap = BitmapFactory.decodeFile(list.get(i));
+        if (list != null) {
+            Log.e("图片数组",list.size()+"");
+            for (int i = 0; i < list.size() - 1; i++) {
+               bitmap = BitmapFactory.decodeFile(list.get(i));
             //将缩略图进行扩大
-            bmpCompressed = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
-            utils.postPictureServer("releaseDynamic","", bmpCompressed);
+//              bmpCompressed = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
+//            utils.postPictureServer("dynamic","addDynamic", bmpCompressed);
             /*ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bmpCompressed.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             byte[] data = bos.toByteArray();
             System.out.println("upload:"+data);*/
-        }
 
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Log.e("图片"+i,list.get(i));
+            File file = new File(list.get(i));
+            MultipartBody.Builder builder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), file));
+            RequestBody requestBody = builder.build();
+            Request request = new Request.Builder()
+                    .url("http://"+getResources().getString(R.string.ip_address)+":8080/smallpigeon/dynamic/getPicture")
+                    .post(requestBody)
+                    .build();
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e("TAG", "失败信息: " + e);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+//                            Toast.makeText(getApplicationContext(),"失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.e("TAG", "成功返回" + response);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+            }
+        }
     }
 
     private void initData() {
@@ -203,12 +283,9 @@ public class ReleaseDynamic extends AppCompatActivity {
             }else {
                 imgInfo = imgInfo+";"+imgName;
             }
-            System.out.println("imgInfo:"+imgInfo);
-            System.out.println("imgPath:"+imgPath+", imgName:"+imgName);
+            Log.e("图片信息imgInfo:",imgInfo);
             String path = ImageTool.getImageAbsolutePath(this, uri);
-
-            System.out.println(path);
-            Log.e("path",path);
+            Log.e("图片的路径:",path);
             Log.e("uri",uri.getPath());
             if (list.size() == IMG_COUNT) {
                 removeItem();
@@ -229,4 +306,32 @@ public class ReleaseDynamic extends AppCompatActivity {
             }
         }
     }
+
+    //将动态信息插入数据库
+    private void sendMessageToServer(String id, String pushContent, Timestamp pushTime){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
+                            +":8080/smallpigeon/dynamic/addDynamic?userId="+id
+                            +"&&pushContent="+pushContent+"&&pushTime="+pushTime+"&&pushImg="+imgInfo);
+                    Log.e("url",url.toString());
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String result = reader.readLine();
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 2;
+                    handler.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 }
