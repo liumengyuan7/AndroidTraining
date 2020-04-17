@@ -25,8 +25,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.PeopleAdapter;
@@ -59,7 +57,6 @@ public class PeopleFragment extends Fragment {
         }
     };
 
-    private RelativeLayout rl_comment;
     private PopupWindow mPopWindow;
     @Nullable
     @Override
@@ -83,7 +80,6 @@ public class PeopleFragment extends Fragment {
         dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                rl_comment = view.findViewById(R.id.rl_comment);
                 iv_comment = view.findViewById(R.id.iv_comment);
                 Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
                 iv_comment.setOnClickListener(new View.OnClickListener() {
@@ -92,49 +88,50 @@ public class PeopleFragment extends Fragment {
                         Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
                         showPopupWindow();
                     }
-
-                    @SuppressLint("WrongConstant")
-                    private void showPopupWindow() {
-                        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
-                        mPopWindow = new PopupWindow(contentView,
-                                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-                        mPopWindow.setContentView(contentView);
-                        //防止PopupWindow被软件盘挡住（可能只要下面一句，可能需要这两句）
-                        mPopWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
-                        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                        //设置软键;弹出
-                        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);//这里给它设置了弹出的时间
-
-                        //设置各个控件的点击响应
-                        final EditText editText = contentView.findViewById(R.id.pop_editText);
-                        Button btn = contentView.findViewById(R.id.pop_btn);
-//                        inputMethodManager.showSoftInput(contentView,0);
-
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String inputString = editText.getText().toString();
-                                Toast.makeText(getActivity(), inputString, Toast.LENGTH_SHORT).show();
-                               /* TextView textView = new TextView(CommentActivity.this);
-                                textView.setText(inputString);
-                                ll.addView(textView);*/
-                                mPopWindow.dismiss();//让PopupWindow消失
-                            }
-                        });
-                        //是否具有获取焦点的能力
-                        mPopWindow.setFocusable(true);
-                        //显示PopupWindow
-                        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_people, null);
-                        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
-                    }
                 });
             }
         });
         return view;
     }
 
-    //查出所有动态
+    @SuppressLint("WrongConstant")
+    private void showPopupWindow() {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
+        mPopWindow = new PopupWindow(contentView,
+                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        mPopWindow.setContentView(contentView);
+        //防止PopupWindow被软件盘挡住（可能只要下面一句，可能需要这两句）
+        mPopWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        //设置软键盘弹出
+        InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);//这里给它设置了弹出的时间
+
+        //设置各个控件的点击响应
+        final EditText editText = contentView.findViewById(R.id.pop_editText);
+        Button btn = contentView.findViewById(R.id.pop_btn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputString = editText.getText().toString();
+                Toast.makeText(getActivity(), inputString, Toast.LENGTH_SHORT).show();
+                /*TextView textView = new TextView(CommentActivity.this);
+                textView.setText(inputString);
+                ll.addView(textView);*/
+                mPopWindow.dismiss();//让PopupWindow消失
+            }
+        });
+        //是否具有获取焦点的能力
+        mPopWindow.setFocusable(true);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_people, null);
+        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+
+    }
+
+    //TODO:查出所有动态
     private void selectDynamic() {
         new Thread(){
             @Override
@@ -146,6 +143,9 @@ public class PeopleFragment extends Fragment {
             }
         }.start();
     }
+
+    //TODO:得到从后台传入的图片并设置到对应的动态上
+
 
     private void registerListener() {
         iv_add_Message.setOnClickListener(listener);
