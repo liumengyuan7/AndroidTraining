@@ -4,17 +4,20 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -26,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.PeopleAdapter;
@@ -39,6 +44,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class PeopleFragment extends Fragment {
@@ -49,8 +56,14 @@ public class PeopleFragment extends Fragment {
     private MyClickListener listener;
     private PeopleAdapter peopleAdapter;
     private List<DynamicContent> dynamicContents = new ArrayList<>();
-    private PopupWindow mPopWindow;
-    private InputMethodManager imm;//软键盘的控制
+
+    private PopupWindow popupWindow;
+    private View popupView = null;
+    private EditText inputComment;
+    private String nInputContentText;
+    private TextView btn_submit;
+    private RelativeLayout rl_input_container;
+    private InputMethodManager mInputManager;
 
     private Handler handler = new Handler(){
         @Override
@@ -59,6 +72,7 @@ public class PeopleFragment extends Fragment {
         }
     };
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +80,6 @@ public class PeopleFragment extends Fragment {
         getViews(view);
         listener = new MyClickListener();
         registerListener();
-        imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);;
 
         DynamicContent content = new DynamicContent();
         UserContent userContent = new UserContent();
@@ -103,37 +116,83 @@ public class PeopleFragment extends Fragment {
 
     @SuppressLint("WrongConstant")
     private void showPopupWindow() {
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
-        mPopWindow = new PopupWindow(contentView,
-                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        mPopWindow.setContentView(contentView);
-        //防止PopupWindow被软件盘挡住（可能只要下面一句，可能需要这两句）
-        mPopWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
-        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        //设置软键盘弹出
-        //设置弹出时间
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        //设置各个控件的点击响应
-        final EditText editText = contentView.findViewById(R.id.pop_editText);
-        Button btn = contentView.findViewById(R.id.pop_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        if (popupView == null){
+            //加载评论框的资源文件
+            popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
+        }
+        inputComment = (EditText) popupView.findViewById(R.id.et_discuss);
+        btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
+        rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
+        //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                mInputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                mInputManager.showSoftInput(inputComment, 0);
+                mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 200);
+        if (popupWindow == null){
+            popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT, false);
+
+        }
+        //popupWindow的常规设置，设置点击外部事件，背景色
+        popupWindow.setTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                String inputString = editText.getText().toString();
-                Toast.makeText(getActivity(), inputString, Toast.LENGTH_SHORT).show();
-                /*TextView textView = new TextView(CommentActivity.this);
-                textView.setText(inputString);
-                ll.addView(textView);*/
-                mPopWindow.dismiss();//让PopupWindow消失
-                //收起软键盘
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
+                    popupWindow.dismiss();
+                return false;
+
             }
         });
-        //是否具有获取焦点的能力
-        mPopWindow.setFocusable(true);
-        //显示PopupWindow
-        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_people, null);
-        mPopWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
+
+        // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
+        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        // 再设置模式，和Activity的一样，覆盖，调整大小。
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
+        popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+
+        popupWindow.update();
+
+        //设置监听
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            // 在dismiss中恢复透明度
+            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+            public void onDismiss() {
+                mInputManager.hideSoftInputFromWindow(inputComment.getWindowToken(), 0); //强制隐藏键盘
+            }
+        });
+        //外部点击事件
+        rl_input_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInputManager.hideSoftInputFromWindow(inputComment.getWindowToken(), 0); //强制隐藏键盘
+                popupWindow.dismiss();
+            }
+        });
+        //评论框内的发送按钮设置点击事件
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nInputContentText = inputComment.getText().toString().trim();
+                Toast.makeText(getContext(),nInputContentText,Toast.LENGTH_SHORT).show();
+                if (nInputContentText == null || "".equals(nInputContentText)) {
+                    //showToastMsgShort("请输入评论内容");
+                    return;
+                }
+                mInputManager.hideSoftInputFromWindow(inputComment.getWindowToken(),0);
+                popupWindow.dismiss();
+            }
+        });
     }
 
     //TODO:查出所有动态
