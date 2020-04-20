@@ -95,22 +95,23 @@ public class PeopleFragment extends Fragment {
         //单条动态的点击事件
         peopleAdapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem, dynamicContents);
         dynamic_list.setAdapter(peopleAdapter);
-        dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        peopleAdapter.setBtnOnclick(new PeopleAdapter.btnOnclick() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
-                //评论
-                ll_toComment = view.findViewById( R.id.ll_toComment );
-                ll_toComment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
-                        //弹出评论框和软键盘
+            public void click(View view, int index) {
+                switch (view.getId()){
+                    case R.id.ll_toComment:
                         showPopupWindow();
-                    }
-                });
+                        break;
+                    case R.id.ll_forward:
+                        //todo:转发
+                        break;
+                    case R.id.ll_like:
+                        //todo:点赞
+                        break;
+                }
             }
         });
+
         return view;
     }
 
