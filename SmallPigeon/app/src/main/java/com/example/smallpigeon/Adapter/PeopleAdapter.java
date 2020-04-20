@@ -25,7 +25,7 @@ import com.example.smallpigeon.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PeopleAdapter extends BaseAdapter {
+public class PeopleAdapter extends BaseAdapter implements View.OnClickListener {
     private Context context;
     private int itemLayoutID;
     private List<DynamicContent> list = new ArrayList<>();
@@ -34,6 +34,16 @@ public class PeopleAdapter extends BaseAdapter {
         this.context = context;
         this.itemLayoutID = itemLayoutID;
         this.list = list;
+    }
+
+    private btnOnclick btnOnclick;
+
+    public btnOnclick getBtnOnclick() {
+        return btnOnclick;
+    }
+
+    public void setBtnOnclick(btnOnclick btnOnclick) {
+        this.btnOnclick = btnOnclick;
     }
 
     @Override
@@ -64,6 +74,9 @@ public class PeopleAdapter extends BaseAdapter {
             holder.device = convertView.findViewById(R.id.device);
             holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
             holder.dynamic_item_img = convertView.findViewById( R.id.dynamic_item_img );
+            holder.ll_toComment = convertView.findViewById(R.id.ll_toComment);
+            holder.ll_forward = convertView.findViewById(R.id.ll_forward);
+            holder.ll_like = convertView.findViewById(R.id.ll_like);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
@@ -74,10 +87,20 @@ public class PeopleAdapter extends BaseAdapter {
         holder.tv_date.setText(dynamicContent.getDate());
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
-        //todo：获取每条动态的点赞、评论、转发数量
+        holder.ll_toComment.setOnClickListener(this);
+        holder.ll_like.setOnClickListener(this);
+        holder.ll_forward.setOnClickListener(this);
+        holder.ll_toComment.setTag(position);
+        holder.ll_forward.setTag(position);
+        holder.ll_like.setTag(position);
 
         return convertView;
     }
+    @Override
+    public void onClick(View view) {
+        btnOnclick.click(view,(int)view.getTag());
+    }
+
 
     static class ViewHolder{
         ImageView iv_icon;//用户头像
@@ -86,5 +109,12 @@ public class PeopleAdapter extends BaseAdapter {
         TextView device;//设备名称
         TextView dynamic_item_txt;//发表内容
         ImageView dynamic_item_img;//发表内容配图
+        LinearLayout ll_toComment;//评论
+        LinearLayout ll_forward;//转发
+        LinearLayout ll_like;//点赞
+    }
+
+    public interface btnOnclick{
+        public void click(View view,int index);
     }
 }

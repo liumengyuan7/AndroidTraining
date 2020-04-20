@@ -1,6 +1,7 @@
 package com.example.smallpigeon.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -46,20 +47,18 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class PeopleFragment extends Fragment {
 
+public class PeopleFragment extends Fragment {
     private ListView dynamic_list;//动态列表
     private ImageView iv_add_Message;//发表动态，右上角加号
+    private LinearLayout ll_toComment;//评论
 
     private MyClickListener listener;
     private PeopleAdapter peopleAdapter;
     private List<DynamicContent> dynamicContents = new ArrayList<>();
 
-    private LinearLayout ll_forward;//转发
-    private LinearLayout ll_toComment;//评论
     private PopupWindow popupWindow;
     private View popupView = null;
-    private EditText et_discuss;
     private EditText inputComment;
     private String nInputContentText;
     private TextView btn_submit;
@@ -72,6 +71,7 @@ public class PeopleFragment extends Fragment {
             String result = msg.obj+"";
         }
     };
+
 
     @Nullable
     @Override
@@ -95,72 +95,28 @@ public class PeopleFragment extends Fragment {
         //单条动态的点击事件
         peopleAdapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem, dynamicContents);
         dynamic_list.setAdapter(peopleAdapter);
-        dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        peopleAdapter.setBtnOnclick(new PeopleAdapter.btnOnclick() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
-                //转发
-                ll_forward = view.findViewById( R.id.ll_forward );
-                ll_forward.setOnClickListener( listener );
-                //评论
-                ll_toComment = view.findViewById( R.id.ll_toComment );
-                ll_toComment.setOnClickListener(listener);
+            public void click(View view, int index) {
+                switch (view.getId()){
+                    case R.id.ll_toComment:
+                        showPopupWindow();
+                        break;
+                    case R.id.ll_forward:
+                        //todo:转发
+                        break;
+                    case R.id.ll_like:
+                        //todo:点赞
+                        break;
+                }
             }
         });
+
         return view;
     }
 
-    //TODO:查出所有动态
-    private void selectDynamic() {
-        new Thread(){
-            @Override
-            public void run() {
-                String result = new Utils().getConnectionResult("","");
-                Message message = new Message();
-                message.obj = result;
-                handler.sendMessage(message);
-            }
-        }.start();
-    }
-
-    //TODO:得到从后台传入的图片并设置到对应的动态上
-
-    private void registerListener() {
-        iv_add_Message.setOnClickListener(listener);
-    }
-
-    private void getViews(View view) {
-        dynamic_list = view.findViewById(R.id.dynamic_list);
-        iv_add_Message = view.findViewById(R.id.iv_add_Message);
-    }
-
-    class MyClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.iv_add_Message:
-                    //TODO:添加新的动态
-                    //TODO:如果已登录，跳转发表动态
-//                    if (loginOrNot()){
-                        Intent intent = new Intent(getContext(), ReleaseDynamic.class);
-                        startActivity(intent);
-//                    } else {
-//                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-//                    }
-                    break;
-                case R.id.ll_forward:
-                    Toast.makeText(getContext(),"转发",Toast.LENGTH_SHORT).show();
-                    showPopupWindow("forward");
-                    break;
-                case R.id.ll_toComment:
-                    Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
-                    showPopupWindow("comment");
-            }
-        }
-    }
-
     @SuppressLint("WrongConstant")
-    private void showPopupWindow(String type) {
+    private void showPopupWindow() {
         if (popupView == null){
             //加载评论框的资源文件
             popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
@@ -168,13 +124,6 @@ public class PeopleFragment extends Fragment {
         inputComment = (EditText) popupView.findViewById(R.id.et_discuss);
         btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
         rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
-        et_discuss = popupView.findViewById( R.id.et_discuss );
-        if (type == "forward"){
-            et_discuss.setHint( "转发理由" );
-        }
-        if (type == "comment"){
-            et_discuss.setHint( "说点什么吧……" );
-        }
         //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -204,22 +153,26 @@ public class PeopleFragment extends Fragment {
 
             }
         });
+
         // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
         popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
         // 再设置模式，和Activity的一样，覆盖，调整大小。
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+
         popupWindow.update();
+
         //设置监听
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
             // 在dismiss中恢复透明度
             @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
             public void onDismiss() {
                 mInputManager.hideSoftInputFromWindow(inputComment.getWindowToken(), 0); //强制隐藏键盘
             }
         });
-        //外部点击：收起评论框
+        //外部点击事件
         rl_input_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,19 +185,57 @@ public class PeopleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 nInputContentText = inputComment.getText().toString().trim();
+                Toast.makeText(getContext(),nInputContentText,Toast.LENGTH_SHORT).show();
                 if (nInputContentText == null || "".equals(nInputContentText)) {
-                    Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_SHORT).show();
+                    //showToastMsgShort("请输入评论内容");
                     return;
-                } else {
-                    Toast.makeText(getContext(),nInputContentText,Toast.LENGTH_SHORT).show();
-                    //todo:存储评论内容
-
-                    //清除评论框内容
-                    et_discuss.setText( null );
                 }
                 mInputManager.hideSoftInputFromWindow(inputComment.getWindowToken(),0);
                 popupWindow.dismiss();
             }
         });
+    }
+
+    //TODO:查出所有动态
+    private void selectDynamic() {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("","");
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
+
+    //TODO:得到从后台传入的图片并设置到对应的动态上
+
+
+    private void registerListener() {
+        iv_add_Message.setOnClickListener(listener);
+    }
+
+    private void getViews(View view) {
+        dynamic_list = view.findViewById(R.id.dynamic_list);
+        iv_add_Message = view.findViewById(R.id.iv_add_Message);
+    }
+
+    class MyClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.iv_add_Message:
+                    //TODO:添加新的动态
+                    //TODO:如果已登录，跳转发表动态
+//                    if (loginOrNot()){
+                        Intent intent = new Intent(getContext(), ReleaseDynamic.class);
+                        startActivity(intent);
+//                    } else {
+//                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+//                    }
+                    break;
+            }
+        }
     }
 }
