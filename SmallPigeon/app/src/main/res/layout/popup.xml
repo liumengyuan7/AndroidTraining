@@ -16,7 +16,6 @@
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_weight="1"
-            android:hint="在此输入评论"
             android:background="@drawable/edit_background"
             android:textSize="15sp"
             android:layout_marginRight="7dp"
@@ -31,10 +30,11 @@
             android:layout_width="70dp"
             android:layout_height="38dp"
             android:layout_marginTop="6dp"
-            android:background="@color/colorPrimary"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:text="提交"/>
+            android:background="@drawable/circular"
+            android:text="发送"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#259B24"/>
     </LinearLayout>
 
 </RelativeLayout>
