@@ -71,6 +71,7 @@ public class ReleaseDynamic extends AppCompatActivity {
     private GridView gridView;
     private GVAdapter adapter;
     private TextView textView;
+    private TextView cancle;
     private ImageView img;
     private List<String> list;
 //    private List<String> bitmaps = new ArrayList<>();
@@ -96,6 +97,13 @@ public class ReleaseDynamic extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gridview);
         dynamic_content = findViewById(R.id.dynamic_content);
         textView = (TextView) findViewById(R.id.send);
+        cancle = findViewById(R.id.tv_cancel);
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
