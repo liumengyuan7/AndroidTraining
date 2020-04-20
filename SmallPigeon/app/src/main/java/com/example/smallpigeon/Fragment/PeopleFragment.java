@@ -5,17 +5,20 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -26,6 +29,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.PeopleAdapter;
@@ -43,6 +48,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class PeopleFragment extends Fragment {
@@ -52,8 +59,16 @@ public class PeopleFragment extends Fragment {
     private ImageView iv_comment;
     private ImageView iv_praise;
     private MyClickListener listener;
-    private PeopleAdapter adapter;
+    private PeopleAdapter peopleAdapter;
     private List<DynamicContent> list = new ArrayList<>();
+
+    private PopupWindow popupWindow;
+    private View popupView = null;
+    private EditText et_discuss;
+    private String nInputContentText;
+    private TextView btn_submit;
+    private RelativeLayout rl_input_container;
+    private InputMethodManager mInputManager;
 
     private  Handler handler = new Handler() {
         @Override
@@ -82,7 +97,7 @@ public class PeopleFragment extends Fragment {
                         }
                         content.setDevice(Build.MODEL);
                         list.add(content);
-                        adapter.notifyDataSetChanged();
+                        peopleAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -95,16 +110,15 @@ public class PeopleFragment extends Fragment {
         }
     };
     private PopupWindow mPopWindow;
-    private View view;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_people,container,false);
-
-//        listener = new MyClickListener();
-//        registerListener();
-//        //显示后台服务器存储的所有发布的动态
-//        selectAllDynamic();
+        View view = inflater.inflate(R.layout.fragment_people,container,false);
+        getViews(view);
+        listener = new MyClickListener();
+        registerListener();
+        //显示后台服务器存储的所有发布的动态
+        selectAllDynamic();
 ////        DynamicContent content = new DynamicContent();
 ////        UserContent userContent = new UserContent();
 ////        userContent.setUserNickname("啦啦啦");
@@ -114,60 +128,117 @@ public class PeopleFragment extends Fragment {
 ////        content.setDevice(Build.MODEL);
 ////        list.add(content);
 //        //selectDynamic();
-////        adapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
-////        dynamic_list.setAdapter(adapter);
-//        dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                iv_comment = view.findViewById(R.id.iv_comment);
-//                Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
-//                iv_comment.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
-//                        showPopupWindow();
-//                    }
-//                });
-//            }
-//        });
+        peopleAdapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
+        dynamic_list.setAdapter(peopleAdapter);
+        peopleAdapter.setBtnOnclick(new PeopleAdapter.btnOnclick() {
+            @Override
+            public void click(View view, int index) {
+                switch (view.getId()){
+                    case R.id.ll_toComment:
+                        showPopupWindow("comment");
+                        break;
+                    case R.id.ll_forward:
+                        //todo:转发
+                        showPopupWindow("forward");
+                        break;
+                    case R.id.ll_like:
+                        //todo:点赞
+                        break;
+                }
+            }
+        });
         return view;
     }
 
     @SuppressLint("WrongConstant")
-    private void showPopupWindow() {
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
-        mPopWindow = new PopupWindow(contentView,
-                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        mPopWindow.setContentView(contentView);
-        //防止PopupWindow被软件盘挡住（可能只要下面一句，可能需要这两句）
-        mPopWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
-        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    private void showPopupWindow(String type) {
+        if (popupView == null){
+            //加载评论框的资源文件
+            popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
+        }
+        et_discuss = (EditText) popupView.findViewById(R.id.et_discuss);
+        btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
+        rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
+        if (type == "forward"){
+            et_discuss.setHint( "转发理由……" );
+        } else if (type == "comment"){
+            et_discuss.setHint( "说点儿什么……" );
+        }
+        //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                mInputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                mInputManager.showSoftInput(et_discuss, 0);
+                mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 200);
+        if (popupWindow == null){
+            popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT, false);
 
-        //设置软键盘弹出
-        InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);//这里给它设置了弹出的时间
-
-        //设置各个控件的点击响应
-        final EditText editText = contentView.findViewById(R.id.pop_editText);
-        Button btn = contentView.findViewById(R.id.pop_btn);
-
-        btn.setOnClickListener(new View.OnClickListener() {
+        }
+        //popupWindow的常规设置，设置点击外部事件，背景色
+        popupWindow.setTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                String inputString = editText.getText().toString();
-                Toast.makeText(getActivity(), inputString, Toast.LENGTH_SHORT).show();
-                /*TextView textView = new TextView(CommentActivity.this);
-                textView.setText(inputString);
-                ll.addView(textView);*/
-                mPopWindow.dismiss();//让PopupWindow消失
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
+                    popupWindow.dismiss();
+                return false;
+
             }
         });
-        //是否具有获取焦点的能力
-        mPopWindow.setFocusable(true);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_people, null);
-        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
-
+        // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
+        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        // 再设置模式，和Activity的一样，覆盖，调整大小。
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
+        popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+        popupWindow.update();
+        //设置监听
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            // 在dismiss中恢复透明度
+            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+            public void onDismiss() {
+                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+            }
+        });
+        //外部点击——收起键盘
+        rl_input_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+                popupWindow.dismiss();
+            }
+        });
+        //评论框内的发送按钮设置点击事件
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nInputContentText = et_discuss.getText().toString().trim();
+                if (nInputContentText == null || "".equals(nInputContentText)) {
+                    Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    Toast.makeText(getContext(),nInputContentText,Toast.LENGTH_SHORT).show();
+                    if (type == "comment"){
+                        Toast.makeText(getContext(),"评论成功！",Toast.LENGTH_SHORT).show();
+                        //TODO：添加到数据库
+                    } else if (type == "forward"){
+                        Toast.makeText(getContext(),"转发成功",Toast.LENGTH_SHORT).show();
+                        //TODO：添加到数据库
+                    }
+                    et_discuss.setText( null );
+                }
+                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
+                popupWindow.dismiss();
+            }
+        });
     }
 
     //查出所有动态
@@ -217,34 +288,5 @@ public class PeopleFragment extends Fragment {
         }else{
             return true;
         }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        getViews(view);
-        adapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
-        dynamic_list.setAdapter(adapter);
-        listener = new MyClickListener();
-        registerListener();
-
-
-        dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                iv_comment = view.findViewById(R.id.iv_comment);
-                Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
-                iv_comment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
-                        showPopupWindow();
-                    }
-                });
-            }
-        });
-        //显示后台服务器存储的所有发布的动态
-        selectAllDynamic();
     }
 }

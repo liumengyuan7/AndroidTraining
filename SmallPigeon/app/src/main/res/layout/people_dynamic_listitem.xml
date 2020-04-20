@@ -41,7 +41,6 @@
             android:layout_toRightOf="@id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
         <TextView
             android:id="@+id/device"
             android:text="VIVO X23"
@@ -71,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/dynamic_item_img1"
+                android:id="@+id/dynamic_item_img"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="5dp"
@@ -79,11 +78,6 @@
                 android:maxHeight="150dp"
                 android:maxWidth="300dp"
                 android:src="@drawable/man"/>
-      <!--  <ImageView
-            android:layout_marginTop="5dp"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#6e6e6e"/>-->
             <ImageView
                 android:id="@+id/dynamic_item_img2"
                 android:layout_width="150dp"
@@ -98,7 +92,7 @@
 
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_width="320dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp">
@@ -109,7 +103,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_unfold"
                 android:src="@drawable/transmit"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
@@ -120,16 +113,23 @@
                 android:textSize="18dp"
                 android:textColor="#000"
                 android:text="转发"/>
+            <TextView
+                android:id="@+id/tv_forwardNum"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="3dp"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:text="6"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_toComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp">
+            android:layout_marginLeft="50dp">
 
             <ImageView
-                android:id="@+id/iv_comment"
                 android:src="@drawable/comment"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
@@ -140,16 +140,23 @@
                 android:textColor="#000"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp" />
+            <TextView
+                android:id="@+id/tv_commentNum"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="3dp"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:text="7"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp">
+            android:layout_marginLeft="50dp">
 
             <ImageView
-                android:id="@+id/iv_praise"
                 android:src="@drawable/good"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
@@ -159,44 +166,51 @@
                 android:textSize="18dp"
                 android:textColor="#000"
                 android:layout_width="wrap_content"
+                android:layout_height="25dp"/>
+            <TextView
+                android:id="@+id/tv_likeNum"
+                android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginLeft="3dp"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:text="6"/>
         </LinearLayout>
 
     </LinearLayout>
 
-<!--    <LinearLayout-->
-<!--        android:visibility="invisible"-->
-<!--        android:id="@+id/ll_comment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_margin="30dp">-->
-<!--        <EditText-->
-<!--            android:id="@+id/et_content"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:layout_weight="8"-->
-<!--            android:background="@drawable/edit_style"-->
-<!--            android:hint="说点什么吧..." />-->
-<!--        <Button-->
-<!--            android:id="@+id/btn_ok"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_weight="2"-->
-<!--            android:text="发送"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:background="@drawable/edit_style"-->
-<!--            android:layout_marginLeft="5dp"/>-->
-<!--    </LinearLayout>-->
+    <!--    <LinearLayout-->
+    <!--        android:visibility="invisible"-->
+    <!--        android:id="@+id/ll_comment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="35dp"-->
+    <!--        android:layout_margin="30dp">-->
+    <!--        <EditText-->
+    <!--            android:id="@+id/et_content"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:layout_marginTop="3dp"-->
+    <!--            android:layout_weight="8"-->
+    <!--            android:background="@drawable/edit_style"-->
+    <!--            android:hint="说点什么吧..." />-->
+    <!--        <Button-->
+    <!--            android:id="@+id/btn_ok"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="2"-->
+    <!--            android:text="发送"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:background="@drawable/edit_style"-->
+    <!--            android:layout_marginLeft="5dp"/>-->
+    <!--    </LinearLayout>-->
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:id="@+id/rl_comment"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:visibility="gone"
         android:layout_alignParentBottom="true">
 
-       <View
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#ffffff" />
@@ -233,7 +247,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="15dp"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <ListView
         android:id="@+id/comment_list"
