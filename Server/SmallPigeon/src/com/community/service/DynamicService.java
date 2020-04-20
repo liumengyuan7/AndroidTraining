@@ -2,6 +2,7 @@ package com.community.service;
 
 import com.community.dao.DynamicMapper;
 import com.entity.Dynamic;
+import com.google.gson.Gson;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,5 +33,10 @@ public class DynamicService {
         }else{
             return "false";
         }
+    }
+    //得到所有用户的动态
+    public String queryAllDynamic(){
+        System.out.println(this.dynamicMapper.queryAllDynamic());
+        return new Gson().toJson(this.dynamicMapper.queryAllDynamic());
     }
 }

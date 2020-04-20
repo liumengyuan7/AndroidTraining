@@ -67,21 +67,33 @@
             android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/dynamic_item_img"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="5dp"
-            android:adjustViewBounds="true"
-            android:maxHeight="150dp"
-            android:maxWidth="300dp"
-            android:src="@drawable/man"/>
-        <ImageView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/dynamic_item_img1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="150dp"
+                android:maxWidth="300dp"
+                android:src="@drawable/man"/>
+      <!--  <ImageView
             android:layout_marginTop="5dp"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#6e6e6e"/>
+            android:background="#6e6e6e"/>-->
+            <ImageView
+                android:id="@+id/dynamic_item_img2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="150dp"
+                android:maxWidth="300dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

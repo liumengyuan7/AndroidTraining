@@ -7,7 +7,7 @@ public class DynamicContent {
     private String content;
     private String img;
     private int zan_num;
-
+    private String img2;
     public DynamicContent(){}
 
 
@@ -57,5 +57,13 @@ public class DynamicContent {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getImg2() {
+        return img2;
+    }
+
+    public void setImg2(String img2) {
+        this.img2 = img2;
     }
 }

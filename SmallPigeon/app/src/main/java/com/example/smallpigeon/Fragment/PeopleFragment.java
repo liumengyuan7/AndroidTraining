@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -34,6 +35,10 @@ import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,47 +55,81 @@ public class PeopleFragment extends Fragment {
     private PeopleAdapter adapter;
     private List<DynamicContent> list = new ArrayList<>();
 
-    private Handler handler = new Handler(){
+    private  Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String result = msg.obj+"";
+            super.handleMessage(msg);
+            String result = msg.obj + "";
+            if(!result.equals("false")){
+                list.clear();
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int i = 0;i<jsonArray.length();i++){
+                        JSONObject json = jsonArray.getJSONObject(i);
+                        DynamicContent content = new DynamicContent();
+                        UserContent userContent = new UserContent();
+                        userContent.setUserNickname(json.get("user_nickname").toString());
+                        String time = json.get("push_time").toString();
+                        Date d = new Date(time);
+                        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+                        content.setDate(sdf.format(d).toString());//时间转换
+                        content.setUserContent(userContent);
+                        content.setContent(json.get("push_content").toString());
+                        String [] imgs = json.getString("push_image").split(";");
+                        content.setImg(imgs[0]);
+                        if(imgs.length==2) {
+                            content.setImg2(imgs[1]);
+                        }
+                        content.setDevice(Build.MODEL);
+                        list.add(content);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                Toast toastTip = Toast.makeText(getContext(),"获取动态失败！请检查网络！",Toast.LENGTH_LONG);
+                toastTip.setGravity(Gravity.CENTER, 0, 0);
+                toastTip.show();
+            }
         }
     };
-
     private PopupWindow mPopWindow;
+    private View view;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_people,container,false);
-        getViews(view);
-        listener = new MyClickListener();
-        registerListener();
+        view = inflater.inflate(R.layout.fragment_people,container,false);
 
-        DynamicContent content = new DynamicContent();
-        UserContent userContent = new UserContent();
-        userContent.setUserNickname("啦啦啦");
-        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-        content.setUserContent(userContent);
-        content.setContent("今日跑步分享");
-        content.setDevice(Build.MODEL);
-        list.add(content);
-        //selectDynamic();
-        adapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
-        dynamic_list.setAdapter(adapter);
-        dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                iv_comment = view.findViewById(R.id.iv_comment);
-                Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
-                iv_comment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
-                        showPopupWindow();
-                    }
-                });
-            }
-        });
+//        listener = new MyClickListener();
+//        registerListener();
+//        //显示后台服务器存储的所有发布的动态
+//        selectAllDynamic();
+////        DynamicContent content = new DynamicContent();
+////        UserContent userContent = new UserContent();
+////        userContent.setUserNickname("啦啦啦");
+////        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+////        content.setUserContent(userContent);
+////        content.setContent("今日跑步分享");
+////        content.setDevice(Build.MODEL);
+////        list.add(content);
+//        //selectDynamic();
+////        adapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
+////        dynamic_list.setAdapter(adapter);
+//        dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                iv_comment = view.findViewById(R.id.iv_comment);
+//                Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
+//                iv_comment.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
+//                        showPopupWindow();
+//                    }
+//                });
+//            }
+//        });
         return view;
     }
 
@@ -131,21 +170,18 @@ public class PeopleFragment extends Fragment {
 
     }
 
-    //TODO:查出所有动态
-    private void selectDynamic() {
+    //查出所有动态
+    private void selectAllDynamic() {
         new Thread(){
             @Override
             public void run() {
-                String result = new Utils().getConnectionResult("","");
+                String result = new Utils().getConnectionResult("dynamic","getAllDynamic");
                 Message message = new Message();
                 message.obj = result;
                 handler.sendMessage(message);
             }
         }.start();
     }
-
-    //TODO:得到从后台传入的图片并设置到对应的动态上
-
 
     private void registerListener() {
         iv_add_Message.setOnClickListener(listener);
@@ -163,15 +199,52 @@ public class PeopleFragment extends Fragment {
                 case R.id.iv_add_Message:
                     //TODO:添加新的动态
                     //TODO:如果已登录，跳转发表动态
-//                    if (loginOrNot()){
+                    if (loginOrNot()){
                         Intent intent = new Intent(getContext(), ReleaseDynamic.class);
                         startActivity(intent);
-//                    } else {
-//                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-//                    }
+                    } else {
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
     }
+    private boolean loginOrNot(){
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getViews(view);
+        adapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
+        dynamic_list.setAdapter(adapter);
+        listener = new MyClickListener();
+        registerListener();
+
+
+        dynamic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                iv_comment = view.findViewById(R.id.iv_comment);
+                Toast.makeText( getContext(), "xxx", Toast.LENGTH_SHORT ).show();
+                iv_comment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText( getContext(), "评论", Toast.LENGTH_SHORT ).show();
+                        showPopupWindow();
+                    }
+                });
+            }
+        });
+        //显示后台服务器存储的所有发布的动态
+        selectAllDynamic();
+    }
 }

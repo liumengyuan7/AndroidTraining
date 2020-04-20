@@ -17,6 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.Community.Comment.CommentAdapter;
 import com.example.smallpigeon.Entity.CommentContent;
 import com.example.smallpigeon.Entity.DynamicContent;
@@ -72,7 +75,8 @@ public class PeopleAdapter extends BaseAdapter {
             holder.tv_date = convertView.findViewById(R.id.tv_date);
             holder.device = convertView.findViewById(R.id.device);
             holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
-            holder.dynamic_item_img = convertView.findViewById( R.id.dynamic_item_img );
+            holder.dynamic_item_img1 = convertView.findViewById( R.id.dynamic_item_img1 );
+            holder.dynamic_item_img2 = convertView.findViewById( R.id.dynamic_item_img2 );
             holder.ll_forward = convertView.findViewById( R.id.ll_forward );
             holder.ll_toComment = convertView.findViewById( R.id.ll_toComment );
             holder.ll_like = convertView.findViewById( R.id.ll_like );
@@ -94,7 +98,13 @@ public class PeopleAdapter extends BaseAdapter {
         holder.tv_date.setText(dynamicContent.getDate());
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
-
+        //缓存图片
+        if(!"".equals(dynamicContent.getImg())) {
+            showImges(dynamicContent.getImg(), holder.dynamic_item_img1);
+        }
+        if(!"".equals(dynamicContent.getImg2())) {
+            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+        }
         rl_comment.setVisibility(View.GONE);
 
 //        comment_content.addTextChangedListener( new TextWatcher() {
@@ -120,7 +130,14 @@ public class PeopleAdapter extends BaseAdapter {
         holder.rl_comment.setOnClickListener( listener );
         holder.hide_down.setOnClickListener( listener );
         holder.comment_send.setOnClickListener( listener );
+        notifyDataSetChanged();
         return convertView;
+    }
+    //缓存动态图片
+    private void showImges(String imgName,ImageView imageView) {
+        String url = "http://"+this.context.getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/dynamic/"+imgName;
+        Glide.with(this.context).load(url).into(imageView);
     }
 
     class MyClickListener implements View.OnClickListener{
@@ -168,7 +185,8 @@ public class PeopleAdapter extends BaseAdapter {
         TextView tv_date;//发表时间
         TextView device;//设备名称
         TextView dynamic_item_txt;//发表内容
-        ImageView dynamic_item_img;//发表内容配图
+        ImageView dynamic_item_img1;//发表内容配图1
+        ImageView dynamic_item_img2;//发表内容配图2
         LinearLayout ll_forward;//转发
         LinearLayout ll_toComment;//评论
         LinearLayout ll_like;//赞

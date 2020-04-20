@@ -65,6 +65,17 @@ public class DynamicController {
 		item.write(new File(path+item.getName()));
 		return "true";
 	}
+	//得到所有动态
+    @ResponseBody
+    @RequestMapping(value = "getAllDynamic",produces = "text/html;charset=UTF-8")
+    public String getAllDynamic(){
+        String result = this.dynamicService.queryAllDynamic();
+        if(result == null || result.equals("")){
+			return "false";
+		}else{
+			return result;
+		}
+    }
 /*
 	//post图片
 	@ResponseBody
