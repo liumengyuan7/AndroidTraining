@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -104,6 +105,7 @@ public class PeopleFragment extends Fragment {
                         break;
                     case R.id.ll_forward:
                         //todo:转发
+                        toTransmit();
                         break;
                     case R.id.ll_like:
                         //todo:点赞
@@ -113,6 +115,16 @@ public class PeopleFragment extends Fragment {
         });
 
         return view;
+    }
+
+    //转发相关操作
+    private void toTransmit() {
+        if (loginOrNot()){
+            //获取当前用户信息
+
+        }else {
+            Toast.makeText(getContext(),"您还未登录，请先登录",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @SuppressLint("WrongConstant")
@@ -144,6 +156,7 @@ public class PeopleFragment extends Fragment {
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        inputComment.setFocusable(true);
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -187,8 +200,9 @@ public class PeopleFragment extends Fragment {
                 nInputContentText = inputComment.getText().toString().trim();
                 Toast.makeText(getContext(),nInputContentText,Toast.LENGTH_SHORT).show();
                 if (nInputContentText == null || "".equals(nInputContentText)) {
-                    //showToastMsgShort("请输入评论内容");
-                    return;
+                    Toast.makeText(getContext(),"评论不能为空",Toast.LENGTH_LONG).show();
+                }else {
+
                 }
                 mInputManager.hideSoftInputFromWindow(inputComment.getWindowToken(),0);
                 popupWindow.dismiss();
@@ -236,6 +250,16 @@ public class PeopleFragment extends Fragment {
 //                    }
                     break;
             }
+        }
+    }
+
+    private boolean loginOrNot(){
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
         }
     }
 }
