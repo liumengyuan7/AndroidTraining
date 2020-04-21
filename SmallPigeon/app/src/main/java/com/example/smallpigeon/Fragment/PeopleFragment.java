@@ -55,6 +55,7 @@ import java.util.TimerTask;
 public class PeopleFragment extends Fragment {
     private ListView dynamic_list;
     private ImageView iv_add_Message;//发表动态，右上角加号
+//    private ImageView iv_like;//点赞图标
     private MyClickListener listener;
     private PeopleAdapter peopleAdapter;
     private List<DynamicContent> list = new ArrayList<>();
@@ -138,12 +139,11 @@ public class PeopleFragment extends Fragment {
                         showPopupWindow("comment");
                         break;
                     case R.id.ll_forward:
-                        //todo:转发
                         showPopupWindow("forward");
                         break;
-                    case R.id.ll_like:
-                        //todo:点赞
-                        break;
+//                    case R.id.ll_like:
+//                        likeIt();
+//                        break;
                 }
             }
         });
@@ -225,12 +225,13 @@ public class PeopleFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     nInputContentText = et_discuss.getText().toString().trim();
-                    Toast.makeText(getContext(),nInputContentText,Toast.LENGTH_SHORT).show();
                     if (nInputContentText == null || "".equals(nInputContentText)) {
-                        Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_SHORT).show();
                     }else {
                         mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
                         popupWindow.dismiss();
+                        Toast.makeText(getContext(),"发送成功",Toast.LENGTH_SHORT).show();
+                        et_discuss.setText( null );
                         //TODO：发送成功，与后台交互
                     }
                 }

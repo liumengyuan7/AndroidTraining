@@ -1,6 +1,8 @@
 package com.example.smallpigeon.Adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -29,6 +31,8 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     private Context context;
     private int itemLayoutID;
     private List<DynamicContent> list = new ArrayList<>();
+    private ImageView ivLike;
+    private TextView tvLikeNum;
 
     public PeopleAdapter(Context context, int itemLayoutID, List<DynamicContent> list) {
         this.context = context;
@@ -74,35 +78,62 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             holder.device = convertView.findViewById(R.id.device);
             holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
             holder.dynamic_item_img = convertView.findViewById( R.id.dynamic_item_img );
-            holder.dynamic_item_img2 = convertView.findViewById( R.id.dynamic_item_img2 );
+//            holder.dynamic_item_img2 = convertView.findViewById( R.id.dynamic_item_img2 );
             holder.ll_forward = convertView.findViewById( R.id.ll_forward );
             holder.ll_toComment = convertView.findViewById( R.id.ll_toComment );
             holder.ll_like = convertView.findViewById( R.id.ll_like );
+            holder.iv_like = convertView.findViewById( R.id.iv_like );
+            holder.tv_likeNum = convertView.findViewById( R.id.tv_likeNum );
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        ivLike = holder.iv_like;
+        tvLikeNum = holder.tv_likeNum;
 
         DynamicContent dynamicContent = list.get(position);
         holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
         holder.tv_date.setText(dynamicContent.getDate());
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
+        //todo:与后台交互，查询give_to表中的点赞状态
+//        if (点赞状态为1){
+//            ivLike.setImageResource( R.drawable.heart );
+//        } else {
+//            ivLike.setImageResource( R.drawable.good );
+//        }
+
         //缓存图片
-        if(!"".equals(dynamicContent.getImg())) {
-            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
-        }
-        if(!"".equals(dynamicContent.getImg2())) {
-            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
-        }
+//        if(!"".equals(dynamicContent.getImg())) {
+//            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
+//        }
+//        if(!"".equals(dynamicContent.getImg2())) {
+//            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+//        }
 
         //点击事件
+        holder.ll_like.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo：从数据库获取点赞状态
+                Toast.makeText(context,"点赞",Toast.LENGTH_SHORT).show();
+                if (false){
+                    ivLike.setImageResource( R.drawable.good );
+                    //todo：从数据库获取数据并更改点赞数
+//                    tvLikeNum.setText(  - 1 );
+                } else {
+                    ivLike.setImageResource( R.drawable.heart );
+                    //todo：从数据库获取数据并更改点赞数
+//                    tvLikeNum.setText(  + 1 );
+                }
+            }
+        });
+
         holder.ll_toComment.setOnClickListener(this);
-        holder.ll_like.setOnClickListener(this);
         holder.ll_forward.setOnClickListener(this);
         holder.ll_toComment.setTag(position);
         holder.ll_forward.setTag(position);
-        holder.ll_like.setTag(position);
         notifyDataSetChanged();
         return convertView;
     }
@@ -128,7 +159,10 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         LinearLayout ll_forward;//转发
         LinearLayout ll_toComment;//评论
         LinearLayout ll_like;//赞
+        ImageView iv_like;//点赞图标
+        TextView tv_likeNum;//点赞数
     }
+
     public interface btnOnclick{
         public void click(View view,int index);
     }
