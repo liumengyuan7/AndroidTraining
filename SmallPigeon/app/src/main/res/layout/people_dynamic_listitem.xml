@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_icon"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:src="@drawable/zh"/>-->
+        <com.example.smallpigeon.RoundImageView
             android:id="@+id/iv_icon"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/zh"/>
+            android:src="@drawable/zh"
+            imagecontrol:border_inside_color="#259B24"
+            imagecontrol:border_outside_color="#ffffff"
+            imagecontrol:border_thickness="1dp"/>
         <TextView
             android:id="@+id/tv_nickName"
             android:layout_toRightOf="@id/iv_icon"

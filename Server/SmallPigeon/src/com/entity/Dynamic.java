@@ -1,6 +1,8 @@
 package com.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @className Dynamic
@@ -17,7 +19,7 @@ public class Dynamic {
     private String pushImage;
     private int zanNum;
     private int forwardId;
-
+//    private List<Comment> comments = new ArrayList<>();
     public int getId() {
         return id;
     }
@@ -73,4 +75,12 @@ public class Dynamic {
     public void setForwardId(int forwardId) {
         this.forwardId = forwardId;
     }
+
+  /*  public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }*/
 }

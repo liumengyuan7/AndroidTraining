@@ -69,7 +69,7 @@ public class PeopleFragment extends Fragment {
     private TextView btn_submit;
     private RelativeLayout rl_input_container;
     private InputMethodManager mInputManager;
-
+    private boolean isPause = false;
     private  Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -84,6 +84,7 @@ public class PeopleFragment extends Fragment {
                         DynamicContent content = new DynamicContent();
                         UserContent userContent = new UserContent();
                         userContent.setUserNickname(json.get("user_nickname").toString());
+                        userContent.setUserImage(json.getString("user_email"));
                         String time = json.get("push_time").toString();
                         Date d = new Date(time);
                         SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
@@ -283,6 +284,23 @@ public class PeopleFragment extends Fragment {
             return false;
         }else{
             return true;
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isPause = true;//记录页面已经被暂停
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isPause){//判断是否暂停
+            isPause = false;
+            selectAllDynamic();
+            peopleAdapter.notifyDataSetChanged();
+
         }
     }
 }

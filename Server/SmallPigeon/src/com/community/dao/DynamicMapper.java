@@ -12,4 +12,5 @@ public interface DynamicMapper {
 
     public int insertDynamic(@Param("userId") String userId, @Param("pushTime") String pushTime, @Param("pushContent") String pushContent, @Param("pushImg") String pushImg);
     public List<Map> queryAllDynamic();
+    public List<Map> queryAllDynamicAndComment();
 }

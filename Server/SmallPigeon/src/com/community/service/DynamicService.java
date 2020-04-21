@@ -39,4 +39,9 @@ public class DynamicService {
         System.out.println(this.dynamicMapper.queryAllDynamic());
         return new Gson().toJson(this.dynamicMapper.queryAllDynamic());
     }
+      //得到所有用户的动态和评论内容
+    public String queryAllDynamicAndComment(){
+        System.out.println(this.dynamicMapper.queryAllDynamicAndComment());
+        return new Gson().toJson(this.dynamicMapper.queryAllDynamicAndComment());
+    }
 }

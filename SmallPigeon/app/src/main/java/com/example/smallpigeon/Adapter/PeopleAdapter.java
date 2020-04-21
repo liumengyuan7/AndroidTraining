@@ -95,7 +95,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         if(!"".equals(dynamicContent.getImg2())) {
             showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
         }
-
+        showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
         //点击事件
         holder.ll_toComment.setOnClickListener(this);
         holder.ll_like.setOnClickListener(this);
@@ -131,5 +131,11 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     }
     public interface btnOnclick{
         public void click(View view,int index);
+    }
+    //缓存头像图片
+    private void showImage(String imgName,ImageView imageView) {
+        String url = "http://"+this.context.getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/avatar/"+imgName+".jpg";
+        Glide.with(this.context).load(url).into(imageView);
     }
 }

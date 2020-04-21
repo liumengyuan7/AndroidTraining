@@ -70,31 +70,23 @@ public class DynamicController {
     @RequestMapping(value = "getAllDynamic",produces = "text/html;charset=UTF-8")
     public String getAllDynamic(){
         String result = this.dynamicService.queryAllDynamic();
+        String s = this.dynamicService.queryAllDynamicAndComment();
+        System.out.println(s);
         if(result == null || result.equals("")){
 			return "false";
 		}else{
 			return result;
 		}
     }
-/*
-	//post图片
-	@ResponseBody
-	@RequestMapping("postPicture")
-	public File postPicture(@RequestParam("userEmail") String userEmail,
-							HttpServletResponse response) throws IOException {
-		String path = servletContext.getRealPath("")+"avatar\\"+userEmail+".jpg";
-		response.setContentType(servletContext.getMimeType(userEmail+".jpg"));
-		response.setHeader("Content-Disposition","attachment;fileName="+userEmail+".jpg");
-		InputStream in = new FileInputStream(path);
-		OutputStream out = response.getOutputStream();
-		int n = -1;
-		while ((n=in.read())!=-1){
-			out.write(n);
-			out.flush();
+    //得到所有动态 带评论内容
+    @ResponseBody
+    @RequestMapping(value = "getAllDynamicAndComment",produces = "text/html;charset=UTF-8")
+    public String queryAllDynamicAndComment(){
+        String result = this.dynamicService.queryAllDynamicAndComment();
+        if(result == null || result.equals("")){
+			return "false";
+		}else{
+			return result;
 		}
-		in.close();
-		out.close();
-		return null;
-	}*/
-
+    }
 }
