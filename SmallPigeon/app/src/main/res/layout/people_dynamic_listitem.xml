@@ -168,6 +168,7 @@
             android:layout_marginLeft="50dp">
 
             <ImageView
+                android:id="@+id/iv_like"
                 android:src="@drawable/good"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
@@ -185,80 +186,12 @@
                 android:layout_marginLeft="3dp"
                 android:textSize="18dp"
                 android:textColor="#000"
-                android:text="6"/>
+                android:text="6"
+                android:hint="0"/>
         </LinearLayout>
 
     </LinearLayout>
 
-    <!--    <LinearLayout-->
-    <!--        android:visibility="invisible"-->
-    <!--        android:id="@+id/ll_comment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="35dp"-->
-    <!--        android:layout_margin="30dp">-->
-    <!--        <EditText-->
-    <!--            android:id="@+id/et_content"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="30dp"-->
-    <!--            android:layout_marginTop="3dp"-->
-    <!--            android:layout_weight="8"-->
-    <!--            android:background="@drawable/edit_style"-->
-    <!--            android:hint="说点什么吧..." />-->
-    <!--        <Button-->
-    <!--            android:id="@+id/btn_ok"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_weight="2"-->
-    <!--            android:text="发送"-->
-    <!--            android:layout_height="30dp"-->
-    <!--            android:background="@drawable/edit_style"-->
-    <!--            android:layout_marginLeft="5dp"/>-->
-    <!--    </LinearLayout>-->
-
-    <!--<RelativeLayout
-        android:id="@+id/rl_comment"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#ffffff" />
-
-        <ImageView
-            android:id="@+id/hide_down"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/backt"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"/>
-
-        <EditText
-            android:id="@+id/comment_content"
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
-            android:text="发表你的想法"
-            android:textSize="15sp"
-            android:singleLine="true"
-            android:background="@null"
-            android:layout_toRightOf="@id/hide_down"
-            android:layout_marginLeft="10dp"/>
-
-        <Button
-            android:id="@+id/comment_send"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:text="发送"
-            android:textSize="15sp"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#259B24"
-            android:background="@drawable/circular"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="15dp"/>
-    </RelativeLayout>-->
 
     <ListView
         android:id="@+id/comment_list"
