@@ -1,7 +1,6 @@
 package com.example.smallpigeon.Fragment;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,14 +49,17 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class PeopleFragment extends Fragment {
+
     private ListView dynamic_list;
     private ImageView iv_add_Message;//发表动态，右上角加号
-//    private ImageView iv_like;//点赞图标
+
     private MyClickListener listener;
     private PeopleAdapter peopleAdapter;
     private List<DynamicContent> list = new ArrayList<>();
+
+    private TextView tv_forwardNum;
+    private TextView tv_commentNum;
 
     private PopupWindow popupWindow;
     private View popupView = null;
@@ -68,6 +69,7 @@ public class PeopleFragment extends Fragment {
     private RelativeLayout rl_input_container;
     private InputMethodManager mInputManager;
     private boolean isPause = false;
+
     private  Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -108,7 +110,7 @@ public class PeopleFragment extends Fragment {
             }
         }
     };
-    private PopupWindow mPopWindow;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -137,14 +139,13 @@ public class PeopleFragment extends Fragment {
             public void click(View view, int index) {
                 switch (view.getId()){
                     case R.id.ll_toComment:
+                        tv_commentNum = view.findViewById( R.id.tv_commentNum );
                         showPopupWindow("comment");
                         break;
                     case R.id.ll_forward:
+                        tv_forwardNum = view.findViewById( R.id.tv_forwardNum );
                         showPopupWindow("forward");
                         break;
-//                    case R.id.ll_like:
-//                        likeIt();
-//                        break;
                 }
             }
         });
@@ -154,89 +155,94 @@ public class PeopleFragment extends Fragment {
     @SuppressLint("WrongConstant")
     private void showPopupWindow(String type) {
 //        if (loginOrNot()){
-            if (popupView == null){
-                //加载评论框的资源文件
-                popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
+        if (popupView == null){
+            //加载评论框的资源文件
+            popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
+        }
+        et_discuss = (EditText) popupView.findViewById(R.id.et_discuss);
+        btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
+        rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
+        if (type == "comment"){
+            et_discuss.setHint( "说点什么吧……" );
+        } else if (type == "forward"){
+            et_discuss.setHint( "转发理由……" );
+        }
+        //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                mInputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                mInputManager.showSoftInput(et_discuss, 0);
+                mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
-            et_discuss = (EditText) popupView.findViewById(R.id.et_discuss);
-            btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
-            rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
-            if (type == "comment"){
-                et_discuss.setHint( "说点什么吧……" );
-            } else if (type == "forward"){
-                et_discuss.setHint( "转发理由……" );
-            }
-            //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                public void run()
-                {
-                    mInputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mInputManager.showSoftInput(et_discuss, 0);
-                    mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-            }, 200);
-            if (popupWindow == null){
-                popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, false);
+        }, 200);
+        if (popupWindow == null){
+            popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT, false);
 
-            }
-            //popupWindow的常规设置，设置点击外部事件，背景色
-            popupWindow.setTouchable(true);
-            popupWindow.setFocusable(true);
-            popupWindow.setOutsideTouchable(true);
-            popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-            et_discuss.setFocusable(true);
-            popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
-                        popupWindow.dismiss();
-                    return false;
-                }
-            });
-
-            // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
-            popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
-            // 再设置模式，和Activity的一样，覆盖，调整大小。
-            popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-            //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
-            popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-
-            popupWindow.update();
-
-            //设置监听
-            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                // 在dismiss中恢复透明度
-                @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-                public void onDismiss() {
-                    mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
-                }
-            });
-            //外部点击事件
-            rl_input_container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+        }
+        //popupWindow的常规设置，设置点击外部事件，背景色
+        popupWindow.setTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        et_discuss.setFocusable(true);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
                     popupWindow.dismiss();
-                }
-            });
-            //评论框内的发送按钮设置点击事件
-            btn_submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    nInputContentText = et_discuss.getText().toString().trim();
-                    if (nInputContentText == null || "".equals(nInputContentText)) {
-                        Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_SHORT).show();
-                    }else {
-                        mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
-                        popupWindow.dismiss();
-                        Toast.makeText(getContext(),"发送成功",Toast.LENGTH_SHORT).show();
-                        et_discuss.setText( null );
-                        //TODO：发送成功，与后台交互
+                return false;
+            }
+        });
+        // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
+        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        // 再设置模式，和Activity的一样，覆盖，调整大小。
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
+        popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+        popupWindow.update();
+        //设置监听
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            // 在dismiss中恢复透明度
+            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+            public void onDismiss() {
+                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+            }
+        });
+        //外部点击事件
+        rl_input_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+                popupWindow.dismiss();
+            }
+        });
+        //评论框内的发送按钮设置点击事件
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nInputContentText = et_discuss.getText().toString().trim();
+                if (nInputContentText == null || "".equals(nInputContentText)) {
+                    Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_SHORT).show();
+                }else {
+                    mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
+                    popupWindow.dismiss();
+                    Toast.makeText(getContext(),"发送成功",Toast.LENGTH_SHORT).show();
+                    et_discuss.setText( null );
+                    if (type == "comment"){
+                        //todo：从数据库获取数据并更改评论数
+                        tv_commentNum.setText( "10" );
+                    } else if (type == "forward"){
+                        //todo：从数据库获取数据并更改转发数
+                        tv_forwardNum.setText( "9" );
                     }
+                    //TODO：发送成功，与后台交互
+
                 }
-            });
+            }
+        });
 //        }else {
 //            Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
 //        }

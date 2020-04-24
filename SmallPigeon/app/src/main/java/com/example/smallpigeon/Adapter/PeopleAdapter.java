@@ -1,26 +1,15 @@
 package com.example.smallpigeon.Adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
-import com.example.smallpigeon.Community.Comment.CommentAdapter;
-import com.example.smallpigeon.Entity.CommentContent;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.R;
 
@@ -28,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
+
     private Context context;
     private int itemLayoutID;
     private List<DynamicContent> list = new ArrayList<>();
@@ -105,26 +95,26 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
 //        }
 
         //缓存图片
-        }
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
+
         //点击事件
         holder.ll_like.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //todo：从数据库获取点赞状态
-                Toast.makeText(context,"点赞",Toast.LENGTH_SHORT).show();
-                if (false){
-                    ivLike.setImageResource( R.drawable.good );
-                    //todo：从数据库获取数据并更改点赞数
+        @Override
+        public void onClick(View v) {
+            //todo：从数据库获取点赞状态
+//            ivLike.setImageResource( R.drawable. );
+            Toast.makeText(context,"点赞",Toast.LENGTH_SHORT).show();
+            if (false){
+                ivLike.setImageResource( R.drawable.good );
+                //todo：从数据库获取数据并更改点赞数
 //                    tvLikeNum.setText(  - 1 );
-                } else {
-                    ivLike.setImageResource( R.drawable.heart );
-                    //todo：从数据库获取数据并更改点赞数
+            } else {
+                ivLike.setImageResource( R.drawable.heart );
+                //todo：从数据库获取数据并更改点赞数
 //                    tvLikeNum.setText(  + 1 );
-                }
             }
+        }
         });
-
         holder.ll_toComment.setOnClickListener(this);
         holder.ll_forward.setOnClickListener(this);
         holder.ll_toComment.setTag(position);
@@ -132,6 +122,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         notifyDataSetChanged();
         return convertView;
     }
+
     //缓存动态图片
     private void showImges(String imgName,ImageView imageView) {
         String url = "http://"+this.context.getResources().getString(R.string.ip_address)
@@ -143,6 +134,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     public void onClick(View view) {
         btnOnclick.click(view,(int)view.getTag());
     }
+
     static class ViewHolder{
         ImageView iv_icon;//用户头像
         TextView tv_nickName;//用户昵称
@@ -161,6 +153,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     public interface btnOnclick{
         public void click(View view,int index);
     }
+
     //缓存头像图片
     private void showImage(String imgName,ImageView imageView) {
         String url = "http://"+this.context.getResources().getString(R.string.ip_address)

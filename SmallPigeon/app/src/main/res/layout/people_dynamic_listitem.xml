@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center">
     <RelativeLayout
@@ -14,6 +15,7 @@
 <!--            android:layout_width="60dp"-->
 <!--            android:layout_height="60dp"-->
 <!--            android:src="@drawable/zh"/>-->
+
         <com.example.smallpigeon.RoundImageView
             android:id="@+id/iv_icon"
             android:layout_marginLeft="20dp"
@@ -24,6 +26,7 @@
             imagecontrol:border_inside_color="#259B24"
             imagecontrol:border_outside_color="#ffffff"
             imagecontrol:border_thickness="1dp"/>
+
         <TextView
             android:id="@+id/tv_nickName"
             android:layout_toRightOf="@id/iv_icon"
@@ -35,6 +38,7 @@
             android:text="用户昵称"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/tv_date"
             android:layout_marginTop="2dp"
@@ -43,6 +47,7 @@
             android:layout_alignLeft="@id/tv_nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/from"
             android:text="来自"
@@ -52,6 +57,7 @@
             android:layout_toRightOf="@id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/device"
             android:text="VIVO X23"
@@ -70,6 +76,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/dynamic_item_txt"
             android:text="此次跑步分享内容"
@@ -77,9 +84,11 @@
             android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/dynamic_item_img"
                 android:layout_width="150dp"
@@ -89,6 +98,7 @@
                 android:maxHeight="150dp"
                 android:maxWidth="300dp"
                 android:src="@drawable/man"/>
+
             <ImageView
                 android:id="@+id/dynamic_item_img2"
                 android:layout_width="150dp"
@@ -124,6 +134,7 @@
                 android:textSize="18dp"
                 android:textColor="#000"
                 android:text="转发"/>
+
             <TextView
                 android:id="@+id/tv_forwardNum"
                 android:layout_width="wrap_content"
@@ -144,6 +155,7 @@
                 android:src="@drawable/comment"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
+
             <TextView
                 android:layout_marginLeft="3dp"
                 android:text="评论"
@@ -151,6 +163,7 @@
                 android:textColor="#000"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp" />
+
             <TextView
                 android:id="@+id/tv_commentNum"
                 android:layout_width="wrap_content"
@@ -172,6 +185,7 @@
                 android:src="@drawable/good"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
+
             <TextView
                 android:layout_marginLeft="3dp"
                 android:text="赞"
@@ -179,6 +193,7 @@
                 android:textColor="#000"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"/>
+
             <TextView
                 android:id="@+id/tv_likeNum"
                 android:layout_width="wrap_content"
@@ -191,7 +206,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
     <ListView
         android:id="@+id/comment_list"
