@@ -1,6 +1,16 @@
 package com.example.smallpigeon.Entity;
 
-public class DynamicContent {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.example.smallpigeon.Entity.CommentDetailBean;
+import com.example.smallpigeon.Entity.UserContent;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DynamicContent implements Serializable {
     private UserContent userContent;
     private String date;
     private String device;
@@ -8,6 +18,7 @@ public class DynamicContent {
     private String img;
     private int zan_num;
     private String img2;
+    private List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
     public DynamicContent(){}
 
 
@@ -66,4 +77,27 @@ public class DynamicContent {
     public void setImg2(String img2) {
         this.img2 = img2;
     }
+
+    public List<CommentDetailBean> getCommentDetailBeans() {
+        return commentDetailBeans;
+    }
+
+    public void setCommentDetailBeans(List<CommentDetailBean> commentDetailBeans) {
+        this.commentDetailBeans = commentDetailBeans;
+    }
+
+    @Override
+    public String toString() {
+        return "DynamicContent{" +
+                "userContent=" + userContent +
+                ", date='" + date + '\'' +
+                ", device='" + device + '\'' +
+                ", content='" + content + '\'' +
+                ", img='" + img + '\'' +
+                ", zan_num=" + zan_num +
+                ", img2='" + img2 + '\'' +
+                ", commentDetailBeans=" + commentDetailBeans +
+                '}';
+    }
+
 }

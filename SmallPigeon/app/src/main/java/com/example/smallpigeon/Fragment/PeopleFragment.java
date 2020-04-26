@@ -32,9 +32,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.PeopleAdapter;
+import com.example.smallpigeon.Community.Comment.DynamicDetailActivity;
 import com.example.smallpigeon.Community.ReleaseDynamic.ReleaseDynamic;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.UserContent;
+import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
 
@@ -140,7 +142,12 @@ public class PeopleFragment extends Fragment {
                 switch (view.getId()){
                     case R.id.ll_toComment:
                         tv_commentNum = view.findViewById( R.id.tv_commentNum );
-                        showPopupWindow("comment");
+//                        showPopupWindow("comment");
+                        Intent intent = new Intent(getContext(), DynamicDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("dynamic",list.get(index));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         break;
                     case R.id.ll_forward:
                         tv_forwardNum = view.findViewById( R.id.tv_forwardNum );

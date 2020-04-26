@@ -49,6 +49,7 @@
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan">
+        <activity android:name=".Community.Comment.DynamicDetailActivity"></activity>
         <activity android:name=".Community.ReleaseDynamic.ReleaseDynamic" />
         <activity android:name=".Run.FinishRunActivity" />
         <activity android:name=".My.MyPlan" />

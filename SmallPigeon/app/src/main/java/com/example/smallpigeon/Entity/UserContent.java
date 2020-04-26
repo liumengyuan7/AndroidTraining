@@ -1,5 +1,6 @@
 package com.example.smallpigeon.Entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.sql.Date;
  * @Author: 程璐
  * @Descripe: User实体类
  */
-public class UserContent {
+public class UserContent implements Serializable {
     private  int id;
     private String userName;
     private String userNickname;

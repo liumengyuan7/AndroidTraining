@@ -87,12 +87,6 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         holder.tv_date.setText(dynamicContent.getDate());
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
-        //todo:与后台交互，查询give_to表中的点赞状态
-//        if (点赞状态为1){
-//            ivLike.setImageResource( R.drawable.heart );
-//        } else {
-//            ivLike.setImageResource( R.drawable.good );
-//        }
 
         //缓存图片
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
@@ -101,8 +95,6 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         holder.ll_like.setOnClickListener( new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //todo：从数据库获取点赞状态
-//            ivLike.setImageResource( R.drawable. );
             Toast.makeText(context,"点赞",Toast.LENGTH_SHORT).show();
             if (false){
                 ivLike.setImageResource( R.drawable.good );
