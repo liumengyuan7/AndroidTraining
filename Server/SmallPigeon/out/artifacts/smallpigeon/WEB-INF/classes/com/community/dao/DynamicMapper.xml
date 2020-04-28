@@ -3,33 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.dao.DynamicMapper">
-<!--    <resultMap id="dynamicMap" type="com.entity.Dynamic">-->
-<!--        <id property="id" column="id" />-->
-<!--        <result property="userId" column="user_id" />-->
-<!--        <result property="pushTime" column="push_time" />-->
-<!--        <result property="pushContent" column="push_content" />-->
-<!--        <result property="pushImage" column="push_image" />-->
-<!--        <result property="zanNum" column="zan_num" />-->
-<!--        <result property="forwardId" column="forward_id"/>-->
-<!--        <collection property="comments" ofType="com.entity.Comment">-->
-<!--             <id property="id" column="id" />-->
-<!--             <result property="userId" column="user_id" />-->
-<!--             <result property="content" column="comment_content" />-->
-<!--        </collection>-->
-<!--    </resultMap>-->
     <insert id="insertDynamic">
         insert into dynamics(user_id, push_time, push_content, push_image)
         values(#{userId},#{pushTime},#{pushContent},#{pushImg})
     </insert>
-    <select id="queryAllDynamic" resultType="java.util.Map">
-        select  u.user_nickname,u.user_email,d.push_content,d.push_time,d.push_image
+    <select id="queryAllDynamic" resultType="com.entity.Dynamics">
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId
         from dynamics d,user u
         where u.id = d.user_id
     </select>
-    <select id="queryAllDynamicAndComment" resultType="java.util.Map">
-        select  u.user_nickname,u.user_email,d.push_content,d.push_time,d.push_image,c.comment_content,c.user_id
-        from dynamics d
-        LEFT  JOIN user u on u.id = d.user_id
-        LEFT  JOIN comment c ON d.id = c.dynamics_id
-    </select>
+   <!-- <select id="queryAllDynamicAndComment" resultMap="dynamicMap">
+        select  *
+        from dynamics d,comment c
+        where c.dynamics_id = d.id
+    </select>-->
 </mapper>
