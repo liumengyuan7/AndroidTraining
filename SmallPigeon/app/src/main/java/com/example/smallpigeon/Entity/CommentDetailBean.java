@@ -10,10 +10,14 @@ public class CommentDetailBean implements Serializable {
     private String userLogo;
     private String content;
     private String imgId;
+    private int dynamicId;
+    private int commentFromId;
     private int replyTotal;
     private String createDate;
     private List<ReplyDetailBean> replyList;
+    public CommentDetailBean() {
 
+    }
     public CommentDetailBean(String nickName, String content, String createDate) {
         this.nickName = nickName;
         this.content = content;
@@ -32,6 +36,22 @@ public class CommentDetailBean implements Serializable {
     }
     public String getNickName() {
         return nickName;
+    }
+
+    public int getCommentFromId() {
+        return commentFromId;
+    }
+
+    public void setCommentFromId(int commentFromId) {
+        this.commentFromId = commentFromId;
+    }
+
+    public int getDynamicId() {
+        return dynamicId;
+    }
+
+    public void setDynamicId(int dynamicId) {
+        this.dynamicId = dynamicId;
     }
 
     public void setUserLogo(String userLogo) {

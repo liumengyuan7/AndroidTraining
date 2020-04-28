@@ -88,8 +88,15 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
 
-        //缓存图片
+        //缓存头像
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
+        //缓存发布的动态图片
+        if(!"".equals(dynamicContent.getImg())) {
+            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
+        }
+        if(!"".equals(dynamicContent.getImg2())) {
+            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+        }
 
         //点击事件
         holder.ll_like.setOnClickListener( new View.OnClickListener() {
