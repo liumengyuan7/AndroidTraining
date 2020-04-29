@@ -1,6 +1,10 @@
 package com.example.smallpigeon.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +16,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +35,29 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     private List<DynamicContent> list = new ArrayList<>();
     private ImageView ivLike;
     private TextView tvLikeNum;
+    private boolean judgeZan = false;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj+"";
+            switch (msg.what){
+                case 0:
+                    if(result.equals("true")){
+                        Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context,"点赞失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 1:
+                    if(result.equals("true")){
+                        Toast.makeText(context,"取消点赞成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context,"取消点赞失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+        }
+    };
 
     public PeopleAdapter(Context context, int itemLayoutID, List<DynamicContent> list) {
         this.context = context;
@@ -70,7 +105,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             holder.dynamic_item_img = convertView.findViewById( R.id.dynamic_item_img );
             holder.dynamic_item_img2 = convertView.findViewById( R.id.dynamic_item_img2 );
             holder.ll_forward = convertView.findViewById( R.id.ll_forward );
+            holder.tv_forwardNum = convertView.findViewById(R.id.tv_forwardNum);
             holder.ll_toComment = convertView.findViewById( R.id.ll_toComment );
+            holder.tv_commentNum = convertView.findViewById(R.id.tv_commentNum);
             holder.ll_like = convertView.findViewById( R.id.ll_like );
             holder.iv_like = convertView.findViewById( R.id.iv_like );
             holder.tv_likeNum = convertView.findViewById( R.id.tv_likeNum );
@@ -87,23 +124,41 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         holder.tv_date.setText(dynamicContent.getDate());
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
-
-        //缓存图片
+        holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
+        holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+        //缓存头像
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
-
+        //缓存发布的动态图片
+        if(!"".equals(dynamicContent.getImg())) {
+            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
+        }
+        if(!"".equals(dynamicContent.getImg2())) {
+            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+        }
+        //得到点赞用户id
+        SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        int userId = Integer.parseInt(pre.getString("user_id",""));
         //点击事件
-        holder.ll_like.setOnClickListener( new View.OnClickListener() {
+        ViewHolder finalHolder = holder;
+        holder.ll_like.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(context,"点赞",Toast.LENGTH_SHORT).show();
-            if (false){
-                ivLike.setImageResource( R.drawable.good );
-                //todo：从数据库获取数据并更改点赞数
-//                    tvLikeNum.setText(  - 1 );
+            if (judgeZan){
+                finalHolder.iv_like.setImageResource(R.drawable.good);
+                int zanNumBefore = dynamicContent.getZan_num();
+                int zanNumAfter = zanNumBefore-1;
+                decZanNum(dynamicContent.getDynamicId(),userId,zanNumAfter);
+                dynamicContent.setZan_num(zanNumAfter);
+                tvLikeNum.setText(zanNumAfter+"");
+                judgeZan = false;
             } else {
-                ivLike.setImageResource( R.drawable.heart );
-                //todo：从数据库获取数据并更改点赞数
-//                    tvLikeNum.setText(  + 1 );
+                finalHolder.iv_like.setImageResource( R.drawable.heart );
+                int zanNumBefore = dynamicContent.getZan_num();
+                int zanNumAfter = zanNumBefore+1;
+                addZanNum(dynamicContent.getDynamicId(),userId,zanNumAfter);
+                dynamicContent.setZan_num(zanNumAfter);
+                tvLikeNum.setText(zanNumAfter+"");
+                judgeZan = true;
             }
         }
         });
@@ -115,6 +170,34 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         return convertView;
     }
 
+    //点赞
+    private void addZanNum(int dynamicId, int userId,int zanNumAfter) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","addZanNum","dynamicId="+dynamicId
+                        +"&&userId="+userId+"&&zanNumAfter="+zanNumAfter);
+                Message message = new Message();
+                message.obj = result;
+                message.what=0;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
+    //取消点赞
+    private void decZanNum(int dynamicId, int userId,int zanNumAfter) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","decZanNum","dynamicId="+dynamicId
+                        +"&&userId="+userId+"&&zanNumAfter="+zanNumAfter);
+                Message message = new Message();
+                message.obj = result;
+                message.what=1;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
     //缓存动态图片
     private void showImges(String imgName,ImageView imageView) {
         String url = "http://"+this.context.getResources().getString(R.string.ip_address)
@@ -136,7 +219,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         ImageView dynamic_item_img;//发表内容配图
         ImageView dynamic_item_img2;//发表内容配图2
         LinearLayout ll_forward;//转发
+        TextView tv_forwardNum;//转发数
         LinearLayout ll_toComment;//评论
+        TextView tv_commentNum;//评论数
         LinearLayout ll_like;//赞
         ImageView iv_like;//点赞图标
         TextView tv_likeNum;//点赞数
@@ -152,4 +237,5 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 +":8080/smallpigeon/avatar/"+imgName+".jpg";
         Glide.with(this.context).load(url).into(imageView);
     }
+
 }

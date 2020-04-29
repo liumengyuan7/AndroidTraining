@@ -2,6 +2,8 @@ package com.example.smallpigeon.Community.Comment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -18,8 +21,13 @@ import com.example.smallpigeon.Entity.CommentDetailBean;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.ReplyDetailBean;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,6 +40,29 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private Context context;
     private int pageIndex = 1;
     private DynamicContent dynamicContent;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj+"";
+            switch (msg.what){
+                case 0:
+                    if(result.equals("true")){
+                        Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context,"评论失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 1:
+                    if(result.equals("true")){
+                        Toast.makeText(context,"回复成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context,"回复失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+
+        }
+    };
     public CommentExpandAdapter(Context context, DynamicContent dynamicContent) {
         this.context = context;
 //        this.commentBeanList = commentBeanList;
@@ -90,12 +121,18 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
-        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL);
-        Glide.with(context).load(R.drawable.user_other)
+        RequestOptions requestOptions = new RequestOptions()
+                .error(R.drawable.user_logo)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+        String url = "http://"+this.context.getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/avatar/"+dynamicContent.getCommentDetailBeans().get(groupPosition).getUserLogo()+".jpg";
+        Glide.with(context).load(url)
                 .apply(requestOptions)
                 .into(groupHolder.logo);
         groupHolder.tv_name.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getNickName());
-        groupHolder.tv_time.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getCreateDate());
+
+        String time = dynamicContent.getCommentDetailBeans().get(groupPosition).getCreateDate();
+        groupHolder.tv_time.setText(time.substring(0,19));
         groupHolder.tv_content.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getContent());
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +172,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
 
         childHolder.tv_content.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().get(childPosition).getContent());
-
+        childHolder.tv_time.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().get(childPosition).getCreateDate().substring(0,19));
         return convertView;
     }
 
@@ -158,16 +195,22 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     }
 
     private class ChildHolder{
-        private TextView tv_name, tv_content;
+        private TextView tv_name, tv_content,tv_time;
         public ChildHolder(View view) {
             tv_name = (TextView) view.findViewById(R.id.reply_item_user);
             tv_content = (TextView) view.findViewById(R.id.reply_item_content);
+            tv_time = (TextView) view.findViewById(R.id.reply_item_time);
         }
     }
 
     public void addTheCommentData(CommentDetailBean commentDetailBean){
         if(commentDetailBean!=null){
             dynamicContent.getCommentDetailBeans().add(commentDetailBean);
+            int dynamicId = commentDetailBean.getDynamicId();
+            int userId = commentDetailBean.getCommentFromId();
+            String content = commentDetailBean.getContent();
+            String  contentTime = commentDetailBean.getCreateDate();
+            addComment(dynamicId,userId,content,contentTime);
             notifyDataSetChanged();
         }else {
             throw new IllegalArgumentException("评论数据为空!");
@@ -178,17 +221,20 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
         if(replyDetailBean!=null){
             Log.e(TAG, "addTheReplyData: >>>>该刷新回复列表了:"+replyDetailBean.toString() );
-            Log.e(TAG,"addTheReplyData:"+dynamicContent.getCommentDetailBeans().toString());
-
+            Log.e("向数据库插入回复数据",replyDetailBean.toString());
+            int commentId =Integer.parseInt(replyDetailBean.getCommentId());
+            int fromId = replyDetailBean.getFromId();
+            int toId = replyDetailBean.getToId();
+            String replyContent = replyDetailBean.getContent();
+            String replyTime = replyDetailBean.getCreateDate();
             if(dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList() != null ){
-                Log.e(TAG,"addTheReplyData:"+dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().toString()+"");
                 dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().add(replyDetailBean);
             }else {
                 List<ReplyDetailBean> replyList = new ArrayList<>();
                 replyList.add(replyDetailBean);
                 dynamicContent.getCommentDetailBeans().get(groupPosition).setReplyList(replyList);
-                Log.e(TAG,"addTheReplyData:"+dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().toString()+"");
             }
+            addReply(commentId,fromId,toId,replyContent,replyTime);
             notifyDataSetChanged();
         }else {
             throw new IllegalArgumentException("回复数据为空!");
@@ -206,7 +252,34 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
         notifyDataSetChanged();
     }
-
-
+    //向数据库中插入评论信息
+    private void addComment(int dynamicId, int userId, String content, String contentTime) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","addComment",
+                        "dynamicId="+dynamicId+"&userId="+userId+"&content="+content+"&contentTime="+contentTime);
+                Message message = new Message();
+                message.obj = result;
+                message.what=0;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
+    //向数据库中插入回复信息
+    private void addReply(int commentId, int fromId, int toId, String replyContent, String replyTime) {
+        Log.e("向数据库插入回复数据","run");
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","addReply",
+                        "commentId="+commentId+"&fromId="+fromId+"&toId="+toId+"&replyContent="+replyContent+"&replyTime="+replyTime);
+                Message message = new Message();
+                message.obj = result;
+                message.what=1;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
 
 }

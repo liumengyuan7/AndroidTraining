@@ -3,7 +3,9 @@ package com.example.smallpigeon.Community.Comment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.smallpigeon.Entity.CommentBean;
 import com.example.smallpigeon.Entity.CommentDetailBean;
 import com.example.smallpigeon.Entity.DynamicContent;
@@ -29,6 +32,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -45,79 +51,43 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
     private TextView detail_page_do_comment;
     private ImageView iv_collect;
     private boolean isCollect = false;
-
+    private DynamicContent dynamicContent;
     private CommentExpandAdapter adapter;
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
-    private String testJson = "{\n" +
-            "\t\"code\": 1000,\n" +
-            "\t\"message\": \"查看评论成功\",\n" +
-            "\t\"data\": {\n" +
-            "\t\t\"total\": 3,\n" +
-            "\t\t\"list\": [{\n" +
-            "\t\t\t\t\"id\": 42,\n" +
-            "\t\t\t\t\"nickName\": \"程序猿\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\"content\": \"时间是一切财富中最宝贵的财富。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"三分钟前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\t\"id\": 40,\n" +
-            "\t\t\t\t\t\"commentId\": \"42\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"一个小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"id\": 41,\n" +
-            "\t\t\t\t\"nickName\": \"设计狗\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\"content\": \"这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"一天前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\t\"commentId\": \"41\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"id\": 40,\n" +
-            "\t\t\t\t\"nickName\": \"产品喵\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\"content\": \"笨蛋自以为聪明，聪明人才知道自己是笨蛋。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 0,\n" +
-            "\t\t\t\t\"createDate\": \"三天前\",\n" +
-            "\t\t\t\t\"replyList\": []\n" +
-            "\t\t\t}\n" +
-            "\t\t]\n" +
-            "\t}\n" +
-            "}";
-
+    private String userNickname;
+    private String userLogo;
+    private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_detail);
 
         getViews();
-        commentsList = generateTestData();
+//        commentsList = generateTestData();
+        SharedPreferences pre = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        userNickname = pre.getString("user_nickname","");
+        userLogo = pre.getString("user_email","");
+        userId = Integer.parseInt(pre.getString("user_id",""));
         Intent intent = getIntent();
-        DynamicContent dynamicContent = (DynamicContent) intent.getSerializableExtra("dynamic");
+        dynamicContent = (DynamicContent) intent.getSerializableExtra("dynamic");
         System.out.println(dynamicContent.toString());
+        showUserImage(dynamicContent.getUserContent().getUserImage(),iv_icon);
 //        iv_icon.setImageResource(Integer.parseInt(dynamicContent.getUserContent().getUserImage()));
         tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
         tv_date.setText(dynamicContent.getDate());
+        device.setText(dynamicContent.getDevice());
         dynamic_item_txt.setText(dynamicContent.getContent());
+        //缓存图片
+        if(!"".equals(dynamicContent.getImg())) {
+            showDynamicImage(dynamicContent.getImg(), dynamic_item_img);
+        }
+        if(!"".equals(dynamicContent.getImg2())) {
+            showDynamicImage(dynamicContent.getImg2(), dynamic_item_img2);
+        }
+
+        commentsList = dynamicContent.getCommentDetailBeans();
 //        dynamic_item_img.setImageResource(Integer.parseInt(dynamicContent.getImg()));
 //        commentsList = dynamicContent.getCommentDetailBeans();
         dynamicContent.setCommentDetailBeans(commentsList);
@@ -139,14 +109,6 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
         iv_collect.setOnClickListener(this);
     }
 
-
-    private List<CommentDetailBean> generateTestData(){
-        Gson gson = new Gson();
-        commentBean = gson.fromJson(testJson, CommentBean.class);
-        commentsList = commentBean.getData().getList();
-        return commentsList;
-    }
-
     /**
      * 初始化评论和回复列表
      */
@@ -163,7 +125,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
                 boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+dynamicContent.getCommentDetailBeans().get(groupPosition).getId());
+                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+dynamicContent.getCommentDetailBeans().get(groupPosition).getCommentFromId());
 //                if(isExpanded){
 //                    expandableListView.collapseGroup(groupPosition);
 //                }else {
@@ -215,9 +177,15 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
 
                     //commentOnWork(commentContent);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean("小明", commentContent,"刚刚");
+                    CommentDetailBean detailBean = new CommentDetailBean();
+                    detailBean.setNickName(userNickname);
+                    detailBean.setContent(commentContent);
+                    detailBean.setCreateDate(new Timestamp(new Date().getTime()).toString());
+                    detailBean.setCommentFromId(userId);
+                    detailBean.setUserLogo(userLogo);
+                    detailBean.setDynamicId(dynamicContent.getDynamicId());
                     adapter.addTheCommentData(detailBean);
-                    Toast.makeText(DynamicDetailActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(DynamicDetailActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
                     Toast.makeText(DynamicDetailActivity.this,"评论内容不能为空",Toast.LENGTH_SHORT).show();
@@ -260,10 +228,16 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
                 String replyContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean("小红",replyContent);
+                    ReplyDetailBean detailBean = new ReplyDetailBean();
+                    detailBean.setNickName(userNickname);
+                    detailBean.setContent(replyContent);
+                    detailBean.setCreateDate(new Timestamp(new Date().getTime()).toString());
+                    detailBean.setCommentId(String.valueOf(commentsList.get(position).getId()));
+                    detailBean.setToId(commentsList.get(position).getCommentFromId());
+                    detailBean.setFromId(userId);
                     adapter.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
-                    Toast.makeText(DynamicDetailActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(DynamicDetailActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(DynamicDetailActivity.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
                 }
@@ -319,5 +293,23 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
                 }
                 break;
         }
+    }
+    /*
+    * 详情页显示动态图片
+    * */
+    //缓存动态图片
+    private void showDynamicImage(String imgName,ImageView imageView) {
+        String url = "http://"+this.getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/dynamic/"+imgName;
+        Glide.with(this).load(url).into(imageView);
+    }
+    /*
+    * 详情页显示动态用户头像
+    * */
+    //缓存头像图片
+    private void showUserImage(String imgName,ImageView imageView) {
+        String url = "http://"+this.getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/avatar/"+imgName+".jpg";
+        Glide.with(this).load(url).into(imageView);
     }
 }

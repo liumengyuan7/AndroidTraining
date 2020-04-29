@@ -11,16 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DynamicContent implements Serializable {
+    private int dynamicId;
     private UserContent userContent;
     private String date;
     private String device;
     private String content;
     private String img;
     private int zan_num;
+    private int forward_id;
+    private int comment_Num;
     private String img2;
     private List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
     public DynamicContent(){}
 
+    public int getDynamicId() {
+        return dynamicId;
+    }
+
+    public void setDynamicId(int dynamicId) {
+        this.dynamicId = dynamicId;
+    }
 
     public void setImg(String img) {
         this.img = img;
@@ -36,6 +46,14 @@ public class DynamicContent implements Serializable {
 
     public int getZan_num() {
         return zan_num;
+    }
+
+    public int getForward_id() {
+        return forward_id;
+    }
+
+    public void setForward_id(int forward_id) {
+        this.forward_id = forward_id;
     }
 
     public UserContent getUserContent() {
@@ -84,6 +102,14 @@ public class DynamicContent implements Serializable {
 
     public void setCommentDetailBeans(List<CommentDetailBean> commentDetailBeans) {
         this.commentDetailBeans = commentDetailBeans;
+    }
+
+    public int getComment_Num() {
+        return comment_Num;
+    }
+
+    public void setComment_Num(int comment_Num) {
+        this.comment_Num = comment_Num;
     }
 
     @Override

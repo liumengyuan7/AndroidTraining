@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.dao.ReplyMapper">
+    <select id="queryReplyByCommentId" resultType="com.entity.Reply">
+         select distinct r.comment_id commentId, r.from_id fromId, u.user_email fEmail,
+         u.user_nickname fNickname, r.reply_content replyContent,r.reply_time replyTime
+         from reply_msg r,comment c,user u
+         where r.to_id = c.user_id and r.from_id = u.id and r.comment_id=#{commentId}
+    </select>
+    <insert id="insertReply">
+        insert into reply_msg(comment_id, from_id, to_id, reply_content, reply_time)
+        values (#{commentId},#{fromId},#{toId},#{replyContent},#{replyTime})
+    </insert>
+</mapper>

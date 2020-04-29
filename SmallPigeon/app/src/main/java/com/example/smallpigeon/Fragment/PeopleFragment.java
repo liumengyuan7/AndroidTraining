@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,7 +35,9 @@ import android.widget.Toast;
 import com.example.smallpigeon.Adapter.PeopleAdapter;
 import com.example.smallpigeon.Community.Comment.DynamicDetailActivity;
 import com.example.smallpigeon.Community.ReleaseDynamic.ReleaseDynamic;
+import com.example.smallpigeon.Entity.CommentDetailBean;
 import com.example.smallpigeon.Entity.DynamicContent;
+import com.example.smallpigeon.Entity.ReplyDetailBean;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
@@ -83,22 +86,62 @@ public class PeopleFragment extends Fragment {
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0;i<jsonArray.length();i++){
                         JSONObject json = jsonArray.getJSONObject(i);
+                        Log.e("第"+i+"条动态",json.toString());
                         DynamicContent content = new DynamicContent();
+                        content.setDynamicId(json.getInt("id"));
                         UserContent userContent = new UserContent();
-                        userContent.setUserNickname(json.get("user_nickname").toString());
-                        userContent.setUserImage(json.getString("user_email"));
-                        String time = json.get("push_time").toString();
+                        userContent.setUserNickname(json.get("nickName").toString());
+                        userContent.setUserImage(json.getString("userEmail"));
+                        String time = json.get("pushTime").toString();
                         Date d = new Date(time);
                         SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
-                        content.setDate(sdf.format(d).toString());//时间转换
+                        content.setDate(sdf.format(d));//时间转换
                         content.setUserContent(userContent);
-                        content.setContent(json.get("push_content").toString());
-                        String [] imgs = json.getString("push_image").split(";");
+                        content.setDevice(Build.MODEL);
+                        content.setContent(json.get("pushContent").toString());
+                        String [] imgs = json.getString("pushImage").split(";");
                         content.setImg(imgs[0]);
                         if(imgs.length==2) {
                             content.setImg2(imgs[1]);
                         }
                         content.setDevice(Build.MODEL);
+                        content.setZan_num(json.getInt("zanNum"));
+                        content.setForward_id(json.getInt("forwardId"));
+                        JSONArray jsonArrayComment = json.getJSONArray("comments");
+                        Log.e("comments",jsonArrayComment.toString());
+                        List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
+                        for (int j=0;j<jsonArrayComment.length();j++){
+                            JSONObject jsonComment = jsonArrayComment.getJSONObject(j);
+                            Log.e("该动态下第"+j+"条评论",jsonComment.toString());
+                            String nickName = jsonComment.getString("commentFromNickname");
+                            String userLogo = jsonComment.getString("commentFromEmail");
+                            String cContent = jsonComment.getString("commentFromContent");
+                            String createTime = jsonComment.getString("commentFromTime");
+                            int commentId = jsonComment.getInt("id");
+                            int commentFromId = jsonComment.getInt("commenmtFromId");
+                            int dynamicId = jsonComment.getInt("dynamicId");
+                            String createT = createTime.substring(0,19);
+                            CommentDetailBean commentDetailBean = new CommentDetailBean(nickName,cContent,createTime);
+                            commentDetailBean.setId(commentId);
+                            commentDetailBean.setCommentFromId(commentFromId);
+                            commentDetailBean.setDynamicId(dynamicId);
+                            commentDetailBean.setCreateDate(createT);
+                            commentDetailBean.setUserLogo(userLogo);
+                            JSONArray jsonArrayCommentReply = jsonComment.getJSONArray("replies");
+                            List<ReplyDetailBean> replyDetailBeans = new ArrayList<>();
+                            for (int k=0;k<jsonArrayCommentReply.length();k++) {
+                                JSONObject jsonCommentReply = jsonArrayCommentReply.getJSONObject(k);
+                                Log.e("该评论下的回复",jsonArrayCommentReply.toString());
+                                ReplyDetailBean replyDetailBean = new ReplyDetailBean(jsonCommentReply.getString("fNickname"),jsonCommentReply.getString("replyContent"));
+                                replyDetailBean.setCreateDate(jsonCommentReply.getString("replyTime").substring(0,19));
+                                replyDetailBean.setCommentId(jsonCommentReply.getString("commentId"));
+                                replyDetailBeans.add(replyDetailBean);
+                            }
+                            commentDetailBean.setReplyList(replyDetailBeans);
+                            commentDetailBeans.add(commentDetailBean);
+                        }
+                        content.setComment_Num(jsonArrayComment.length());
+                        content.setCommentDetailBeans(commentDetailBeans);
                         list.add(content);
                         peopleAdapter.notifyDataSetChanged();
                     }
@@ -122,17 +165,17 @@ public class PeopleFragment extends Fragment {
         registerListener();
 
         //显示后台服务器存储的所有发布的动态
-//        selectAllDynamic();
+        selectAllDynamic();
 
         //前端测试用
-        DynamicContent content = new DynamicContent();
-        UserContent userContent = new UserContent();
-        userContent.setUserNickname("啦啦啦");
-        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-        content.setUserContent(userContent);
-        content.setContent("今日跑步分享");
-        content.setDevice(Build.MODEL);
-        list.add(content);
+//        DynamicContent content = new DynamicContent();
+//        UserContent userContent = new UserContent();
+//        userContent.setUserNickname("啦啦啦");
+//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+//        content.setUserContent(userContent);
+//        content.setContent("今日跑步分享");
+//        content.setDevice(Build.MODEL);
+//        list.add(content);
 
         peopleAdapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
         dynamic_list.setAdapter(peopleAdapter);
@@ -151,7 +194,7 @@ public class PeopleFragment extends Fragment {
                         break;
                     case R.id.ll_forward:
                         tv_forwardNum = view.findViewById( R.id.tv_forwardNum );
-                        showPopupWindow("forward");
+                        showPopupWindow(index,"forward");
                         break;
                 }
             }
@@ -160,7 +203,7 @@ public class PeopleFragment extends Fragment {
     }
 
     @SuppressLint("WrongConstant")
-    private void showPopupWindow(String type) {
+    private void showPopupWindow(int index,String type) {
 //        if (loginOrNot()){
         if (popupView == null){
             //加载评论框的资源文件
@@ -240,7 +283,7 @@ public class PeopleFragment extends Fragment {
                     et_discuss.setText( null );
                     if (type == "comment"){
                         //todo：从数据库获取数据并更改评论数
-                        tv_commentNum.setText( "10" );
+                        tv_commentNum.setText("10");
                     } else if (type == "forward"){
                         //todo：从数据库获取数据并更改转发数
                         tv_forwardNum.setText( "9" );
