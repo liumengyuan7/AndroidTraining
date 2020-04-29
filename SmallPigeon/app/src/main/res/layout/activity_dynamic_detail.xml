@@ -18,13 +18,23 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_vertical">
-                <ImageView
+               <!-- <ImageView
                     android:id="@+id/iv_icon"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/abc_vector_test"/>
+                    android:src="@drawable/abc_vector_test"/>-->
+                <com.example.smallpigeon.RoundImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/zh"
+                    imagecontrol:border_inside_color="#259B24"
+                    imagecontrol:border_outside_color="#ffffff"
+                    imagecontrol:border_thickness="1dp"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

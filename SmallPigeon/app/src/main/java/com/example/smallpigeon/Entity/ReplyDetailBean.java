@@ -6,14 +6,36 @@ public class ReplyDetailBean implements Serializable {
     private String nickName;
     private String userLogo;
     private int id;
+    private int fromId;
+    private int toId;
     private String commentId;
     private String content;
     private String status;
     private String createDate;
 
+    public ReplyDetailBean() {
+
+    }
+
     public ReplyDetailBean(String nickName, String content) {
         this.nickName = nickName;
         this.content = content;
+    }
+
+    public int getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(int fromId) {
+        this.fromId = fromId;
+    }
+
+    public int getToId() {
+        return toId;
+    }
+
+    public void setToId(int toId) {
+        this.toId = toId;
     }
 
     public void setNickName(String nickName) {
@@ -71,6 +93,8 @@ public class ReplyDetailBean implements Serializable {
                 "nickName='" + nickName + '\'' +
                 ", userLogo='" + userLogo + '\'' +
                 ", id=" + id +
+                ", fromId=" + fromId +
+                ", toId=" + toId +
                 ", commentId='" + commentId + '\'' +
                 ", content='" + content + '\'' +
                 ", status='" + status + '\'' +

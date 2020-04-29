@@ -187,6 +187,16 @@ public class UserController {
 		return null;
 	}
 
+	//更新经纬度
+	@ResponseBody
+	@RequestMapping("updateUserLocation")
+	public String updateUserLocation(@RequestParam("location") String location,
+									 @RequestParam("userId") String userId){
+		int result = this.userService.updateUserLocation(location, userId);
+		if(result>0) return "true";
+		else return "false";
+	}
+
 	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，
 	//并将matcher与对应的人的matcher标为未匹配状态
 	@ResponseBody

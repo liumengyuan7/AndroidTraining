@@ -3,18 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.dao.CommentMapper">
-    <resultMap id="dynamicMap" type="com.entity.Comment">
-        <id property="id" column="id" />
-        <result property="userId" column="user_id" />
-        <result property="content" column="comment_content" />
-    </resultMap>
+   <select id="selectCommnetByDynamicId" resultType="com.entity.Comment">
+        select  c.id,c.dynamics_id dynamicId, c.user_id commenmtFromId, u.user_nickname commentFromNickname,
+        u.user_email commentFromEmail, c.comment_content commentFromContent,c.comment_time commentFromTime
+        from comment c,user u
+        where c.dynamics_id = #{dynamicId} and c.user_id = u.id
+    </select>
     <insert id="insertComment">
-        insert into comment(dynamics_id, user_id, comment_content)
-        values(#{dynamicId},#{userId},#{content})
+        insert into comment(dynamics_id, user_id, comment_content, comment_time)
+        value (#{dynamicId},#{userId},#{content},#{contentTime})
     </insert>
-  <!--  <select id="selectCommnetByDynamicId" resultType="com.entity.Comment">
-        select  c.user_id,c.comment_content
-        from comment c
-        where c.dynamics_id = #{dynamicId}
-    </select>-->
 </mapper>

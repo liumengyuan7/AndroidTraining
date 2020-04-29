@@ -36,7 +36,7 @@
         android:layout_gravity="center"
         android:background="@drawable/circular"
         android:backgroundTint="#259B24"
-        android:text="重新匹配好友"
+        android:text="匹配好友"
         android:textSize="18sp"
         android:textColor="#FFFFFF"/>
 

@@ -196,6 +196,17 @@ public class UserService {
 		return new Gson().toJson(this.userMapper.selectAllUserForPoints());
 	}
 
+	//更新用户的位置信息
+	public int updateUserLocation(String location,String userId){
+		return this.userMapper.updateUserLocation(location, userId);
+	}
+
+	//根据经纬度的大小获取周围的人的信息
+	public List<Map> selectNearbyUserByLocation(double minLongitude,double maxLongitude,double minLatitude,double maxLatitude){
+		return this.userMapper.selectNearbyUserByLocation(minLongitude, maxLongitude, minLatitude, maxLatitude);
+	}
+
+
 	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，
 	//并将matcher与对应的人的matcher标为未匹配状态
 	public String randomMatchFirst(String id,HttpServletResponse response) throws IOException {

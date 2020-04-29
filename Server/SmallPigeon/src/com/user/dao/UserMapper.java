@@ -32,6 +32,9 @@ public interface UserMapper {
 
     public List<Map> selectUserByMatcherAndId(@Param("matcher") String matcher, @Param("id") String id);
 
+    public List<Map> selectNearbyUserByLocation(@Param("minLongitude") double minLongitude, @Param("maxLongitude") double maxLongitude,
+                                                @Param("minLatitude") double minLatitude, @Param("maxLatitude") double maxLatitude);
+
     public int insertUserInfo(User user);
 
     public int updateUserPasswordById(@Param("userId") String userId, @Param("userPassword") String userPassword);
@@ -43,5 +46,7 @@ public interface UserMapper {
     public int updateUserMatcherStateById(@Param("id") String id, @Param("state") String state);
 
     public int updateUserPointsById(@Param("userId") String userId, @Param("point") int point);
+
+    public int updateUserLocation(@Param("location") String location,@Param("userId") String userId);
 
 }

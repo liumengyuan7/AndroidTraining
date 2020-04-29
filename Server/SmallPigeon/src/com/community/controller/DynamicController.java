@@ -70,7 +70,7 @@ public class DynamicController {
     @RequestMapping(value = "getAllDynamic",produces = "text/html;charset=UTF-8")
     public String getAllDynamic(){
         String result = this.dynamicService.queryAllDynamic();
-        String s = this.dynamicService.queryAllDynamicAndComment();
+        String s = this.dynamicService.queryAllDynamic();
         System.out.println(s);
         if(result == null || result.equals("")){
 			return "false";
@@ -78,7 +78,7 @@ public class DynamicController {
 			return result;
 		}
     }
-    //得到所有动态 带评论内容
+  /*  //得到所有动态 带评论内容
     @ResponseBody
     @RequestMapping(value = "getAllDynamicAndComment",produces = "text/html;charset=UTF-8")
     public String queryAllDynamicAndComment(){
@@ -88,5 +88,68 @@ public class DynamicController {
 		}else{
 			return result;
 		}
+    }*/
+  /*
+   * @Description 给动态添加评论信息
+   * @Auther 刘梦圆
+   * @Date 10:42 2020/04/28
+   * @Param
+   * @return
+   */
+   @ResponseBody
+   @RequestMapping("/addComment")
+   public String addComment(@RequestParam("dynamicId") String dynamicId,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("content") String content,@RequestParam("contentTime") String contentTime) throws Exception {
+       System.out.println(userId + dynamicId + content + contentTime);
+       String result = this.dynamicService.addComment(dynamicId, userId, content, contentTime);
+       return result;
+   }
+   /*
+    * @Description 对评论进行回复
+    * @Auther 刘梦圆
+    * @Date 16:13 2020/04/28
+    * @Param
+    * @return
+    */
+   @ResponseBody
+   @RequestMapping("/addReply")
+   public String addReply(@RequestParam("commentId") String commentId,
+                             @RequestParam("fromId") String fromId,
+                             @RequestParam("toId") String toId,
+                             @RequestParam("replyContent") String replyContent,@RequestParam("replyTime") String replyTime) throws Exception {
+       System.out.println(commentId + fromId + toId + replyContent+replyTime);
+       String result = this.dynamicService.addReply(commentId, fromId, toId, replyContent,replyTime);
+       return result;
+   }
+    /*
+     * @Description  对动态进行点赞
+     * @Auther 刘梦圆
+     * @Date 9:56 2020/04/29
+     * @Param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addZanNum")
+    public  String addZanNum(@RequestParam("dynamicId") String dynamicId,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("zanNumAfter") String zanNumAfter){
+        String result = this.dynamicService.addZan(dynamicId,userId,zanNumAfter);
+        return result;
+    }
+    /*
+     * @Description  对动态取消点赞
+     * @Auther 刘梦圆
+     * @Date 11:08 2020/04/29
+     * @Param
+     * @return
+     */
+     @ResponseBody
+     @RequestMapping("/decZanNum")
+    public  String decZanNum(@RequestParam("dynamicId") String dynamicId,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("zanNumAfter") String zanNumAfter){
+        String result = this.dynamicService.decZan(dynamicId,userId,zanNumAfter);
+        return result;
     }
 }
