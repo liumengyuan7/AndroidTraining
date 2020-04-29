@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".Fragment.MyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="horizontal"
         android:gravity="right"
@@ -30,9 +29,9 @@
             android:id="@+id/my_Settings"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/setting"
-            />
+            android:src="@drawable/setting" />
     </LinearLayout>
+
     <LinearLayout
         android:gravity="center"
         android:orientation="vertical"
@@ -42,8 +41,8 @@
 
         <com.example.smallpigeon.RoundImageView
             android:id="@+id/myAvatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/woman"
             imagecontrol:border_inside_color="#259B24"
             imagecontrol:border_outside_color="#ffffff"
@@ -54,8 +53,8 @@
             android:layout_height="wrap_content"
             android:background="#00000000"
             android:text="登录/注册"
-            android:id="@+id/LoginOrRegister"
-            />
+            android:textSize="18sp"
+            android:id="@+id/LoginOrRegister"/>
 
     </LinearLayout>
     <LinearLayout
@@ -73,8 +72,7 @@
                 android:layout_gravity="center"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/rz"
-                />
+                android:src="@drawable/rz" />
             <TextView
                 android:layout_width="0dp"
                 android:paddingLeft="5dp"
