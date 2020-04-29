@@ -10,4 +10,5 @@ import java.util.List;
 public interface DynamicMapper {
     public int insertDynamic(@Param("userId") String userId, @Param("pushTime") Date pushTime, @Param("pushContent") String pushContent, @Param("pushImg") String pushImg);
     public List<Dynamics> queryAllDynamic();
+    public int updateZanNum(@Param("dynamicId") String dynamicId,@Param("zanNum") String zanNum);
 }

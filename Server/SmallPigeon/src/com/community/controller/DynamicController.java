@@ -122,4 +122,34 @@ public class DynamicController {
        String result = this.dynamicService.addReply(commentId, fromId, toId, replyContent,replyTime);
        return result;
    }
+    /*
+     * @Description  对动态进行点赞
+     * @Auther 刘梦圆
+     * @Date 9:56 2020/04/29
+     * @Param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addZanNum")
+    public  String addZanNum(@RequestParam("dynamicId") String dynamicId,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("zanNumAfter") String zanNumAfter){
+        String result = this.dynamicService.addZan(dynamicId,userId,zanNumAfter);
+        return result;
+    }
+    /*
+     * @Description  对动态取消点赞
+     * @Auther 刘梦圆
+     * @Date 11:08 2020/04/29
+     * @Param
+     * @return
+     */
+     @ResponseBody
+     @RequestMapping("/decZanNum")
+    public  String decZanNum(@RequestParam("dynamicId") String dynamicId,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("zanNumAfter") String zanNumAfter){
+        String result = this.dynamicService.decZan(dynamicId,userId,zanNumAfter);
+        return result;
+    }
 }

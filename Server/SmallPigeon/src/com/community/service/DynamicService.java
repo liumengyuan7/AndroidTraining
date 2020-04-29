@@ -3,11 +3,13 @@ package com.community.service;
 import com.community.dao.CommentMapper;
 import com.community.dao.DynamicMapper;
 import com.community.dao.ReplyMapper;
+import com.community.dao.ZanNumMapper;
 import com.entity.Comment;
 import com.entity.Dynamics;
 import com.entity.Reply;
 import com.google.gson.Gson;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -31,6 +33,8 @@ public class DynamicService {
     private CommentMapper commentMapper;
     @Resource
     private ReplyMapper replyMapper;
+    @Resource
+    private ZanNumMapper zanNumMapper;
 
     public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
@@ -82,6 +86,28 @@ public class DynamicService {
         if(result>0){
             return "true";
         }else{
+            return "false";
+        }
+    }
+    //点赞
+    public String addZan(String dynamicId, String userId, String zanNumAfter){
+        int n =this.zanNumMapper.insertZan(dynamicId,userId);
+        if(n>0){
+            int m =this.dynamicMapper.updateZanNum(dynamicId,zanNumAfter);
+            if(m>0) return "true";
+            else return "fasle";
+        }else {
+            return "false";
+        }
+    }
+    //取消点赞
+    public String decZan(String dynamicId, String userId, String zanNumAfter){
+        int n =this.zanNumMapper.deleteZan(dynamicId,userId);
+        if(n>0){
+            int m =this.dynamicMapper.updateZanNum(dynamicId,zanNumAfter);
+            if(m>0) return "true";
+            else return "fasle";
+        }else {
             return "false";
         }
     }

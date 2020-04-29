@@ -12,6 +12,5 @@
   </head>
   <body>
   $END$
- <%-- <a href="/smallpigeon/dynamic/getAllDynamic">dianji</a>--%>
   </body>
 </html>

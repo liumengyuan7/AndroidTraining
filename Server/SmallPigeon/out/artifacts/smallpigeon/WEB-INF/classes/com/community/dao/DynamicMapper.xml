@@ -17,4 +17,9 @@
         from dynamics d,comment c
         where c.dynamics_id = d.id
     </select>-->
+    <update id="updateZanNum">
+        update dynamics
+        set zan_num = #{zanNum}
+        where id = #{dynamicId}
+    </update>
 </mapper>
