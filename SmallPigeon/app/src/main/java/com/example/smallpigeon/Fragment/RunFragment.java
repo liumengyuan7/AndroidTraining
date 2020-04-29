@@ -21,19 +21,8 @@ import android.widget.Toast;
 
 import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
-import com.example.smallpigeon.Run.MachingActivity;
+import com.example.smallpigeon.Run.MatchingActivity;
 import com.example.smallpigeon.Utils;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class RunFragment extends Fragment {
@@ -101,7 +90,7 @@ public class RunFragment extends Fragment {
                 case R.id.MatchingButton:
                     //匹配模式
                     if(loginOrNot()){
-                        Intent intentM = new Intent( getContext(), MachingActivity.class );
+                        Intent intentM = new Intent( getContext(), MatchingActivity.class );
                         startActivity( intentM );
                     }else{
                         Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();

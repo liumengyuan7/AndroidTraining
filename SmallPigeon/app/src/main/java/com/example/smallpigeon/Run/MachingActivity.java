@@ -90,13 +90,12 @@ public class MachingActivity extends AppCompatActivity {
                     information = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0;i<jsonArray.length();i++){
-                        JSONObject json1 = jsonArray.getJSONObject(i);
-                        JSONObject json2 = json1.getJSONObject("attrs");
+                        JSONObject json = jsonArray.getJSONObject(i);
                         Map<String, String> item = new HashMap<>();
-                        item.put("plan_time",json2.getString("plan_time"));
-                        item.put("plan_address",json2.getString("plan_address"));
-                        item.put("plan_email",json2.getString("plan_email"));
-                        item.put("plan_nickname",json2.getString("plan_nickname"));
+                        item.put("plan_time",json.getString("plan_time"));
+                        item.put("plan_address",json.getString("plan_address"));
+                        item.put("plan_email",json.getString("plan_email"));
+                        item.put("plan_nickname",json.getString("plan_nickname"));
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.lv_machingTask);
@@ -170,10 +169,11 @@ public class MachingActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.btn_rematch:
-                    //popupwindow的显示
-                    appearPopupWindow();
-                    //重新匹配按钮
-                    randomMatch();
+//                    //popupwindow的显示
+//                    appearPopupWindow();
+//                    //重新匹配按钮
+//                    randomMatch();
+
                     break;
                 case R.id.maching_back:
                     //返回按钮
@@ -181,6 +181,21 @@ public class MachingActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    //获取用户未完成的计划
+    private void getUserUnfinishedPlan(){
+        new Thread(){
+            @Override
+            public void run() {
+                SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                String userId = pre.getString("user_id","");
+                String result=new Utils().getConnectionResult("plan","getUnfinishedPlan","userId="+userId);
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 
     //随机匹配
@@ -228,21 +243,6 @@ public class MachingActivity extends AppCompatActivity {
                         }
                     }
                 }
-            }
-        }.start();
-    }
-
-    //获取用户未完成的计划
-    private void getUserUnfinishedPlan(){
-        new Thread(){
-            @Override
-            public void run() {
-                SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                String userId = pre.getString("user_id","");
-                String result=new Utils().getConnectionResult("plan","getUnfinishedPlan","userId="+userId);
-                Message message = new Message();
-                message.obj = result;
-                handler.sendMessage(message);
             }
         }.start();
     }

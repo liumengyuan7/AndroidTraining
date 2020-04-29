@@ -3,42 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.smallpigeon">
     <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入对象存储BOS数据 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- Android O之后开启前台服务需要申请该权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Android Q之后，后台定位需要申请该权限 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 以下不是鹰眼SDK需要的基础权限，可选 -->
-    <!-- 用于加快GPS首次定位，可选权限，非必须 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 用于Android M及以上系统，申请加入忽略电池优化白名单，可选权限，非必须 -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission
-        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission
-        android:name="android.permission.WRITE_MEDIA_STORAGE"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Required -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" /> -->
-    <!-- <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER" />
-
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-
-    <uses-permission android:name="com.miui.whetstone.permission.ACCESS_PROVIDER" />
-
     <application
         android:name=".TrackApplication"
         android:allowBackup="true"
@@ -49,7 +13,8 @@
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".Community.Comment.DynamicDetailActivity"></activity>
+        <activity android:name=".Run.MatchingActivity"></activity>
+        <activity android:name=".Community.Comment.DynamicDetailActivity" />
         <activity android:name=".Community.ReleaseDynamic.ReleaseDynamic" />
         <activity android:name=".Run.FinishRunActivity" />
         <activity android:name=".My.MyPlan" />
@@ -89,21 +54,9 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="tGSM2HnpdI65l0aTDEaUpn81WzDUtvOo" />
 
-        <service
-            android:name="com.baidu.trace.LBSTraceService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":remote" /> <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1136191202113312#smallpigeon" /> <!-- 声明SDK所需的service SDK核心功能 -->
-        <service
-            android:name="com.hyphenate.chat.EMChatService"
-            android:exported="true" />
-        <service
-            android:name="com.hyphenate.chat.EMJobService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 声明SDK所需的receiver -->
+            android:value="1136191202113312#smallpigeon" /> <!-- 设置环信应用的AppKey -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -115,7 +68,55 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
-    </application>
+        </receiver> <!-- 声明SDK所需的service SDK核心功能 -->
+        <service
+            android:name="com.baidu.trace.LBSTraceService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" /> <!-- 声明SDK所需的receiver -->
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+    </application> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入对象存储BOS数据 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Android O之后开启前台服务需要申请该权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Android Q之后，后台定位需要申请该权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 以下不是鹰眼SDK需要的基础权限，可选 -->
+    <!-- 用于加快GPS首次定位，可选权限，非必须 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于Android M及以上系统，申请加入忽略电池优化白名单，可选权限，非必须 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> <!-- Required -->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.WRITE_MEDIA_STORAGE"
+        tools:ignore="ProtectedPermissions" /> <!-- <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
+    <uses-permission android:name="com.miui.whetstone.permission.ACCESS_PROVIDER" />
 
 </manifest>
