@@ -31,7 +31,7 @@
             <a href="forgot.jsp" style="float:right">
                 Forgot Password?
             </a>
-            <input name="password" id="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <input name="password" id="password"  placeholder="密码"  type="password" class="layui-input" required >
             <hr class="hr15">
             <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
             <hr class="hr20" >

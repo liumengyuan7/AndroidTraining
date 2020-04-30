@@ -25,6 +25,7 @@
     }
     table,table tr th, table tr td {border: 1px solid black;}
 </style>
+</head>
 <body>
      <h2 style="text-align: center;color: #009f95">table_user</h2>
      <button onclick="window.location.href='${ctx}/user/addUsers'" style="background-color: lightblue;height: 30px;width:100px;border-radius: 236px 236px 236px 236px">
@@ -38,28 +39,31 @@
                  #
                </th>
                <th>
-                 user_nickname
+                 昵称
                </th>
               <th>
-                user_sex
+                性别
               </th>
               <th>
-                user_email
+                邮箱
               </th>
               <th>
-                user_register_time
+                注册时间
               </th>
               <th>
-                user_sno
+                学号
               </th>
               <th>
-                user_points
+                积分
               </th>
               <th>
-                is_accreditation
+                  是否匹配
               </th>
+                <th>
+                    是否达到标准
+                </th>
               <th>
-                operate
+                操作
               </th>
             </tr>
          </thead>
@@ -87,6 +91,9 @@
          <td>
              ${user.userPoints}
          </td>
+           <td>
+               ${user.matcher}
+           </td>
          <td>
              ${user.isAcc}
          </td>

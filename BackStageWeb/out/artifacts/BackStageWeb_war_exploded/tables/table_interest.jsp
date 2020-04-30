@@ -45,34 +45,34 @@
             #
         </th>
         <th>
-            user_id
+            用户ID
         </th>
         <th>
-            outdoor
+            户外
         </th>
         <th>
-            music
+            音乐
         </th>
         <th>
-            film
+            电影
         </th>
         <th>
-            society
+            社会活动
         </th>
         <th>
-            delicacy
+            美食
         </th>
         <th>
-            science
+            科学活动
         </th>
         <th>
-            star
+            追星
         </th>
         <th>
-            comic
+            喜剧
         </th>
         <th>
-            operate
+            操作
         </th>
     </tr>
     </thead>

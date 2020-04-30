@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smallpigeon.dynamics.dao.DynamicsMapper">
+    <resultMap id="dynamicsMap" type="Dynamics">
+        <id property="id" column="id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="pushTime" column="push_time"></result>
+        <result property="pushContent" column="push_content"></result>
+        <result property="pushImage" column="push_image"></result>
+        <result property="zanNum" column="zan_num"></result>
+        <result property="forwardId" column="forward_id"></result>
+    </resultMap>
+    <select id="getAllDynamics" resultMap="dynamicsMap">
+        select * from dynamics
+    </select>
+    <insert id="addDynamics" parameterType="Dynamics">
+        insert into dynamics (id,user_id,push_time,push_content,push_image,zan_num,forward_id) values (#{id},#{userId},#{pushTime},#{pushContent},#{pushImage},#{zanNum},#{forwardId});
+    </insert>
+    <delete id="deleteDynamics">
+        delete from dynamics where id=#{id}
+    </delete>
+    <select id="getDynamics" resultMap="dynamicsMap">
+        select * from dynamics where id=#{id}
+    </select>
+    <update id="updateDynamics" parameterType="Dynamics">
+        update dynamics set user_id=#{userId},push_time=#{pushTime},push_content=#{pushContent},push_image=#{pushImage},zan_num=#{zanNum},forward_id=#{forwardId}
+        where id=#{id}
+    </update>
+</mapper>

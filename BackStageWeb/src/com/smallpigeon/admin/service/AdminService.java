@@ -6,6 +6,8 @@ import com.smallpigeon.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * @className AdminService
@@ -22,5 +24,8 @@ public class AdminService {
     }
     public int insertUser(String nickName,String email,String password){
         return  this.adminMapper.insertUser(nickName,email,password);
+    }
+    public List<Admin> getAllAdmin(){
+        return this.adminMapper.getAllAdmin();
     }
 }

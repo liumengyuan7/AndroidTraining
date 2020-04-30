@@ -5,7 +5,7 @@
          version="4.0">
  	<display-name>backstage_smallpigeon</display-name>
 	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>choose.jsp</welcome-file>
 	</welcome-file-list>
 	<context-param>
   		<param-name>contextConfigLocation</param-name>

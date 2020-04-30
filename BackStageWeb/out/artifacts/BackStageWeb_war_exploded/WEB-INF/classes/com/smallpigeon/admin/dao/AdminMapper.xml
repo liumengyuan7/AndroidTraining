@@ -12,5 +12,7 @@
   	insert into admin(nickName,email,password)
   	values(#{nickName},#{email},#{password})
   </insert>
-
+    <select id="getAllAdmin" resultType="Admin">
+        select * from admin
+    </select>
 </mapper>

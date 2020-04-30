@@ -31,7 +31,7 @@
 			<hr class="hr15">
 			<input name="password" id="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
 			<hr class="hr15">
-			<input type="checkbox" name="aggree" value="1"> I agree to the Terms and Conditions
+			<input type="checkbox" name="agree" value="1"> I agree to the Terms and Conditions
 			<hr class="hr15">
 			<input value="register" lay-submit lay-filter="register" style="width:100%;" type="submit">
 			<hr class="hr20" >

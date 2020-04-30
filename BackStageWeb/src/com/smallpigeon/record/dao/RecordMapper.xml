@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smallpigeon.record.dao.RecordMapper">
+    <resultMap id="recordMap" type="Record">
+        <id property="id" column="id"></id>
+        <result property="user_id" column="user_id"></result>
+        <result property="recordTime" column="record_time"></result>
+        <result property="recordDistance" column="record_distance"></result>
+        <result property="recordSpeed" column="record_speed"></result>
+        <result property="recordDate" column="record_date"></result>
+        <result property="recordPoints" column="record_points"></result>
+    </resultMap>
+    <select id="getAllRecords" resultMap="recordMap">
+        select * from record
+    </select>
+    <insert id="addRecord" parameterType="Record">
+        insert into record(user_id,record_time,record_distance,record_speed,record_date,record_points) values (#{user_id},#{recordTime},#{recordDistance},#{recordSpeed},#{recordDate},#{recordPoints})
+    </insert>
+    <delete id="deleteRecord">
+        delete from record where id=#{id}
+    </delete>
+    <select id="getRecord" resultMap="recordMap">
+        select * from record where id=#{id}
+    </select>
+    <update id="updateRecord">
+        update record set user_id=#{user_id},record_time=#{recordTime},record_distance=#{recordDistance},record_speed=#{recordSpeed},record_date=#{recordDate},record_points=#{recordPoints}
+        where id=#{id}
+    </update>
+</mapper>

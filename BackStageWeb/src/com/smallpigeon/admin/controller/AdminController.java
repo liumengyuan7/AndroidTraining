@@ -5,6 +5,7 @@ import com.smallpigeon.admin.service.AdminService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,5 +42,15 @@ public class AdminController {
 		String password = request.getParameter("password");
 		this.adminService.insertUser(nickName,email,password);
 		return "login";
+	}
+	@RequestMapping("/getAll")
+	public String getAllAdmins(Model model){
+		try {
+			model.addAttribute("admin", this.adminService.getAllAdmin());
+			return "/tables/table_admin";
+		}catch(Exception e){
+			e.printStackTrace();
+			return "/welcome";
+		}
 	}
 }

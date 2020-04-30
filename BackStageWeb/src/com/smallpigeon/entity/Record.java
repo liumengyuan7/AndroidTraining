@@ -8,10 +8,11 @@ import java.util.Date;
  * @className Record
  * @auther 吴东枚
  * @description 记录信息
- * @date 2020/04/18 12:58
+ * @date 2020/04/27 12:58
  */
 public class Record {
     private Integer id;
+    private Integer user_id;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date recordTime;
     private float recordDistance;
@@ -26,6 +27,14 @@ public class Record {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public Date getRecordTime() {

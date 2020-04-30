@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smallpigeon.plan.dao.PlanMapper">
+    <resultMap id="planMap" type="Plan">
+        <id property="id" column="id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="companionId" column="companion_id"></result>
+        <result property="planTime" column="plan_time"></result>
+        <result property="planAddress" column="plan_address"></result>
+        <result property="planStatus" column="plan_status"></result>
+    </resultMap>
+    <select id="getAllPlans" resultMap="planMap">
+        select * from plan;
+    </select>
+    <insert id="addPlan" parameterType="Plan">
+        insert into plan(user_id,companion_id,plan_time,plan_address,plan_status) values (#{userId},#{companionId},#{planTime},#{planAddress},#{planStatus})
+    </insert>
+    <delete id="deletePlan">
+        delete from plan where id=#{id}
+    </delete>
+    <select id="getPlan" resultMap="planMap">
+        select * from plan where id=#{id}
+    </select>
+    <update id="updatePlan">
+        update plan set user_id=#{userId},companion_id=#{companionId},plan_time=#{planTime},plan_address=#{planAddress},plan_status=#{planStatus}
+        where id=#{id}
+    </update>
+</mapper>

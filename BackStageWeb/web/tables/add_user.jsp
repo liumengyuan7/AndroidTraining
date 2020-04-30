@@ -12,7 +12,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <title>SmallPigeon Admin</title>
+    <title>SmallPigeon User</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -49,7 +49,7 @@
             <hr class="hr15">
             <input name="userPoints" id="userPoints" placeholder="用户积分"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
-            <input name="matcher" id="matcher" lay-verify="required" placeholder="匹配人姓名"  type="text" class="layui-input">
+            <input name="matcher" id="matcher" lay-verify="required" placeholder="是否匹配"  type="text" class="layui-input">
             <hr class="hr15">
             <input name="isAcc" id="isAcc" lay-verify="required" placeholder="是否达到标准（没有达到0，达到标准1）"  type="text" class="layui-input">
             <hr class="hr15">

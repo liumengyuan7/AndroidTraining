@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smallpigeon.friend.dao.FriendMapper">
+    <resultMap id="friendMap" type="Friend">
+        <id property="id" column="id"></id>
+        <result property="myId" column="my_id"></result>
+        <result property="friendId" column="friend_id"></result>
+    </resultMap>
+    <select id="getAllFriends" resultMap="friendMap">
+        select * from friend
+    </select>
+    <insert id="addFriend" parameterType="Friend">
+        insert into friend (my_id,friend_id) values (#{myId},#{friendId});
+    </insert>
+    <delete id="deleteFriend">
+        delete from friend where id=#{id}
+    </delete>
+    <select id="getFriend" resultMap="friendMap">
+        select * from friend where id=#{id}
+    </select>
+    <update id="updateFriend" parameterType="Friend">
+        update friend set my_id=#{myId},friend_id=#{friendId} where id=#{id}
+    </update>
+</mapper>
