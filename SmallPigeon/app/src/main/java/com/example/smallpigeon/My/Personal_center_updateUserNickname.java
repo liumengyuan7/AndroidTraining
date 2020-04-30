@@ -31,16 +31,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Personal_center_updateUserNickname extends AppCompatActivity {
+
     private EditText edtNickname;
     private ImageView personal_center_updateNickname_back;
-    private ImageView Personal_center_btnSaveNickname;
-    private CustomeClickListener listener;
+    private ImageView personal_center_btnSaveNickname;
+    private CustomClickListener listener;
+
     private Handler handleNickname = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
-                Personal_center_btnSaveNickname.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                personal_center_btnSaveNickname.setImageDrawable(getResources().
+                        getDrawable(R.drawable.wancheng));
                 Toast.makeText(getApplicationContext(),"修改成功！",Toast.LENGTH_SHORT).show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 SharedPreferences.Editor editor = pre.edit();
@@ -57,16 +60,15 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_center_update_user_nickname);
+
         setStatusBar();
         personal_center_updateNickname_back=findViewById(R.id.personal_center_updateNickname_back);
         edtNickname=findViewById(R.id.edit_Nickname);
-        Personal_center_btnSaveNickname=findViewById(R.id.personal_center_btnSaveNickname);
+        personal_center_btnSaveNickname=findViewById(R.id.personal_center_btnSaveNickname);
 
-        listener=new CustomeClickListener();
+        listener=new CustomClickListener();
         personal_center_updateNickname_back.setOnClickListener(listener);
-        Personal_center_btnSaveNickname.setOnClickListener(listener);
-
-
+        personal_center_btnSaveNickname.setOnClickListener(listener);
 
     }
 
@@ -79,30 +81,25 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
         }
     }
 
-    class CustomeClickListener implements View.OnClickListener {
+    class CustomClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.personal_center_updateNickname_back:
-                    finish();
                     //返回到个人中心界面
+                    finish();
                     break;
                 case R.id.personal_center_btnSaveNickname:
                     if(edtNickname.getText().toString().equals("")){
                         Toast.makeText(getApplicationContext(),
-                            "昵称不能为空哦！",
-                            Toast.LENGTH_SHORT).show();
+                                "昵称不能为空哦！", Toast.LENGTH_SHORT).show();
                     }else{
                         updateUserNickname();
                     }
                     break;
-
             }
-
-
         }
     }
-
 
     public void updateUserNickname(){
         new Thread(){
@@ -127,5 +124,4 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
             }
         }.start();
     }
-
 }

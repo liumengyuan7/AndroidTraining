@@ -15,12 +15,13 @@ import android.widget.TextView;
 import com.example.smallpigeon.R;
 
 public class Personal_center_More extends AppCompatActivity {
+
     private ImageView personal_center_more_back;
     private TextView personal_center_more_userSex;
     private TextView personal_center_more_userInterest;
     private TextView personal_center_more_userRegisterTime;
     private String interestC = "";
-    private CustomeClickListener listener=new CustomeClickListener();;
+    private CustomClickListener listener = new CustomClickListener();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,6 @@ public class Personal_center_More extends AppCompatActivity {
         getViews();
         registerListener();
         getSexAndInterest();
-
     }
 
     //隐藏状态栏
@@ -106,19 +106,17 @@ public class Personal_center_More extends AppCompatActivity {
     }
 
     //监听器类
-    class CustomeClickListener implements View.OnClickListener {
+    class CustomClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.personal_center_more_back:
+                    //返回到个人中心界面
                     Intent intent3 = new Intent(Personal_center_More.this, PersonalCenter.class);
                     startActivity(intent3);
                     finish();
-
-                    //返回到个人中心界面
                     break;
             }
         }
     }
-
 }

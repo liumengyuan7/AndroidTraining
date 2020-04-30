@@ -30,10 +30,10 @@ import java.util.regex.Pattern;
 public class ForgetPassword extends AppCompatActivity {
 
     private ImageView back;
-    private  EditText userEmail;
-    private  EditText checkCode;
+    private EditText userEmail;
+    private EditText checkCode;
     private TextView getCode;
-    private  TextView code_error;
+    private TextView code_error;
     private String code1;
 
     private Handler sendEmail = new Handler(){

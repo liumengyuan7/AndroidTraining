@@ -74,7 +74,6 @@
                     android:src="@drawable/right"
                     android:layout_gravity="center"/>
             </LinearLayout>
-
         </RelativeLayout>
 
         <LinearLayout
@@ -89,6 +88,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,6 +97,7 @@
                 android:layout_gravity="left"
                 android:textColor="#000"
                 android:layout_marginLeft="20dp" />
+
             <TextView
                 android:id="@+id/personal_center_user_email"
                 android:layout_width="wrap_content"
@@ -151,9 +152,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#ededed"
+            android:background="#ededed" />
 
-            />
         <LinearLayout
             android:id="@+id/userPointsLayout"
             android:background="#ffffff"
@@ -161,6 +161,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,8 +169,7 @@
                 android:textSize="18sp"
                 android:layout_gravity="left"
                 android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                />
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:id="@+id/personal_center_user_points"
@@ -179,14 +179,13 @@
                 android:layout_marginTop="-26dp"
                 android:layout_marginRight="20dp"
                 android:text=""
-
                 android:textSize="18sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:background="#ededed"
-            />
+            android:background="#ededed" />
 
         <LinearLayout
             android:id="@+id/userMoreLayout"
@@ -195,6 +194,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,22 +202,21 @@
                 android:textSize="18sp"
                 android:layout_gravity="left"
                 android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                />
+                android:layout_marginLeft="20dp" />
+
             <ImageView
                 android:layout_gravity="right"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/right"
-                android:layout_marginTop="-25dp"
-                />
+                android:layout_marginTop="-25dp" />
         </LinearLayout>
+
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ededed"
+        android:background="#ededed" />
 
-        />
         <LinearLayout
             android:id="@+id/userSecurityLayout"
             android:gravity="center"
@@ -225,6 +224,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -232,33 +232,29 @@
                 android:textSize="18sp"
                 android:layout_gravity="left"
                 android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                />
+                android:layout_marginLeft="20dp" />
+
             <ImageView
                 android:layout_gravity="right"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/right"
-                android:layout_marginTop="-25dp"
-
-                />
-
-
+                android:layout_marginTop="-25dp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <Button
             android:layout_gravity="center"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:background="@drawable/circular"
             android:text="注销登录"
-            android:id="@+id/personal_center_SignOut"
-            />
+            android:id="@+id/personal_center_SignOut" />
     </LinearLayout>
 </LinearLayout>

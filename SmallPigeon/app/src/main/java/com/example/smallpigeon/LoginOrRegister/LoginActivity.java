@@ -36,8 +36,8 @@ import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 public class LoginActivity extends AppCompatActivity {
+
     private ImageView loginReturn;
     private TextView accountRegister;
     private TextView forgetPassword;
@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private ImageView userLogin;
     private String md5Pass;
+
     private Handler handlerLogin = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
         getViews();
         //按钮的点击事件
         btnEvents();
-
     }
 
     //获取视图的控件
@@ -104,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         accountRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
                 startActivity(intent);
             }
@@ -118,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                 }else {
                     sendMessageToServer();
                 }
-
             }
         });
 
@@ -128,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         //忘记密码
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
+import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
@@ -46,6 +47,7 @@ import java.net.URLConnection;
 
 
 public class MyFragment extends Fragment {
+
     private RoundImageView myAvatar;
     private ImageView my_Settings;
     private Button loginOrRegister;
@@ -55,6 +57,7 @@ public class MyFragment extends Fragment {
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
     private String path;
+
     private Handler handleImage = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -71,6 +74,7 @@ public class MyFragment extends Fragment {
             }
         }
     };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,8 +83,6 @@ public class MyFragment extends Fragment {
         registerListener();
         loginEvent();
         return view;
-
-
     }
 
     //注册监听器
@@ -98,7 +100,6 @@ public class MyFragment extends Fragment {
     }
 
     class CustomButtonListener implements View.OnClickListener,View.OnTouchListener{
-
         @Override
         public void onClick(View v) {
             switch (v.getId()){
@@ -110,7 +111,8 @@ public class MyFragment extends Fragment {
                     Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.right_community:
-                    Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
+                    Intent intent3 = new Intent(getContext(), MyCommunity.class);
+                    startActivity(intent3);
                     break;
                 case R.id.right_gradeRank:
                     if(loginOrNot()){
@@ -190,7 +192,7 @@ public class MyFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-        }else{
+        } else{
             signIn(useId);
             loginOrRegister.setText("欢迎登录："+nickname);
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +261,7 @@ public class MyFragment extends Fragment {
             }
         }.start();
     }
+
     /*
      * 登录  异步
      * */

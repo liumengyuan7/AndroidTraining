@@ -22,6 +22,7 @@ public class DynamicContent implements Serializable {
     private int comment_Num;
     private String img2;
     private List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
+
     public DynamicContent(){}
 
     public int getDynamicId() {
