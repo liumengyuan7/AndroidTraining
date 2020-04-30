@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
+import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
@@ -110,7 +111,8 @@ public class MyFragment extends Fragment {
                     Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.right_community:
-                    Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
+                    Intent intent3 = new Intent(getContext(), MyCommunity.class);
+                    startActivity(intent3);
                     break;
                 case R.id.right_gradeRank:
                     if(loginOrNot()){
@@ -190,7 +192,7 @@ public class MyFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-        }else{
+        } else{
             signIn(useId);
             loginOrRegister.setText("欢迎登录："+nickname);
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +261,7 @@ public class MyFragment extends Fragment {
             }
         }.start();
     }
+
     /*
      * 登录  异步
      * */
