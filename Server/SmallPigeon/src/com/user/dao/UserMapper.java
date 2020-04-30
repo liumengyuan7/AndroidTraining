@@ -22,15 +22,11 @@ public interface UserMapper {
 
     public Map selectUserById(String id);
 
-    public Map selectUserByMatcher(String matcher);
-
     public List<Map> selectAllUserForPoints();
 
     public List<Map> selectAllUser();
 
     public List<Map> selectUserByEmailLike(String userEmailLike);
-
-    public List<Map> selectUserByMatcherAndId(@Param("matcher") String matcher, @Param("id") String id);
 
     public List<Map> selectNearbyUserByLocation(@Param("minLongitude") double minLongitude, @Param("maxLongitude") double maxLongitude,
                                                 @Param("minLatitude") double minLatitude, @Param("maxLatitude") double maxLatitude,
@@ -43,8 +39,6 @@ public interface UserMapper {
     public int updateUserNicknameById(@Param("userId") String userId, @Param("userNickname") String userNickname);
 
     public int updateUserEmailById(@Param("userId") String userId, @Param("userEmail") String userEmail);
-
-    public int updateUserMatcherStateById(@Param("id") String id, @Param("state") String state);
 
     public int updateUserPointsById(@Param("userId") String userId, @Param("point") int point);
 

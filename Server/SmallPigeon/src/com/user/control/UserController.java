@@ -206,32 +206,10 @@ public class UserController {
 	    String[] loLa = location.split(";");
 	    double longitude = Double.parseDouble(loLa[0]);
 	    double latitude = Double.parseDouble(loLa[1]);
-	    List<Map> nearbyUser = this.userService.selectNearbyUserByLocation(longitude-0.1,longitude+0.1,
+	    String nearbyUser = this.userService.selectNearbyUserByLocation(longitude-0.1,longitude+0.1,
                 latitude-0.1,latitude+0.1,userId);
-	    if(nearbyUser!=null) return new Gson().toJson(nearbyUser);
+	    if(nearbyUser!=null) return nearbyUser;
 	    else return "false";
     }
-
-	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，
-	//并将matcher与对应的人的matcher标为未匹配状态
-	@ResponseBody
-	@RequestMapping("randomMatchFirst")
-	public String randomMatchFirst(@RequestParam("id") String id,HttpServletResponse response) throws IOException {
-        return this.userService.randomMatchFirst(id,response);
-    }
-
-    //获取出自己以外的正在匹配的人的信息，并返回给客户端
-	@ResponseBody
-	@RequestMapping("randomMatchSecond")
-    public String randomMatchSecond(@RequestParam("id") String id,HttpServletResponse response) throws IOException {
-        return this.userService.randomMatchSecond(id, response);
-    }
-
-    //修改匹配的状态
-	@ResponseBody
-	@RequestMapping("fixMatcherStatus")
-	public void fixMatcherStatus(@RequestParam("id") String id){
-		this.userService.fixMatcherStatus(id);
-	}
 
 }

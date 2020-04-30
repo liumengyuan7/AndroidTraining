@@ -13,7 +13,8 @@ public class User {
 	private Date userRegisterTime;
 	private String userSno;
 	private int userPoints;
-	private String userMatcher;
+	private double longitude;
+	private double latitude;
 
 	public int getId() {
 		return id;
@@ -87,12 +88,19 @@ public class User {
 		this.userPoints = userPoints;
 	}
 
-	public String getUserMatcher() {
-		return userMatcher;
+	public double getLongitude() {
+		return longitude;
 	}
 
-	public void setUserMatcher(String userMatcher) {
-		this.userMatcher = userMatcher;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
 }

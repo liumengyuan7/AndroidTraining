@@ -12,7 +12,8 @@
         <result property="userEmail" column="user_email"/>
         <result property="userRegisterTime" column="user_register_time"/>
         <result property="userPoints" column="user_points"/>
-        <result property="userMatcher" column="matcher"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
     </resultMap>
 	<select id="selectUserByEmailAndPassword" resultType="java.util.Map">
         select * from user where user_email=#{userEmail} and user_password=#{userPassword}
@@ -23,14 +24,8 @@
     <select id="selectUserById" resultType="java.util.Map">
         select * from user where id=#{id}
     </select>
-    <select id="selectUserByMatcher" resultType="java.util.Map">
-        select * from user where matcher=#{matcher}
-    </select>
     <select id="selectAllUserForPoints" resultType="java.util.Map">
         select * from user order by user_points desc limit 0,10
-    </select>
-    <select id="selectUserByMatcherAndId" resultType="java.util.Map">
-        select * from user where matcher=#{matcher} and id!=#{id}
     </select>
     <select id="selectAllUser" resultType="java.util.Map">
         select * from user
@@ -54,9 +49,6 @@
     </update>
     <update id="updateUserEmailById" parameterType="com.entity.User">
         update user set user_email=#{userEmail} where id=#{userId}
-    </update>
-    <update id="updateUserMatcherStateById" parameterType="com.entity.User">
-        update user set matcher=#{state} where id=#{id}
     </update>
     <update id="updateUserPointsById" parameterType="com.entity.User">
         update user set user_points=#{point} where id=#{userId}

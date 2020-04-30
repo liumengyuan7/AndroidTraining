@@ -46,6 +46,7 @@ public class UserService {
 	@Resource
 	private ServletContext servletContext;
 	private String interestString = "";
+	private String userInfoAndInterest = "";
 
 	//用户的登录操作
 	public String userLogin(String email, String password) {
@@ -202,54 +203,23 @@ public class UserService {
 	}
 
 	//根据经纬度的大小获取周围的人的信息
-	public List<Map> selectNearbyUserByLocation(double minLongitude,double maxLongitude,double minLatitude,double maxLatitude,String userId){
-		return this.userMapper.selectNearbyUserByLocation(minLongitude, maxLongitude, minLatitude, maxLatitude, userId);
-	}
-
-
-
-
-	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，
-	//并将matcher与对应的人的matcher标为未匹配状态
-	public String randomMatchFirst(String id,HttpServletResponse response) throws IOException {
-		this.userMapper.updateUserMatcherStateById(id,"yes");
-        Map user = this.userMapper.selectUserByMatcher(id);
-        if(user == null){
-            return "empty";
-        }else{
-        	this.userMapper.updateUserMatcherStateById(user.get("id")+"","no");
-        	this.userMapper.updateUserMatcherStateById(id,"no");
-            String result = this.userLogin(user.get("user_email")+"",user.get("user_password")+"");
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().write(result);
-			return null;
-        }
-	}
-
-	//获取出自己以外的正在匹配的人的信息，并返回给客户端
-	public String randomMatchSecond(String id,HttpServletResponse response) throws IOException {
-		List<Map> users = this.userMapper.selectUserByMatcherAndId("yes",id);
-        if(users.isEmpty()){
-            return "no";
-        }else{
-        	Map user = null;
-        	if(users.size()==1){
-        		user = users.get(0);
-			}else{
-        		int s = new Random().nextInt(users.size());
-        		user = users.get(s);
-			}
-        	this.userMapper.updateUserMatcherStateById(id,user.get("id")+"");
-            String result = this.userLogin(user.get("user_email")+"",user.get("user_password")+"");
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().write(result);
-			return null;
-        }
-	}
-
-	//修改匹配的状态
-	public void fixMatcherStatus(String id){
-		this.userMapper.updateUserMatcherStateById(id,"no");
+	public String selectNearbyUserByLocation(double minLongitude,double maxLongitude,double minLatitude,double maxLatitude,String userId){
+		List<Map> result = this.userMapper.selectNearbyUserByLocation(minLongitude, maxLongitude, minLatitude, maxLatitude, userId);
+		userInfoAndInterest += new Gson().toJson(result)+";";
+		for(int i = 0;i<result.size();i++){
+			interestString = "";
+			Interest interest = this.interestService.selectInterestByUserId(Integer.parseInt(result.get(i).get("id")+""));
+			interestSet(interest.getOutdoor(),"outdoor");
+			interestSet(interest.getSociety(),"society");
+			interestSet(interest.getMusic(),"music");
+			interestSet(interest.getStar(),"star");
+			interestSet(interest.getScience(),"science");
+			interestSet(interest.getFilm(),"film");
+			interestSet(interest.getComic(),"comic");
+			interestSet(interest.getDelicacy(),"delicacy");
+			userInfoAndInterest += interestString + "+";
+		}
+		return userInfoAndInterest;
 	}
 
 }

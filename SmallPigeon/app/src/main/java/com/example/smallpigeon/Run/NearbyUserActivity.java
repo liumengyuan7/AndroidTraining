@@ -42,15 +42,16 @@ public class NearbyUserActivity extends AppCompatActivity {
     public void prepareDataSource(){
         dataSource = new ArrayList<>();
         try {
-            String nearbyUser = getIntent().getStringExtra("nearbyUser");
-            JSONArray jsonArray = new JSONArray(nearbyUser.split(";")[0]);
+            String[] nearbyUserAndInterest = getIntent().getStringExtra("nearbyUser").split(";");
+            JSONArray jsonArray = new JSONArray(nearbyUserAndInterest[0]);
+            String[] interest = nearbyUserAndInterest[1].split("+");
             for (int i = 0;i<jsonArray.length();i++){
                 JSONObject json = jsonArray.getJSONObject(i);
                 Map<String, String> item = new HashMap<>();
                 item.put("user_nickname",json.getString("user_nickname"));
                 item.put("user_sex",json.getString("user_sex"));
                 item.put("user_points",json.getString("user_points"));
-                item.put("user_interest",nearbyUser.split(";")[1]);
+                item.put("user_interest",interest[i]);
                 item.put("user_email",json.getString("user_email"));
                 item.put("user_id",json.getString("id"));
                 dataSource.add(item);
