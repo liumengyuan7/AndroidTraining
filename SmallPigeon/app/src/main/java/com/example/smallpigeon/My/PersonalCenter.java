@@ -10,10 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -25,24 +22,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.R;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PersonalCenter extends AppCompatActivity {
+
     private ImageView personal_center_back;
     private ImageView user_Img;
 
@@ -69,7 +57,6 @@ public class PersonalCenter extends AppCompatActivity {
         getViews();
         registListeners();
         preferencesEvent();
-
     }
 
     @Override
@@ -107,7 +94,6 @@ public class PersonalCenter extends AppCompatActivity {
 
     //prefer
     private void preferencesEvent() {
-
         //注销按钮的动态设置
         SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
         String s = pre.getString("user_nickname","");
@@ -124,7 +110,7 @@ public class PersonalCenter extends AppCompatActivity {
                     finish();
                 }
             });
-        }else{
+        } else{
             personal_center_user_email.setText(pre.getString("user_email",""));
             personal_center_nickName.setText(pre.getString("user_nickname",""));
             personal_center_user_points.setText(pre.getString("user_points",""));
@@ -144,46 +130,39 @@ public class PersonalCenter extends AppCompatActivity {
                 }
             });
         }
-
     }
+
     //环信退出登录
     private void signOut() {
         EMClient.getInstance().logout(true, new EMCallBack() {
-
             @Override
             public void onSuccess() {
-                // TODO Auto-generated method stub
                 Log.e("退出成功","退出登录");
             }
 
             @Override
-            public void onProgress(int progress, String status) {
-                // TODO Auto-generated method stub
-            }
+            public void onProgress(int progress, String status) { }
 
             @Override
             public void onError(int code, String message) {
-                // TODO Auto-generated method stub
                 Log.e("退出失败",code+","+message);
             }
         });
     }
+
     //获取视图的控件
     private void getViews() {
         personal_center_back=findViewById(R.id.personal_center_back);
-
         personal_center_user_email=findViewById(R.id.personal_center_user_email);
         personal_center_nickName=findViewById(R.id.personal_center_nickName);
         personal_center_user_points=findViewById(R.id.personal_center_user_points);
         SignOut=findViewById(R.id.personal_center_SignOut);
-
         userImageLayout = findViewById(R.id.userImageLayout);
         userEmailLayout = findViewById(R.id.userEmailLayout);
         userNicknameLayout = findViewById(R.id.userNicknameLayout);
         userPointsLayout = findViewById(R.id.userPointsLayout);
         userMoreLayout = findViewById(R.id.userMoreLayout);
         userSecurityLayout = findViewById(R.id.userSecurityLayout);
-
         user_Img=findViewById(R.id.user_Img);
     }
 
@@ -203,8 +182,6 @@ public class PersonalCenter extends AppCompatActivity {
         userMoreLayout.setOnTouchListener(listener);
         userSecurityLayout.setOnClickListener(listener);
         userSecurityLayout.setOnTouchListener(listener);
-
-
     }
 
     //设置监听事件
@@ -217,7 +194,6 @@ public class PersonalCenter extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.userImageLayout://进入修改头像activity
-
                     if(!email.equals("") && email != null){
                         Intent intent1 = new Intent(PersonalCenter.this, Personal_centet_updateUserImg.class);
                         startActivity(intent1);
@@ -228,9 +204,9 @@ public class PersonalCenter extends AppCompatActivity {
                     break;
                 case R.id.userNicknameLayout://进入修改昵称activity
                     if(!email.equals("") && email != null){
-                    Intent intent2 = new Intent(PersonalCenter.this, Personal_center_updateUserNickname.class);
-                    startActivity(intent2);
-                    finish();
+                        Intent intent2 = new Intent(PersonalCenter.this, Personal_center_updateUserNickname.class);
+                        startActivity(intent2);
+                        finish();
                     }else {
                         Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
                     }
@@ -246,7 +222,7 @@ public class PersonalCenter extends AppCompatActivity {
                     break;
                 case R.id.userSecurityLayout:
                     if(loginOrNot()){
-                        Intent intent4 = new Intent(PersonalCenter.this, anquan.class);
+                        Intent intent4 = new Intent(PersonalCenter.this, AnQuan.class);
                         startActivity(intent4);
                         finish();
                     }else {

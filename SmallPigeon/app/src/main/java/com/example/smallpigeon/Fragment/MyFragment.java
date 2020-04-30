@@ -46,6 +46,7 @@ import java.net.URLConnection;
 
 
 public class MyFragment extends Fragment {
+
     private RoundImageView myAvatar;
     private ImageView my_Settings;
     private Button loginOrRegister;
@@ -55,6 +56,7 @@ public class MyFragment extends Fragment {
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
     private String path;
+
     private Handler handleImage = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -71,6 +73,7 @@ public class MyFragment extends Fragment {
             }
         }
     };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,8 +82,6 @@ public class MyFragment extends Fragment {
         registerListener();
         loginEvent();
         return view;
-
-
     }
 
     //注册监听器
@@ -98,7 +99,6 @@ public class MyFragment extends Fragment {
     }
 
     class CustomButtonListener implements View.OnClickListener,View.OnTouchListener{
-
         @Override
         public void onClick(View v) {
             switch (v.getId()){

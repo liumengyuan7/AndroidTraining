@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.smallpigeon.R;
 
-public class anquan extends AppCompatActivity {
+public class AnQuan extends AppCompatActivity {
 
     private ImageView back;
     private LinearLayout userChangeEmail;
@@ -29,9 +29,8 @@ public class anquan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anquan);
         setStatusBar();
-        findviews();
+        findViews();
         registerListener();
-
     }
 
     //隐藏状态栏
@@ -60,13 +59,13 @@ public class anquan extends AppCompatActivity {
             String email = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
             switch (v.getId()){
                 case R.id.anquan_back:
-                    Intent intent = new Intent(anquan.this,PersonalCenter.class);
+                    Intent intent = new Intent( AnQuan.this,PersonalCenter.class);
                     startActivity(intent);
                     finish();
                     break;
                 case R.id.userChangeEmail:
                     if(!email.equals("") && email != null){
-                        Intent intent1 = new Intent(anquan.this,update_email.class);
+                        Intent intent1 = new Intent( AnQuan.this,update_email.class);
                         startActivity(intent1);
                         finish();
                     } else{
@@ -75,7 +74,7 @@ public class anquan extends AppCompatActivity {
                     break;
                 case R.id.userChangePassword:
                     if(!email.equals("") && email != null){
-                        Intent intent2 = new Intent(anquan.this,update_pwd.class);
+                        Intent intent2 = new Intent( AnQuan.this,update_pwd.class);
                         startActivity(intent2);
                         finish();
                     } else{
@@ -97,7 +96,6 @@ public class anquan extends AppCompatActivity {
             }
             return false;
         }
-
     }
 
     //动态事件
@@ -113,10 +111,9 @@ public class anquan extends AppCompatActivity {
     }
 
     //获取视图控件
-    public void findviews(){
+    public void findViews(){
         back = findViewById(R.id.anquan_back);
         userChangeEmail = findViewById(R.id.userChangeEmail);
         userChangePassword = findViewById(R.id.userChangePassword);
     }
-
 }

@@ -9,19 +9,19 @@
     android:background="@drawable/bg"
     android:alpha="0.9"
     tools:context=".LoginOrRegister.RegisterActivity">
+
     <LinearLayout
         android:gravity="center"
-
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        >
+        android:layout_height="50dp">
+
         <ImageView
             android:id="@+id/Register_Return"
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:src="@mipmap/returnimage"/>
-        <TextView
 
+        <TextView
             android:gravity="center"
             android:layout_marginLeft="-10dp"
             android:layout_weight="1"
@@ -30,18 +30,19 @@
             android:text="注册"
             android:textSize="25dp"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="520dp"
-        android:orientation="vertical"
+        android:orientation="vertical">
 
-        >
         <LinearLayout
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="300dp"
             android:layout_height="wrap_content">
+
             <EditText
                 android:alpha="0.7"
                 android:gravity="center"
@@ -50,22 +51,18 @@
                 android:layout_height="50dp"
                 android:id="@+id/register_userEmail"
                 android:hint="请输入您的邮箱账号"
-                android:textSize="20sp"
-                />
-
+                android:textSize="20sp" />
         </LinearLayout>
 
-            <TextView
-                android:id="@+id/length_error"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:text=""
-                android:textColor="#ff0000"
-                android:textSize="18sp"
-                />
-
+        <TextView
+            android:id="@+id/length_error"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text=""
+            android:textColor="#ff0000"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:gravity="center"
@@ -82,8 +79,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/register_userPassword"
                 android:hint="请输入密码"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/pwd_length"
@@ -92,18 +88,15 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="18sp"
-                android:textColor="#ff0000"
-                />
+                android:textColor="#ff0000" />
         </LinearLayout>
         <LinearLayout
             android:alpha="0"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="#fff"
-            >
-
-
+            android:background="#fff">
         </LinearLayout>
+
         <LinearLayout
             android:layout_gravity="center"
             android:orientation="vertical"
@@ -119,8 +112,8 @@
                 android:hint="请再次确认密码"
                 android:inputType="textPassword"
                 android:gravity="center"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/pwd_same"
                 android:layout_gravity="center"
@@ -128,17 +121,15 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="18sp"
-                android:textColor="#ff0000"
-                />
-
+                android:textColor="#ff0000" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:alpha="0"
-            android:background="#fff"
-            />
+            android:background="#fff" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_gravity="center"
@@ -153,15 +144,15 @@
                 android:layout_height="50dp"
                 android:id="@+id/register_userNickname"
                 android:hint="请编辑您的用户名"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:background="#fff"
-            android:alpha="0"
-            />
+            android:alpha="0" />
+
         <LinearLayout
             android:layout_gravity="center"
             android:background="@drawable/circular"
@@ -169,6 +160,7 @@
             android:orientation="horizontal"
             android:layout_width="300dp"
             android:layout_height="wrap_content">
+
             <EditText
                 android:gravity="center"
                 android:layout_width="150dp"
@@ -176,51 +168,47 @@
                 android:alpha="0.7"
                 android:layout_height="50dp"
                 android:id="@+id/register_checkCode"
-                android:hint="输入验证码"
+                android:hint="输入验证码" />
 
-                />
             <TextView
-
                 android:gravity="center"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:text="获取验证码"
-                android:id="@+id/register_getCode"
-                />
+                android:id="@+id/register_getCode" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="#fff"
-            android:alpha="0"
-            />
-        <LinearLayout
+            android:alpha="0" />
 
+        <LinearLayout
             android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <RadioGroup
-
                 android:orientation="horizontal"
                 android:id="@+id/radioGroup_userSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <RadioButton
                     android:id="@+id/Man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="男"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
+
                 <RadioButton
                     android:id="@+id/Woman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="女"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
             </RadioGroup>
         </LinearLayout>
 
@@ -231,7 +219,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -264,14 +251,11 @@
                     android:layout_height="wrap_content"
                     android:text="人文"
                     android:textSize="20sp" />
-
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -302,20 +286,16 @@
                     android:layout_height="wrap_content"
                     android:text="动漫"
                     android:textSize="20sp" />
-
-
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
+
     <ImageView
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="@drawable/wancheng1"
-
-
-        android:id="@+id/btn_FinishReg"
-        />
+        android:alpha="0.6"
+        android:id="@+id/btn_FinishReg" />
 </LinearLayout>

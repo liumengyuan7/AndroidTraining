@@ -57,7 +57,7 @@
         <activity android:name=".My.update_email" />
         <activity android:name=".My.update_pwd_final" />
         <activity android:name=".My.update_pwd" />
-        <activity android:name=".My.anquan" />
+        <activity android:name=".My.AnQuan" />
         <activity android:name=".LoginOrRegister.ResetPwd" />
         <activity android:name=".LoginOrRegister.ForgetPassword" />
         <activity android:name=".My.Personal_center_More" />

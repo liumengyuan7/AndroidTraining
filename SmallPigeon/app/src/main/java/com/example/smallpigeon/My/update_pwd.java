@@ -29,6 +29,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class update_pwd extends AppCompatActivity {
+
     private TextView userEmail;
     private EditText code;//输入的验证码
     private TextView getCode;//获取验证码
@@ -81,8 +82,7 @@ public class update_pwd extends AppCompatActivity {
         //从本地获取用户存入的邮箱账号 为userEmail设置值
         getUserEmail();
 
-
-        //  1. 获取验证码事件  检验验证码 正确自动转入update_pwd_final设置新密码  否则给code_error设置“验证码有误，重新输入”
+        //获取验证码事件  检验验证码 正确自动转入update_pwd_final设置新密码  否则给code_error设置“验证码有误，重新输入”
         getCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,18 +91,20 @@ public class update_pwd extends AppCompatActivity {
                 sendEmailToServer();
             }
         });
+
        //返回事件
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent4 = new Intent(update_pwd.this, AnQuan.class);
+                startActivity(intent4);
                 finish();
             }
         });
+
         code.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -120,11 +122,8 @@ public class update_pwd extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) { }
         });
-
     }
 
     //隐藏状态栏
@@ -184,7 +183,7 @@ public class update_pwd extends AppCompatActivity {
         }.start();
     }
 
-    public  void  getViews(){
+    public void getViews(){
         userEmail=findViewById(R.id.user_email);
         getCode=findViewById(R.id.updpwd_getcode);
         code=findViewById(R.id.updPwd_edt_code);
@@ -198,5 +197,4 @@ public class update_pwd extends AppCompatActivity {
         String s = pre.getString("user_email","");
         userEmail.setText(s);
     }
-
 }

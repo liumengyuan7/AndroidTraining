@@ -8,12 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +37,7 @@ public class update_email extends AppCompatActivity {
     private ImageView btnFinish;
     private ImageView back;
     private String code1;
+
     private Handler sendEmail = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -121,7 +119,7 @@ public class update_email extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent4 = new Intent(update_email.this,anquan.class);
+                Intent intent4 = new Intent(update_email.this, AnQuan.class);
                 startActivity(intent4);
                 finish();
             }

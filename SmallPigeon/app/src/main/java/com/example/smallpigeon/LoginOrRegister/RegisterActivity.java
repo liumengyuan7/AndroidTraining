@@ -59,6 +59,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
+
     private ImageView btn_FinishReg;
     private CustomeClickListener listener;
     private RadioGroup radioGroup_userSex;
@@ -157,7 +158,6 @@ public class RegisterActivity extends AppCompatActivity {
         registListeners();
         length();
         same();
-
     }
 
     //隐藏状态栏
@@ -173,9 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void length(){
         register_userPassword.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -190,9 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) { }
         });
     }
 
@@ -200,9 +196,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void same(){
        register_checkPwd.addTextChangedListener(new TextWatcher() {
            @Override
-           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-           }
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
            @Override
            public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -223,9 +217,7 @@ public class RegisterActivity extends AppCompatActivity {
            }
 
            @Override
-           public void afterTextChanged(Editable s) {
-
-           }
+           public void afterTextChanged(Editable s) { }
        });
     }
 
@@ -243,10 +235,6 @@ public class RegisterActivity extends AppCompatActivity {
         params1.setMargins((int)(displayWidth * 0.001f + 0.1f),(int)(displayHeight * 0.001f + 0.5f)
                 ,(int)(displayWidth * 0.05f + 0.5f),0);
         register_Linear.setLayoutParams(params1);
-
-
-
-
     }
 
     //获取视图的控件
@@ -277,9 +265,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         pwd_length=findViewById(R.id.pwd_length);
         pwd_same=findViewById(R.id.pwd_same);
-
-
-
     }
 
     //注册监听器
@@ -302,13 +287,15 @@ public class RegisterActivity extends AppCompatActivity {
                         getCode.setText("验证码发送中...");
                         getCode.setOnClickListener(null);
                         sendEmail();
+                    } else{
+                        Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show();
                     }
-                    else{ Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show(); }
                     break;
                 case R.id.btn_FinishReg:
                     radioAndCheckbox();
-                    if(!confirmUserInfo()) {Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();}
-                    else{
+                    if(!confirmUserInfo()) {
+                        Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                    }  else{
                         if(checkcode.equals(code)){
                             Log.e("str"," "+interesStr);
                             str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
@@ -329,8 +316,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        }
-                        else{
+                        } else{
                             Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT).show();
                         }
                     }
