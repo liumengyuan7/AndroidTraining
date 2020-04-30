@@ -1,12 +1,18 @@
 package com.example.smallpigeon.Fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -21,7 +27,7 @@ import android.widget.Toast;
 
 import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
-import com.example.smallpigeon.Run.MatchingActivity;
+import com.example.smallpigeon.Run.MachingActivity;
 import com.example.smallpigeon.Utils;
 
 
@@ -90,7 +96,11 @@ public class RunFragment extends Fragment {
                 case R.id.MatchingButton:
                     //匹配模式
                     if(loginOrNot()){
-                        Intent intentM = new Intent( getContext(), MatchingActivity.class );
+                        //更新用户当前的位置
+                        String location = getUserLocation();
+                        updateUserLocation(location);
+                        Intent intentM = new Intent( getContext(), MachingActivity.class );
+                        intentM.putExtra("location",location);  //更新用户位置后传递位置到匹配界面
                         startActivity( intentM );
                     }else{
                         Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
@@ -132,4 +142,50 @@ public class RunFragment extends Fragment {
             selectLength();
         }else { }
     }
+
+    //更新用户当前的位置
+    public void updateUserLocation(String location){
+        new Thread(){
+            @Override
+            public void run() {
+                if(location!=null){
+                    new Utils().getConnectionResult("user","updateUserLocation","location="+location);
+                }
+            }
+        }.start();
+    }
+
+    //获取当前的经纬度
+    public String getUserLocation(){
+        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        criteria.setCostAllowed(false);
+        //设置位置服务免费
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE); //设置水平位置精度
+        //getBestProvider 只有允许访问调用活动的位置供应商将被返回
+        String providerName = lm.getBestProvider(criteria, true);
+
+        if (providerName != null) {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "没有权限", Toast.LENGTH_SHORT).show();
+            }
+
+            Location location = lm.getLastKnownLocation(providerName);
+
+            //获取维度信息
+            double latitude = location.getLatitude();
+            //获取经度信息
+            double longitude = location.getLongitude();
+
+            Log.i("获取经纬度", "定位方式： " + providerName + "  维度：" + latitude + "  经度：" + longitude);
+            return longitude+";"+latitude;
+        } else {
+            Toast.makeText(getContext(), "1.请检查网络连接 \n2.请打开我的位置", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+    }
+
 }

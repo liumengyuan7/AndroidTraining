@@ -46,16 +46,15 @@ public class MyPlan extends AppCompatActivity {
                     information = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0;i<jsonArray.length();i++){
-                        JSONObject json1 = jsonArray.getJSONObject(i);
-                        JSONObject json2 = json1.getJSONObject("attrs");
+                        JSONObject json = jsonArray.getJSONObject(i);
                         Map<String, String> item = new HashMap<>();
-                        item.put("plan_id",json2.getString("id"));
-                        item.put("plan_time",json2.getString("plan_time"));
-                        item.put("plan_address",json2.getString("plan_address"));
-                        item.put("plan_email",json2.getString("plan_email"));
-                        item.put("plan_nickname",json2.getString("plan_nickname"));
+                        item.put("plan_id",json.getString("id"));
+                        item.put("plan_time",json.getString("plan_time"));
+                        item.put("plan_address",json.getString("plan_address"));
+                        item.put("plan_email",json.getString("plan_email"));
+                        item.put("plan_nickname",json.getString("plan_nickname"));
                         //状态：0表示未完成 1表示完成
-                        item.put("plan_status",json2.getString("plan_status"));
+                        item.put("plan_status",json.getString("plan_status"));
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.plan_list);

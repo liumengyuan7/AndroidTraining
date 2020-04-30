@@ -39,7 +39,8 @@
         select * from user where user_email like "%"#{userEmailLike}"%"
     </select>
     <select id="selectNearbyUserByLocation" resultType="java.util.Map">
-        select * from user where #{minLongitude}<=longitude<=#{maxLongitude} and #{minLatitude}<=latitude<=#{maxLatitude}
+        select * from user where #{minLongitude} &lt;= longitude &lt;= #{maxLongitude}
+        and #{minLatitude} &lt;= latitude &lt;= #{maxLatitude} and id!=#{userId}
     </select>
     <insert id="insertUserInfo" useGeneratedKeys="true" keyProperty="id" parameterType="com.entity.User">
         insert into user(user_nickname,user_password,user_sex,user_email,user_register_time)

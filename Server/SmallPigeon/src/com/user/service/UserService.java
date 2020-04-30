@@ -202,9 +202,11 @@ public class UserService {
 	}
 
 	//根据经纬度的大小获取周围的人的信息
-	public List<Map> selectNearbyUserByLocation(double minLongitude,double maxLongitude,double minLatitude,double maxLatitude){
-		return this.userMapper.selectNearbyUserByLocation(minLongitude, maxLongitude, minLatitude, maxLatitude);
+	public List<Map> selectNearbyUserByLocation(double minLongitude,double maxLongitude,double minLatitude,double maxLatitude,String userId){
+		return this.userMapper.selectNearbyUserByLocation(minLongitude, maxLongitude, minLatitude, maxLatitude, userId);
 	}
+
+
 
 
 	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，

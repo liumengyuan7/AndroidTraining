@@ -30,13 +30,17 @@
         select * from user order by user_points desc limit 0,10
     </select>
     <select id="selectUserByMatcherAndId" resultType="java.util.Map">
-        select * from user where matcher=#{matcher} and id!=#{id}"
+        select * from user where matcher=#{matcher} and id!=#{id}
     </select>
     <select id="selectAllUser" resultType="java.util.Map">
         select * from user
     </select>
     <select id="selectUserByEmailLike" resultType="java.util.Map">
         select * from user where user_email like "%"#{userEmailLike}"%"
+    </select>
+    <select id="selectNearbyUserByLocation" resultType="java.util.Map">
+        select * from user where #{minLongitude} &lt;= longitude &lt;= #{maxLongitude}
+        and #{minLatitude} &lt;= latitude &lt;= #{maxLatitude} and id!=#{userId}
     </select>
     <insert id="insertUserInfo" useGeneratedKeys="true" keyProperty="id" parameterType="com.entity.User">
         insert into user(user_nickname,user_password,user_sex,user_email,user_register_time)
@@ -56,5 +60,8 @@
     </update>
     <update id="updateUserPointsById" parameterType="com.entity.User">
         update user set user_points=#{point} where id=#{userId}
+    </update>
+    <update id="updateUserLocation" parameterType="com.entity.User">
+        update user set locaiton=#{location} where id=#{userId}
     </update>
 </mapper>

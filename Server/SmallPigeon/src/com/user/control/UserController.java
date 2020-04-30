@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import com.google.gson.Gson;
 import com.user.service.UserService;
 
 @Controller
@@ -196,6 +198,19 @@ public class UserController {
 		if(result>0) return "true";
 		else return "false";
 	}
+
+	//根据经纬度获得周围用户的信息
+    @ResponseBody
+    @RequestMapping("getNearbyUser")
+    public String getNearbyUser(@RequestParam("location") String location,@RequestParam("userId") String userId){
+	    String[] loLa = location.split(";");
+	    double longitude = Double.parseDouble(loLa[0]);
+	    double latitude = Double.parseDouble(loLa[1]);
+	    List<Map> nearbyUser = this.userService.selectNearbyUserByLocation(longitude-0.1,longitude+0.1,
+                latitude-0.1,latitude+0.1,userId);
+	    if(nearbyUser!=null) return new Gson().toJson(nearbyUser);
+	    else return "false";
+    }
 
 	//将matcher标识为匹配状态，若matcher有值，获取值返回客户端，
 	//并将matcher与对应的人的matcher标为未匹配状态

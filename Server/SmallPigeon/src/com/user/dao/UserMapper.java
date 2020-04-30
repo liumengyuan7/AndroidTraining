@@ -33,7 +33,8 @@ public interface UserMapper {
     public List<Map> selectUserByMatcherAndId(@Param("matcher") String matcher, @Param("id") String id);
 
     public List<Map> selectNearbyUserByLocation(@Param("minLongitude") double minLongitude, @Param("maxLongitude") double maxLongitude,
-                                                @Param("minLatitude") double minLatitude, @Param("maxLatitude") double maxLatitude);
+                                                @Param("minLatitude") double minLatitude, @Param("maxLatitude") double maxLatitude,
+                                                @Param("userId") String userId);
 
     public int insertUserInfo(User user);
 

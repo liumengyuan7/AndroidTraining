@@ -48,34 +48,6 @@ public class MachingActivity extends AppCompatActivity {
     private ImageView machingBack;
     private Button btnRematch;
     private MyClickListener listener;
-    private PopupWindow pop;
-    private TextView secondDown;
-    private boolean flag = true;
-
-    private Handler matchHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            try {
-                String re = msg.obj + "";
-                String result = re.split(";")[0];
-                JSONArray jsonArray = new JSONArray(result);
-                JSONObject json1 = jsonArray.getJSONObject(0);
-                JSONObject json2 = new JSONObject(json1.getString("attrs"));
-                Intent intent = new Intent(getApplicationContext(),RemachingActivity.class);
-                intent.putExtra("user_nickname",json2.getString("user_nickname"));
-                intent.putExtra("user_sex",json2.getString("user_sex"));
-                intent.putExtra("user_points",json2.getString("user_points"));
-                intent.putExtra("user_interest",re.split(";")[1]);
-                intent.putExtra("user_email",json2.getString("user_email"));
-                intent.putExtra("user_id",json2.getString("id"));
-                startActivity(intent);
-                finish();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-    };
 
     private List<Map<String,String>> information;
     private PlanAdapter planAdapter;
@@ -108,19 +80,6 @@ public class MachingActivity extends AppCompatActivity {
                 Toast toastTip = Toast.makeText(getApplicationContext(),"你的计划为空哦！",Toast.LENGTH_LONG);
                 toastTip.setGravity(Gravity.CENTER, 0, 0);
                 toastTip.show();
-            }
-        }
-    };
-
-    private Handler handleSecond = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            String second = msg.obj + "";
-            if(second.equals("0")){
-                pop.dismiss();
-                Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT).show();
-            }else{
-                secondDown.setText("正在匹配中... "+second+"秒");
             }
         }
     };
@@ -163,17 +122,14 @@ public class MachingActivity extends AppCompatActivity {
         machingBack = findViewById( R.id.maching_back );
     }
 
+    //自定义listener
     private class MyClickListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.btn_rematch:
-//                    //popupwindow的显示
-//                    appearPopupWindow();
-//                    //重新匹配按钮
-//                    randomMatch();
-
+                    getNearbyUser();
                     break;
                 case R.id.maching_back:
                     //返回按钮
@@ -198,107 +154,21 @@ public class MachingActivity extends AppCompatActivity {
         }.start();
     }
 
-    //随机匹配
-    private void randomMatch(){
+    //根据后台获取附近的用户
+    public void getNearbyUser(){
         new Thread(){
             @Override
             public void run() {
-                SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
-                String id = pre.getString("user_id","");
-                for(int i=0;i<10;i++){
-                    if(flag){
-                        String result = new Utils().getConnectionResult("user","randomMatchFirst","id="+id);
-                        if(result.equals("empty")){
-                            String r = new Utils().getConnectionResult("user","randomMatchSecond","id="+id);
-                            if(r.equals("no")){
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                continue;
-                            }else{
-                                secondDown.setText("匹配成功！");
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Message message = new Message();
-                                message.obj = r;
-                                matchHandler.sendMessage(message);
-                                break;
-                            }
-                        }else{
-                            secondDown.setText("匹配成功！");
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            Message message = new Message();
-                            message.obj = result;
-                            matchHandler.sendMessage(message);
-                            break;
-                        }
-                    }
-                }
-            }
-        }.start();
-    }
-
-    //popupwindow的显示
-    private void appearPopupWindow(){
-        flag = true;
-        View popView = getLayoutInflater().inflate(R.layout.match_pop,null);
-        pop = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,true);
-        pop.setAnimationStyle(R.style.popmatch_anim_style);
-        pop.setOutsideTouchable(false);
-        pop.showAtLocation(getWindow().getDecorView(),Gravity.CENTER,0,0);
-        secondDown = popView.findViewById(R.id.secondDown);
-        secondDown();
-        final WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = 0.4f;
-        getWindow().setAttributes(lp);
-        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                flag = false;
-                new Thread(){
-                    @Override
-                    public void run() {
-                        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
-                        String id = pre.getString("user_id","");
-                        new Utils().getConnectionResult("user","fixMatcherStatus","id="+id);
-                    }
-                }.start();
-                Toast.makeText(getApplicationContext(),"取消匹配！",Toast.LENGTH_SHORT).show();
-                lp.alpha = 1f;
-                getWindow().setAttributes(lp);
-        }});
-    }
-
-    //处理倒计时的方法
-    private void secondDown(){
-        new Thread(){
-            @Override
-            public void run() {
-                for(int i = 10;i>=0;i--){
-                    if(flag){
-                        try {
-                            if(secondDown.getText().toString().equals("匹配成功！")){
-                                break;
-                            }else{
-                                Message message = new Message();
-                                message.obj = i;
-                                handleSecond.sendMessage(message);
-                            }
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                String userId = pre.getString("user_id","");
+                Intent response = getIntent();
+                String location = response.getStringExtra("location");
+                String result = new Utils().getConnectionResult("user","getNearbyUser",
+                        "location="+location+"&&userId="+userId);
+                Intent request = new Intent();
+                request.setClass(getApplicationContext(),NearbyUserActivity.class);
+                request.putExtra("nearbyUser",result);
+                getApplicationContext().startActivity(request);
             }
         }.start();
     }
