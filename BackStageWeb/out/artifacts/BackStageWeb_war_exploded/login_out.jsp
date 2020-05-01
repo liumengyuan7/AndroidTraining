@@ -31,7 +31,7 @@
     <div class="message">小鸽快跑-管理登录</div>
     <div id="darkbannerwrap"></div>
         <c:if test="${not empty admin}">
-            <jsp:forward page="${ctx}/login.jsp"></jsp:forward>
+            <jsp:forward page="/admin/login_out"></jsp:forward>
         </c:if>
     </div>
 </body>

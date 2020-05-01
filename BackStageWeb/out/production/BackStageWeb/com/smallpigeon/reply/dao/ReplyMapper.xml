@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smallpigeon.reply.dao.ReplyMapper">
+    <resultMap id="replyMap" type="Reply">
+        <id property="id" column="id"></id>
+        <result property="commentId" column="comment_id"></result>
+        <result property="fromId" column="from_id"></result>
+        <result property="toId" column="to_id"></result>
+        <result property="replyContent" column="reply_content"></result>
+    </resultMap>
+    <select id="getAllReply" resultMap="replyMap">
+        select * from reply_msg
+    </select>
+    <insert id="addReply" parameterType="Reply">
+        insert into reply_msg(id,comment_id,from_id,to_id,reply_content) values (#{id},#{commentId},#{fromId},#{toId},#{replyContent})
+    </insert>
+    <delete id="deleteReply">
+        delete from reply_msg where id=#{id}
+    </delete>
+    <select id="getReply" resultMap="replyMap">
+        select * from reply_msg where id=#{id}
+    </select>
+    <update id="updateReply">
+        update reply_msg set comment_id=#{commentId},from_id=#{fromId},to_id=#{toId},reply_content=#{replyContent}
+        where id=#{id}
+    </update>
+</mapper>

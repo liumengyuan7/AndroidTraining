@@ -53,4 +53,9 @@ public class AdminController {
 			return "/welcome";
 		}
 	}
+	@RequestMapping("/login_out")
+	public String login_out(HttpSession session){
+    	session.removeAttribute("admin");
+    	return "/login";
+	}
 }

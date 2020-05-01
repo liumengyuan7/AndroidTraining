@@ -28,7 +28,7 @@
         <!-- 顶部开始 -->
         <div class="container">
             <div class="logo">
-                <a href="${ctx}/index.jsp">smallpigeon</a></div>
+                <a href="${ctx}/admin/login">smallpigeon</a></div>
             <div class="left_open">
                 <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
             </div>
@@ -61,9 +61,7 @@
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
                         <dd>
-                            <a onclick="xadmin.open('个人信息','http://www.baidu.com')">个人信息</a></dd>
-                        <dd>
-                            <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+                            <a href="${ctx}/login_out.jsp">切换帐号</a></dd>
                         <dd>
                             <a href="${ctx}/login_out.jsp">退出</a></dd>
                     </dl>
@@ -202,6 +200,24 @@
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>动态添加</cite></a>
                             </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="iconfont left-nav-li" lay-tips="评论管理">&#xe723;</i>
+                                    <cite>评论管理</cite>
+                                    <i class="iconfont nav_right">&#xe697;</i></a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a onclick="xadmin.add_tab('评论列表','${ctx}/reply/getAll')">
+                                            <i class="iconfont">&#xe6a7;</i>
+                                            <cite>评论列表</cite></a>
+                                    </li>
+                                    <li>
+                                        <a onclick="xadmin.add_tab('评论添加','${ctx}/reply/addReply')">
+                                            <i class="iconfont">&#xe6a7;</i>
+                                            <cite>评论添加</cite></a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -224,54 +240,6 @@
                                 <a onclick="xadmin.add_tab('注册页面','${ctx}/register.jsp')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>注册页面</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('更新日志','log.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>更新日志</cite></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="第三方组件">&#xe6b4;</i>
-                            <cite>layui第三方组件</cite>
-                            <i class="iconfont nav_right">&#xe697;</i></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('滑块验证','https://fly.layui.com/extend/sliderVerify/')" target="">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>滑块验证</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('富文本编辑器','https://fly.layui.com/extend/layedit/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>富文本编辑器</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('eleTree 树组件','https://fly.layui.com/extend/eleTree/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>eleTree 树组件</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('图片截取','https://fly.layui.com/extend/croppers/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>图片截取</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('formSelects 4.x 多选框','https://fly.layui.com/extend/formSelects/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>formSelects 4.x 多选框</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('Magnifier 放大镜','https://fly.layui.com/extend/Magnifier/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>Magnifier 放大镜</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('notice 通知控件','https://fly.layui.com/extend/notice/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>notice 通知控件</cite></a>
                             </li>
                         </ul>
                     </li>
