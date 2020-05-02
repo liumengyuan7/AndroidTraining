@@ -54,6 +54,6 @@
         update user set user_points=#{point} where id=#{userId}
     </update>
     <update id="updateUserLocation" parameterType="com.entity.User">
-        update user set locaiton=#{location} where id=#{userId}
+        update user set longitude=#{longitude},latitude=#{latitude} where id=#{userId}
     </update>
 </mapper>

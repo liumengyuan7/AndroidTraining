@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.smallpigeon.Chat.activity.ChatActivity;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.MainActivity;
@@ -61,14 +62,7 @@ public class RemachingActivity extends AppCompatActivity {
     private String myId;
     private String userId;
     private String userNickName;
-    private Handler handleAvatar = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            Bitmap bitmap = (Bitmap)msg.obj;
-            match_userImg.setImageBitmap(bitmap);
-        }
-    };
-
+    private String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,25 +120,8 @@ public class RemachingActivity extends AppCompatActivity {
 
     //获取匹配对象的头像
     private void getAvatar() {
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://" + getResources().getString(R.string.ip_address) + ":8080/" +
-                            "smallpigeon/user/postPicture?userEmail="+match_userEmail.getText().toString());
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    Message message = new Message();
-                    message.obj = bitmap;
-                    handleAvatar.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        Glide.with(this).load("http://"+getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/avatar/"+userEmail+".jpg").into(match_userImg);
     }
 
     //获取匹配对象的信息
@@ -161,7 +138,7 @@ public class RemachingActivity extends AppCompatActivity {
         match_userPoints.setText(intent.getStringExtra("user_points"));
         match_userInterest.setText(interest.substring(0,interest.length()-1));
         match_userEmail.setText(intent.getStringExtra("user_email"));
-
+        userEmail = intent.getStringExtra("user_email");
     }
 
     /**

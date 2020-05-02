@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
@@ -57,6 +58,7 @@ public class MyFragment extends Fragment {
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
     private String path;
+    private String userEmail;
 
     private Handler handleImage = new Handler(){
         @Override
@@ -65,7 +67,6 @@ public class MyFragment extends Fragment {
                 Bitmap bitmap = (Bitmap) msg.obj;
                 OutputStream outputStream = new FileOutputStream(path);
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-                myAvatar.setImageBitmap(bitmap);
                 outputStream.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -240,6 +241,9 @@ public class MyFragment extends Fragment {
 
     //设置头像，并保存到本地
     private void getPictureAndSave(final String userEmail){
+        this.userEmail = userEmail;
+        Glide.with(getActivity()).load("http://"+getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/avatar/"+userEmail+".jpg").into(myAvatar);
         new Thread(){
             @Override
             public void run() {

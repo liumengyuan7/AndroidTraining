@@ -84,6 +84,23 @@ public class MachingActivity extends AppCompatActivity {
         }
     };
 
+    private Handler nearbyUserHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj + "";
+            if(result==null){
+                Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT).show();
+            }else{
+                Intent request = new Intent();
+                request.setClass(MachingActivity.this,NearbyUserActivity.class);
+                request.putExtra("nearbyUser",result);
+                startActivity(request);
+//                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+//                Log.e("aaaaaaaaaaaaaaaaaa",result);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -165,10 +182,9 @@ public class MachingActivity extends AppCompatActivity {
                 String location = response.getStringExtra("location");
                 String result = new Utils().getConnectionResult("user","getNearbyUser",
                         "location="+location+"&&userId="+userId);
-                Intent request = new Intent();
-                request.setClass(getApplicationContext(),NearbyUserActivity.class);
-                request.putExtra("nearbyUser",result);
-                getApplicationContext().startActivity(request);
+                Message message = new Message();
+                message.obj = result;
+                nearbyUserHandler.sendMessage(message);
             }
         }.start();
     }

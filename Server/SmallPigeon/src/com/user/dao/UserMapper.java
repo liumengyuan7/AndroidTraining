@@ -42,6 +42,6 @@ public interface UserMapper {
 
     public int updateUserPointsById(@Param("userId") String userId, @Param("point") int point);
 
-    public int updateUserLocation(@Param("location") String location,@Param("userId") String userId);
+    public int updateUserLocation(@Param("longitude") double longitude,@Param("latitude") double latitude,@Param("userId") String userId);
 
 }

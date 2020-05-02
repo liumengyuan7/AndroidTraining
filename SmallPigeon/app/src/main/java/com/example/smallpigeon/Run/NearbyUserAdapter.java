@@ -56,14 +56,6 @@ public class NearbyUserAdapter extends BaseAdapter {
         Map<String,String> item = dataSource.get(position);
         TextView textView = convertView.findViewById(R.id.nearby_user_email);
         textView.setText(item.get("user_email"));
-        Intent intent = new Intent(context,RemachingActivity.class);
-        intent.putExtra("user_nickname",item.get("user_nickname"));
-        intent.putExtra("user_sex",item.get("user_sex"));
-        intent.putExtra("user_points",item.get("user_points"));
-        intent.putExtra("user_interest",item.get("user_interest"));
-        intent.putExtra("user_email",item.get("user_email"));
-        intent.putExtra("user_id",item.get("id"));
-        context.startActivity(intent);
         return convertView;
     }
 }

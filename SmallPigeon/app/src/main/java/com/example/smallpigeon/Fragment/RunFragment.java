@@ -98,6 +98,7 @@ public class RunFragment extends Fragment {
                     if(loginOrNot()){
                         //更新用户当前的位置
                         String location = getUserLocation();
+                        Log.e("location:",location);
                         updateUserLocation(location);
                         Intent intentM = new Intent( getContext(), MachingActivity.class );
                         intentM.putExtra("location",location);  //更新用户位置后传递位置到匹配界面
@@ -149,7 +150,8 @@ public class RunFragment extends Fragment {
             @Override
             public void run() {
                 if(location!=null){
-                    new Utils().getConnectionResult("user","updateUserLocation","location="+location);
+                    String userId = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_id","");
+                    new Utils().getConnectionResult("user","updateUserLocation","location="+location+"&&userId="+userId);
                 }
             }
         }.start();
@@ -157,7 +159,7 @@ public class RunFragment extends Fragment {
 
     //获取当前的经纬度
     public String getUserLocation(){
-        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         criteria.setCostAllowed(false);
         //设置位置服务免费

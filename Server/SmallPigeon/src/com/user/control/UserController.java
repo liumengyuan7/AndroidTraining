@@ -201,13 +201,14 @@ public class UserController {
 
 	//根据经纬度获得周围用户的信息
     @ResponseBody
-    @RequestMapping("getNearbyUser")
+    @RequestMapping(value = "getNearbyUser",produces = "text/html;charset=UTF-8")
     public String getNearbyUser(@RequestParam("location") String location,@RequestParam("userId") String userId){
 	    String[] loLa = location.split(";");
 	    double longitude = Double.parseDouble(loLa[0]);
 	    double latitude = Double.parseDouble(loLa[1]);
 	    String nearbyUser = this.userService.selectNearbyUserByLocation(longitude-0.1,longitude+0.1,
                 latitude-0.1,latitude+0.1,userId);
+		System.out.println(nearbyUser);
 	    if(nearbyUser!=null) return nearbyUser;
 	    else return "false";
     }

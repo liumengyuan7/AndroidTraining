@@ -2,7 +2,10 @@ package com.example.smallpigeon.Run;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.smallpigeon.R;
@@ -31,6 +34,7 @@ public class NearbyUserActivity extends AppCompatActivity {
         prepareDataSource();
         nearbyUserAdapter = new NearbyUserAdapter(dataSource,getApplicationContext(),R.layout.nearby_user_item);
         nearbyUserList.setAdapter(nearbyUserAdapter);
+        itemClickListener();
     }
 
     //获取视图中的控件
@@ -44,7 +48,7 @@ public class NearbyUserActivity extends AppCompatActivity {
         try {
             String[] nearbyUserAndInterest = getIntent().getStringExtra("nearbyUser").split(";");
             JSONArray jsonArray = new JSONArray(nearbyUserAndInterest[0]);
-            String[] interest = nearbyUserAndInterest[1].split("+");
+            String[] interest = nearbyUserAndInterest[1].split("\\+");
             for (int i = 0;i<jsonArray.length();i++){
                 JSONObject json = jsonArray.getJSONObject(i);
                 Map<String, String> item = new HashMap<>();
@@ -59,6 +63,24 @@ public class NearbyUserActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    //item的点击事件
+    public void itemClickListener(){
+        nearbyUserList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String,String> item = dataSource.get(position);
+                Intent intent = new Intent(getApplicationContext(),RemachingActivity.class);
+                intent.putExtra("user_nickname",item.get("user_nickname"));
+                intent.putExtra("user_sex",item.get("user_sex"));
+                intent.putExtra("user_points",item.get("user_points"));
+                intent.putExtra("user_interest",item.get("user_interest"));
+                intent.putExtra("user_email",item.get("user_email"));
+                intent.putExtra("user_id",item.get("id"));
+                startActivity(intent);
+            }
+        });
     }
 
 }

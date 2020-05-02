@@ -45,11 +45,12 @@ public class UserService {
 	private InterestService interestService;
 	@Resource
 	private ServletContext servletContext;
-	private String interestString = "";
-	private String userInfoAndInterest = "";
+	private String interestString;
+	private String userInfoAndInterest;
 
 	//用户的登录操作
 	public String userLogin(String email, String password) {
+		interestString = "";
 		Map user = this.userMapper.selectUserByEmailAndPassword(email, password); //查询是否存在用户
 		if(user != null){
 			List<Map> userList = new ArrayList<>();
@@ -199,11 +200,14 @@ public class UserService {
 
 	//更新用户的位置信息
 	public int updateUserLocation(String location,String userId){
-		return this.userMapper.updateUserLocation(location, userId);
+		String[] longitudeAndLatitude = location.split(";");
+		return this.userMapper.updateUserLocation(Double.parseDouble(longitudeAndLatitude[0]),
+				Double.parseDouble(longitudeAndLatitude[1]), userId);
 	}
 
 	//根据经纬度的大小获取周围的人的信息
 	public String selectNearbyUserByLocation(double minLongitude,double maxLongitude,double minLatitude,double maxLatitude,String userId){
+		userInfoAndInterest = "";
 		List<Map> result = this.userMapper.selectNearbyUserByLocation(minLongitude, maxLongitude, minLatitude, maxLatitude, userId);
 		userInfoAndInterest += new Gson().toJson(result)+";";
 		for(int i = 0;i<result.size();i++){
