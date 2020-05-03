@@ -169,26 +169,6 @@ public class UserController {
 		return "true";
 	}
 
-	//post图片
-	@ResponseBody
-	@RequestMapping("postPicture")
-	public File postPicture(@RequestParam("userEmail") String userEmail,
-							HttpServletResponse response) throws IOException {
-		String path = servletContext.getRealPath("")+"avatar\\"+userEmail+".jpg";
-		response.setContentType(servletContext.getMimeType(userEmail+".jpg"));
-		response.setHeader("Content-Disposition","attachment;fileName="+userEmail+".jpg");
-		InputStream in = new FileInputStream(path);
-		OutputStream out = response.getOutputStream();
-		int n = -1;
-		while ((n=in.read())!=-1){
-			out.write(n);
-			out.flush();
-		}
-		in.close();
-		out.close();
-		return null;
-	}
-
 	//更新经纬度
 	@ResponseBody
 	@RequestMapping("updateUserLocation")

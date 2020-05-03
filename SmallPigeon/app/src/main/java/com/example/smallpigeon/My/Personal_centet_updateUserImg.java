@@ -29,6 +29,9 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.RoundImageView;
 
@@ -56,15 +59,10 @@ public class Personal_centet_updateUserImg extends AppCompatActivity {
         setStatusBar();
         getViews();
         registerListener();
-        String path = getFilesDir().getAbsolutePath()+"/avatar/"
-                +getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","")+".jpg";
-        File file = new File(path);
-        if(!file.exists()){
-            userImg.setImageDrawable(getResources().getDrawable(R.drawable.woman));
-        }else{
-            Bitmap bitmap = BitmapFactory.decodeFile(path);
-            userImg.setImageBitmap(bitmap);
-        }
+        String userEmail = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
+        RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with(this).load("http://"+getResources().getString(R.string.ip_address)
+                    +":8080/smallpigeon/avatar/"+userEmail+".jpg").apply(requestOptions).into(userImg);
         //打开相机获取图片并上传新头像
         camera.setOnClickListener(new View.OnClickListener() {
             @Override

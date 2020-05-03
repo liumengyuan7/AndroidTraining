@@ -26,6 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
@@ -57,24 +59,6 @@ public class MyFragment extends Fragment {
     private LinearLayout btnGradeRank;
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
-    private String path;
-    private String userEmail;
-
-    private Handler handleImage = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            try {
-                Bitmap bitmap = (Bitmap) msg.obj;
-                OutputStream outputStream = new FileOutputStream(path);
-                bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-                outputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
     @Nullable
     @Override
@@ -226,44 +210,12 @@ public class MyFragment extends Fragment {
     private void getAvatar(){
         String userEmail = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","");
         if(! userEmail.equals("") && userEmail != null){
-            path = getContext().getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
-            File file = new File(path);
-            if(!file.exists()){
-                getPictureAndSave(userEmail);
-            }else{
-                Bitmap bitmap = BitmapFactory.decodeFile(path);
-                myAvatar.setImageBitmap(bitmap);
-            }
+            RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
+            Glide.with(getActivity()).load("http://"+getResources().getString(R.string.ip_address)
+                    +":8080/smallpigeon/avatar/"+userEmail+".jpg").apply(requestOptions).into(myAvatar);
         }else{
             myAvatar.setImageDrawable(getResources().getDrawable(R.drawable.woman));
         }
-    }
-
-    //设置头像，并保存到本地
-    private void getPictureAndSave(final String userEmail){
-        this.userEmail = userEmail;
-        Glide.with(getActivity()).load("http://"+getResources().getString(R.string.ip_address)
-                +":8080/smallpigeon/avatar/"+userEmail+".jpg").into(myAvatar);
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://"+getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/user/postPicture?userEmail="+userEmail);
-                    URLConnection conn = url.openConnection();
-                    InputStream in = conn.getInputStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    in.close();
-                    Message message = new Message();
-                    message.obj = bitmap;
-                    handleImage.sendMessage(message);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
     /*

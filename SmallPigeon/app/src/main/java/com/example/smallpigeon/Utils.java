@@ -124,7 +124,7 @@ public class Utils {
 
     }
 
-    //向后台发送图片
+    //向后台发送图片(可以用okhttp框架)
     public String postPictureServer(String controller, String method,Bitmap bitmap){
 
         try {

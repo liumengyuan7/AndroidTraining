@@ -22,6 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.R;
 import com.hyphenate.EMCallBack;
@@ -70,14 +73,9 @@ public class PersonalCenter extends AppCompatActivity {
     private void getAvatar(){
         String userEmail = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","");
         if(! userEmail.equals("") && userEmail != null){
-            String path = getFilesDir().getAbsolutePath()+"/avatar/"+userEmail+".jpg";
-            File file = new File(path);
-            if(!file.exists()){
-                user_Img.setImageDrawable(getResources().getDrawable(R.drawable.woman));
-            }else{
-                Bitmap bitmap = BitmapFactory.decodeFile(path);
-                user_Img.setImageBitmap(bitmap);
-            }
+            RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
+            Glide.with(this).load("http://"+getResources().getString(R.string.ip_address)
+                    +":8080/smallpigeon/avatar/"+userEmail+".jpg").apply(requestOptions).into(user_Img);
         }else{
             user_Img.setImageDrawable(getResources().getDrawable(R.drawable.woman));
         }
