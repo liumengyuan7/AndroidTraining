@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.smallpigeon.Adapter.MyDynamicAdapter;
-import com.example.smallpigeon.Adapter.PeopleAdapter;
 import com.example.smallpigeon.Community.ReleaseDynamic.ReleaseDynamic;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.UserContent;
@@ -55,7 +54,14 @@ public class MyCommunity extends AppCompatActivity {
         list.add(content);
 
         myDynamicAdapter = new MyDynamicAdapter( MyCommunity.this, R.layout.people_dynamic_listitem, list );
-        my_dynamic_list.setAdapter(myDynamicAdapter);
+//        my_dynamic_list.setAdapter(myDynamicAdapter);
+//        //item点击事件
+//        my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText( getApplicationContext(), "hh", Toast.LENGTH_SHORT ).show();
+//            }
+//        } );
     }
 
     class CustomClickListener implements View.OnClickListener{
