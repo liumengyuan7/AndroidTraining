@@ -49,7 +49,7 @@ public class IdentifyActivity extends AppCompatActivity {
     private String userId;
     private MyClickListener listener;
     private String identifyImages;
-    private int is_accreditation;
+    private Integer is_accreditation;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -70,7 +70,7 @@ public class IdentifyActivity extends AppCompatActivity {
         registerListeners();
         SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
-        selectUserInfo();
+
     }
 
     private void registerListeners() {
@@ -108,6 +108,7 @@ public class IdentifyActivity extends AppCompatActivity {
                     String userSno = et_sno.getText().toString().trim();
                     //更新后台用户数据  增加姓名 学校 学号 以及认证图片
                     updateUserMsg(userId,userName,userSchool,userSno,identifyImages);
+                    selectUserInfo();
                     Intent intent1 = new Intent(IdentifyActivity.this,IsIdentifyActivity.class);
                     intent1.putExtra("identify",is_accreditation);
                     startActivity(intent1);

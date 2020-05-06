@@ -30,6 +30,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.IdentifyActivity;
+import com.example.smallpigeon.My.IsIdentifyActivity;
 import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
@@ -61,6 +62,9 @@ public class MyFragment extends Fragment {
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
 
+    private Integer is_accreditation;
+    private String userId;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class MyFragment extends Fragment {
         getViews(view);
         registerListener();
         loginEvent();
+
         return view;
     }
 
@@ -94,7 +99,18 @@ public class MyFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.right_Authentication:
-                    Intent intentAuthor = new Intent(getContext(), IdentifyActivity.class);
+                    Intent intentAuthor=null;
+                    if (loginOrNot() && is_accreditation==0){
+                        intentAuthor = new Intent(getContext(), IsIdentifyActivity.class);
+                        intentAuthor.putExtra("identify",is_accreditation);
+                    }else if (loginOrNot() && is_accreditation==1){
+                        intentAuthor = new Intent(getContext(), IsIdentifyActivity.class);
+                        intentAuthor.putExtra("identify",is_accreditation);
+                    }else if (loginOrNot() && is_accreditation==null){
+                        intentAuthor = new Intent(getContext(), IdentifyActivity.class);
+                    }else {
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     startActivity(intentAuthor);
                     break;
                 case R.id.right_community:
@@ -141,16 +157,23 @@ public class MyFragment extends Fragment {
 
     }
 
+    //TODO：根据用户id查询用户信息
+    private void selectUserInfo() {
+    }
+
     //判断是否登录的方法
     private boolean loginOrNot(){
         SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String userEmail = pre.getString("user_email","");
+        userId = pre.getString("user_id","");
+        selectUserInfo();
         if(userEmail.equals("")||userEmail==null){
             return false;
         }else{
             return true;
         }
     }
+
 
     //动态事件
     private void motionEvent(View view,MotionEvent event){
