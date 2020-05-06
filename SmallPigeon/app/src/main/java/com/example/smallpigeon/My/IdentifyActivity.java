@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,11 +54,21 @@ public class IdentifyActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            String result = msg.obj+"";
-            if(result.equals("true")){
-                Toast.makeText(getApplicationContext(),"提交成功，请等待管理员验证",Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getApplicationContext(),"提交失败，请重新提交",Toast.LENGTH_SHORT).show();
+            switch (msg.what) {
+                case 0:
+                    String result = msg.obj + "";
+                    if (result.equals("true")) {
+                        Toast.makeText(getApplicationContext(), "提交成功，请等待管理员验证", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "提交失败，请重新提交", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 1:
+                    String status = msg.obj + "";
+                    is_accreditation = Integer.parseInt(status);
+                    Log.e("IdentifyActivity当前认证状态",is_accreditation+"");
+                    break;
+
             }
         }
     };
@@ -70,7 +81,7 @@ public class IdentifyActivity extends AppCompatActivity {
         registerListeners();
         SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
-        selectUserInfo();
+        selectUserInfo(userId);
     }
 
     private void registerListeners() {
@@ -106,18 +117,29 @@ public class IdentifyActivity extends AppCompatActivity {
                     String userName = et_name.getText().toString().trim();
                     String userSchool = et_school.getText().toString().trim();
                     String userSno = et_sno.getText().toString().trim();
-                    //更新后台用户数据  增加姓名 学校 学号 以及认证图片
-                    updateUserMsg(userId,userName,userSchool,userSno,identifyImages);
+                    //更新后台用户数据  增加姓名 学校 学号 以及认证图片  认证状态
+                    updateUserMsg(userId,userName,userSchool,userSno,identifyImages,2);
                     Intent intent1 = new Intent(IdentifyActivity.this,IsIdentifyActivity.class);
                     intent1.putExtra("identify",is_accreditation);
                     startActivity(intent1);
+                    finish();
                     break;
             }
         }
     }
 
-    //TODO：根据用户id查询用户信息
-    private void selectUserInfo() {
+    //根据用户id得到 用户是否认证成功
+    private void selectUserInfo(String userId) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("user","getStatusByUserId", "userId="+ userId);
+                Message message = new Message();
+                message.obj = result;
+                message.what=1;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 
     @Override
@@ -225,14 +247,16 @@ public class IdentifyActivity extends AppCompatActivity {
 
     }
     //更新用户信息
-    private void updateUserMsg(String userId, String userName, String userSchool, String userSno, String identifyImages) {
+    private void updateUserMsg(String userId, String userName, String userSchool, String userSno, String identifyImages, int status) {
         new Thread(){
             @Override
             public void run() {
                 String result = new Utils().getConnectionResult("user","updateUserByMsg",
-                        "userId="+userId+"&&userName="+userName+"&&userSno="+userSno+"&&userSchool="+userSchool+"&&identifyImages="+identifyImages);
+                        "userId="+userId+"&&userName="+userName+"&&userSno="+
+                                userSno+"&&userSchool="+userSchool+"&&identifyImages="+identifyImages+"&&status="+status);
                 Message message = new Message();
                 message.obj = result;
+                message.what=0;
                 handler.sendMessage(message);
             }
         }.start();

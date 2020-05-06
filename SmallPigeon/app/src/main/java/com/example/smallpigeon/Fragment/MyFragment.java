@@ -30,6 +30,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.IdentifyActivity;
+import com.example.smallpigeon.My.IsIdentifyActivity;
 import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
@@ -60,7 +61,15 @@ public class MyFragment extends Fragment {
     private LinearLayout btnGradeRank;
     private LinearLayout btnPlan;
     private CustomButtonListener listener;
-
+    private String useId;
+    private int is_accreditation;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String status = msg.obj + "";
+            is_accreditation = Integer.parseInt(status);
+        }
+    };
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +77,7 @@ public class MyFragment extends Fragment {
         getViews(view);
         registerListener();
         loginEvent();
+        selectUserInfo(useId);
         return view;
     }
 
@@ -90,16 +100,34 @@ public class MyFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.my_Settings:
-                    Intent intent = new Intent(getContext(), PersonalCenter.class);
-                    startActivity(intent);
+                    if(loginOrNot()){
+                        Intent intent = new Intent(getContext(), PersonalCenter.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.right_Authentication:
-                    Intent intentAuthor = new Intent(getContext(), IdentifyActivity.class);
-                    startActivity(intentAuthor);
+                    if(loginOrNot()){
+                        if(is_accreditation==0) {
+                            Intent intentAuthor = new Intent(getContext(), IdentifyActivity.class);
+                            startActivity(intentAuthor);
+                        }else{
+                            Intent intentJudge = new Intent(getContext(), IsIdentifyActivity.class);
+                            intentJudge.putExtra("identify",is_accreditation);
+                            startActivity(intentJudge);
+                        }
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.right_community:
-                    Intent intent3 = new Intent(getContext(), MyCommunity.class);
-                    startActivity(intent3);
+                    if(loginOrNot()){
+                        Intent intent3 = new Intent(getContext(), MyCommunity.class);
+                        startActivity(intent3);
+                    }else{
+                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.right_gradeRank:
                     if(loginOrNot()){
@@ -169,7 +197,7 @@ public class MyFragment extends Fragment {
         //跳转登录界面
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
         String nickname = pre.getString("user_nickname","");
-        String useId = pre.getString("user_id","");
+        useId = pre.getString("user_id","");
         if(nickname.equals("") || nickname == null){
             loginOrRegister.setText("登录/注册");
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +234,7 @@ public class MyFragment extends Fragment {
         super.onResume();
         loginEvent();
         getAvatar();
+        selectUserInfo(useId);
     }
 
     //获取头像
@@ -238,5 +267,18 @@ public class MyFragment extends Fragment {
 
             }
         });
+    }
+    //根据用户id得到 用户是否认证成功
+    private void selectUserInfo(String userId) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("user","getStatusByUserId", "userId="+ userId);
+                Message message = new Message();
+                message.obj = result;
+                message.what=1;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 }
