@@ -136,7 +136,7 @@ public class IdentifyActivity extends AppCompatActivity {
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             iv_back.setImageBitmap(photo);
-            String name = avatarStore(iv_front);
+            String name = avatarStore(iv_back);
             sendImg(name);
             if (identifyImages==null || identifyImages.equals("")){
                 identifyImages = name;
