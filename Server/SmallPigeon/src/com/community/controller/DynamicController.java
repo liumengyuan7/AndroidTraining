@@ -70,25 +70,23 @@ public class DynamicController {
     @RequestMapping(value = "getAllDynamic",produces = "text/html;charset=UTF-8")
     public String getAllDynamic(){
         String result = this.dynamicService.queryAllDynamic();
-        String s = this.dynamicService.queryAllDynamic();
-        System.out.println(s);
         if(result == null || result.equals("")){
 			return "false";
 		}else{
 			return result;
 		}
     }
-  /*  //得到所有动态 带评论内容
+   //得到自己发布的所有动态
     @ResponseBody
-    @RequestMapping(value = "getAllDynamicAndComment",produces = "text/html;charset=UTF-8")
-    public String queryAllDynamicAndComment(){
-        String result = this.dynamicService.queryAllDynamicAndComment();
+    @RequestMapping(value = "getAllDynamicAndCommentByUerId",produces = "text/html;charset=UTF-8")
+    public String queryAllDynamicAndComment(@RequestParam("userId") String userId){
+        String result = this.dynamicService.queryAllDynamicAndComment(userId);
         if(result == null || result.equals("")){
 			return "false";
 		}else{
 			return result;
 		}
-    }*/
+    }
   /*
    * @Description 给动态添加评论信息
    * @Auther 刘梦圆

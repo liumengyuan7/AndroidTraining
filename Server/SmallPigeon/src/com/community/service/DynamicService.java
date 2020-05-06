@@ -62,11 +62,23 @@ public class DynamicService {
         System.out.println(new Gson().toJson(dynamics));
         return new Gson().toJson(dynamics);
     }
-      //得到所有用户的动态和评论内容
-//    public String queryAllDynamicAndComment(){
-////        List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamicAndComment();
-//        return new Gson().toJson(this.dynamicMapper.queryAllDynamicAndComment());
-//    }
+      //得到自己发布的所有动态
+    public String queryAllDynamicAndComment(String userId){
+        List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamicByUserId(userId);
+        System.out.println(dynamics.toString());
+        for (int i =0;i<dynamics.size();i++){
+            int dynamicId = dynamics.get(i).getId();
+            List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
+            dynamics.get(i).setComments(comments);
+            for (int j=0;j<comments.size();j++){
+                int commentId = comments.get(j).getId();
+                List<Reply> replies = this.replyMapper.queryReplyByCommentId(commentId);
+                comments.get(j).setReplies(replies);
+            }
+        }
+        System.out.println(new Gson().toJson(dynamics));
+        return new Gson().toJson(dynamics);
+    }
     //添加评论
      public String addComment(String dynamicId,String userId,String content,String contentTime) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
