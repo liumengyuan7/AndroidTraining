@@ -86,7 +86,7 @@ public class PeopleFragment extends Fragment {
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0;i<jsonArray.length();i++){
                         JSONObject json = jsonArray.getJSONObject(i);
-                        Log.e("第"+i+"条动态",json.toString());
+//                        Log.e("第"+i+"条动态",json.toString());
                         DynamicContent content = new DynamicContent();
                         content.setDynamicId(json.getInt("id"));
                         UserContent userContent = new UserContent();
@@ -108,11 +108,11 @@ public class PeopleFragment extends Fragment {
                         content.setZan_num(json.getInt("zanNum"));
                         content.setForward_id(json.getInt("forwardId"));
                         JSONArray jsonArrayComment = json.getJSONArray("comments");
-                        Log.e("comments",jsonArrayComment.toString());
+//                        Log.e("comments",jsonArrayComment.toString());
                         List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
                         for (int j=0;j<jsonArrayComment.length();j++){
                             JSONObject jsonComment = jsonArrayComment.getJSONObject(j);
-                            Log.e("该动态下第"+j+"条评论",jsonComment.toString());
+//                            Log.e("该动态下第"+j+"条评论",jsonComment.toString());
                             String nickName = jsonComment.getString("commentFromNickname");
                             String userLogo = jsonComment.getString("commentFromEmail");
                             String cContent = jsonComment.getString("commentFromContent");
@@ -131,7 +131,7 @@ public class PeopleFragment extends Fragment {
                             List<ReplyDetailBean> replyDetailBeans = new ArrayList<>();
                             for (int k=0;k<jsonArrayCommentReply.length();k++) {
                                 JSONObject jsonCommentReply = jsonArrayCommentReply.getJSONObject(k);
-                                Log.e("该评论下的回复",jsonArrayCommentReply.toString());
+//                                Log.e("该评论下的回复",jsonArrayCommentReply.toString());
                                 ReplyDetailBean replyDetailBean = new ReplyDetailBean(jsonCommentReply.getString("fNickname"),jsonCommentReply.getString("replyContent"));
                                 replyDetailBean.setCreateDate(jsonCommentReply.getString("replyTime").substring(0,19));
                                 replyDetailBean.setCommentId(jsonCommentReply.getString("commentId"));
@@ -186,15 +186,23 @@ public class PeopleFragment extends Fragment {
                     case R.id.ll_toComment:
                         tv_commentNum = view.findViewById( R.id.tv_commentNum );
 //                        showPopupWindow("comment");
-                        Intent intent = new Intent(getContext(), DynamicDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("dynamic",list.get(index));
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                        if (loginOrNot()){
+                            Intent intent = new Intent(getContext(), DynamicDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("dynamic",list.get(index));
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.ll_forward:
                         tv_forwardNum = view.findViewById( R.id.tv_forwardNum );
-                        showPopupWindow(index,"forward");
+                        if (loginOrNot()){
+                            showPopupWindow(index,"forward");
+                        } else {
+                            Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
             }

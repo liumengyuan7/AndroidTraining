@@ -36,6 +36,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     private ImageView ivLike;
     private TextView tvLikeNum;
     private boolean judgeZan = false;
+    private String userId;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -137,28 +138,31 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         }
         //得到点赞用户id
         SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        int userId = Integer.parseInt(pre.getString("user_id",""));
+        userId = pre.getString("user_id","");
         //点击事件
         ViewHolder finalHolder = holder;
         holder.ll_like.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (judgeZan){
+            if (judgeZan==true && loginOrNot()){
                 finalHolder.iv_like.setImageResource(R.drawable.good);
                 int zanNumBefore = dynamicContent.getZan_num();
                 int zanNumAfter = zanNumBefore-1;
-                decZanNum(dynamicContent.getDynamicId(),userId,zanNumAfter);
+                decZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
                 dynamicContent.setZan_num(zanNumAfter);
                 tvLikeNum.setText(zanNumAfter+"");
                 judgeZan = false;
-            } else {
+            } else if (judgeZan==false && loginOrNot()){
                 finalHolder.iv_like.setImageResource( R.drawable.heart );
                 int zanNumBefore = dynamicContent.getZan_num();
                 int zanNumAfter = zanNumBefore+1;
-                addZanNum(dynamicContent.getDynamicId(),userId,zanNumAfter);
+                addZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
                 dynamicContent.setZan_num(zanNumAfter);
                 tvLikeNum.setText(zanNumAfter+"");
                 judgeZan = true;
+            }else {
+                //没有登录注册 不能点赞  请先登录
+                Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show();
             }
         }
         });
@@ -237,5 +241,13 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 +":8080/smallpigeon/avatar/"+imgName+".jpg";
         Glide.with(this.context).load(url).into(imageView);
     }
-
+    private boolean loginOrNot(){
+        SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userEmail = pre.getString("user_email","");
+        if(userEmail.equals("")||userEmail==null){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
