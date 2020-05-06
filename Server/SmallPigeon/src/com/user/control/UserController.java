@@ -199,9 +199,10 @@ public class UserController {
 								  @RequestParam("userName") String userName,
 								  @RequestParam("userSno") String userSno,
 								  @RequestParam("userSchool") String userSchool,
-								  @RequestParam("identifyImages") String identifyImages){
+								  @RequestParam("identifyImages") String identifyImages,
+								  @RequestParam("status") String status){
 		System.out.println(userId+userName+userSno+userSchool);
-		return this.userService.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages);
+		return this.userService.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages,status);
 	}
 	//获取的学生证图片存入out中
 	@ResponseBody
@@ -215,5 +216,11 @@ public class UserController {
         FileItem item = items.get(0);
 		item.write(new File(path+item.getName()));
 		return "true";
+	}
+	//获得认证状态  是否认证
+	@ResponseBody
+	@RequestMapping("/getStatusByUserId")
+	public String getStatusByUserId(@RequestParam("userId") String userId){
+		return this.userService.getStatusByUserId(userId);
 	}
 }

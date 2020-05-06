@@ -226,12 +226,18 @@ public class UserService {
 		return userInfoAndInterest;
 	}
     //更新学生信息
-	public String updateUserByMsg(String userId,String userName,String userSno,String userSchool,String identifyImages){
-		int n = this.userMapper.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages);
+	public String updateUserByMsg(String userId,String userName,String userSno,String userSchool,String identifyImages,String status){
+		int n = this.userMapper.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages,status);
 		if(n>0) {
 			return "true";
 		}else {
             return "false";
         }
+	}
+	//通过用户id得到其是否被认证
+	public String getStatusByUserId(String userId){
+		String result = this.userMapper.getStatusByUserId(userId);
+		System.out.println(result);
+		return this.userMapper.getStatusByUserId(userId);
 	}
 }

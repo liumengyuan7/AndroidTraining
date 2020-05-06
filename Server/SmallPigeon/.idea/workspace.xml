@@ -8,17 +8,18 @@
   <component name="ChangeListManager">
     <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/controller/DynamicController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/controller/DynamicController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/controller/DynamicController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/controller/DynamicController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/service/DynamicService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/service/DynamicService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/dbinfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/dbinfo.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/IdentifyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/IdentifyActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/MyCommunity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/MyCommunity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_my_community.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_my_community.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/control/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/control/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/dao/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/dao/UserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/dao/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/dao/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/control/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/control/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/dao/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/dao/UserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/dao/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/dao/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/user/control/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/user/control/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/user/dao/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/user/dao/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/user/dao/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/user/dao/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/user/service/UserService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -249,7 +250,7 @@
       <workItem from="1588416372365" duration="637000" />
       <workItem from="1588482810749" duration="3310000" />
       <workItem from="1588747369623" duration="2334000" />
-      <workItem from="1588750430633" duration="4088000" />
+      <workItem from="1588750430633" duration="9157000" />
     </task>
     <servers />
   </component>

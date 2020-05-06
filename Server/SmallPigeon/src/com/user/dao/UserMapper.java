@@ -45,6 +45,7 @@ public interface UserMapper {
     public int updateUserLocation(@Param("longitude") double longitude,@Param("latitude") double latitude,@Param("userId") String userId);
     //学生认证
     public int updateUserByMsg(@Param("userId") String userId,@Param("userName") String userName,@Param("userSno") String userSno,
-                               @Param("userSchool") String userSchool,@Param("identifyImages") String identifyImages);
-
+                               @Param("userSchool") String userSchool,@Param("identifyImages") String identifyImages,@Param("status") String status);
+    //认证状态
+    public String getStatusByUserId(@Param("userId") String userId);
 }
