@@ -225,5 +225,13 @@ public class UserService {
 		}
 		return userInfoAndInterest;
 	}
-
+    //更新学生信息
+	public String updateUserByMsg(String userId,String userName,String userSno,String userSchool,String identifyImages){
+		int n = this.userMapper.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages);
+		if(n>0) {
+			return "true";
+		}else {
+            return "false";
+        }
+	}
 }

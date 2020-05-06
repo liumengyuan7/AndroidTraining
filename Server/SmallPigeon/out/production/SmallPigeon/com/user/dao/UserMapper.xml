@@ -56,4 +56,8 @@
     <update id="updateUserLocation" parameterType="com.entity.User">
         update user set longitude=#{longitude},latitude=#{latitude} where id=#{userId}
     </update>
+     <update id="updateUserByMsg" parameterType="com.entity.User">
+        update user set user_name=#{userName},user_sno=#{userSno},user_school=#{userSchool},identify_image=#{identifyImages}
+        where id=#{userId}
+    </update>
 </mapper>
