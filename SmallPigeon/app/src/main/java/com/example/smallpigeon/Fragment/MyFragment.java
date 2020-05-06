@@ -70,6 +70,9 @@ public class MyFragment extends Fragment {
             is_accreditation = Integer.parseInt(status);
         }
     };
+    private Integer is_accreditation;
+    private String userId;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -173,12 +176,15 @@ public class MyFragment extends Fragment {
     private boolean loginOrNot(){
         SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String userEmail = pre.getString("user_email","");
+        String userId = pre.getString("user_id","");
+    
         if(userEmail.equals("")||userEmail==null){
             return false;
         }else{
             return true;
         }
     }
+
 
     //动态事件
     private void motionEvent(View view,MotionEvent event){

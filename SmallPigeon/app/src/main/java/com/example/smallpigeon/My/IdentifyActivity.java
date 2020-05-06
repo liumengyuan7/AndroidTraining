@@ -17,7 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.nfc.Tag;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
