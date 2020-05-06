@@ -3,20 +3,34 @@ package com.example.smallpigeon.My;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,12 +42,24 @@ import java.util.Random;
 public class IdentifyActivity extends AppCompatActivity {
     private EditText et_name;
     private EditText et_school;
+    private EditText et_sno;
     private ImageView iv_front;
     private ImageView iv_back;
     private Button btn_submit;
-
+    private String userId;
     private MyClickListener listener;
-
+    private String identifyImages;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj+"";
+            if(result.equals("true")){
+                Toast.makeText(getApplicationContext(),"提交成功，请等待管理员验证",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(),"提交失败，请重新提交",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +67,9 @@ public class IdentifyActivity extends AppCompatActivity {
 
         getViews();
         registerListeners();
+        SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        userId = pre.getString("user_id","");
+
     }
 
     private void registerListeners() {
@@ -53,6 +82,7 @@ public class IdentifyActivity extends AppCompatActivity {
     private void getViews() {
         et_name = findViewById(R.id.et_name);
         et_school = findViewById(R.id.et_school);
+        et_sno = findViewById(R.id.et_sno);
         iv_back = findViewById(R.id.iv_back);
         iv_front = findViewById(R.id.iv_front);
         btn_submit = findViewById(R.id.btn_submit);
@@ -72,9 +102,11 @@ public class IdentifyActivity extends AppCompatActivity {
                     startActivityForResult(intent,1);
                     break;
                 case R.id.btn_submit:
-                    String name = et_name.getText().toString().trim();
-                    String school = et_school.getText().toString().trim();
-                    //TODO:将相应信息传到后台
+                    String userName = et_name.getText().toString().trim();
+                    String userSchool = et_school.getText().toString().trim();
+                    String userSno = et_sno.getText().toString().trim();
+                    //更新后台用户数据  增加姓名 学校 学号 以及认证图片
+                    updateUserMsg(userId,userName,userSchool,userSno,identifyImages);
                     break;
             }
         }
@@ -88,18 +120,61 @@ public class IdentifyActivity extends AppCompatActivity {
             iv_front.setImageBitmap(photo);
             String name = avatarStore(iv_front);
             sendImg(name);
+            if (identifyImages==null || identifyImages.equals("")){
+                identifyImages = name;
+            }else {
+                identifyImages = identifyImages+";"+name;
+            }
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             iv_back.setImageBitmap(photo);
             String name = avatarStore(iv_front);
             sendImg(name);
+            if (identifyImages==null || identifyImages.equals("")){
+                identifyImages = name;
+            }else {
+                identifyImages = identifyImages+";"+name;
+            }
         }
     }
 
-    //TODO:向后台发送照片数据,path为图片的存储路径,参数为随机生成的图片名称
     private void sendImg(String name) {
         String path = getFilesDir().getAbsolutePath()+"/"+name;
         File file = new File(path);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Log.e("图片",path);
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("images", file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), file));
+        RequestBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url("http://"+getResources().getString(R.string.ip_address)+":8080/smallpigeon/user/postIdentifyImages")
+                .post(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("TAG", "失败信息: " + e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                            Toast.makeText(getApplicationContext(),"失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("TAG", "成功返回" + response);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                            Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
     }
 
@@ -140,5 +215,18 @@ public class IdentifyActivity extends AppCompatActivity {
         }
         return sb.toString();
 
+    }
+    //更新用户信息
+    private void updateUserMsg(String userId, String userName, String userSchool, String userSno, String identifyImages) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("user","updateUserByMsg",
+                        "userId="+userId+"&&userName="+userName+"&&userSno="+userSno+"&&userSchool="+userSchool+"&&identifyImages="+identifyImages);
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 }

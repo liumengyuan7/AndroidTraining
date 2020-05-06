@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
+import com.example.smallpigeon.My.IdentifyActivity;
 import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
@@ -93,7 +94,8 @@ public class MyFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.right_Authentication:
-                    Toast.makeText(getContext(),"程序员们正在努力开发，敬请期待！",Toast.LENGTH_SHORT).show();
+                    Intent intentAuthor = new Intent(getContext(), IdentifyActivity.class);
+                    startActivity(intentAuthor);
                     break;
                 case R.id.right_community:
                     Intent intent3 = new Intent(getContext(), MyCommunity.class);
