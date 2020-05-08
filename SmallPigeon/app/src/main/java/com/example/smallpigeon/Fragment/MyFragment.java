@@ -70,7 +70,7 @@ public class MyFragment extends Fragment {
             is_accreditation = Integer.parseInt(status);
         }
     };
-    private Integer is_accreditation;
+//    private Integer is_accreditation;
     private String userId;
 
     @Nullable

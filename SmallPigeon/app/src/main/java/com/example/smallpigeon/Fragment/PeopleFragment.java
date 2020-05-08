@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -165,17 +166,17 @@ public class PeopleFragment extends Fragment {
         registerListener();
 
         //显示后台服务器存储的所有发布的动态
-        selectAllDynamic();
+//        selectAllDynamic();
 
         //前端测试用
-//        DynamicContent content = new DynamicContent();
-//        UserContent userContent = new UserContent();
-//        userContent.setUserNickname("啦啦啦");
-//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content.setUserContent(userContent);
-//        content.setContent("今日跑步分享");
-//        content.setDevice(Build.MODEL);
-//        list.add(content);
+        DynamicContent content = new DynamicContent();
+        UserContent userContent = new UserContent();
+        userContent.setUserNickname("啦啦啦");
+        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        content.setUserContent(userContent);
+        content.setContent("今日跑步分享");
+        content.setDevice(Build.MODEL);
+        list.add(content);
 
         peopleAdapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
         dynamic_list.setAdapter(peopleAdapter);
@@ -185,7 +186,6 @@ public class PeopleFragment extends Fragment {
                 switch (view.getId()){
                     case R.id.ll_toComment:
                         tv_commentNum = view.findViewById( R.id.tv_commentNum );
-//                        showPopupWindow("comment");
                         if (loginOrNot()){
                             Intent intent = new Intent(getContext(), DynamicDetailActivity.class);
                             Bundle bundle = new Bundle();
@@ -211,34 +211,30 @@ public class PeopleFragment extends Fragment {
     }
 
     @SuppressLint("WrongConstant")
-    private void showPopupWindow(int index,String type) {
-//        if (loginOrNot()){
+    private void showPopupWindow(int index, String type) {
         if (popupView == null){
             //加载评论框的资源文件
             popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup, null);
         }
+
         et_discuss = (EditText) popupView.findViewById(R.id.et_discuss);
         btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
         rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
-        if (type == "comment"){
-            et_discuss.setHint( "说点什么吧……" );
-        } else if (type == "forward"){
-            et_discuss.setHint( "转发理由……" );
-        }
+        et_discuss.setHint( "  转发理由……" );
+
         //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
-            public void run()
-            {
+            public void run() {
                 mInputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 mInputManager.showSoftInput(et_discuss, 0);
                 mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }, 200);
+
         if (popupWindow == null){
             popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT, false);
-
         }
         //popupWindow的常规设置，设置点击外部事件，背景色
         popupWindow.setTouchable(true);
@@ -261,14 +257,15 @@ public class PeopleFragment extends Fragment {
         //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
         popupWindow.update();
+
         //设置监听
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            // 在dismiss中恢复透明度
-            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-            public void onDismiss() {
-                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
-            }
-        });
+//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//            // 在dismiss中恢复透明度
+//            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+//            public void onDismiss() {
+//                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+//            }
+//        });
         //外部点击事件
         rl_input_container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -289,21 +286,13 @@ public class PeopleFragment extends Fragment {
                     popupWindow.dismiss();
                     Toast.makeText(getContext(),"发送成功",Toast.LENGTH_SHORT).show();
                     et_discuss.setText( null );
-                    if (type == "comment"){
-                        //todo：从数据库获取数据并更改评论数
-                        tv_commentNum.setText("10");
-                    } else if (type == "forward"){
-                        //todo：从数据库获取数据并更改转发数
-                        tv_forwardNum.setText( "9" );
-                    }
-                    //TODO：发送成功，与后台交互
+                    //TODO：从数据库获取数据并更改转发数
+                    tv_forwardNum.setText( "9" );
+                    //TODO：发送成功，与后台交互，保存到数据库
 
                 }
             }
         });
-//        }else {
-//            Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-//        }
     }
 
     //查出所有动态
@@ -333,8 +322,6 @@ public class PeopleFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.iv_add_Message:
-                    //TODO:添加新的动态
-                    //TODO:如果已登录，跳转发表动态
                     if (loginOrNot()){
                         Intent intent = new Intent(getContext(), ReleaseDynamic.class);
                         startActivity(intent);

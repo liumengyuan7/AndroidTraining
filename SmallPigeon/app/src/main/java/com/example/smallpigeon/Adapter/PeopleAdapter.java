@@ -162,7 +162,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 judgeZan = true;
             }else {
                 //没有登录注册 不能点赞  请先登录
-                Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"请先登录哦！",Toast.LENGTH_SHORT).show();
             }
         }
         });
