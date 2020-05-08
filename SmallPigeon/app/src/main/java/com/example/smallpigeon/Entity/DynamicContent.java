@@ -18,12 +18,21 @@ public class DynamicContent implements Serializable {
     private String content;
     private String img;
     private int zan_num;
-    private int forward_id;
+    private int type;
     private int comment_Num;
     private String img2;
+    private ForwardContent forwardContent;
     private List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
 
     public DynamicContent(){}
+
+    public ForwardContent getForwardContent() {
+        return forwardContent;
+    }
+
+    public void setForwardContent(ForwardContent forwardContent) {
+        this.forwardContent = forwardContent;
+    }
 
     public int getDynamicId() {
         return dynamicId;
@@ -49,12 +58,12 @@ public class DynamicContent implements Serializable {
         return zan_num;
     }
 
-    public int getForward_id() {
-        return forward_id;
+    public int getType() {
+        return type;
     }
 
-    public void setForward_id(int forward_id) {
-        this.forward_id = forward_id;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public UserContent getUserContent() {

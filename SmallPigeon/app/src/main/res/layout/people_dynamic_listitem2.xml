@@ -4,21 +4,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.example.smallpigeon.RoundImageView
+        <ImageView
             android:id="@+id/iv_icon"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/zh"
-            imagecontrol:border_inside_color="#259B24"
-            imagecontrol:border_outside_color="#ffffff"
-            imagecontrol:border_thickness="1dp"/>
+            android:src="@drawable/addpic"/>
 
         <TextView
             android:id="@+id/tv_nickName"
@@ -27,7 +25,6 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:textSize="50px"
-            android:textColor="@color/black"
             android:text="用户昵称"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -69,18 +66,45 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/dynamic_item_txt"
-            android:text="此次跑步分享内容"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/dynamic_item_txt"
+                android:text="此次跑步分享内容"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F4F5F9"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/tv_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="用户："
+                    android:textColor="#1F4570"/>
+                <TextView
+                    android:id="@+id/tv_user_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="转发内容"
+                    android:textColor="#000"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/dynamic_item_img"
@@ -101,9 +125,9 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="150dp"
                 android:maxWidth="300dp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:layout_gravity="right"
         android:layout_width="wrap_content"
@@ -118,6 +142,14 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/zhuanfa"/>
+
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="3dp"
+                android:text="转发"
+                android:textColor="#000"
+                android:textSize="18dp" />-->
 
             <TextView
                 android:id="@+id/tv_forwardNum"
@@ -141,6 +173,14 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/comment"/>
+
+            <!--<TextView
+                android:text="评论"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp" />
+-->
             <TextView
                 android:id="@+id/tv_commentNum"
                 android:layout_width="wrap_content"
@@ -164,6 +204,7 @@
                 android:layout_height="25dp"
                 android:src="@drawable/good"/>
 
+
             <TextView
                 android:id="@+id/tv_likeNum"
                 android:layout_width="wrap_content"
@@ -176,6 +217,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
     <ListView
         android:id="@+id/comment_list"

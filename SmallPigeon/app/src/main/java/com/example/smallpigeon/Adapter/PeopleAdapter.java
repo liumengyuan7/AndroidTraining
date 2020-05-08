@@ -37,6 +37,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     private TextView tvLikeNum;
     private boolean judgeZan = false;
     private String userId;
+    private static final int VIEWTYPFIRST = 0;
+    private static final int VIEWTYPSECOND = 1;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -60,9 +63,8 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         }
     };
 
-    public PeopleAdapter(Context context, int itemLayoutID, List<DynamicContent> list) {
+    public PeopleAdapter(Context context,List<DynamicContent> list) {
         this.context = context;
-        this.itemLayoutID = itemLayoutID;
         this.list = list;
     }
 
@@ -92,41 +94,101 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     }
 
     @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (list.get(position).getType() == 0){
+            return VIEWTYPFIRST;
+        }else {
+            return VIEWTYPSECOND;
+        }
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if (null == convertView) {
+        int type = getItemViewType(position);
+        Log.e("type:",type+"");
+        if (convertView == null){
             holder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(itemLayoutID, null);
-            holder.iv_icon = convertView.findViewById(R.id.iv_icon);
-            holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
-            holder.tv_date = convertView.findViewById(R.id.tv_date);
-            holder.device = convertView.findViewById(R.id.device);
-            holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
-            holder.dynamic_item_img = convertView.findViewById( R.id.dynamic_item_img );
-            holder.dynamic_item_img2 = convertView.findViewById( R.id.dynamic_item_img2 );
-            holder.ll_forward = convertView.findViewById( R.id.ll_forward );
-            holder.tv_forwardNum = convertView.findViewById(R.id.tv_forwardNum);
-            holder.ll_toComment = convertView.findViewById( R.id.ll_toComment );
-            holder.tv_commentNum = convertView.findViewById(R.id.tv_commentNum);
-            holder.ll_like = convertView.findViewById( R.id.ll_like );
-            holder.iv_like = convertView.findViewById( R.id.iv_like );
-            holder.tv_likeNum = convertView.findViewById( R.id.tv_likeNum );
+            switch (type){
+                case VIEWTYPFIRST:
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    convertView = inflater.inflate(R.layout.people_dynamic_listitem,null);
+                    holder.iv_icon = convertView.findViewById(R.id.iv_icon);
+                    holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
+                    holder.tv_date = convertView.findViewById(R.id.tv_date);
+                    holder.device = convertView.findViewById(R.id.device);
+                    holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    holder.dynamic_item_img = convertView.findViewById( R.id.dynamic_item_img );
+                    holder.dynamic_item_img2 = convertView.findViewById( R.id.dynamic_item_img2 );
+                    holder.ll_forward = convertView.findViewById( R.id.ll_forward );
+                    holder.tv_forwardNum = convertView.findViewById(R.id.tv_forwardNum);
+                    holder.ll_toComment = convertView.findViewById( R.id.ll_toComment );
+                    holder.tv_commentNum = convertView.findViewById(R.id.tv_commentNum);
+                    holder.ll_like = convertView.findViewById( R.id.ll_like );
+                    holder.iv_like = convertView.findViewById( R.id.iv_like );
+                    holder.tv_likeNum = convertView.findViewById( R.id.tv_likeNum );
+                    break;
+                case VIEWTYPSECOND:
+                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem2,null);
+                    holder.iv_icon = convertView.findViewById(R.id.iv_icon);
+                    holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
+                    holder.tv_date = convertView.findViewById(R.id.tv_date);
+                    holder.device = convertView.findViewById(R.id.device);
+                    holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    holder.dynamic_item_img = convertView.findViewById( R.id.dynamic_item_img );
+                    holder.dynamic_item_img2 = convertView.findViewById( R.id.dynamic_item_img2 );
+                    holder.ll_forward = convertView.findViewById( R.id.ll_forward );
+                    holder.tv_forwardNum = convertView.findViewById(R.id.tv_forwardNum);
+                    holder.ll_toComment = convertView.findViewById( R.id.ll_toComment );
+                    holder.tv_commentNum = convertView.findViewById(R.id.tv_commentNum);
+                    holder.ll_like = convertView.findViewById( R.id.ll_like );
+                    holder.iv_like = convertView.findViewById( R.id.iv_like );
+                    holder.tv_likeNum = convertView.findViewById( R.id.tv_likeNum );
+                    holder.tv_user_txt = convertView.findViewById(R.id.tv_user_txt);
+                    holder.tv_user = convertView.findViewById(R.id.tv_user);
+
+                    break;
+            }
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        ivLike = holder.iv_like;
-        tvLikeNum = holder.tv_likeNum;
-
         DynamicContent dynamicContent = list.get(position);
-        holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
-        holder.tv_date.setText(dynamicContent.getDate());
-        holder.device.setText(dynamicContent.getDevice());
-        holder.dynamic_item_txt.setText(dynamicContent.getContent());
-        holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
-        holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+        Log.e("content：",dynamicContent.toString());
+        switch (type){
+            case VIEWTYPFIRST:
+                holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+                holder.tv_date.setText(dynamicContent.getDate());
+                holder.device.setText(dynamicContent.getDevice());
+                holder.dynamic_item_txt.setText(dynamicContent.getContent());
+                holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
+                holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+
+                holder.ll_toComment.setOnClickListener(this);
+                holder.ll_forward.setOnClickListener(this);
+                holder.ll_toComment.setTag(position);
+                holder.ll_forward.setTag(position);
+                break;
+            case VIEWTYPSECOND:
+                holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+                holder.tv_date.setText(dynamicContent.getDate());
+                holder.device.setText(dynamicContent.getDevice());
+                holder.dynamic_item_txt.setText(dynamicContent.getContent());
+                holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
+                holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+                holder.tv_user.setText(dynamicContent.getForwardContent().getUserContent().getUserNickname()+"：");
+                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDynamicContent().getContent());
+                holder.ll_toComment.setOnClickListener(this);
+                holder.ll_forward.setOnClickListener(this);
+                holder.ll_toComment.setTag(position);
+                holder.ll_forward.setTag(position);
+                break;
+        }
         //缓存头像
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
         //缓存发布的动态图片
@@ -229,6 +291,8 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         LinearLayout ll_like;//赞
         ImageView iv_like;//点赞图标
         TextView tv_likeNum;//点赞数
+        TextView tv_user;
+        TextView tv_user_txt;
     }
 
     public interface btnOnclick{

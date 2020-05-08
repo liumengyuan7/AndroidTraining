@@ -33,11 +33,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidubce.model.User;
 import com.example.smallpigeon.Adapter.PeopleAdapter;
 import com.example.smallpigeon.Community.Comment.DynamicDetailActivity;
 import com.example.smallpigeon.Community.ReleaseDynamic.ReleaseDynamic;
 import com.example.smallpigeon.Entity.CommentDetailBean;
 import com.example.smallpigeon.Entity.DynamicContent;
+import com.example.smallpigeon.Entity.ForwardContent;
 import com.example.smallpigeon.Entity.ReplyDetailBean;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.MainActivity;
@@ -107,7 +109,6 @@ public class PeopleFragment extends Fragment {
                         }
                         content.setDevice(Build.MODEL);
                         content.setZan_num(json.getInt("zanNum"));
-                        content.setForward_id(json.getInt("forwardId"));
                         JSONArray jsonArrayComment = json.getJSONArray("comments");
 //                        Log.e("comments",jsonArrayComment.toString());
                         List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
@@ -178,7 +179,7 @@ public class PeopleFragment extends Fragment {
         content.setDevice(Build.MODEL);
         list.add(content);
 
-        peopleAdapter = new PeopleAdapter(getContext(),R.layout.people_dynamic_listitem,list);
+        peopleAdapter = new PeopleAdapter(getContext(),list);
         dynamic_list.setAdapter(peopleAdapter);
         peopleAdapter.setBtnOnclick(new PeopleAdapter.btnOnclick() {
             @Override
@@ -278,10 +279,21 @@ public class PeopleFragment extends Fragment {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //转发理由
                 nInputContentText = et_discuss.getText().toString().trim();
                 if (nInputContentText == null || "".equals(nInputContentText)) {
                     Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_SHORT).show();
                 }else {
+                    //TODO：插入转发信息
+                    ForwardContent forwardContent = new ForwardContent();
+                    //TODO:得到当前转发动态的用户信息
+                    UserContent userContent = new UserContent();
+                    DynamicContent dynamicContent = new DynamicContent();
+                    dynamicContent.setContent(nInputContentText);
+                    dynamicContent.setType(1);//type为1代表转发内容，type为0表示不是转发内容
+                    forwardContent.setDynamicContent(dynamicContent);
+                    forwardContent.setUserContent(userContent);
+
                     mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
                     popupWindow.dismiss();
                     Toast.makeText(getContext(),"发送成功",Toast.LENGTH_SHORT).show();
