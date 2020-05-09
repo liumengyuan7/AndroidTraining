@@ -3,10 +3,7 @@ package com.example.smallpigeon.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,7 +28,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.IdentifyActivity;
 import com.example.smallpigeon.My.IsIdentifyActivity;
-import com.example.smallpigeon.My.MyCommunity;
+import com.example.smallpigeon.My.MyCommunity.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
@@ -40,15 +37,6 @@ import com.example.smallpigeon.RoundImageView;
 import com.example.smallpigeon.Utils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 
 public class MyFragment extends Fragment {
@@ -125,12 +113,12 @@ public class MyFragment extends Fragment {
                     }
                     break;
                 case R.id.right_community:
-                    if(loginOrNot()){
+//                    if(loginOrNot()){
                         Intent intent3 = new Intent(getContext(), MyCommunity.class);
                         startActivity(intent3);
-                    }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-                    }
+//                    }else{
+//                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+//                    }
                     break;
                 case R.id.right_gradeRank:
                     if(loginOrNot()){
