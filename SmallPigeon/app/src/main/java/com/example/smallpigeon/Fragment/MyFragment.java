@@ -3,10 +3,7 @@ package com.example.smallpigeon.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +30,7 @@ import com.example.smallpigeon.My.IdentifyActivity;
 import com.example.smallpigeon.My.IsIdentifyActivity;
 import com.example.smallpigeon.My.MyCollectActivity;
 import com.example.smallpigeon.My.MyCommunity;
+import com.example.smallpigeon.My.MyCommunity.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;

@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -141,27 +142,32 @@ public class MyCommunity extends AppCompatActivity {
         userId = pre.getString("user_id","");
         Log.e("userId",userId);
         //显示后台服务器存储的当前用户所有发布的动态
-        selectAllDynamic(userId);
+//        selectAllDynamic(userId);
 //        //前端测试用
-//        DynamicContent content = new DynamicContent();
-//        UserContent userContent = new UserContent();
-//        userContent.setUserNickname("啦啦啦");
-//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content.setUserContent(userContent);
-//        content.setContent("今日跑步分享");
-//        content.setDevice(Build.MODEL);
-//        list.add(content);
+        DynamicContent content = new DynamicContent();
+        UserContent userContent = new UserContent();
+        userContent.setUserNickname("啦啦啦");
+        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        content.setUserContent(userContent);
+        content.setContent("今日跑步分享");
+        content.setDevice(Build.MODEL);
+        list.add(content);
 
         myDynamicAdapter = new MyDynamicAdapter( MyCommunity.this, R.layout.people_dynamic_listitem, list );
         my_dynamic_list.setAdapter(myDynamicAdapter);
-//        my_dynamic_list.setAdapter(myDynamicAdapter);
-//        //item点击事件
-//        my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText( getApplicationContext(), "hh", Toast.LENGTH_SHORT ).show();
-//            }
-//        } );
+        my_dynamic_list.setAdapter(myDynamicAdapter);
+        //item点击事件：查看详情
+        my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText( getApplicationContext(), position, Toast.LENGTH_SHORT ).show();
+                Intent intent = new Intent(getApplicationContext(), MyCommunityDetails.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("dynamic", position);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        } );
     }
 
     class CustomClickListener implements View.OnClickListener{
