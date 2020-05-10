@@ -80,7 +80,6 @@ public class MyCommunity extends AppCompatActivity {
                         }
                         content.setDevice(Build.MODEL);
                         content.setZan_num(json.getInt("zanNum"));
-                        content.setForward_id(json.getInt("forwardId"));
                         JSONArray jsonArrayComment = json.getJSONArray("comments");
                         Log.e("comments",jsonArrayComment.toString());
                         List<CommentDetailBean> commentDetailBeans = new ArrayList<>();

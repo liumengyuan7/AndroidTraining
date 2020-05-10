@@ -31,6 +31,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.IdentifyActivity;
 import com.example.smallpigeon.My.IsIdentifyActivity;
+import com.example.smallpigeon.My.MyCollectActivity;
 import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
@@ -60,6 +61,7 @@ public class MyFragment extends Fragment {
     private LinearLayout btnCommunity;
     private LinearLayout btnGradeRank;
     private LinearLayout btnPlan;
+    private LinearLayout right_collect;
     private CustomButtonListener listener;
     private String useId;
     private int is_accreditation;
@@ -96,6 +98,7 @@ public class MyFragment extends Fragment {
         btnGradeRank.setOnTouchListener(listener);
         btnPlan.setOnClickListener(listener);
         btnPlan.setOnTouchListener(listener);
+        right_collect.setOnClickListener(listener);
     }
 
     class CustomButtonListener implements View.OnClickListener,View.OnTouchListener{
@@ -148,6 +151,14 @@ public class MyFragment extends Fragment {
                         Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case R.id.right_collect:
+//                    if(loginOrNot()){
+                        Intent intent = new Intent(getContext(), MyCollectActivity.class);
+                        startActivity(intent);
+//                    }else {
+//                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+//                    }
+                    break;
             }
         }
 
@@ -165,6 +176,9 @@ public class MyFragment extends Fragment {
                     break;
                 case R.id.right_plan:
                     motionEvent(btnPlan,event);
+                    break;
+                case R.id.right_collect:
+                    motionEvent(right_collect,event);
                     break;
             }
             return false;
@@ -233,6 +247,7 @@ public class MyFragment extends Fragment {
         btnGradeRank = view.findViewById(R.id.right_gradeRank);
         btnPlan = view.findViewById(R.id.right_plan);
         myAvatar = view.findViewById(R.id.myAvatar);
+        right_collect = view.findViewById(R.id.right_collect);
     }
 
     @Override

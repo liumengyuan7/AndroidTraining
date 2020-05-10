@@ -47,7 +47,8 @@
         android:theme="@style/NoTitleTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".My.IsIdentifyActivity"></activity>
+        <activity android:name=".My.MyCollectActivity"></activity>
+        <activity android:name=".My.IsIdentifyActivity" />
         <activity android:name=".Run.NearbyUserActivity" />
         <activity android:name=".My.MyCommunity" />
         <activity android:name=".My.IdentifyActivity" />
