@@ -29,7 +29,6 @@ import com.example.smallpigeon.LoginOrRegister.LoginActivity;
 import com.example.smallpigeon.My.IdentifyActivity;
 import com.example.smallpigeon.My.IsIdentifyActivity;
 import com.example.smallpigeon.My.MyCollectActivity;
-import com.example.smallpigeon.My.MyCommunity;
 import com.example.smallpigeon.My.MyCommunity.MyCommunity;
 import com.example.smallpigeon.My.MyPlan;
 import com.example.smallpigeon.My.Paihang;
