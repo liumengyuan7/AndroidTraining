@@ -40,7 +40,6 @@ import java.util.List;
 public class MyCommunity extends AppCompatActivity {
 
     private ImageView iv_back;
-//    private ImageView iv_add_Message;
     private ListView my_dynamic_list;
 
     private CustomClickListener listener;
@@ -129,6 +128,7 @@ public class MyCommunity extends AppCompatActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -138,11 +138,13 @@ public class MyCommunity extends AppCompatActivity {
         listener = new CustomClickListener();
         registerListener();
         setStatusBar();
+
         SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
         Log.e("userId",userId);
         //显示后台服务器存储的当前用户所有发布的动态
 //        selectAllDynamic(userId);
+
 //        //前端测试用
         DynamicContent content = new DynamicContent();
         UserContent userContent = new UserContent();
@@ -160,11 +162,11 @@ public class MyCommunity extends AppCompatActivity {
         my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText( getApplicationContext(), position, Toast.LENGTH_SHORT ).show();
                 Intent intent = new Intent(getApplicationContext(), MyCommunityDetails.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("dynamic", position);
-                intent.putExtras(bundle);
+                //TODO：传入被点击动态的id
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("dynamic", position);
+//                intent.putExtras(bundle);
                 startActivity(intent);
             }
         } );
@@ -177,23 +179,16 @@ public class MyCommunity extends AppCompatActivity {
                 case R.id.iv_back:
                     finish();
                     break;
-//                case R.id.iv_add_Message:
-//                    //发表动态
-//                    Intent intent = new Intent(MyCommunity.this, ReleaseDynamic.class);
-//                    startActivity(intent);
-//                    break;
             }
         }
     }
 
     private void registerListener() {
         iv_back.setOnClickListener( listener );
-//        iv_add_Message.setOnClickListener( listener );
     }
 
     private void getViews() {
         iv_back = findViewById( R.id.iv_back );
-//        iv_add_Message = findViewById( R.id.iv_add_Message );
         my_dynamic_list =findViewById( R.id.my_dynamic_list );
     }
 
@@ -218,6 +213,7 @@ public class MyCommunity extends AppCompatActivity {
             }
         }.start();
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -232,7 +228,6 @@ public class MyCommunity extends AppCompatActivity {
             Log.e("userId",userId);
             selectAllDynamic(userId);
             myDynamicAdapter.notifyDataSetChanged();
-
         }
     }
 }
