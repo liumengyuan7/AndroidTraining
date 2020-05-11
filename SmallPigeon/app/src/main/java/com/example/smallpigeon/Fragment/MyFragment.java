@@ -3,10 +3,7 @@ package com.example.smallpigeon.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -40,15 +37,6 @@ import com.example.smallpigeon.RoundImageView;
 import com.example.smallpigeon.Utils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 
 public class MyFragment extends Fragment {
