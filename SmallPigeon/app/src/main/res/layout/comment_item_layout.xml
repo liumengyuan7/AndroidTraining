@@ -45,9 +45,14 @@
             android:layout_height="34dp"
             android:theme="?android:selectableItemBackgroundBorderless"
             android:src="@drawable/icon_comment_like"
-            android:layout_margin="10dp"
-            android:padding="8dp"/>
-
+            android:layout_margin="5dp"
+            android:padding="6dp"/>
+        <TextView
+            android:id="@+id/comment_item_liketext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="12dp"
+            android:text="0" />
     </LinearLayout>
     <TextView
         android:id="@+id/comment_item_content"

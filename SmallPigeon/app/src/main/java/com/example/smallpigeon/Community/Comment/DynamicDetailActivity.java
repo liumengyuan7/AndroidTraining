@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -28,6 +30,7 @@ import com.example.smallpigeon.Entity.CommentDetailBean;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.ReplyDetailBean;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
@@ -59,6 +62,28 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
     private String userNickname;
     private String userLogo;
     private int userId;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = msg.obj+"";
+            switch (msg.what){
+                case 0:
+                    if(result.equals("true")){
+                        Toast.makeText(getApplicationContext(),"收藏成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"收藏失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 1:
+                    if(result.equals("true")){
+                        Toast.makeText(getApplicationContext(),"取消收藏成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"取消收藏失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -283,11 +308,13 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
                 showCommentDialog();
                 break;
             case R.id.iv_collect:
-                Toast.makeText(getApplicationContext(),"bbb",Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(),"bbb",Toast.LENGTH_LONG).show();
                 if (isCollect){
+                    decCollect(dynamicContent.getDynamicId(),userId);
                     isCollect = false;
                     iv_collect.setImageResource(R.drawable.icon_collect);
                 }else {
+                    addCollect(dynamicContent.getDynamicId(),userId);
                     isCollect = true;
                     iv_collect.setImageResource(R.drawable.comment_collect_yellow);
                 }
@@ -311,5 +338,34 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
         String url = "http://"+this.getResources().getString(R.string.ip_address)
                 +":8080/smallpigeon/avatar/"+imgName+".jpg";
         Glide.with(this).load(url).into(imageView);
+    }
+
+    //点击进行动态收藏
+    private void addCollect(int dynamicId, int userId) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","addCollect","dynamicId="+dynamicId
+                        +"&&userId="+userId);
+                Message message = new Message();
+                message.obj = result;
+                message.what=0;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
+    //点击取消动态收藏
+    private void decCollect(int dynamicId, int userId) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","decCollect","dynamicId="+dynamicId
+                        +"&&userId="+userId);
+                Message message = new Message();
+                message.obj = result;
+                message.what=1;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 }

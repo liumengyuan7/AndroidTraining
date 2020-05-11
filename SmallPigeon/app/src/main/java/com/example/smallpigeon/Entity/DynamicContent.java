@@ -20,6 +20,7 @@ public class DynamicContent implements Serializable {
     private int zan_num;
     private int type;
     private int comment_Num;
+    private int collect_Num;
     private String img2;
     private ForwardContent forwardContent;
     private List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
@@ -122,18 +123,28 @@ public class DynamicContent implements Serializable {
         this.comment_Num = comment_Num;
     }
 
+    public int getCollect_Num() {
+        return collect_Num;
+    }
+
+    public void setCollect_Num(int collect_Num) {
+        this.collect_Num = collect_Num;
+    }
+
     @Override
     public String toString() {
         return "DynamicContent{" +
-                "userContent=" + userContent +
+                "dynamicId=" + dynamicId +
+                ", userContent=" + userContent +
                 ", date='" + date + '\'' +
                 ", device='" + device + '\'' +
                 ", content='" + content + '\'' +
                 ", img='" + img + '\'' +
                 ", zan_num=" + zan_num +
+                ", type=" + type +
+                ", comment_Num=" + comment_Num +
+                ", collect_Num=" + collect_Num +
                 ", img2='" + img2 + '\'' +
-                ", commentDetailBeans=" + commentDetailBeans +
                 '}';
     }
-
 }

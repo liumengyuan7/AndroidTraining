@@ -2,6 +2,8 @@ package com.example.smallpigeon.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
@@ -33,8 +37,8 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     private Context context;
     private int itemLayoutID;
     private List<DynamicContent> list = new ArrayList<>();
-    private ImageView ivLike;
-    private TextView tvLikeNum;
+//    private ImageView ivLike;
+//    private TextView tvLikeNum;
     private boolean judgeZan = false;
     private String userId;
     private static final int VIEWTYPFIRST = 0;
@@ -201,7 +205,6 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         //得到点赞用户id
         SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
-        //点击事件
         ViewHolder finalHolder = holder;
         holder.ll_like.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -212,15 +215,15 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 int zanNumAfter = zanNumBefore-1;
                 decZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
                 dynamicContent.setZan_num(zanNumAfter);
-                tvLikeNum.setText(zanNumAfter+"");
+                finalHolder.tv_likeNum.setText(zanNumAfter+"");
                 judgeZan = false;
             } else if (judgeZan==false && loginOrNot()){
-                finalHolder.iv_like.setImageResource( R.drawable.heart );
+                finalHolder.iv_like.setImageResource( R.drawable.heart);
                 int zanNumBefore = dynamicContent.getZan_num();
                 int zanNumAfter = zanNumBefore+1;
                 addZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
                 dynamicContent.setZan_num(zanNumAfter);
-                tvLikeNum.setText(zanNumAfter+"");
+                finalHolder.tv_likeNum.setText(zanNumAfter+"");
                 judgeZan = true;
             }else {
                 //没有登录注册 不能点赞  请先登录
