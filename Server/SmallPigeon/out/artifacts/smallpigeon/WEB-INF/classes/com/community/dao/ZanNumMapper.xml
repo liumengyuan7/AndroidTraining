@@ -16,4 +16,13 @@
         delete from give_tu
         where  dynamics_id = #{dynamicId} and user_id = #{userId}
     </delete>
+
+     <insert id="insertZanByComment">
+        insert into give_tu(dynamics_id,comment_id, user_id)
+        values (#{dynamicId},#{commentId},#{userId})
+    </insert>
+    <delete id="deleteZanByComment">
+        delete from give_tu
+        where  comment_id = #{commentId} and user_id = #{userId} and dynamics_id=#{dynamicId}
+    </delete>
 </mapper>

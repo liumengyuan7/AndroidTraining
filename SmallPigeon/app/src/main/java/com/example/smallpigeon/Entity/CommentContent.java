@@ -1,11 +1,7 @@
 package com.example.smallpigeon.Entity;
 
-/**
- * @Time: 2020/4/14
- * @Author: 程璐
- * @Descripe: 评论的实体类
- */
 public class CommentContent {
+
     private int id;
     private int dynamics_id;
     private String user_id;

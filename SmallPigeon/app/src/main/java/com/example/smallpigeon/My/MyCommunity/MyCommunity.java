@@ -1,8 +1,9 @@
-package com.example.smallpigeon.My;
+package com.example.smallpigeon.My.MyCommunity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -125,6 +127,7 @@ public class MyCommunity extends AppCompatActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -134,11 +137,11 @@ public class MyCommunity extends AppCompatActivity {
         listener = new CustomClickListener();
         registerListener();
         setStatusBar();
+
         SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
         Log.e("userId",userId);
         //显示后台服务器存储的当前用户所有发布的动态
-//        selectAllDynamic(userId);
 //        //前端测试用
         DynamicContent content = new DynamicContent();
         UserContent userContent = new UserContent();
@@ -151,14 +154,20 @@ public class MyCommunity extends AppCompatActivity {
 
         myDynamicAdapter = new MyDynamicAdapter( MyCommunity.this, R.layout.people_dynamic_listitem, list );
         my_dynamic_list.setAdapter(myDynamicAdapter);
-//        my_dynamic_list.setAdapter(myDynamicAdapter);
-//        //item点击事件
-//        my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText( getApplicationContext(), "hh", Toast.LENGTH_SHORT ).show();
-//            }
-//        } );
+
+        my_dynamic_list.setAdapter(myDynamicAdapter);
+        //item点击事件：查看详情
+        my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), MyCommunityDetails.class);
+                //TODO：传入被点击动态的id
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("dynamic", position);
+//                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        } );
     }
 
     class CustomClickListener implements View.OnClickListener{
@@ -168,23 +177,17 @@ public class MyCommunity extends AppCompatActivity {
                 case R.id.iv_back:
                     finish();
                     break;
-//                case R.id.iv_add_Message:
-//                    //发表动态
-//                    Intent intent = new Intent(MyCommunity.this, ReleaseDynamic.class);
-//                    startActivity(intent);
-//                    break;
+
             }
         }
     }
 
     private void registerListener() {
         iv_back.setOnClickListener( listener );
-//        iv_add_Message.setOnClickListener( listener );
     }
 
     private void getViews() {
         iv_back = findViewById( R.id.iv_back );
-//        iv_add_Message = findViewById( R.id.iv_add_Message );
         my_dynamic_list =findViewById( R.id.my_dynamic_list );
     }
 
@@ -209,6 +212,7 @@ public class MyCommunity extends AppCompatActivity {
             }
         }.start();
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -223,7 +227,6 @@ public class MyCommunity extends AppCompatActivity {
             Log.e("userId",userId);
             selectAllDynamic(userId);
             myDynamicAdapter.notifyDataSetChanged();
-
         }
     }
 }

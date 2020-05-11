@@ -3,8 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.dao.CommentMapper">
-   <select id="selectCommnetByDynamicId" resultType="com.entity.Comment">
-        select  c.id,c.dynamics_id dynamicId, c.user_id commenmtFromId, u.user_nickname commentFromNickname,
+    <select id="selectCommnetByDynamicId" resultType="com.entity.Comment">
+        select  c.id,c.dynamics_id dynamicId, c.user_id commenmtFromId,c.comment_zanNum commentZanNum, u.user_nickname commentFromNickname,
         u.user_email commentFromEmail, c.comment_content commentFromContent,c.comment_time commentFromTime
         from comment c,user u
         where c.dynamics_id = #{dynamicId} and c.user_id = u.id
@@ -13,4 +13,9 @@
         insert into comment(dynamics_id, user_id, comment_content, comment_time)
         value (#{dynamicId},#{userId},#{content},#{contentTime})
     </insert>
+    <update id="updateZanNumByComment">
+        update comment
+        set comment_zanNum = #{zanNum}
+        where id = #{commentId} and dynamics_id = #{dynamicId}
+    </update>
 </mapper>

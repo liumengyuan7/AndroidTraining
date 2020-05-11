@@ -1,5 +1,6 @@
 package com.community.service;
 
+import com.community.dao.CollectMapper;
 import com.community.dao.CommentMapper;
 import com.community.dao.DynamicMapper;
 import com.community.dao.ReplyMapper;
@@ -9,7 +10,6 @@ import com.entity.Dynamics;
 import com.entity.Reply;
 import com.google.gson.Gson;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -35,6 +35,8 @@ public class DynamicService {
     private ReplyMapper replyMapper;
     @Resource
     private ZanNumMapper zanNumMapper;
+    @Resource
+    private CollectMapper collectMapper;
 
     public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
@@ -101,7 +103,7 @@ public class DynamicService {
             return "false";
         }
     }
-    //点赞
+    //对动态进行点赞
     public String addZan(String dynamicId, String userId, String zanNumAfter){
         int n =this.zanNumMapper.insertZan(dynamicId,userId);
         if(n>0){
@@ -112,7 +114,7 @@ public class DynamicService {
             return "false";
         }
     }
-    //取消点赞
+    //对动态取消点赞
     public String decZan(String dynamicId, String userId, String zanNumAfter){
         int n =this.zanNumMapper.deleteZan(dynamicId,userId);
         if(n>0){
@@ -120,6 +122,65 @@ public class DynamicService {
             if(m>0) return "true";
             else return "fasle";
         }else {
+            return "false";
+        }
+    }
+
+    //对评论进行点赞
+    public String addZanNumByComment(String dynamicId, String commentId, String userId, String zanNumAfter){
+        int n =this.zanNumMapper.insertZanByComment(dynamicId,commentId,userId);
+        if(n>0){
+            int m =this.commentMapper.updateZanNumByComment(dynamicId,commentId,zanNumAfter);
+            if(m>0) return "true";
+            else return "fasle";
+        }else {
+            return "false";
+        }
+    }
+    //对评论取消点赞
+    public String decZanNumByComment(String dynamicId, String commentId, String userId, String zanNumAfter){
+        int n =this.zanNumMapper.deleteZanByComment(dynamicId,commentId,userId);
+        if(n>0){
+            int m =this.commentMapper.updateZanNumByComment(dynamicId,commentId,zanNumAfter);
+            if(m>0) return "true";
+            else return "fasle";
+        }else {
+            return "false";
+        }
+    }
+
+    //某用户所有收藏的动态
+    public String queryAllCollectByUserId(String userId){
+        List<Dynamics> dynamics = this.collectMapper.queryAllCollectByUserId(userId);
+        for (int i =0;i<dynamics.size();i++){
+            System.out.println(dynamics.get(i).toString());
+            int dynamicId = dynamics.get(i).getId();
+            System.out.println(dynamicId);
+            int commentNum = this.collectMapper.getCommentNum(dynamicId);
+            System.out.println(this.collectMapper.getCommentNum(dynamicId));
+            dynamics.get(i).setCommentNum(commentNum);
+            int collectNum = this.collectMapper.getCollectNum(dynamicId);
+            System.out.println(this.collectMapper.getCollectNum(dynamicId));
+            dynamics.get(i).setCollectNum(collectNum);
+        }
+        System.out.println(new Gson().toJson(dynamics));
+        return new Gson().toJson(dynamics);
+    }
+    //收藏动态
+    public String addCollect(String dynamicId, String userId){
+        int result = this.collectMapper.insertCollect(dynamicId,userId);
+        if(result>0){
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+    //取消收藏动态
+    public String decCollect(String dynamicId, String userId){
+        int result = this.collectMapper.deleteCollect(dynamicId,userId);
+        if(result>0){
+            return "true";
+        }else{
             return "false";
         }
     }

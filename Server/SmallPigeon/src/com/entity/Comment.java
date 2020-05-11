@@ -14,6 +14,7 @@ public class Comment {
     private Integer id;
     private Integer dynamicId;
     private Integer commenmtFromId;
+    private Integer commentZanNum;
     private String commentFromNickname;
     private String commentFromEmail;
     private String commentFromContent;
@@ -74,6 +75,14 @@ public class Comment {
 
     public void setCommentFromTime(String commentFromTime) {
         this.commentFromTime = commentFromTime;
+    }
+
+    public Integer getCommentZanNum() {
+        return commentZanNum;
+    }
+
+    public void setCommentZanNum(Integer commentZanNum) {
+        this.commentZanNum = commentZanNum;
     }
 
     public List<Reply> getReplies() {
