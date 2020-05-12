@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".Run.TracingActivity">-->
-
-<!--    <LinearLayout-->
-<!--        android:background="#259B24"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/tracing_back"-->
-<!--            android:layout_width="35dp"-->
-<!--            android:layout_height="35dp"-->
-<!--            android:src="@drawable/left"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:layout_gravity="center" />-->
-
-<!--    </LinearLayout>-->
-
-<!--</LinearLayout>-->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -29,43 +6,40 @@
     <LinearLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="#259B24"
-        android:orientation="horizontal">
+        android:background="#259B24">
 
-        <!--        <include layout="@layout/activity_top"></include>-->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="0.5"
-            android:layout_gravity="left"
-            android:paddingTop="10dp">
+            android:gravity="left"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp">
+
             <ImageView
                 android:id="@+id/tracing_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/left" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/back_w"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="right"
-            android:layout_weight="0.5"
-            android:layout_margin="5dp">
+            android:layout_weight="1"
+            android:layout_marginRight="10dp">
+
             <ImageView
                 android:id="@+id/btn_activity_options"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:background="@mipmap/icon_settings"/>
-
+                android:src="@mipmap/icon_settings"
+                android:layout_gravity="center"/>
         </LinearLayout>
-
     </LinearLayout>
-
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/tracing_mapView"
@@ -83,18 +57,21 @@
         android:layout_marginTop="70dp"
         android:orientation="vertical"
         android:padding="20dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="小鸽快跑"
             android:textColor="@color/black"
-            android:textSize="28sp"></TextView>
+            android:textSize="28sp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
+
             <TextView
                 android:id="@+id/tvDistance"
                 android:layout_width="wrap_content"
@@ -103,6 +80,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:layout_weight="0.5"/>
+
             <TextView
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
@@ -112,6 +90,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tvSpeed"
             android:layout_width="wrap_content"
@@ -119,9 +98,7 @@
             android:text="速度：0.0KM/h"
             android:textColor="@color/black"
             android:textSize="20sp"/>
-
     </LinearLayout>
-
 
     <!--    <ImageButton-->
     <!--    android:layout_width="wrap_content"-->
@@ -133,7 +110,6 @@
     <!--    android:background="@mipmap/bg_btn_all_control"-->
     <!--    android:onClick="onTraceControl"/>-->
 
-
     <LinearLayout
         android:id="@+id/layout_tracing_bottom"
         android:layout_alignParentBottom="true"
@@ -143,6 +119,7 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:gravity="center">
+
         <Button
             android:id="@+id/btn_trace"
             android:layout_width="wrap_content"
@@ -154,8 +131,8 @@
             android:background="@drawable/btn_style"
             android:text="开始"
             android:textColor="@color/white"/>
-
     </LinearLayout>
+
     <LinearLayout
         android:visibility="invisible"
         android:id="@+id/layout_tracing_bottom1"
@@ -189,6 +166,7 @@
             android:background="@drawable/btn_stop_style"
             android:textColor="@color/white"
             android:onClick="onTraceControl"/>
+
         <!--             <Button-->
         <!--                android:id="@+id/btn_trace"-->
         <!--                android:layout_width="0dp"-->
@@ -211,8 +189,5 @@
         <!--                android:background="@mipmap/bg_btn_cancel"-->
         <!--                android:textColor="@color/layout_title"-->
         <!--                android:onClick="onTraceControl"/>-->
-
     </LinearLayout>
-
-
 </RelativeLayout>

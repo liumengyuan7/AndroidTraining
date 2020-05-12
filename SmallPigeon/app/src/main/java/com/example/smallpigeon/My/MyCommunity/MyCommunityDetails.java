@@ -26,12 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.smallpigeon.Community.Comment.CommentExpandAdapter;
-import com.example.smallpigeon.Community.Comment.DynamicDetailActivity;
 import com.example.smallpigeon.Entity.CommentBean;
 import com.example.smallpigeon.Entity.CommentDetailBean;
 import com.example.smallpigeon.Entity.DynamicContent;
 import com.example.smallpigeon.Entity.ReplyDetailBean;
+import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -60,7 +59,8 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
 //    private boolean isCollect = false;
 
     private DynamicContent dynamicContent;
-    private CommentExpandAdapter adapter;
+
+    private CommentAdapter commentAdapter;
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
@@ -80,12 +80,22 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
 //        Intent intent = getIntent();
 //        dynamicContent = (DynamicContent) intent.getSerializableExtra("dynamic");
 //        System.out.println(dynamicContent.toString());
+//        Log.e("err", dynamicContent.toString());
+        //前端测试用
+        dynamicContent = new DynamicContent();
+        UserContent userContent = new UserContent();
+        userContent.setUserNickname("啦啦啦");
+        dynamicContent.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        dynamicContent.setUserContent(userContent);
+        dynamicContent.setContent("今日跑步分享");
+        dynamicContent.setDevice(Build.MODEL);
 
+        //显示内容
 //        iv_icon.setImageResource(Integer.parseInt(dynamicContent.getUserContent().getUserImage()));
-//        tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
-//        tv_date.setText(dynamicContent.getDate());
-//        device.setText(dynamicContent.getDevice());
-//        dynamic_item_txt.setText(dynamicContent.getContent());
+        tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+        tv_date.setText(dynamicContent.getDate());
+        device.setText(dynamicContent.getDevice());
+        dynamic_item_txt.setText(dynamicContent.getContent());
 //        showUserImage(dynamicContent.getUserContent().getUserImage(),iv_icon);
         //缓存图片
 //        if(!"".equals(dynamicContent.getImg())) {
@@ -94,23 +104,16 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
 //        if(!"".equals(dynamicContent.getImg2())) {
 //            showDynamicImage(dynamicContent.getImg2(), dynamic_item_img2);
 //        }
+
         //显示评论
-//        commentsList = dynamicContent.getCommentDetailBeans();
-//        dynamicContent.setCommentDetailBeans(commentsList);
-//        initExpandableListView(dynamicContent);
+        //todo:查询评论
+        commentsList = dynamicContent.getCommentDetailBeans();
+        //测试用
+        CommentDetailBean commentDetailBean = new CommentDetailBean( "a", "pinglun1", "2020-1-1" );
+        commentsList.add( commentDetailBean );
+        dynamicContent.setCommentDetailBeans(commentsList);
 
-
-//        commentsList = generateTestData();
-
-//        SharedPreferences pre = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-//        userNickname = pre.getString("user_nickname","");
-//        userLogo = pre.getString("user_email","");
-//        userId = Integer.parseInt(pre.getString("user_id",""));
-
-
-//        dynamic_item_img.setImageResource(Integer.parseInt(dynamicContent.getImg()));
-//        commentsList = dynamicContent.getCommentDetailBeans();
-
+        initExpandableListView(dynamicContent);
     }
 
     private void getViews() {
@@ -134,9 +137,9 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
     private void initExpandableListView(final DynamicContent dynamicContent){
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
-        adapter = new CommentExpandAdapter( MyCommunityDetails.this, dynamicContent);
+        commentAdapter = new CommentAdapter( MyCommunityDetails.this, dynamicContent);
         Log.e("评论列表",dynamicContent.getCommentDetailBeans().toString());
-        expandableListView.setAdapter(adapter);
+        expandableListView.setAdapter(commentAdapter);
         for(int i = 0; i<dynamicContent.getCommentDetailBeans().size(); i++){
             expandableListView.expandGroup(i);
         }
@@ -144,7 +147,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
                 boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+dynamicContent.getCommentDetailBeans().get(groupPosition).getCommentFromId());
+                Log.e(TAG, "onGroupClick: 当前的评论index>>>"+dynamicContent.getCommentDetailBeans().get(groupPosition).getCommentFromId());
 //                if(isExpanded){
 //                    expandableListView.collapseGroup(groupPosition);
 //                }else {
@@ -167,10 +170,8 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
             @Override
             public void onGroupExpand(int groupPosition) {
                 //toast("展开第"+groupPosition+"个分组");
-
             }
         });
-
     }
 
     private void showCommentDialog(){
@@ -203,7 +204,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
                     detailBean.setCommentFromId(userId);
                     detailBean.setUserLogo(userLogo);
                     detailBean.setDynamicId(dynamicContent.getDynamicId());
-                    adapter.addTheCommentData(detailBean);
+                    commentAdapter.addTheCommentData(detailBean);
 //                    Toast.makeText(DynamicDetailActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
@@ -254,7 +255,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
                     detailBean.setCommentId(String.valueOf(commentsList.get(position).getId()));
                     detailBean.setToId(commentsList.get(position).getCommentFromId());
                     detailBean.setFromId(userId);
-                    adapter.addTheReplyData(detailBean, position);
+                    commentAdapter.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
 //                    Toast.makeText(DynamicDetailActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {

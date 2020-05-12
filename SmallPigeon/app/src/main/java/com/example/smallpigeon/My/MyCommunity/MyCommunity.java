@@ -141,8 +141,8 @@ public class MyCommunity extends AppCompatActivity {
         SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
         Log.e("userId",userId);
-        //显示后台服务器存储的当前用户所有发布的动态
-//        //前端测试用
+        //todo:显示后台服务器存储的当前用户所有发布的动态
+        //前端测试用
         DynamicContent content = new DynamicContent();
         UserContent userContent = new UserContent();
         userContent.setUserNickname("啦啦啦");
@@ -165,6 +165,8 @@ public class MyCommunity extends AppCompatActivity {
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable("dynamic", position);
 //                intent.putExtras(bundle);
+//                bundle.putSerializable( "dynamic", content );
+//                intent.putExtras( bundle );
                 startActivity(intent);
             }
         } );
