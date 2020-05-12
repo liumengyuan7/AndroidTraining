@@ -50,7 +50,7 @@
            <input name="userSex" id="userSex"  type="text" lay-verify="required" class="layui-input" value="${users.userSex}">
            <hr class="hr15">
            邮箱
-           <input name="email" id="email"  type="text" lay-verify="required" class="layui-input" value="${users.userEmail}">
+           <input name="userEmail" id="userEmail"  type="text" lay-verify="required" class="layui-input" value="${users.userEmail}">
            <hr class="hr15">
            注册时间
            <input name="userRegisterTime" id="userRegisterTime" lay-verify="required"  type="date" class="layui-input" value="${users.userRegisterTime}">
@@ -61,11 +61,14 @@
            用户积分
            <input name="userPoints" id="userPoints"   type="text" lay-verify="required" class="layui-input" value="${users.userPoints}">
            <hr class="hr15">
-           匹配
-           <input name="matcher" id="matcher" lay-verify="required"   type="text" class="layui-input" value="${users.matcher}">
-           <hr class="hr15">
            是否达到标准
            <input name="isAcc" id="isAcc" lay-verify="required"   type="text" class="layui-input" value="${users.isAcc}">
+           <hr class="hr15">
+           是否达到标准
+           <input name="longitude" id="longitude" lay-verify="required"   type="text" class="layui-input" value="${users.longitude}">
+           <hr class="hr15">
+           是否达到标准
+           <input name="latitude" id="latitude" lay-verify="required"   type="text" class="layui-input" value="${users.latitude}">
            <hr class="hr15">
            <input value="修改用户" lay-submit lay-filter="edit" style="width:100%;" type="submit">
            <hr class="hr20" >

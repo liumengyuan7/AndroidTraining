@@ -31,6 +31,9 @@
 
         }
         table,table tr th, table tr td {border: 1px solid black;}
+        td{
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>

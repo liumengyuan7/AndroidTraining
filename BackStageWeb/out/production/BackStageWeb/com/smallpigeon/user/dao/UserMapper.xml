@@ -13,14 +13,15 @@
         <result column="user_register_time" property="userRegisterTime"/>
         <result column="user_sno" property="userSno"/>
         <result column="user_points" property="userPoints"/>
-        <result column="matcher" property="matcher"/>
         <result column="is_accreditation" property="isAcc"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
     </resultMap>
     <select id="getAllUsers" resultMap="myMap">
         select * from user
     </select>
     <insert id="addUser" parameterType="User">
-        insert into user(user_name,user_nickname,user_password,user_sex,user_email,user_register_time,user_sno,user_points,matcher,is_accreditation) values (#{userName},#{userNickname},#{password},#{userSex},#{userEmail},#{userRegisterTime},#{userSno},#{userPoints},#{matcher},#{isAcc})
+        insert into user(user_name,user_nickname,user_password,user_sex,user_email,user_register_time,user_sno,user_points,is_accreditation,longitude,latitude) values (#{userName},#{userNickname},#{password},#{userSex},#{userEmail},#{userRegisterTime},#{userSno},#{userPoints},#{isAcc},#{longitude},#{latitude})
     </insert>
     <delete id="deleteUser">
         delete from user where id=#{id}
@@ -29,7 +30,7 @@
         select * from user where id=#{id}
     </select>
     <update id="updateUser">
-        update user set user_name=#{userName},user_nickname=#{userNickname},user_password=#{password},user_sex=#{userSex},user_email=#{userEmail},user_register_time=#{userRegisterTime},user_sno=#{userSno},user_points=#{userPoints},matcher=#{matcher},is_accreditation=#{isAcc}
+        update user set user_name=#{userName},user_nickname=#{userNickname},user_password=#{password},user_sex=#{userSex},user_email=#{userEmail},user_register_time=#{userRegisterTime},user_sno=#{userSno},user_points=#{userPoints},is_accreditation=#{isAcc},longitude=#{longitude},latitude=#{latitude}
         where id=#{id}
     </update>
 </mapper>

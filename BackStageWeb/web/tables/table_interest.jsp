@@ -30,6 +30,9 @@
             width: 1000px; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse;
         }
         table,table tr th, table tr td { border:1px solid black;font-size: 15px }
+        td{
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
@@ -85,30 +88,86 @@
             <td>
                     ${interest.user_id}
             </td>
-            <td>
-                    ${interest.outdoor}
-            </td>
-            <td>
-                    ${interest.music}
-            </td>
-            <td>
-                    ${interest.film}
-            </td>
-            <td>
-                    ${interest.society}
-            </td>
-            <td>
-                    ${interest.delicacy}
-            </td>
-            <td>
-                    ${interest.science}
-            </td>
-            <td>
-                    ${interest.star}
-            </td>
-            <td>
-                    ${interest.comic}
-            </td>
+            <c:if test="${interest.outdoor==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.outdoor==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.music==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.music==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.film==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.film==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.society==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.society==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.delicacy==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.delicacy==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.science==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.science==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.star==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.star==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.comic==0}">
+                <td>
+                    不喜欢
+                </td>
+            </c:if>
+            <c:if test="${interest.comic==1}">
+                <td>
+                    喜欢
+                </td>
+            </c:if>
             <td>
                 <button onclick="window.location.href='${ctx}/interest/editInterests/'+${interest.id}" style="background-color: lightblue;height: 30px;width: 80px;border-radius: 236px 236px 236px 236px;">
                     Edit
