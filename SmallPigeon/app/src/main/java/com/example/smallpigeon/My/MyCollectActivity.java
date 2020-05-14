@@ -132,34 +132,8 @@ public class MyCollectActivity extends AppCompatActivity {
         lv_collect.setAdapter(adapter);
         setOnListViewItemClickListener();
         setOnListViewItemLongClickListener();
-
-
-//        DynamicContent content = new DynamicContent();
-//        UserContent userContent = new UserContent();
-//        userContent.setUserNickname("aaa");
-//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content.setUserContent(userContent);
-//        content.setContent(".....");
-//        content.setDevice(Build.MODEL);
-//        content.setType(0);
-//        list.add(content);
-//
-//        DynamicContent content1 = new DynamicContent();
-//        UserContent userContent1 = new UserContent();
-//        ForwardContent forwardContent = new ForwardContent();
-//        forwardContent.setUserContent(userContent);
-//        forwardContent.setDynamicContent(content);
-//        userContent1.setUserNickname("啦啦啦");
-//        content1.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content1.setForwardContent(forwardContent);
-//        content1.setUserContent(userContent1);
-//        content1.setContent("今日跑步分享");
-//        content1.setDevice(Build.MODEL);
-//        content1.setType(1);
-//        list.add(content1);
     }
 
-    //todo:查询所有的收藏信息
     private void getAllCollect(String userId) {
         new Thread(){
             @Override
