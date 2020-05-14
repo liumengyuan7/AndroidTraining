@@ -22,6 +22,7 @@ public class Dynamics {
     private int forwardId;
     private int commentNum;
     private int collectNum;
+    private ForwardContent forwardContent;
     private List<Comment> comments = new ArrayList<>();
 
     public int getId() {

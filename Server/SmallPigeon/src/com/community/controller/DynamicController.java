@@ -45,11 +45,20 @@ public class DynamicController {
 //    添加发布的动态到数据库
     @ResponseBody
     @RequestMapping("/addDynamic")
-    public String addDynamic(@RequestParam("userId") String userId,
+//    public String addDynamic(@RequestParam("userId") String userId,
+//                             @RequestParam("pushContent") String pushContent,
+//                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg) throws Exception {
+//        System.out.println(userId+pushContent+pushTime+pushImg);
+//        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg);
+//        return result;
+//    }
+      public String addDynamic(@RequestParam("userId") String userId,
                              @RequestParam("pushContent") String pushContent,
-                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg) throws Exception {
+                             @RequestParam("pushTime") String pushTime, @RequestParam("pushImg") String pushImg,
+                                @RequestParam("forwardId") String forwardId,
+                               @RequestParam("type") String type) throws Exception {
         System.out.println(userId+pushContent+pushTime+pushImg);
-        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg);
+        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg,forwardId,type);
         return result;
     }
     //获取的图片存入out中

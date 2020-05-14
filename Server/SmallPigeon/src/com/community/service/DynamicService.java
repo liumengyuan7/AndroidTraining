@@ -10,7 +10,9 @@ import com.entity.Dynamics;
 import com.entity.Reply;
 import com.google.gson.Gson;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,10 +40,20 @@ public class DynamicService {
     @Resource
     private CollectMapper collectMapper;
 
-    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
+//    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
+//        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+//        Date date = sdf.parse(pushTime);
+//        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg);
+//        if(result>0){
+//            return "true";
+//        }else{
+//            return "false";
+//        }
+//    }
+    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg, String forwardId,String type) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         Date date = sdf.parse(pushTime);
-        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg);
+        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg,forwardId,type);
         if(result>0){
             return "true";
         }else{
