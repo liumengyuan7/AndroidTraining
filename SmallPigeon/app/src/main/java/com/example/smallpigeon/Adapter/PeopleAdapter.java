@@ -317,4 +317,28 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             return true;
         }
     }
+    //插入转发信息  当前转发者id  转发时间 转发内容  转发动态的id  转发状态 1 为转发 0为不转发
+    private void addForwardDynamic(String pushTime, String pushContent,int forwardId){
+        Handler handler1 = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                String result = msg.obj+"";
+                if(result.equals("true")){
+                    Toast.makeText(context,"转发成功",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context,"转发失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","addDynamic",
+                        "userId="+userId +"&&pushTime="+pushTime+"&&pushContent="+pushContent+"&&forwardId="+forwardId+"&&type="+1);
+                Message message = new Message();
+                message.obj = result;
+                handler1.sendMessage(message);
+            }
+        }.start();
+    }
 }
