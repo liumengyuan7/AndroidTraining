@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
         <TextView
-            android:textSize="26sp"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="26sp"
+            android:layout_centerInParent="true"
             android:text="聊天"/>
         <ImageView
             android:id="@+id/addFriends"
@@ -20,16 +20,17 @@
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/tabs"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/tabHuihua"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal">
+
             <TextView
                 android:layout_margin="5dp"
                 android:id="@+id/tvHuihua"
@@ -53,8 +54,7 @@
                 android:textSize="28sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系人"
-                />
+                android:text="联系人" />
         </LinearLayout>
     </LinearLayout>
     <FrameLayout

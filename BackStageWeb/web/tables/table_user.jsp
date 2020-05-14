@@ -24,6 +24,9 @@
 
     }
     table,table tr th, table tr td {border: 1px solid black;}
+    td{
+        font-size: 13px;
+    }
 </style>
 </head>
 <body>
@@ -56,11 +59,14 @@
               <th>
                 积分
               </th>
-              <th>
-                  是否匹配
-              </th>
                 <th>
                     是否达到标准
+                </th>
+                <th>
+                    经度
+                </th>
+                <th>
+                    纬度
                 </th>
               <th>
                 操作
@@ -91,12 +97,27 @@
          <td>
              ${user.userPoints}
          </td>
+           <c:if test="${user.isAcc == 0}">
+               <td>
+                   未达到标准
+               </td>
+           </c:if>
+           <c:if test="${user.isAcc == 1}">
+               <td>
+                   达到标准
+               </td>
+           </c:if>
+           <c:if test="${user.isAcc == null}">
+               <td>
+                   ${user.isAcc}
+               </td>
+           </c:if>
            <td>
-               ${user.matcher}
+               ${user.longitude}
            </td>
-         <td>
-             ${user.isAcc}
-         </td>
+           <td>
+               ${user.latitude}
+           </td>
          <td>
            <button onclick="window.location.href='${ctx}/user/editUsers/'+${user.id}" style="background-color: lightblue;height: 30px;width: 80px;border-radius: 236px 236px 236px 236px;text-align: center">
              Edit

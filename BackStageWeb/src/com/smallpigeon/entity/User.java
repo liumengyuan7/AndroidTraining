@@ -24,9 +24,9 @@ public class User {
     private Date userRegisterTime;
     private String userSno;
     private Integer userPoints;
-    private String matcher;
     private Integer isAcc;
-    private List<Record> records=new ArrayList<>();
+    private double longitude;//经度
+    private double latitude;//纬度
     public Integer getId() {
         return id;
     }
@@ -99,14 +99,6 @@ public class User {
         this.userPoints = userPoints;
     }
 
-    public String getMatcher() {
-        return matcher;
-    }
-
-    public void setMatcher(String matcher) {
-        this.matcher = matcher;
-    }
-
     public Integer getIsAcc() {
         return isAcc;
     }
@@ -115,11 +107,19 @@ public class User {
         this.isAcc = isAcc;
     }
 
-    public List<Record> getRecords() {
-        return records;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setRecords(List<Record> records) {
-        this.records = records;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

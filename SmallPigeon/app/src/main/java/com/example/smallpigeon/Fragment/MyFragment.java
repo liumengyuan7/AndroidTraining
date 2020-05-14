@@ -116,12 +116,12 @@ public class MyFragment extends Fragment {
                     }
                     break;
                 case R.id.right_community:
-                    if(loginOrNot()){
+//                    if(loginOrNot()){
                         Intent intent3 = new Intent(getContext(), MyCommunity.class);
                         startActivity(intent3);
-                    }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-                    }
+//                    }else{
+//                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+//                    }
                     break;
                 case R.id.right_gradeRank:
                     if(loginOrNot()){

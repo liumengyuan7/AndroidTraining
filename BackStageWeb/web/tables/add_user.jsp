@@ -41,7 +41,7 @@
             <hr class="hr15">
             <input name="userSex" id="userSex" placeholder="性别"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
-            <input name="email" id="email" placeholder="邮箱"  type="text" lay-verify="required" class="layui-input" >
+            <input name="email" id="userEmail" placeholder="邮箱"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
             <input name="userRegisterTime" id="userRegisterTime" lay-verify="required" placeholder="注册时间"  type="date" class="layui-input">
             <hr class="hr15">
@@ -49,9 +49,11 @@
             <hr class="hr15">
             <input name="userPoints" id="userPoints" placeholder="用户积分"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
-            <input name="matcher" id="matcher" lay-verify="required" placeholder="是否匹配"  type="text" class="layui-input">
-            <hr class="hr15">
             <input name="isAcc" id="isAcc" lay-verify="required" placeholder="是否达到标准（没有达到0，达到标准1）"  type="text" class="layui-input">
+            <hr class="hr15">
+            <input name="longitude" id="longitude" lay-verify="required" placeholder="经度"  type="text" class="layui-input">
+            <hr class="hr15">
+            <input name="latitude" id="latitude" lay-verify="required" placeholder="纬度"  type="text" class="layui-input">
             <hr class="hr15">
             <input value="添加用户" lay-submit lay-filter="login" style="width:100%;" type="submit">
             <hr class="hr20" >
