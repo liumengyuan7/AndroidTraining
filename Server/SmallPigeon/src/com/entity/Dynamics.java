@@ -20,6 +20,9 @@ public class Dynamics {
     private String pushImage;
     private int zanNum;
     private int forwardId;
+    private int commentNum;
+    private int collectNum;
+    private ForwardContent forwardContent;
     private List<Comment> comments = new ArrayList<>();
 
     public int getId() {
@@ -92,5 +95,37 @@ public class Dynamics {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public int getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(int commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    public int getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(int collectNum) {
+        this.collectNum = collectNum;
+    }
+
+    @Override
+    public String toString() {
+        return "Dynamics{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", pushTime=" + pushTime +
+                ", pushContent='" + pushContent + '\'' +
+                ", pushImage='" + pushImage + '\'' +
+                ", zanNum=" + zanNum +
+                ", forwardId=" + forwardId +
+                ", commentNum=" + commentNum +
+                ", collectNum=" + collectNum +
+                '}';
     }
 }

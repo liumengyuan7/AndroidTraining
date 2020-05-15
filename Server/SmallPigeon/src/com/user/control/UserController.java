@@ -192,5 +192,35 @@ public class UserController {
 	    if(nearbyUser!=null) return nearbyUser;
 	    else return "false";
     }
-
+	//更新学生信息 加入学校 学号 姓名
+	@ResponseBody
+	@RequestMapping("updateUserByMsg")
+	public String updateUserByMsg(@RequestParam("userId") String userId,
+								  @RequestParam("userName") String userName,
+								  @RequestParam("userSno") String userSno,
+								  @RequestParam("userSchool") String userSchool,
+								  @RequestParam("identifyImages") String identifyImages,
+								  @RequestParam("status") String status){
+		System.out.println(userId+userName+userSno+userSchool);
+		return this.userService.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages,status);
+	}
+	//获取的学生证图片存入out中
+	@ResponseBody
+	@RequestMapping("/postIdentifyImages")
+	public String postIdentifyImages(HttpServletRequest request) throws Exception {
+		String path = servletContext.getRealPath("")+"identifyImages\\";
+		System.out.println(path);
+        FileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        List<FileItem> items = upload.parseRequest(request);
+        FileItem item = items.get(0);
+		item.write(new File(path+item.getName()));
+		return "true";
+	}
+	//获得认证状态  是否认证
+	@ResponseBody
+	@RequestMapping("/getStatusByUserId")
+	public String getStatusByUserId(@RequestParam("userId") String userId){
+		return this.userService.getStatusByUserId(userId);
+	}
 }

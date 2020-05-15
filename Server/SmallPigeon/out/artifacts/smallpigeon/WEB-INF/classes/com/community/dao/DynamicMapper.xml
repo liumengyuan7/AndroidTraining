@@ -12,11 +12,11 @@
         from dynamics d,user u
         where u.id = d.user_id
     </select>
-   <!-- <select id="queryAllDynamicAndComment" resultMap="dynamicMap">
-        select  *
-        from dynamics d,comment c
-        where c.dynamics_id = d.id
-    </select>-->
+   <select id="queryAllDynamicByUserId" resultType="com.entity.Dynamics">
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId
+        from dynamics d,user u
+        where u.id = d.user_id and u.id=#{userId}
+    </select>
     <update id="updateZanNum">
         update dynamics
         set zan_num = #{zanNum}

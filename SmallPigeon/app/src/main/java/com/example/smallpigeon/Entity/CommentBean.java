@@ -2,11 +2,12 @@ package com.example.smallpigeon.Entity;
 
 import java.util.List;
 
-
 public class CommentBean {
+
     private int code;
     private String message;
     private Data data;
+
     public void setCode(int code) {
         this.code = code;
     }
@@ -32,6 +33,7 @@ public class CommentBean {
 
         private int total;
         private List<CommentDetailBean> list;
+
         public void setTotal(int total) {
             this.total = total;
         }
@@ -42,10 +44,9 @@ public class CommentBean {
         public void setList(List<CommentDetailBean> list) {
             this.list = list;
         }
+
         public List<CommentDetailBean> getList() {
             return list;
         }
-
     }
-
 }

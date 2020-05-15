@@ -64,5 +64,5 @@
         android:text="保存"
         android:id="@+id/personal_center_btnSaveNickname"
         android:src="@drawable/wancheng1"
-        />
+        android:alpha="0.6"/>
 </LinearLayout>

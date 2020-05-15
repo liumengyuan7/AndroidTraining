@@ -8,13 +8,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_icon"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_width="60dp"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:src="@drawable/zh"/>-->
 
         <com.example.smallpigeon.RoundImageView
             android:id="@+id/iv_icon"
@@ -112,63 +105,46 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_gravity="center"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/ll_forward"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:src="@drawable/transmit"
                 android:layout_width="25dp"
-                android:layout_height="25dp" />
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginLeft="3dp"
-                android:textSize="18dp"
-                android:textColor="#000"
-                android:text="转发"/>
+                android:src="@drawable/zhuanfa"/>
 
             <TextView
                 android:id="@+id/tv_forwardNum"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginLeft="3dp"
-                android:textSize="18dp"
+                android:text="6"
                 android:textColor="#000"
-                android:text="6"/>
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_toComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="50dp"
+            android:layout_gravity="right"
+            android:gravity="right">
 
             <ImageView
-                android:src="@drawable/comment"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
-
-            <TextView
-                android:layout_marginLeft="3dp"
-                android:text="评论"
-                android:textSize="18dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp" />
-
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/comment"/>
             <TextView
                 android:id="@+id/tv_commentNum"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginLeft="3dp"
                 android:textSize="18dp"
                 android:textColor="#000"
                 android:text="7"/>
@@ -178,21 +154,15 @@
             android:id="@+id/ll_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="50dp"
+            android:layout_gravity="right"
+            android:gravity="right">
 
             <ImageView
                 android:id="@+id/iv_like"
-                android:src="@drawable/good"
                 android:layout_width="25dp"
-                android:layout_height="25dp" />
-
-            <TextView
-                android:layout_marginLeft="3dp"
-                android:text="赞"
-                android:textSize="18dp"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"/>
+                android:layout_height="25dp"
+                android:src="@drawable/good"/>
 
             <TextView
                 android:id="@+id/tv_likeNum"

@@ -45,11 +45,20 @@ public class DynamicController {
 //    添加发布的动态到数据库
     @ResponseBody
     @RequestMapping("/addDynamic")
-    public String addDynamic(@RequestParam("userId") String userId,
+//    public String addDynamic(@RequestParam("userId") String userId,
+//                             @RequestParam("pushContent") String pushContent,
+//                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg) throws Exception {
+//        System.out.println(userId+pushContent+pushTime+pushImg);
+//        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg);
+//        return result;
+//    }
+      public String addDynamic(@RequestParam("userId") String userId,
                              @RequestParam("pushContent") String pushContent,
-                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg) throws Exception {
+                             @RequestParam("pushTime") String pushTime, @RequestParam("pushImg") String pushImg,
+                                @RequestParam("forwardId") String forwardId,
+                               @RequestParam("type") String type) throws Exception {
         System.out.println(userId+pushContent+pushTime+pushImg);
-        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg);
+        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg,forwardId,type);
         return result;
     }
     //获取的图片存入out中
@@ -70,25 +79,23 @@ public class DynamicController {
     @RequestMapping(value = "getAllDynamic",produces = "text/html;charset=UTF-8")
     public String getAllDynamic(){
         String result = this.dynamicService.queryAllDynamic();
-        String s = this.dynamicService.queryAllDynamic();
-        System.out.println(s);
         if(result == null || result.equals("")){
 			return "false";
 		}else{
 			return result;
 		}
     }
-  /*  //得到所有动态 带评论内容
+   //得到自己发布的所有动态
     @ResponseBody
-    @RequestMapping(value = "getAllDynamicAndComment",produces = "text/html;charset=UTF-8")
-    public String queryAllDynamicAndComment(){
-        String result = this.dynamicService.queryAllDynamicAndComment();
+    @RequestMapping(value = "getAllDynamicAndCommentByUerId",produces = "text/html;charset=UTF-8")
+    public String queryAllDynamicAndComment(@RequestParam("userId") String userId){
+        String result = this.dynamicService.queryAllDynamicAndComment(userId);
         if(result == null || result.equals("")){
 			return "false";
 		}else{
 			return result;
 		}
-    }*/
+    }
   /*
    * @Description 给动态添加评论信息
    * @Auther 刘梦圆
@@ -150,6 +157,82 @@ public class DynamicController {
                              @RequestParam("userId") String userId,
                              @RequestParam("zanNumAfter") String zanNumAfter){
         String result = this.dynamicService.decZan(dynamicId,userId,zanNumAfter);
+        return result;
+    }
+
+    /*
+     * @Description 对评论进行点赞
+     * @Auther 刘梦圆
+     * @Date 15:39 2020/05/08
+     * @Param [dynamicId, commentId, userId, zanNumAfter]
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping("/addZanNumByComment")
+    public  String addZanNumByComment(@RequestParam("dynamicId") String dynamicId,@RequestParam("commentId") String commentId,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("zanNumAfter") String zanNumAfter){
+        String result = this.dynamicService.addZanNumByComment(dynamicId,commentId,userId,zanNumAfter);
+        return result;
+    }
+    /*
+     * @Description 对评论取消点赞
+     * @Auther 刘梦圆
+     * @Date 15:39 2020/05/08
+     * @Param [dynamicId, commentId, userId, zanNumAfter]
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping("/decZanNumByComment")
+    public  String decZanNumByComment(@RequestParam("dynamicId") String dynamicId
+             ,@RequestParam("commentId") String commentId,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("zanNumAfter") String zanNumAfter){
+        String result = this.dynamicService.decZanNumByComment(dynamicId,commentId,userId,zanNumAfter);
+        return result;
+    }
+
+    /*
+     * @Description 得到用户收藏的所有动态
+     * @Auther 刘梦圆
+     * @Date 16:05 2020/05/08
+     * @Param [userId]
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping(value = "getAllCollectByUserId",produces = "text/html;charset=UTF-8")
+    public String getAllCollectByUserId(@RequestParam("userId") String userId){
+        String result = this.dynamicService.queryAllCollectByUserId(userId);
+        if(result == null || result.equals("")){
+			return "false";
+		}else{
+			return result;
+		}
+    }
+    /*
+     * @Description 添加收藏
+     * @Auther 刘梦圆
+     * @Date 16:02 2020/05/08
+     * @Param [dynamicId, userId]
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping("/addCollect")
+    public  String addCollect(@RequestParam("dynamicId") String dynamicId,@RequestParam("userId") String userId){
+        String result = this.dynamicService.addCollect(dynamicId,userId);
+        return result;
+    }
+    /*
+     * @Description 取消收藏
+     * @Auther 刘梦圆
+     * @Date 16:03 2020/05/08
+     * @Param [dynamicId, userId]
+     * @return java.lang.String
+     */
+    @ResponseBody
+    @RequestMapping("/decCollect")
+    public  String decCollect(@RequestParam("dynamicId") String dynamicId,@RequestParam("userId") String userId){
+        String result = this.dynamicService.decCollect(dynamicId,userId);
         return result;
     }
 }

@@ -56,4 +56,12 @@
     <update id="updateUserLocation" parameterType="com.entity.User">
         update user set longitude=#{longitude},latitude=#{latitude} where id=#{userId}
     </update>
+     <update id="updateUserByMsg" parameterType="com.entity.User">
+        update user
+        set user_name=#{userName},user_sno=#{userSno},user_school=#{userSchool},identify_image=#{identifyImages},is_accreditation=#{status}
+        where id=#{userId}
+    </update>
+    <select id="getStatusByUserId" resultType="java.lang.String">
+        select is_accreditation from user where id=#{userId}
+    </select>
 </mapper>

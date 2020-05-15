@@ -1,6 +1,7 @@
 package com.example.smallpigeon.Community.Comment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -57,6 +58,20 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                         Toast.makeText(context,"回复成功",Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(context,"回复失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 2:
+                    if(result.equals("true")){
+                        Toast.makeText(context,"评论点赞成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context,"评论点赞失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 3:
+                    if(result.equals("true")){
+                        Toast.makeText(context,"取消评论点赞成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context,"取消评论点赞失败",Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -131,22 +146,46 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                 .into(groupHolder.logo);
         groupHolder.tv_name.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getNickName());
 
+        //得到点赞用户id
+        SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        int userId = Integer.parseInt(pre.getString("user_id",""));
+
         String time = dynamicContent.getCommentDetailBeans().get(groupPosition).getCreateDate();
         groupHolder.tv_time.setText(time.substring(0,19));
         groupHolder.tv_content.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getContent());
+        groupHolder.tv_likeNum.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum()+"");
+        groupHolder.iv_like.setTag(false);
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isLike){
+                /*if(isLike){
                     isLike = false;
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
                 }else {
                     isLike = true;
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+                }*/
+                Log.e("iv_like.getTag()",groupHolder.iv_like.getTag()+"");
+                if((boolean)groupHolder.iv_like.getTag()){
+                    groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
+                    int zanNumBefore = dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum();
+                    int zanNumAfter = zanNumBefore-1;
+                    decZanNumByComment(dynamicContent.getDynamicId(),dynamicContent.getCommentDetailBeans().get(groupPosition).getId(),userId,zanNumAfter);
+                    dynamicContent.getCommentDetailBeans().get(groupPosition).setComomentZanNum(zanNumAfter);
+                    groupHolder.tv_likeNum.setText(zanNumAfter+"");
+                    groupHolder.iv_like.setTag(false);
+                }else {
+                    groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+                    int zanNumBefore = dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum();
+                    int zanNumAfter = zanNumBefore+1;
+                    addZanNumByComment(dynamicContent.getDynamicId(),dynamicContent.getCommentDetailBeans().get(groupPosition).getId(),userId,zanNumAfter);
+                    dynamicContent.getCommentDetailBeans().get(groupPosition).setComomentZanNum(zanNumAfter);
+                    groupHolder.tv_likeNum.setText(zanNumAfter+"");
+                    groupHolder.iv_like.setTag(true);
                 }
             }
         });
-
+        notifyDataSetChanged();
 
 
         return convertView;
@@ -183,7 +222,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     private class GroupHolder{
         private CircleImageView logo;
-        private TextView tv_name, tv_content, tv_time;
+        private TextView tv_name, tv_content, tv_time,tv_likeNum;
         private ImageView iv_like;
         public GroupHolder(View view) {
             logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
@@ -191,6 +230,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             tv_name = (TextView) view.findViewById(R.id.comment_item_userName);
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);
             iv_like = (ImageView) view.findViewById(R.id.comment_item_like);
+            tv_likeNum = (TextView)view.findViewById(R.id.comment_item_liketext);
         }
     }
 
@@ -282,4 +322,34 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }.start();
     }
 
+    //对评论点赞
+    private void addZanNumByComment(int dynamicId, int commentId, int userId, int zanNumAfter) {
+        new Thread(){
+            @Override
+            public void run() {
+                Log.e("评论的id",commentId+",点赞数"+zanNumAfter);
+                String result = new Utils().getConnectionResult("dynamic","addZanNumByComment","dynamicId="+dynamicId+"&&commentId="+commentId
+                        +"&&userId="+userId+"&&zanNumAfter="+zanNumAfter);
+                Message message = new Message();
+                message.obj = result;
+                message.what=2;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
+    //对评论取消点赞
+    private void decZanNumByComment(int dynamicId, int commentId, int userId, int zanNumAfter) {
+        new Thread(){
+            @Override
+            public void run() {
+                Log.e("取消点赞评论的id",commentId+",点赞数"+zanNumAfter);
+                String result = new Utils().getConnectionResult("dynamic","decZanNumByComment","dynamicId="+dynamicId+"&&commentId="+commentId
+                        +"&&userId="+userId+"&&zanNumAfter="+zanNumAfter);
+                Message message = new Message();
+                message.obj = result;
+                message.what=3;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
 }

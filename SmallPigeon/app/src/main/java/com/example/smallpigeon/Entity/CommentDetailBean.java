@@ -14,6 +14,7 @@ public class CommentDetailBean implements Serializable {
     private int commentFromId;
     private int replyTotal;
     private String createDate;
+    private int comomentZanNum;
     private List<ReplyDetailBean> replyList;
     public CommentDetailBean() {
 
@@ -96,6 +97,14 @@ public class CommentDetailBean implements Serializable {
         return replyList;
     }
 
+    public int getComomentZanNum() {
+        return comomentZanNum;
+    }
+
+    public void setComomentZanNum(int comomentZanNum) {
+        this.comomentZanNum = comomentZanNum;
+    }
+
     @Override
     public String toString() {
         return "CommentDetailBean{" +
@@ -104,8 +113,11 @@ public class CommentDetailBean implements Serializable {
                 ", userLogo='" + userLogo + '\'' +
                 ", content='" + content + '\'' +
                 ", imgId='" + imgId + '\'' +
+                ", dynamicId=" + dynamicId +
+                ", commentFromId=" + commentFromId +
                 ", replyTotal=" + replyTotal +
-                ", createDate='" + createDate +
+                ", createDate='" + createDate + '\'' +
+                ", comomentZanNum=" + comomentZanNum +
                 '}';
     }
 }
