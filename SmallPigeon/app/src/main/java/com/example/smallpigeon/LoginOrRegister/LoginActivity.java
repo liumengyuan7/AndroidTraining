@@ -50,11 +50,12 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             String re = msg.obj+"";
+            Log.e("sssssssss",re);
             if(re.equals("false")){
                 Toast.makeText(getApplicationContext(),"您的账号或者密码错误，登录失败！",Toast.LENGTH_SHORT).show();
             }else{
                 try {
-                    String result = re.split(";")[0];
+                    String result = re.split("/+")[0];
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject json = jsonArray.getJSONObject(0);
                     SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);

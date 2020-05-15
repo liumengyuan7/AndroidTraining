@@ -57,7 +57,7 @@ public class MyFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             String status = msg.obj + "";
-            is_accreditation = Integer.parseInt(status);
+//            is_accreditation = Integer.parseInt(status);
         }
     };
 //    private Integer is_accreditation;
@@ -178,8 +178,7 @@ public class MyFragment extends Fragment {
     private boolean loginOrNot(){
         SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String userEmail = pre.getString("user_email","");
-        String userId = pre.getString("user_id","");
-    
+
         if(userEmail.equals("")||userEmail==null){
             return false;
         }else{

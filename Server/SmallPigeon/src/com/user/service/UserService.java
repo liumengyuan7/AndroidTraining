@@ -66,7 +66,7 @@ public class UserService {
 			interestSet(interest.getComic(),"comic");
 			interestSet(interest.getDelicacy(),"delicacy");
 			//返回用户信息和兴趣的字符串
-			return new Gson().toJson(userList)+";"+interestString;
+			return new Gson().toJson(userList)+"+"+interestString;
 		}
 		return null;
 	}
