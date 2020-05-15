@@ -7,6 +7,7 @@ import com.community.dao.ReplyMapper;
 import com.community.dao.ZanNumMapper;
 import com.entity.Comment;
 import com.entity.Dynamics;
+import com.entity.ForwardContent;
 import com.entity.Reply;
 import com.google.gson.Gson;
 
@@ -81,7 +82,8 @@ public class DynamicService {
         for (int i =0;i<dynamics.size();i++){
             int forwardId = dynamics.get(i).getForwardId();
             if(forwardId!=0) {
-                this.dynamicMapper.queryDynamicByForwardId(forwardId);
+                ForwardContent  forwardContent= this.dynamicMapper.queryDynamicByForwardId(forwardId);
+                dynamics.get(i).setForwardContent(forwardContent);
             }
             int dynamicId = dynamics.get(i).getId();
             List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);

@@ -18,12 +18,12 @@
         </choose>
     </insert>
     <select id="queryAllDynamic" resultType="com.entity.Dynamics">
-        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type type
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type dtype
         from dynamics d,user u
         where u.id = d.user_id
     </select>
    <select id="queryAllDynamicByUserId" resultType="com.entity.Dynamics">
-        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type dtype
         from dynamics d,user u
         where u.id = d.user_id and u.id=#{userId}
     </select>

@@ -22,6 +22,7 @@ public class Dynamics {
     private int forwardId;
     private int commentNum;
     private int collectNum;
+    private int dtype;
     private ForwardContent forwardContent;
     private List<Comment> comments = new ArrayList<>();
 
@@ -113,6 +114,23 @@ public class Dynamics {
         this.collectNum = collectNum;
     }
 
+    public ForwardContent getForwardContent() {
+        return forwardContent;
+    }
+
+    public void setForwardContent(ForwardContent forwardContent) {
+        this.forwardContent = forwardContent;
+    }
+
+
+    public int getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(int dtype) {
+        this.dtype = dtype;
+    }
+
     @Override
     public String toString() {
         return "Dynamics{" +
@@ -126,6 +144,9 @@ public class Dynamics {
                 ", forwardId=" + forwardId +
                 ", commentNum=" + commentNum +
                 ", collectNum=" + collectNum +
+                ", dtype=" + dtype +
+                ", forwardContent=" + forwardContent.getUser().getUserName()+ forwardContent.getDynamic().getPushContent() +
+                ", comments=" + comments +
                 '}';
     }
 }
