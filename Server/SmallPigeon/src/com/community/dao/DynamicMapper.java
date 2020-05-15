@@ -1,6 +1,7 @@
 package com.community.dao;
 
 import com.entity.Dynamics;
+import com.entity.ForwardContent;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +21,6 @@ public interface DynamicMapper {
                          @Param("pushImg") String pushImg,
                          @Param("forwardId") String forwardId,
                          @Param("type") String type);
+    //查询转发的信息
+    public ForwardContent queryDynamicByForwardId(@Param("forwardId") int forwardId);
 }

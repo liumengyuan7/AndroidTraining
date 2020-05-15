@@ -61,9 +61,28 @@ public class DynamicService {
         }
     }
     //得到所有用户的动态
-    public String queryAllDynamic(){
+ /*   public String queryAllDynamic(){
         List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamic();
         for (int i =0;i<dynamics.size();i++){
+            int dynamicId = dynamics.get(i).getId();
+            List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
+            dynamics.get(i).setComments(comments);
+            for (int j=0;j<comments.size();j++){
+                int commentId = comments.get(j).getId();
+                List<Reply> replies = this.replyMapper.queryReplyByCommentId(commentId);
+                comments.get(j).setReplies(replies);
+            }
+        }
+        System.out.println(new Gson().toJson(dynamics));
+        return new Gson().toJson(dynamics);
+    }*/
+      public String queryAllDynamic(){
+        List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamic();
+        for (int i =0;i<dynamics.size();i++){
+            int forwardId = dynamics.get(i).getForwardId();
+            if(forwardId!=0) {
+                this.dynamicMapper.queryDynamicByForwardId(forwardId);
+            }
             int dynamicId = dynamics.get(i).getId();
             List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
             dynamics.get(i).setComments(comments);

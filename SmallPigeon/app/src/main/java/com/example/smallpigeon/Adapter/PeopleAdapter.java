@@ -41,7 +41,9 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -259,7 +261,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 if (loginOrNot()){
-                    showPopupWindow(holder, "forward");
+                    showPopupWindow(holder, "forward",position);
                 } else {
                     Toast.makeText(context, "请先登录哦！", Toast.LENGTH_SHORT).show();
                 }
@@ -276,7 +278,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
 
     //转发
     @SuppressLint("WrongConstant")
-    private void showPopupWindow(ViewHolder holder, String type) {
+    private void showPopupWindow(ViewHolder holder, String type, int position) {
         if (popupView == null){
             //加载评论框的资源文件
             popupView = LayoutInflater.from(context).inflate(R.layout.popup, null);
@@ -348,16 +350,18 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 if (nInputContentText == null || "".equals(nInputContentText)) {
                     Toast.makeText(context,"内容不能为空！",Toast.LENGTH_SHORT).show();
                 }else {
-                    //TODO：插入转发信息
-                    ForwardContent forwardContent = new ForwardContent();
-                    //TODO:得到当前转发动态的用户信息
-                    UserContent userContent = new UserContent();
-                    DynamicContent dynamicContent = new DynamicContent();
-                    dynamicContent.setContent(nInputContentText);
-                    dynamicContent.setType(1);//type为1代表转发内容，type为0表示不是转发内容
-                    forwardContent.setDynamicContent(dynamicContent);
-                    forwardContent.setUserContent(userContent);
-
+//                    //TODO：插入转发信息
+//                    ForwardContent forwardContent = new ForwardContent();
+//                    //TODO:得到当前转发动态的用户信息
+//                    UserContent userContent = new UserContent();
+//                    DynamicContent dynamicContent = new DynamicContent();
+//                    dynamicContent.setContent(nInputContentText);
+//                    dynamicContent.setType(1);//type为1代表转发内容，type为0表示不是转发内容
+//                    forwardContent.setDynamicContent(dynamicContent);
+//                    forwardContent.setUserContent(userContent);
+                    Timestamp pushTime = new Timestamp(new Date().getTime());
+                    int forwardId = list.get(position).getDynamicId();
+                    addForwardDynamic(pushTime, nInputContentText ,forwardId);
                     mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
                     popupWindow.dismiss();
                     Toast.makeText(context, "发送成功",Toast.LENGTH_SHORT).show();
@@ -452,7 +456,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     }
 
     //插入转发信息  当前转发者id  转发时间 转发内容  转发动态的id  转发状态 1 为转发 0为不转发
-    private void addForwardDynamic(String pushTime, String pushContent,int forwardId){
+    private void addForwardDynamic(Timestamp pushTime, String pushContent,int forwardId){
         Handler handler1 = new Handler(){
             @Override
             public void handleMessage(Message msg) {

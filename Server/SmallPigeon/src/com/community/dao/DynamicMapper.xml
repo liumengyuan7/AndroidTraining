@@ -7,7 +7,7 @@
       /*  insert into dynamics(user_id, push_time, push_content, push_image)
         values(#{userId},#{pushTime},#{pushContent},#{pushImg})*/
         <choose>
-            <when test="forwardDynamicId!=0">
+            <when test="forwardId!=0">
                 insert into dynamics(user_id, push_time, push_content, forward_id, type)
                 values(#{userId},#{pushTime},#{pushContent}, #{forwardId}, #{type})
             </when>
@@ -18,12 +18,12 @@
         </choose>
     </insert>
     <select id="queryAllDynamic" resultType="com.entity.Dynamics">
-        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type type
         from dynamics d,user u
         where u.id = d.user_id
     </select>
    <select id="queryAllDynamicByUserId" resultType="com.entity.Dynamics">
-        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type
         from dynamics d,user u
         where u.id = d.user_id and u.id=#{userId}
     </select>
@@ -48,4 +48,9 @@
         from user u,dynamics d
         where d.user_id = u.id and d.id=#{dynamicId} and d.forward_id=#{forwardId}
     </select>-->
+    <select id="queryDynamicByForwardId">
+        select u.user_nickname userNickname,u.user_email userEmail,d.push_time pushTime, d.push_content pushContent, d.push_image pushImage
+        from dynamics d,user u
+        where d.user_id = u.id and d.id = #{forwardId}
+    </select>
 </mapper>
