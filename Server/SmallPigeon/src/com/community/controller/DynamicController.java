@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,20 +46,23 @@ public class DynamicController {
 //    添加发布的动态到数据库
     @ResponseBody
     @RequestMapping("/addDynamic")
-//    public String addDynamic(@RequestParam("userId") String userId,
-//                             @RequestParam("pushContent") String pushContent,
-//                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg) throws Exception {
-//        System.out.println(userId+pushContent+pushTime+pushImg);
-//        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg);
-//        return result;
-//    }
-      public String addDynamic(@RequestParam("userId") String userId,
+    public String addDynamic(@RequestParam("userId") String userId,
                              @RequestParam("pushContent") String pushContent,
-                             @RequestParam("pushTime") String pushTime, @RequestParam("pushImg") String pushImg,
+                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg) throws Exception {
+        System.out.println(userId+pushContent+pushTime+pushImg);
+        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg);
+        return result;
+    }
+    //    添加转发的动态到数据库
+    @ResponseBody
+    @RequestMapping("/addForwardDynamic")
+    public String addForwardDynamic(@RequestParam("userId") String userId,
+                             @RequestParam("pushContent") String pushContent,
+                             @RequestParam("pushTime") String pushTime,
                                 @RequestParam("forwardId") String forwardId,
                                @RequestParam("type") String type) throws Exception {
-        System.out.println(userId+pushContent+pushTime+pushImg);
-        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg,forwardId,type);
+        System.out.println(userId+pushContent+pushTime+type);
+        String result =this.dynamicService.addForwardDynamic(userId,pushTime,pushContent,forwardId,type);
         return result;
     }
     //获取的图片存入out中
@@ -241,6 +245,25 @@ public class DynamicController {
     @RequestMapping("/decCollect")
     public  String decCollect(@RequestParam("dynamicId") String dynamicId,@RequestParam("userId") String userId){
         String result = this.dynamicService.decCollect(dynamicId,userId);
+        return result;
+    }
+    /*
+     * @Description  取消多条收藏
+     * @Auther 刘梦圆
+     * @Date 8:26 2020/05/16
+     * @Param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/decCollectList")
+    public  String decCollectList(@RequestParam("dynamicIdList")String dynamicIdList,@RequestParam("userId") String userId){
+        String[] dynamicIds =dynamicIdList.split(",");
+        List<String> list = new ArrayList<>();
+        for (int i=0;i<dynamicIds.length;i++){
+            list.add(dynamicIds[i]);
+        }
+        System.out.println(list.toString());
+        String result = this.dynamicService.decCollects(list,userId);
         return result;
     }
 }

@@ -17,4 +17,6 @@ public interface CollectMapper {
     public int insertCollect(@Param("dynamicId") String dynamicId,@Param("userId") String userId);
     //取消收藏
     public int deleteCollect(@Param("dynamicId") String dynamicId,@Param("userId") String userId);
+    //批量删除收藏数据
+    public int deleteCollects(@Param(value = "idList") List<String> idList,@Param("userId") String userId);
 }

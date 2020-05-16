@@ -18,6 +18,7 @@ public class DynamicContent implements Serializable {
     private String content;
     private String img;
     private int zan_num;
+    private int forwardId;
     private int type;
     private int comment_Num;
     private int collect_Num;
@@ -131,6 +132,14 @@ public class DynamicContent implements Serializable {
         this.collect_Num = collect_Num;
     }
 
+    public int getForwardId() {
+        return forwardId;
+    }
+
+    public void setForwardId(int forwardId) {
+        this.forwardId = forwardId;
+    }
+
     @Override
     public String toString() {
         return "DynamicContent{" +
@@ -141,10 +150,12 @@ public class DynamicContent implements Serializable {
                 ", content='" + content + '\'' +
                 ", img='" + img + '\'' +
                 ", zan_num=" + zan_num +
+                ", forwardId=" + forwardId +
                 ", type=" + type +
                 ", comment_Num=" + comment_Num +
                 ", collect_Num=" + collect_Num +
                 ", img2='" + img2 + '\'' +
+                ", forwardContent=" + forwardContent +
                 '}';
     }
 }

@@ -145,8 +145,6 @@ public class Dynamics {
                 ", commentNum=" + commentNum +
                 ", collectNum=" + collectNum +
                 ", dtype=" + dtype +
-                ", forwardContent=" + forwardContent.getUser().getUserName()+ forwardContent.getDynamic().getPushContent() +
-                ", comments=" + comments +
                 '}';
     }
 }
