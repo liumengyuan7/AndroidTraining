@@ -130,8 +130,6 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     @Override
     public int getItemViewType(int position) {
         if (list.get(position).getType() == 0){
-//            Log.e("list.position",list.get(position).toString()+"/n"+list.get(position).getType());
-
             return VIEWTYPFIRST;
         }else {
             return VIEWTYPSECOND;
@@ -198,11 +196,18 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.dynamic_item_txt.setText(dynamicContent.getContent());
                 holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
                 holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
-
+                holder.tv_forwardNum.setText(dynamicContent.getForward_Num()+"");
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
                 holder.ll_toComment.setTag(position);
                 holder.ll_forward.setTag(position);
+                //缓存发布的动态图片
+                if(!"".equals(dynamicContent.getImg())) {
+                    showImges(dynamicContent.getImg(), holder.dynamic_item_img);
+                }
+                if(!"".equals(dynamicContent.getImg2())) {
+                    showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+                }
                 break;
             case VIEWTYPSECOND:
                 holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
@@ -217,19 +222,27 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
+                holder.ll_forward.setVisibility(View.GONE);
                 holder.ll_toComment.setTag(position);
                 holder.ll_forward.setTag(position);
+                //缓存发布的动态图片 来自被转发动态
+                if(!"".equals(dynamicContent.getForwardContent().getDpushImage1())) {
+                    showImges(dynamicContent.getForwardContent().getDpushImage1(), holder.dynamic_item_img);
+                }
+                if(!"".equals(dynamicContent.getForwardContent().getDpushImage2())) {
+                    showImges(dynamicContent.getForwardContent().getDpushImage2(), holder.dynamic_item_img2);
+                }
                 break;
         }
         //缓存头像
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
         //缓存发布的动态图片
-        if(!"".equals(dynamicContent.getImg())) {
-            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
-        }
-        if(!"".equals(dynamicContent.getImg2())) {
-            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
-        }
+//        if(!"".equals(dynamicContent.getImg())) {
+//            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
+//        }
+//        if(!"".equals(dynamicContent.getImg2())) {
+//            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+//        }
         //得到点赞用户id
         SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
@@ -265,7 +278,100 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 if (loginOrNot()){
-                    showPopupWindow(holder, "forward",position);
+                    if (popupView == null){
+                        //加载评论框的资源文件
+                        popupView = LayoutInflater.from(context).inflate(R.layout.popup, null);
+                    }
+
+                    et_discuss = (EditText) popupView.findViewById(R.id.et_discuss);
+                    btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
+                    rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
+                    et_discuss.setHint( "  转发理由……" );
+
+                    //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        public void run() {
+                            mInputManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            mInputManager.showSoftInput(et_discuss, 0);
+                            mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                        }
+                    }, 200);
+
+                    if (popupWindow == null){
+                        popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT, false);
+                    }
+                    //popupWindow的常规设置，设置点击外部事件，背景色
+                    popupWindow.setTouchable(true);
+                    popupWindow.setFocusable(true);
+                    popupWindow.setOutsideTouchable(true);
+                    popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+                    et_discuss.setFocusable(true);
+                    popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
+                                popupWindow.dismiss();
+                            return false;
+                        }
+                    });
+                    // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
+                    popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+                    // 再设置模式，和Activity的一样，覆盖，调整大小。
+                    popupWindow.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                    //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
+                    popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+                    popupWindow.update();
+                    //外部点击事件
+                    rl_input_container.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+                            popupWindow.dismiss();
+                        }
+                    });
+                    //评论框内的发送按钮设置点击事件
+                    btn_submit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //转发理由
+                            nInputContentText = et_discuss.getText().toString().trim();
+                            if (nInputContentText == null || "".equals(nInputContentText)) {
+                                Toast.makeText(context,"内容不能为空！",Toast.LENGTH_SHORT).show();
+                            }else {
+//                    //TODO：插入转发信息
+//                    ForwardContent forwardContent = new ForwardContent();
+//                    forwardContent.setDuserNickname(list.get(position).getUserContent().getUserNickname());
+//                    forwardContent.setDuserEmail(list.get(position).getUserContent().getUserEmail());
+//                    forwardContent.setDpushTime(list.get(position).getDate());
+//                    if (list.get(position).getImg()!=null && !list.get(position).getImg().equals("")) {
+//                        forwardContent.setDpushImage1(list.get(position).getImg());
+//                    }
+//                    if (list.get(position).getImg2()!=null && !list.get(position).getImg2().equals("")){
+//                        forwardContent.setDpushImage2(list.get(position).getImg2());
+//                    }
+////                    //TODO:得到当前转发动态的用户信息
+//                    DynamicContent dynamicContent = new DynamicContent();
+//                    dynamicContent.setContent(nInputContentText);
+//                    dynamicContent.setType(1);//type为1代表转发内容，type为0表示不是转发内容
+//                    dynamicContent.setForwardContent(forwardContent);
+//                    list.add(dynamicContent);
+//                    notifyDataSetChanged();
+                    Timestamp pushTime = new Timestamp(new Date().getTime());
+                    int forwardId = list.get(position).getDynamicId();
+                    addForwardDynamic(pushTime, nInputContentText ,forwardId);
+                    mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
+                    popupWindow.dismiss();
+                    et_discuss.setText( null );
+                    int forwardNumBefore = list.get(position).getForward_Num();
+                    int forwardNumAfter = forwardNumBefore+1;
+                    Log.e("forwardNumAfter",forwardNumAfter+"");
+                    list.get(position).setForward_Num(forwardNumAfter);
+                    holder.tv_forwardNum.setText(list.get(position).getForward_Num()+"");
+                    //转发成功后改变转发数量
+                    changeForwardNum(list.get(position).getDynamicId(),forwardNumAfter); } }});
+                    notifyDataSetChanged();
                 } else {
                     Toast.makeText(context, "请先登录哦！", Toast.LENGTH_SHORT).show();
                 }
@@ -280,102 +386,131 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         return convertView;
     }
 
-    //转发
-    @SuppressLint("WrongConstant")
-    private void showPopupWindow(ViewHolder holder, String type, int position) {
-        if (popupView == null){
-            //加载评论框的资源文件
-            popupView = LayoutInflater.from(context).inflate(R.layout.popup, null);
-        }
-
-        et_discuss = (EditText) popupView.findViewById(R.id.et_discuss);
-        btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
-        rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
-        et_discuss.setHint( "  转发理由……" );
-
-        //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-                mInputManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                mInputManager.showSoftInput(et_discuss, 0);
-                mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-        }, 200);
-
-        if (popupWindow == null){
-            popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, false);
-        }
-        //popupWindow的常规设置，设置点击外部事件，背景色
-        popupWindow.setTouchable(true);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        et_discuss.setFocusable(true);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
-                    popupWindow.dismiss();
-                return false;
-            }
-        });
-        // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
-        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
-        // 再设置模式，和Activity的一样，覆盖，调整大小。
-        popupWindow.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
-        popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-        popupWindow.update();
-
-        //设置监听
-//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//            // 在dismiss中恢复透明度
-//            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-//            public void onDismiss() {
-//                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+//    //转发
+//    @SuppressLint("WrongConstant")
+//    private void showPopupWindow(ViewHolder finalHolder,String type, int position) {
+//        if (popupView == null){
+//            //加载评论框的资源文件
+//            popupView = LayoutInflater.from(context).inflate(R.layout.popup, null);
+//        }
+//
+//        et_discuss = (EditText) popupView.findViewById(R.id.et_discuss);
+//        btn_submit = (Button) popupView.findViewById(R.id.btn_confirm);
+//        rl_input_container = (RelativeLayout)popupView.findViewById(R.id.rl_input_container);
+//        et_discuss.setHint( "  转发理由……" );
+//
+//        //利用Timer这个Api设置延迟显示软键盘，这里时间为200毫秒
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            public void run() {
+//                mInputManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                mInputManager.showSoftInput(et_discuss, 0);
+//                mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//            }
+//        }, 200);
+//
+//        if (popupWindow == null){
+//            popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT,
+//                    RelativeLayout.LayoutParams.WRAP_CONTENT, false);
+//        }
+//        //popupWindow的常规设置，设置点击外部事件，背景色
+//        popupWindow.setTouchable(true);
+//        popupWindow.setFocusable(true);
+//        popupWindow.setOutsideTouchable(true);
+//        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        et_discuss.setFocusable(true);
+//        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
+//                    popupWindow.dismiss();
+//                return false;
 //            }
 //        });
-        //外部点击事件
-        rl_input_container.setOnClickListener(new View.OnClickListener() {
+//        // 设置弹出窗体需要软键盘，放在setSoftInputMode之前
+//        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+//        // 再设置模式，和Activity的一样，覆盖，调整大小。
+//        popupWindow.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//        //设置popupwindow的显示位置，这里应该是显示在底部，即Bottom
+//        popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+//        popupWindow.update();
+//
+//        //设置监听
+////        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+////            // 在dismiss中恢复透明度
+////            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+////            public void onDismiss() {
+////                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+////            }
+////        });
+//        //外部点击事件
+//        rl_input_container.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
+//                popupWindow.dismiss();
+//            }
+//        });
+//        //评论框内的发送按钮设置点击事件
+//        btn_submit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //转发理由
+//                nInputContentText = et_discuss.getText().toString().trim();
+//                if (nInputContentText == null || "".equals(nInputContentText)) {
+//                    Toast.makeText(context,"内容不能为空！",Toast.LENGTH_SHORT).show();
+//                }else {
+////                    //TODO：插入转发信息
+////                    ForwardContent forwardContent = new ForwardContent();
+////                    forwardContent.setDuserNickname(list.get(position).getUserContent().getUserNickname());
+////                    forwardContent.setDuserEmail(list.get(position).getUserContent().getUserEmail());
+////                    forwardContent.setDpushTime(list.get(position).getDate());
+////                    if (list.get(position).getImg()!=null && !list.get(position).getImg().equals("")) {
+////                        forwardContent.setDpushImage1(list.get(position).getImg());
+////                    }
+////                    if (list.get(position).getImg2()!=null && !list.get(position).getImg2().equals("")){
+////                        forwardContent.setDpushImage2(list.get(position).getImg2());
+////                    }
+//////                    //TODO:得到当前转发动态的用户信息
+////                    DynamicContent dynamicContent = new DynamicContent();
+////                    dynamicContent.setContent(nInputContentText);
+////                    dynamicContent.setType(1);//type为1代表转发内容，type为0表示不是转发内容
+////                    dynamicContent.setForwardContent(forwardContent);
+////                    list.add(dynamicContent);
+////                    notifyDataSetChanged();
+//
+//                    Timestamp pushTime = new Timestamp(new Date().getTime());
+//                    int forwardId = list.get(position).getDynamicId();
+//                    addForwardDynamic(pushTime, nInputContentText ,forwardId);
+//
+//                    mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
+//                    popupWindow.dismiss();
+////                    Toast.makeText(context, "发送成功",Toast.LENGTH_SHORT).show();
+//                    et_discuss.setText( null );
+//                    int forwardNumBefore = list.get(position).getForward_Num();
+//                    int forwardNumAfter = forwardNumBefore+1;
+//                    Log.e("forwardNumAfter",forwardNumAfter+"");
+//                    list.get(position).setForward_Num(forwardNumAfter);
+//                    finalHolder.tv_forwardNum.setText(list.get(position).getForward_Num()+"");
+//                    //转发成功后改变转发数量
+//                    changeForwardNum(list.get(position).getDynamicId(),forwardNumAfter);
+//                }
+//            }
+//        });
+//        notifyDataSetChanged();
+//    }
+    //转发成功后改变转发数量
+    private void changeForwardNum(int dynamicId,int forwardNum) {
+        new Thread(){
             @Override
-            public void onClick(View v) {
-                mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(), 0); //强制隐藏键盘
-                popupWindow.dismiss();
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","changeForwardNum","dynamicId="+dynamicId+"&&forwardNum="+forwardNum);
+                Message message = new Message();
+                message.obj = result;
+                message.what=2;
+                handler.sendMessage(message);
             }
-        });
-        //评论框内的发送按钮设置点击事件
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //转发理由
-                nInputContentText = et_discuss.getText().toString().trim();
-                if (nInputContentText == null || "".equals(nInputContentText)) {
-                    Toast.makeText(context,"内容不能为空！",Toast.LENGTH_SHORT).show();
-                }else {
-//                    //TODO：插入转发信息
-//                    ForwardContent forwardContent = new ForwardContent();
-//                    //TODO:得到当前转发动态的用户信息
-//                    UserContent userContent = new UserContent();
-//                    DynamicContent dynamicContent = new DynamicContent();
-//                    dynamicContent.setContent(nInputContentText);
-//                    dynamicContent.setType(1);//type为1代表转发内容，type为0表示不是转发内容
-//                    forwardContent.setDynamicContent(dynamicContent);
-//                    forwardContent.setUserContent(userContent);
-                    Timestamp pushTime = new Timestamp(new Date().getTime());
-                    int forwardId = list.get(position).getDynamicId();
-                    addForwardDynamic(pushTime, nInputContentText ,forwardId);
-                    mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
-                    popupWindow.dismiss();
-//                    Toast.makeText(context, "发送成功",Toast.LENGTH_SHORT).show();
-                    et_discuss.setText( null );
-                    //TODO：从数据库获取数据并更改转发数
-                    holder.tv_forwardNum.setText( "9" );
-                    //TODO：发送成功，与后台交互，保存到数据库
-                }
-            }
-        });
+        }.start();
     }
 
     //点赞
@@ -412,6 +547,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     private void showImges(String imgName,ImageView imageView) {
         String url = "http://"+this.context.getResources().getString(R.string.ip_address)
                 +":8080/smallpigeon/dynamic/"+imgName;
+//        ViewGroup.LayoutParams layoutParams =  imageView.getLayoutParams();
+//        layoutParams.height=500;
+//        imageView.setLayoutParams(layoutParams);
         Glide.with(this.context).load(url).into(imageView);
     }
 
@@ -466,6 +604,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             public void handleMessage(Message msg) {
                 String result = msg.obj+"";
                 if(result.equals("true")){
+
                     Toast.makeText(context,"转发成功",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context,"转发失败",Toast.LENGTH_SHORT).show();

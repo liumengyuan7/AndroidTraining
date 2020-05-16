@@ -122,6 +122,13 @@ public class CollectAdapter extends BaseAdapter {
                 holder.collectNum.setText(dynamicContent.getCollect_Num()+"");
                 holder.dynamic_item_txt.setText(dynamicContent.getContent());
                 holder.checkBox.setChecked(stateCheckedMap.get(position));
+                //缓存发布的动态图片
+                if(!"".equals(dynamicContent.getImg())) {
+                    showImges(dynamicContent.getImg(), holder.dynamic_item_img);
+                }
+                if(!"".equals(dynamicContent.getImg2())) {
+                    showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+                }
                 break;
             case VIEWTYPSECOND:
                 showAndHideCheckBox();//控制CheckBox的那个的框显示与隐藏
@@ -137,18 +144,25 @@ public class CollectAdapter extends BaseAdapter {
                 //显示评论和收藏数量
                 holder.commentNum.setText(dynamicContent.getComment_Num()+"");
                 holder.collectNum.setText(dynamicContent.getCollect_Num()+"");
+                //缓存发布的动态图片 来自被转发动态
+                if(!"".equals(dynamicContent.getForwardContent().getDpushImage1())) {
+                    showImges(dynamicContent.getForwardContent().getDpushImage1(), holder.dynamic_item_img);
+                }
+                if(!"".equals(dynamicContent.getForwardContent().getDpushImage2())) {
+                    showImges(dynamicContent.getForwardContent().getDpushImage2(), holder.dynamic_item_img2);
+                }
                 break;
         }
 
         //缓存头像
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
-        //缓存发布的动态图片
-        if(!"".equals(dynamicContent.getImg())) {
-            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
-        }
-        if(!"".equals(dynamicContent.getImg2())) {
-            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
-        }
+//        //缓存发布的动态图片
+//        if(!"".equals(dynamicContent.getImg())) {
+//            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
+//        }
+//        if(!"".equals(dynamicContent.getImg2())) {
+//            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
+//        }
         //得到点赞用户id
         SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");

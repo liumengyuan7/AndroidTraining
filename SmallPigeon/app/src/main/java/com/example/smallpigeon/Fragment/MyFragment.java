@@ -58,7 +58,7 @@ public class MyFragment extends Fragment {
         public void handleMessage(Message msg) {
             String status = msg.obj + "";
             is_accreditation = Integer.parseInt(status);
-            Toast.makeText(getContext(),"当前认证状态"+is_accreditation,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(),"当前认证状态"+is_accreditation,Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -70,6 +70,9 @@ public class MyFragment extends Fragment {
         registerListener();
         loginEvent();
 //        selectUserInfo(useId);
+        if(!userId.equals("") && userId != null) {
+            selectUserInfo(userId);
+        }
         return view;
     }
 
@@ -247,6 +250,14 @@ public class MyFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(!userId.equals("") && userId != null) {
+            selectUserInfo(userId);
+        }
+    }
+
     //获取头像
     private void getAvatar(){
         String userEmail = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("user_email","");
@@ -287,7 +298,7 @@ public class MyFragment extends Fragment {
                 Message message = new Message();
                 message.obj = result;
                 message.what=1;
-//                handler.sendMessage(message);
+                handler.sendMessage(message);
             }
         }.start();
     }

@@ -102,7 +102,7 @@ public class PeopleFragment extends Fragment {
                         content.setUserContent(userContent);
                         content.setDevice(Build.MODEL);
                         content.setContent(json.get("pushContent").toString());
-                        if(json.getString("pushImage")!=null && !json.getString("pushImage").equals("")){
+                        if(json.has("pushImage") && json.getString("pushImage")!=null && !json.getString("pushImage").equals("")){
                             String [] imgs = json.getString("pushImage").split(";");
                             content.setImg(imgs[0]);
                             if (imgs.length == 2) {
@@ -110,29 +110,34 @@ public class PeopleFragment extends Fragment {
                             }
                         }
                         content.setDevice(Build.MODEL);
+                        content.setForward_Num(json.getInt("forwardNum"));
                         content.setZan_num(json.getInt("zanNum"));
-//                        String forwardId = json.get("forwardId").toString();
-//
-//                        content.setForwardId(Integer.parseInt(forwardId));
-//                        content.setType(json.getInt("dtype"));
-//                        Log.e("forwardId,dtype",forwardId+":"+json.getString("dtype"));
-//                        if (forwardId>0){
-//                            JSONObject jsonForwardContent = json.getJSONObject("forwardContent");
-//                            ForwardContent forwardContent = new ForwardContent();
-//                            forwardContent.setDid(jsonForwardContent.getInt("did"));
-//                            forwardContent.setDuserNickname(jsonForwardContent.getString("duserNickname"));
-//                            forwardContent.setDuserEmail(jsonForwardContent.getString("duserEmail"));
-//                            String dpushTime = jsonForwardContent.get("dpushTime").toString();
-//                            Date d1 = new Date(dpushTime);
-//                            SimpleDateFormat sdf1  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
-//                            forwardContent.setDpushTime(sdf1.format(d1));
-//                            forwardContent.setDpushContent(jsonForwardContent.getString("dpushContent"));
-//                            forwardContent.setDpushImage(jsonForwardContent.getString("dpushImage"));
-//                            Log.e("forward",forwardContent.toString());
-//                            content.setForwardContent(forwardContent);
-//                            Log.e("第"+i+"条动态下的转发",content.getForwardContent().toString());
-//                        }
-
+                        int forwardId = json.getInt("forwardId");
+                        content.setForwardId(forwardId);
+                        content.setType(json.getInt("dtype"));
+                        Log.e("第"+i+"动态的forwardId和dtype",forwardId+":"+json.getString("dtype"));
+                        if (forwardId>0){
+                            JSONObject jsonForwardContent = json.getJSONObject("forwardContent");
+                            ForwardContent forwardContent = new ForwardContent();
+                            forwardContent.setDid(jsonForwardContent.getInt("did"));
+                            forwardContent.setDuserNickname(jsonForwardContent.getString("duserNickname"));
+                            forwardContent.setDuserEmail(jsonForwardContent.getString("duserEmail"));
+                            String dpushTime = jsonForwardContent.get("dpushTime").toString();
+                            Date d1 = new Date(dpushTime);
+                            SimpleDateFormat sdf1  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+                            forwardContent.setDpushTime(sdf1.format(d1));
+                            forwardContent.setDpushContent(jsonForwardContent.getString("dpushContent"));
+                            if(jsonForwardContent.getString("dpushImage")!=null && !jsonForwardContent.getString("dpushImage").equals("")){
+                                String [] images = jsonForwardContent.getString("dpushImage").split(";");
+                                forwardContent.setDpushImage1(images[0]);
+                                if (images.length == 2) {
+                                    forwardContent.setDpushImage2(images[1]);
+                                }
+                            }
+                            Log.e("forward",forwardContent.toString());
+                            content.setForwardContent(forwardContent);
+                            Log.e("第"+i+"条动态下的转发",content.getForwardContent().toString());
+                        }
                         JSONArray jsonArrayComment = json.getJSONArray("comments");
 //                        Log.e("comments",jsonArrayComment.toString());
                         List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
@@ -397,5 +402,11 @@ public class PeopleFragment extends Fragment {
             peopleAdapter.notifyDataSetChanged();
 
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        selectAllDynamic();
     }
 }

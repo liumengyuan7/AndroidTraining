@@ -45,7 +45,8 @@ public class ForwardContent implements Serializable {
     private String duserEmail;
     private String dpushTime;
     private String dpushContent;
-    private String dpushImage;
+    private String dpushImage1;
+    private String dpushImage2;
 
     public int getDid() {
         return did;
@@ -86,13 +87,20 @@ public class ForwardContent implements Serializable {
     public void setDpushContent(String dpushContent) {
         this.dpushContent = dpushContent;
     }
-
-    public String getDpushImage() {
-        return dpushImage;
+    public String getDpushImage1() {
+        return dpushImage1;
     }
 
-    public void setDpushImage(String dpushImage) {
-        this.dpushImage = dpushImage;
+    public void setDpushImage1(String dpushImage1) {
+        this.dpushImage1 = dpushImage1;
+    }
+
+    public String getDpushImage2() {
+        return dpushImage2;
+    }
+
+    public void setDpushImage2(String dpushImage2) {
+        this.dpushImage2 = dpushImage2;
     }
 
     @Override
@@ -103,7 +111,9 @@ public class ForwardContent implements Serializable {
                 ", duserEmail='" + duserEmail + '\'' +
                 ", dpushTime='" + dpushTime + '\'' +
                 ", dpushContent='" + dpushContent + '\'' +
-                ", dpushImage='" + dpushImage + '\'' +
+                ", dpushImage1='" + dpushImage1 + '\'' +
+                ", dpushImage2='" + dpushImage2+
+
                 '}';
     }
 }

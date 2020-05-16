@@ -314,7 +314,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
                     isCollect = false;
                     iv_collect.setImageResource(R.drawable.icon_collect);
                 }else {
-                    addCollect(dynamicContent.getDynamicId(),userId);
+                    addCollect(dynamicContent.getDynamicId(),userId,dynamicContent.getType());
                     isCollect = true;
                     iv_collect.setImageResource(R.drawable.comment_collect_yellow);
                 }
@@ -341,7 +341,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     //点击进行动态收藏
-    private void addCollect(int dynamicId, int userId) {
+    private void addCollect(int dynamicId, int userId,int type) {
         new Thread(){
             @Override
             public void run() {
