@@ -188,6 +188,12 @@ public class DynamicService {
     public String queryAllCollectByUserId(String userId){
         List<Dynamics> dynamics = this.collectMapper.queryAllCollectByUserId(userId);
         for (int i =0;i<dynamics.size();i++){
+            int forwardId = dynamics.get(i).getForwardId();
+            if(forwardId!=0) {
+                ForwardContent  forwardContent= this.dynamicMapper.queryDynamicByForwardId(forwardId);
+                dynamics.get(i).setForwardContent(forwardContent);
+                System.out.println(forwardContent.toString());
+            }
             System.out.println(dynamics.get(i).toString());
             int dynamicId = dynamics.get(i).getId();
             System.out.println(dynamicId);
@@ -230,5 +236,10 @@ public class DynamicService {
         }else{
             return "false";
         }
+    }
+    //得到转发数
+    public String changeForwardNum(String dynamicId,String forwardNum){
+          int result = this.dynamicMapper.changeForwardNum(dynamicId,forwardNum);
+          return result+"";
     }
 }

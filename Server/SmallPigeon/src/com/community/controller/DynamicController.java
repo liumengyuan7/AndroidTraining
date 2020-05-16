@@ -266,4 +266,17 @@ public class DynamicController {
         String result = this.dynamicService.decCollects(list,userId);
         return result;
     }
+    /*
+     * @Description  得到转发数
+     * @Auther 刘梦圆
+     * @Date 18:12 2020/05/16
+     * @Param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/changeForwardNum")
+    public  String getForwardNum(@RequestParam("dynamicId") String dynamicId,@RequestParam("forwardNum") String forwardNum){
+        String result = this.dynamicService.changeForwardNum(dynamicId,forwardNum);
+        return result;
+    }
 }

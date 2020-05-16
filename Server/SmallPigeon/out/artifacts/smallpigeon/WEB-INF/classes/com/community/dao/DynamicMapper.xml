@@ -15,13 +15,13 @@
     </insert>
     <!--得到所有动态-->
     <select id="queryAllDynamic" resultType="com.entity.Dynamics">
-        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type dtype
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type dtype,d.forward_num forwardNum
         from dynamics d,user u
         where u.id = d.user_id
     </select>
     <!--根据用户id得到自己发布或者转发的动态-->
    <select id="queryAllDynamicByUserId" resultType="com.entity.Dynamics">
-        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type dtype
+        select  d.id,u.user_nickname nickName,u.user_email userEmail,d.push_content pushContent,d.push_time pushTime,d.push_image pushImage,d.zan_num zanNum,d.forward_id forwardId,d.type dtype,d.forward_num forwardNum
         from dynamics d,user u
         where u.id = d.user_id and u.id=#{userId}
     </select>
@@ -37,21 +37,10 @@
         set zan_num = #{zanNum}
         where id = #{dynamicId}
     </update>
-    <!--插入转发信息-->
- <!--   <insert id="insertForwardMsg">
-        insert into dynamics(user_id, push_time, push_content, forward_id,dynamic_type)
-        value (#{userId},#{pushTime},#{pushContent},#{forwardId},1)
-    </insert>
-    &lt;!&ndash;得到转发信息   首先得到转发者的昵称 头像 转发时间 转发内容  转发动态id  转发状态&ndash;&gt;
-    <select id="">
-        select u.user_nickname,u.user_email,d.push_time,d.push_content,d.forward_id,d.dynamic_type
-        from user u,dynamics d
-        where d.user_id = u.id and d.id=#{dynamicId}
+    <select id="changeForwardNum" resultType="java.lang.Integer">
+        update dynamics
+        set forward_num=#{forwardNum}
+        where dynamics.id=#{dynamicId}
     </select>
-    <select id="">/*再得到转发的动态中的用户昵称 头像以及发布动态内容*/
-        select u.user_nickname,u.user_email,d.push_time,d.push_content,d.push_image
-        from user u,dynamics d
-        where d.user_id = u.id and d.id=#{dynamicId} and d.forward_id=#{forwardId}
-    </select>-->
 
 </mapper>
