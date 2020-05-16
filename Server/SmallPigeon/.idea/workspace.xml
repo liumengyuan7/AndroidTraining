@@ -7,41 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../SmallPigeon/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../SmallPigeon/.idea/runConfigurations.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/controller/DynamicController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/controller/DynamicController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/DynamicMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/DynamicMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/DynamicMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/DynamicMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/service/DynamicService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/service/DynamicService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Dynamics.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Dynamics.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/ForwardContent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/ForwardContent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/dbinfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/dbinfo.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/META-INF/SmallPigeon.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/controller/DynamicController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/controller/DynamicController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/DynamicMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/DynamicMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/DynamicMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/DynamicMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/service/DynamicService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/service/DynamicService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Dynamics.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Dynamics.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/ForwardContent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/ForwardContent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/entity/Dynamics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/entity/Dynamics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/entity/ForwardContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/entity/ForwardContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/dbinfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/dbinfo.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/CollectAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/CollectAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/PeopleAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/PeopleAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Entity/DynamicContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Entity/DynamicContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Entity/ForwardContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Entity/ForwardContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -273,7 +239,7 @@
       <workItem from="1589504741692" duration="987000" />
       <workItem from="1589505928198" duration="1771000" />
       <workItem from="1589539870002" duration="6326000" />
-      <workItem from="1589585506878" duration="7614000" />
+      <workItem from="1589585506878" duration="8693000" />
     </task>
     <servers />
   </component>
