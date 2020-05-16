@@ -287,7 +287,7 @@ public class MyFragment extends Fragment {
                 Message message = new Message();
                 message.obj = result;
                 message.what=1;
-                handler.sendMessage(message);
+//                handler.sendMessage(message);
             }
         }.start();
     }

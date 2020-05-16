@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"您的账号或者密码错误，登录失败！",Toast.LENGTH_SHORT).show();
             }else{
                 try {
-                    String result = re.split("/+")[0];
+                    String result = re.split(";;")[0];
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject json = jsonArray.getJSONObject(0);
                     SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user_email",json.getString("user_email"));
                     editor.putString("user_register_time",json.getString("user_register_time"));
                     editor.putString("user_points",json.getString("user_points"));
-                    editor.putString("user_interest",re.split(";")[1]);
+                    editor.putString("user_interest",re.split(";;")[1]);
                     signIn(json.getString("id"));
                     editor.commit();
                 } catch (JSONException e){
