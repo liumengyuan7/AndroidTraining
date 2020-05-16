@@ -130,6 +130,8 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     @Override
     public int getItemViewType(int position) {
         if (list.get(position).getType() == 0){
+//            Log.e("list.position",list.get(position).toString()+"/n"+list.get(position).getType());
+
             return VIEWTYPFIRST;
         }else {
             return VIEWTYPSECOND;
@@ -209,8 +211,10 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.dynamic_item_txt.setText(dynamicContent.getContent());
                 holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
                 holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
-                holder.tv_user.setText(dynamicContent.getForwardContent().getUserContent().getUserNickname()+"：");
-                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDynamicContent().getContent());
+//                holder.tv_user.setText(dynamicContent.getForwardContent().getUserContent().getUserNickname()+"：");
+//                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDynamicContent().getContent());
+                holder.tv_user.setText(dynamicContent.getForwardContent().getDuserNickname()+"：");
+                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
                 holder.ll_toComment.setTag(position);
@@ -364,7 +368,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                     addForwardDynamic(pushTime, nInputContentText ,forwardId);
                     mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
                     popupWindow.dismiss();
-                    Toast.makeText(context, "发送成功",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "发送成功",Toast.LENGTH_SHORT).show();
                     et_discuss.setText( null );
                     //TODO：从数据库获取数据并更改转发数
                     holder.tv_forwardNum.setText( "9" );
@@ -471,7 +475,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         new Thread(){
             @Override
             public void run() {
-                String result = new Utils().getConnectionResult("dynamic","addDynamic",
+                String result = new Utils().getConnectionResult("dynamic","addForwardDynamic",
                         "userId="+userId +"&&pushTime="+pushTime+"&&pushContent="+pushContent+"&&forwardId="+forwardId+"&&type="+1);
                 Message message = new Message();
                 message.obj = result;

@@ -41,20 +41,21 @@ public class DynamicService {
     @Resource
     private CollectMapper collectMapper;
 
-//    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
-//        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
-//        Date date = sdf.parse(pushTime);
-//        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg);
-//        if(result>0){
-//            return "true";
-//        }else{
-//            return "false";
-//        }
-//    }
-    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg, String forwardId,String type) throws ParseException {
+    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         Date date = sdf.parse(pushTime);
-        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg,forwardId,type);
+        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg);
+        if(result>0){
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+    //添加转发动态的信息
+    public String addForwardDynamic(String userId, String pushTime, String pushContent,String forwardId,String type) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        Date date = sdf.parse(pushTime);
+        int result = this.dynamicMapper.insertForwardDynamic(userId,date,pushContent,forwardId,type);
         if(result>0){
             return "true";
         }else{
@@ -84,6 +85,7 @@ public class DynamicService {
             if(forwardId!=0) {
                 ForwardContent  forwardContent= this.dynamicMapper.queryDynamicByForwardId(forwardId);
                 dynamics.get(i).setForwardContent(forwardContent);
+                System.out.println(forwardContent.toString());
             }
             int dynamicId = dynamics.get(i).getId();
             List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
@@ -196,8 +198,9 @@ public class DynamicService {
             System.out.println(this.collectMapper.getCollectNum(dynamicId));
             dynamics.get(i).setCollectNum(collectNum);
         }
-        System.out.println(new Gson().toJson(dynamics));
-        return new Gson().toJson(dynamics);
+        if (dynamics.isEmpty()) return "empty";
+//        System.out.println(new Gson().toJson(dynamics));
+        else return new Gson().toJson(dynamics);
     }
     //收藏动态
     public String addCollect(String dynamicId, String userId){
@@ -211,6 +214,17 @@ public class DynamicService {
     //取消收藏动态
     public String decCollect(String dynamicId, String userId){
         int result = this.collectMapper.deleteCollect(dynamicId,userId);
+        if(result>0){
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+    //批量删除收藏数据
+    public String decCollects(List<String> list,String userId){
+          System.out.println("decCollects service"+list.toString());
+        int result = this.collectMapper.deleteCollects(list,userId);
+        System.out.println("结果"+result);
         if(result>0){
             return "true";
         }else{

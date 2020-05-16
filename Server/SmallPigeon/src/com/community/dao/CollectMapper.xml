@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.dao.CollectMapper">
    <select id="queryAllCollectByUserId" resultType="com.entity.Dynamics">
-        select  d.id,u.user_nickname nickName,u.user_email userEmail, d.push_time pushTime, d.push_content pushContent, d.push_image pushImage
+        select  distinct d.id,u.user_nickname nickName,u.user_email userEmail, d.push_time pushTime, d.push_content pushContent, d.push_image pushImage
         from dynamics d,collect c,user u
         where d.id = c.dynamic_id and  u.id = d.user_id and c.user_id = #{userId}
     </select>
@@ -27,5 +27,14 @@
     <delete id="deleteCollect">
         delete from collect
         where dynamic_id=#{dynamicId} and user_id=#{userId}
+    </delete>
+    <!--批量删除收藏数据-->
+    <delete id="deleteCollects">
+        delete from collect
+        where user_id=#{userId}  and dynamic_id in
+ 		<foreach collection="idList" open="(" close=")"
+ 			separator="," item="dynamicId" index="i">
+ 			#{dynamicId}
+ 		</foreach>
     </delete>
 </mapper>

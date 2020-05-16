@@ -129,8 +129,10 @@ public class CollectAdapter extends BaseAdapter {
                 holder.tv_date.setText(dynamicContent.getDate());
                 holder.device.setText(dynamicContent.getDevice());
                 holder.dynamic_item_txt.setText(dynamicContent.getContent());
-                holder.tv_user.setText(dynamicContent.getForwardContent().getUserContent().getUserNickname()+"：");
-                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDynamicContent().getContent());
+//                holder.tv_user.setText(dynamicContent.getForwardContent().getUserContent().getUserNickname()+"：");
+//                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDynamicContent().getContent());
+                holder.tv_user.setText(dynamicContent.getForwardContent().getDuserNickname()+"：");
+                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.checkBox.setChecked(stateCheckedMap.get(position));
                 //显示评论和收藏数量
                 holder.commentNum.setText(dynamicContent.getComment_Num()+"");
