@@ -15,6 +15,7 @@ public class CommentDetailBean implements Serializable {
     private int replyTotal;
     private String createDate;
     private int comomentZanNum;
+    private boolean zanFocus;
     private List<ReplyDetailBean> replyList;
     public CommentDetailBean() {
 
@@ -103,6 +104,14 @@ public class CommentDetailBean implements Serializable {
 
     public void setComomentZanNum(int comomentZanNum) {
         this.comomentZanNum = comomentZanNum;
+    }
+
+    public boolean isZanFocus() {
+        return zanFocus;
+    }
+
+    public void setZanFocus(boolean zanFocus) {
+        this.zanFocus = zanFocus;
     }
 
     @Override

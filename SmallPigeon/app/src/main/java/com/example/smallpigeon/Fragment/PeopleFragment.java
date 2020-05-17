@@ -161,6 +161,7 @@ public class PeopleFragment extends Fragment {
                             commentDetailBean.setCreateDate(createT);
                             commentDetailBean.setComomentZanNum(commentZanNum);
                             commentDetailBean.setUserLogo(userLogo);
+                            commentDetailBean.setZanFocus(false);
                             JSONArray jsonArrayCommentReply = jsonComment.getJSONArray("replies");
                             List<ReplyDetailBean> replyDetailBeans = new ArrayList<>();
                             for (int k=0;k<jsonArrayCommentReply.length();k++) {

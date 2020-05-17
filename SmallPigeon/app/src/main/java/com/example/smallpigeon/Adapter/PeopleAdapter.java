@@ -265,7 +265,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                     //获取上次是否已经被点击
                     Log.e("第"+position+"条记录上次点击状态",dynamicContent.isZanFocus()+"");
                     boolean flag = dynamicContent.isZanFocus();
-                    //判断当前
+                    //判断当前点赞状态
                     if (flag) {
                         int zanNumAfter = dynamicContent.getZan_num()-1;
                         dynamicContent.setZan_num(zanNumAfter);
@@ -277,7 +277,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                     }
                     //反向存储记录，实现取消点赞功能
                     dynamicContent.setZanFocus(!flag);
-//                    AnimationTools.scale(holder.iv_like);
+                    AnimationTools.scale(holder.iv_like);
                     notifyDataSetChanged();
                 } else {
                     //没有登录注册 不能点赞  请先登录
