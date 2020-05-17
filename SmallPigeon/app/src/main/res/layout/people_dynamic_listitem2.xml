@@ -68,7 +68,9 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp">
+
             <TextView
                 android:id="@+id/dynamic_item_txt"
                 android:text="此次跑步分享内容"
@@ -82,7 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F4F5F9"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,7 +117,8 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="150dp"
                 android:maxWidth="300dp"
-                android:src="@drawable/man"/>
+                android:src="@drawable/man"
+                />
 
             <ImageView
                 android:id="@+id/dynamic_item_img2"

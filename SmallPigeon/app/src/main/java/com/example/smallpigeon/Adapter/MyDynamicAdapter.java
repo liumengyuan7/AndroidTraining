@@ -110,6 +110,7 @@ public class MyDynamicAdapter extends BaseAdapter  implements View.OnClickListen
         holder.tv_date.setText(dynamicContent.getDate());
         holder.device.setText(dynamicContent.getDevice());
         holder.dynamic_item_txt.setText(dynamicContent.getContent());
+        holder.tv_forwardNum.setText(dynamicContent.getForward_Num()+"");
         holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
         holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
         //缓存头像
@@ -128,6 +129,9 @@ public class MyDynamicAdapter extends BaseAdapter  implements View.OnClickListen
     private void showImges(String imgName,ImageView imageView) {
         String url = "http://"+this.context.getResources().getString(R.string.ip_address)
                 +":8080/smallpigeon/dynamic/"+imgName;
+//        ViewGroup.LayoutParams layoutParams =  imageView.getLayoutParams();
+//        layoutParams.height=500;
+//        imageView.setLayoutParams(layoutParams);
         Glide.with(this.context).load(url).into(imageView);
     }
 

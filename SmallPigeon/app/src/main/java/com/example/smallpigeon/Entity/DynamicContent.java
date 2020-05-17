@@ -18,10 +18,13 @@ public class DynamicContent implements Serializable {
     private String content;
     private String img;
     private int zan_num;
+    private int forwardId;
     private int type;
+    private int forward_Num;
     private int comment_Num;
     private int collect_Num;
     private String img2;
+    private boolean zanFocus, forwardFocus;
     private ForwardContent forwardContent;
     private List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
 
@@ -131,6 +134,38 @@ public class DynamicContent implements Serializable {
         this.collect_Num = collect_Num;
     }
 
+    public int getForwardId() {
+        return forwardId;
+    }
+
+    public void setForwardId(int forwardId) {
+        this.forwardId = forwardId;
+    }
+
+    public int getForward_Num() {
+        return forward_Num;
+    }
+
+    public void setForward_Num(int forward_Num) {
+        this.forward_Num = forward_Num;
+    }
+
+    public boolean isZanFocus() {
+        return zanFocus;
+    }
+
+    public void setZanFocus(boolean zanFocus) {
+        this.zanFocus = zanFocus;
+    }
+
+    public boolean isForwardFocus() {
+        return forwardFocus;
+    }
+
+    public void setForwardFocus(boolean forwardFocus) {
+        this.forwardFocus = forwardFocus;
+    }
+
     @Override
     public String toString() {
         return "DynamicContent{" +
@@ -141,10 +176,12 @@ public class DynamicContent implements Serializable {
                 ", content='" + content + '\'' +
                 ", img='" + img + '\'' +
                 ", zan_num=" + zan_num +
+                ", forwardId=" + forwardId +
                 ", type=" + type +
                 ", comment_Num=" + comment_Num +
                 ", collect_Num=" + collect_Num +
                 ", img2='" + img2 + '\'' +
+                ", forwardContent=" + forwardContent +
                 '}';
     }
 }

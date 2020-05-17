@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-05-14 09:45:54
+Date: 2020-05-16 19:51:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,12 +43,13 @@ CREATE TABLE `collect` (
   `user_id` int(11) DEFAULT NULL,
   `type` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of collect
 -- ----------------------------
-INSERT INTO `collect` VALUES ('3', '3', '46', '0');
+INSERT INTO `collect` VALUES ('13', '24', '46', '1');
+INSERT INTO `collect` VALUES ('14', '26', '46', '0');
 
 -- ----------------------------
 -- Table structure for `comment`
@@ -62,7 +63,7 @@ CREATE TABLE `comment` (
   `comment_time` datetime DEFAULT NULL,
   `comment_zanNum` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comment
@@ -73,6 +74,7 @@ INSERT INTO `comment` VALUES ('3', '2', '46', '项目实训', '2020-04-28 14:39:
 INSERT INTO `comment` VALUES ('4', '22', '46', '我爱你', '2020-04-28 14:44:36', '0');
 INSERT INTO `comment` VALUES ('5', '3', '46', '加油加油', '2020-04-28 14:47:05', '0');
 INSERT INTO `comment` VALUES ('6', '2', '46', '爱你', '2020-04-28 14:55:15', '0');
+INSERT INTO `comment` VALUES ('7', '27', '46', '你觉得哪个', '2020-05-16 17:59:32', '0');
 
 -- ----------------------------
 -- Table structure for `dynamics`
@@ -85,17 +87,20 @@ CREATE TABLE `dynamics` (
   `push_content` varchar(255) DEFAULT NULL,
   `push_image` varchar(255) DEFAULT NULL,
   `zan_num` int(11) NOT NULL DEFAULT '0',
+  `forward_num` int(11) DEFAULT '0',
   `forward_id` int(11) NOT NULL DEFAULT '0',
   `type` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dynamics
 -- ----------------------------
-INSERT INTO `dynamics` VALUES ('2', '46', '2020-04-20 14:36:55', '哈哈哈哈哈哈', 'IMG_20200320_161235.jpg', '0', '0', '0');
-INSERT INTO `dynamics` VALUES ('3', '46', '2020-04-20 14:45:45', '嘻嘻嘻', 'IMG_20200320_161235.jpg;IMG_20200310_205542.jpg', '0', '0', '0');
-INSERT INTO `dynamics` VALUES ('22', '47', '2020-04-28 10:37:26', 'yyyyyyyyy', '', '1', '2', '1');
+INSERT INTO `dynamics` VALUES ('2', '46', '2020-04-20 14:36:55', '哈哈哈哈哈哈', 'IMG_20200320_161235.jpg', '0', '1', '0', '0');
+INSERT INTO `dynamics` VALUES ('3', '46', '2020-04-20 14:45:45', '嘻嘻嘻', 'IMG_20200320_161235.jpg;IMG_20200310_205542.jpg', '1', '0', '0', '0');
+INSERT INTO `dynamics` VALUES ('22', '47', '2020-04-28 10:37:26', 'yyyyyyyyy', 'IMG_20200320_161235.jpg;IMG_20200320_161235.jpg', '1', '1', '0', '0');
+INSERT INTO `dynamics` VALUES ('26', '46', '2020-05-16 15:01:25', '这个界面', null, '0', '0', '22', '1');
+INSERT INTO `dynamics` VALUES ('32', '46', '2020-05-16 19:13:16', '哈哈哈哈啊哈哈', null, '0', '0', '2', '1');
 
 -- ----------------------------
 -- Table structure for `friend`
@@ -124,13 +129,14 @@ CREATE TABLE `give_tu` (
   `user_id` int(11) DEFAULT NULL,
   `comment_id` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of give_tu
 -- ----------------------------
 INSERT INTO `give_tu` VALUES ('7', '22', '44', '0');
 INSERT INTO `give_tu` VALUES ('8', '0', '46', '0');
+INSERT INTO `give_tu` VALUES ('9', '3', '46', '0');
 
 -- ----------------------------
 -- Table structure for `interest`
@@ -209,7 +215,7 @@ CREATE TABLE `reply_msg` (
   `reply_content` varchar(255) DEFAULT NULL,
   `reply_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of reply_msg
@@ -218,6 +224,7 @@ INSERT INTO `reply_msg` VALUES ('1', '2', '46', '46', '自己回复自己', '202
 INSERT INTO `reply_msg` VALUES ('2', '1', '46', '46', '今天天气真好', '2020-04-28 19:04:13');
 INSERT INTO `reply_msg` VALUES ('3', '4', '46', '46', '今天天气不好', '2020-04-28 19:04:59');
 INSERT INTO `reply_msg` VALUES ('4', '3', '46', '46', '哎呀哎呀', '2020-04-28 19:11:32');
+INSERT INTO `reply_msg` VALUES ('5', '6', '46', '46', '我也是', '2020-05-15 21:26:41');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -244,5 +251,5 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('46', '溜溜', 'aa', 'e10adc3949ba59abbe56e057f20f883e', 'woman', '904569030@qq.com', '2020-04-30 15:13:16', '河北工业大学', '2017011856', 'x56N6e.jpg;uWSQfB.jpg', '0', '1', '0.0000000000000000', '0.0000000000000000');
+INSERT INTO `user` VALUES ('46', '刘梦圆', 'aa', 'e10adc3949ba59abbe56e057f20f883e', 'woman', '904569030@qq.com', '2020-04-30 15:13:16', '河北师范大学', '2017011897', 'null', '0', '1', '0.0000000000000000', '0.0000000000000000');
 INSERT INTO `user` VALUES ('47', '哈哈', '哈哈', 'e10adc3949ba59abbe56e057f20f883e', 'man', '156267102@qq.com', '2020-04-30 17:13:16', '河北师范大学操场', '2017011897', 'R5RhkQ.jpg;7h9sP8.jpg', '0', '0', '0.0000000000000000', '0.0000000000000000');

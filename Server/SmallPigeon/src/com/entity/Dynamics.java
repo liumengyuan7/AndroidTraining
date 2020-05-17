@@ -20,6 +20,7 @@ public class Dynamics {
     private String pushImage;
     private int zanNum;
     private int forwardId;
+    private int forwardNum;
     private int commentNum;
     private int collectNum;
     private int dtype;
@@ -122,6 +123,13 @@ public class Dynamics {
         this.forwardContent = forwardContent;
     }
 
+    public int getForwardNum() {
+        return forwardNum;
+    }
+
+    public void setForwardNum(int forwardNum) {
+        this.forwardNum = forwardNum;
+    }
 
     public int getDtype() {
         return dtype;
@@ -142,11 +150,10 @@ public class Dynamics {
                 ", pushImage='" + pushImage + '\'' +
                 ", zanNum=" + zanNum +
                 ", forwardId=" + forwardId +
+                ", forwardNum=" + forwardNum +
                 ", commentNum=" + commentNum +
                 ", collectNum=" + collectNum +
                 ", dtype=" + dtype +
-                ", forwardContent=" + forwardContent.getUser().getUserName()+ forwardContent.getDynamic().getPushContent() +
-                ", comments=" + comments +
                 '}';
     }
 }
