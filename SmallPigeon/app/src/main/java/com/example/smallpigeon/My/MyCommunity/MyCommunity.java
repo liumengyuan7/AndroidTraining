@@ -175,16 +175,29 @@ public class MyCommunity extends AppCompatActivity {
         userId = pre.getString("user_id","");
         Log.e("userId",userId);
         //todo:显示后台服务器存储的当前用户所有发布的动态
-        selectAllDynamic(userId);
+//        selectAllDynamic(userId);
         //前端测试用
-//        DynamicContent content = new DynamicContent();
-//        UserContent userContent = new UserContent();
-//        userContent.setUserNickname("啦啦啦");
-//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content.setUserContent(userContent);
-//        content.setContent("今日跑步分享");
-//        content.setDevice(Build.MODEL);
-//        list.add(content);
+        DynamicContent content = new DynamicContent();
+        UserContent userContent = new UserContent();
+        userContent.setUserNickname("啦啦啦");
+        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        content.setUserContent(userContent);
+        content.setContent("今日跑步分享");
+        content.setDevice(Build.MODEL);
+
+        DynamicContent content2 = new DynamicContent();
+        content2.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        content2.setUserContent(userContent);
+        content2.setContent("zhuanfa");
+        content2.setType( 1 );
+        ForwardContent forwardContent = new ForwardContent();
+        forwardContent.setDpushContent( "jinri" );
+        forwardContent.setDuserNickname( "pupupu" );
+        content2.setForwardContent( forwardContent );
+        content2.setDevice(Build.MODEL);
+
+        list.add(content);
+        list.add(content2);
 
         myDynamicAdapter = new MyDynamicAdapter( MyCommunity.this, R.layout.people_dynamic_listitem, list );
         my_dynamic_list.setAdapter(myDynamicAdapter);
