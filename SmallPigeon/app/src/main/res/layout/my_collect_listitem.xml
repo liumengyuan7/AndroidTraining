@@ -152,7 +152,7 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:focusable="false"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

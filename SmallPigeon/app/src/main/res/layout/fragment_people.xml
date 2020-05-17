@@ -4,26 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/ll_mydynamic"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-        <ImageView
-            android:id="@+id/iv_back"
-            android:src="@drawable/left"
-            android:layout_width="48dp"
-            android:layout_height="40dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="20dp"
-            android:textColor="#000000"
-            android:text="我的动态"
-            android:gravity="center"/>
-    </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/ll_shequ"
         android:layout_width="match_parent"

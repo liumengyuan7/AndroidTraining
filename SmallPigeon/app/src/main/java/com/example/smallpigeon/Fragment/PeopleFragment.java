@@ -204,14 +204,28 @@ public class PeopleFragment extends Fragment {
         selectAllDynamic();
 
         //前端测试用
-//        DynamicContent content = new DynamicContent();
-//        UserContent userContent = new UserContent();
-//        userContent.setUserNickname("啦啦啦");
-//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content.setUserContent(userContent);
-//        content.setContent("今日跑步分享");
-//        content.setDevice(Build.MODEL);
-//        list.add(content);
+        /*DynamicContent content = new DynamicContent();
+        UserContent userContent = new UserContent();
+        userContent.setUserNickname("啦啦啦");
+        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        content.setUserContent(userContent);
+        content.setContent("今日跑步分享");
+        content.setDevice(Build.MODEL);
+        content.setType(0);
+        list.add(content);
+        DynamicContent content1 = new DynamicContent();
+        UserContent userContent1 = new UserContent();
+        userContent1.setUserNickname("啦啦啦");
+        content1.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        content1.setUserContent(userContent);
+        content1.setContent("今日跑步分享");
+        content1.setDevice(Build.MODEL);
+        ForwardContent forwardContent = new ForwardContent();
+        forwardContent.setDpushContent("dmskc");
+        forwardContent.setDuserNickname("aaaa");
+        content1.setForwardContent(forwardContent);
+        content1.setType(1);
+        list.add(content1);*/
 
         peopleAdapter = new PeopleAdapter(getContext(),list);
         dynamic_list.setAdapter(peopleAdapter);
@@ -231,14 +245,6 @@ public class PeopleFragment extends Fragment {
                             Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
                         }
                         break;
-//                    case R.id.ll_forward:
-//                        tv_forwardNum = view.findViewById( R.id.tv_forwardNum );
-//                        if (loginOrNot()){
-//                            showPopupWindow(index,"forward");
-//                        } else {
-//                            Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-//                        }
-//                        break;
                 }
             }
         });
@@ -374,6 +380,7 @@ public class PeopleFragment extends Fragment {
                     } else {
                         Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
                     }
+
                     break;
             }
         }

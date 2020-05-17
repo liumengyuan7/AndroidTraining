@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,13 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
     private TextView dynamic_item_txt;
     private ImageView dynamic_item_img;
     private ImageView dynamic_item_img2;
+    private ImageView user_dynamic_item_img;
+    private ImageView user_dynamic_item_img2;
+    private TextView tv_user;
+    private TextView tv_user_txt;
+    private LinearLayout ll_forwardtype;
+    private LinearLayout ll_type;
+    private ImageView iv_back;
     private ExpandableListView expandableListView;
     private TextView detail_page_do_comment;
     private ImageView iv_collect;
@@ -98,25 +106,50 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
         Intent intent = getIntent();
         dynamicContent = (DynamicContent) intent.getSerializableExtra("dynamic");
         System.out.println(dynamicContent.toString());
-        showUserImage(dynamicContent.getUserContent().getUserImage(),iv_icon);
-//        iv_icon.setImageResource(Integer.parseInt(dynamicContent.getUserContent().getUserImage()));
-        tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
-        tv_date.setText(dynamicContent.getDate());
-        device.setText(dynamicContent.getDevice());
-        dynamic_item_txt.setText(dynamicContent.getContent());
-        //缓存图片
-        if(!"".equals(dynamicContent.getImg())) {
-            showDynamicImage(dynamicContent.getImg(), dynamic_item_img);
-        }
-        if(!"".equals(dynamicContent.getImg2())) {
-            showDynamicImage(dynamicContent.getImg2(), dynamic_item_img2);
+        int type = dynamicContent.getType();
+        if (type==0){
+            ll_type.setVisibility(View.VISIBLE);
+            ll_forwardtype.setVisibility(View.GONE);
+            showUserImage(dynamicContent.getUserContent().getUserImage(),iv_icon);
+            tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+            tv_date.setText(dynamicContent.getDate());
+            device.setText(dynamicContent.getDevice());
+            dynamic_item_txt.setText(dynamicContent.getContent());
+            //缓存图片
+            if(!"".equals(dynamicContent.getImg())) {
+                showDynamicImage(dynamicContent.getImg(), dynamic_item_img);
+            }
+            if(!"".equals(dynamicContent.getImg2())) {
+                showDynamicImage(dynamicContent.getImg2(), dynamic_item_img2);
+            }
+        }else if (type==1){
+            ll_type.setVisibility(View.GONE);
+            ll_forwardtype.setVisibility(View.VISIBLE);
+            showUserImage(dynamicContent.getUserContent().getUserImage(),iv_icon);
+            tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+            tv_date.setText(dynamicContent.getDate());
+            device.setText(dynamicContent.getDevice());
+            dynamic_item_txt.setText(dynamicContent.getContent());
+            tv_user.setText(dynamicContent.getUserContent().getUserNickname()+"：");
+            tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
+            if (!"".equals(dynamicContent.getForwardContent().getDpushImage1())){
+                showDynamicImage(dynamicContent.getForwardContent().getDpushImage1(),user_dynamic_item_img);
+            }
+            if (!"".equals(dynamicContent.getForwardContent().getDpushImage2())){
+                showDynamicImage(dynamicContent.getForwardContent().getDpushImage2(),user_dynamic_item_img2);
+            }
         }
 
         commentsList = dynamicContent.getCommentDetailBeans();
-//        dynamic_item_img.setImageResource(Integer.parseInt(dynamicContent.getImg()));
-//        commentsList = dynamicContent.getCommentDetailBeans();
         dynamicContent.setCommentDetailBeans(commentsList);
         initExpandableListView(dynamicContent);
+
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getViews() {
@@ -132,6 +165,13 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
         detail_page_do_comment.setOnClickListener(this);
         iv_collect = findViewById(R.id.iv_collect);
         iv_collect.setOnClickListener(this);
+        user_dynamic_item_img = findViewById(R.id.user_dynamic_item_img);
+        user_dynamic_item_img2 = findViewById(R.id.user_dynamic_item_img2);
+        tv_user = findViewById(R.id.tv_user);
+        tv_user_txt = findViewById(R.id.tv_user_txt);
+        ll_forwardtype = findViewById(R.id.ll_forwardtype);
+        ll_type = findViewById(R.id.ll_type);
+        iv_back = findViewById(R.id.iv_back);
     }
 
     /**

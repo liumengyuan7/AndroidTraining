@@ -2,8 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:background="#259B24"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/left"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:tint="@color/white"/>
+        <TextView
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:text="动态详情"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <RelativeLayout
+        android:layout_below="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -18,13 +41,6 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_vertical">
-               <!-- <ImageView
-                    android:id="@+id/iv_icon"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/abc_vector_test"/>-->
                 <com.example.smallpigeon.RoundImageView
                     android:id="@+id/iv_icon"
                     android:layout_marginLeft="20dp"
@@ -94,8 +110,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
+                android:id="@+id/ll_type"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="visible">
                 <ImageView
                     android:id="@+id/dynamic_item_img"
                     android:layout_width="150dp"
@@ -114,6 +132,60 @@
                     android:adjustViewBounds="true"
                     android:maxHeight="150dp"
                     android:maxWidth="300dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_forwardtype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F4F5F9"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:paddingLeft="5dp"
+                        android:id="@+id/tv_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="用户："
+                        android:textColor="#1F4570"/>
+                    <TextView
+                        android:id="@+id/tv_user_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="转发内容"
+                        android:textColor="#000"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/user_dynamic_item_img"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="150dp"
+                        android:maxWidth="300dp"
+                        android:src="@drawable/man"/>
+
+                    <ImageView
+                        android:id="@+id/user_dynamic_item_img2"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="150dp"
+                        android:maxWidth="300dp" />
+
+                </LinearLayout>
+
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
