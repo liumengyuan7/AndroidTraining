@@ -112,6 +112,7 @@ public class PeopleFragment extends Fragment {
                         content.setDevice(Build.MODEL);
                         content.setForward_Num(json.getInt("forwardNum"));
                         content.setZan_num(json.getInt("zanNum"));
+                        content.setZanFocus(false);
                         int forwardId = json.getInt("forwardId");
                         content.setForwardId(forwardId);
                         content.setType(json.getInt("dtype"));
@@ -387,26 +388,32 @@ public class PeopleFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        isPause = true;//记录页面已经被暂停
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        isPause = true;//记录页面已经被暂停
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if(isPause){//判断是否暂停
+//            isPause = false;
+//            selectAllDynamic();
+//            peopleAdapter.notifyDataSetChanged();
+//
+//        }
+//    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(isPause){//判断是否暂停
-            isPause = false;
-            selectAllDynamic();
-            peopleAdapter.notifyDataSetChanged();
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        selectAllDynamic();
+//    }
 
-        }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  /*  @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         selectAllDynamic();
-    }
+    }*/
 }

@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -140,6 +142,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     public View getView(int position, View convertView, ViewGroup parent) {
         int type = getItemViewType(position);
         Log.e("type:",type+"");
+        DynamicContent dynamicContent = list.get(position);
         if (convertView == null){
             holder = new ViewHolder();
             switch (type){
@@ -186,7 +189,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
-        DynamicContent dynamicContent = list.get(position);
+
         Log.e("content：",dynamicContent.toString());
         switch (type){
             case VIEWTYPFIRST:
@@ -195,7 +198,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.device.setText(dynamicContent.getDevice());
                 holder.dynamic_item_txt.setText(dynamicContent.getContent());
                 holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
-                holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+//                holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
                 holder.tv_forwardNum.setText(dynamicContent.getForward_Num()+"");
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
@@ -215,7 +218,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.device.setText(dynamicContent.getDevice());
                 holder.dynamic_item_txt.setText(dynamicContent.getContent());
                 holder.tv_commentNum.setText(dynamicContent.getComment_Num()+"");
-                holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+//                holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
 //                holder.tv_user.setText(dynamicContent.getForwardContent().getUserContent().getUserNickname()+"：");
 //                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDynamicContent().getContent());
                 holder.tv_user.setText(dynamicContent.getForwardContent().getDuserNickname()+"：");
@@ -246,31 +249,63 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
         //得到点赞用户id
         SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
-        ViewHolder finalHolder = holder;
-        holder.ll_like.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (judgeZan==true && loginOrNot()){
-                finalHolder.iv_like.setImageResource(R.drawable.good);
-                int zanNumBefore = dynamicContent.getZan_num();
-                int zanNumAfter = zanNumBefore-1;
-                decZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
-                dynamicContent.setZan_num(zanNumAfter);
-                finalHolder.tv_likeNum.setText(zanNumAfter+"");
-                judgeZan = false;
-            } else if (judgeZan==false && loginOrNot()){
-                finalHolder.iv_like.setImageResource( R.drawable.heart);
-                int zanNumBefore = dynamicContent.getZan_num();
-                int zanNumAfter = zanNumBefore+1;
-                addZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
-                dynamicContent.setZan_num(zanNumAfter);
-                finalHolder.tv_likeNum.setText(zanNumAfter+"");
-                judgeZan = true;
-            }else {
-                //没有登录注册 不能点赞  请先登录
-                Toast.makeText(context,"请先登录哦！",Toast.LENGTH_SHORT).show();
-            }
+//        ViewHolder finalHolder = holder;
+
+        // 取出bean中当记录状态是否为true，是的话则给img设置focus点赞图片
+        if (dynamicContent.isZanFocus()) {
+            holder.iv_like.setImageResource(R.drawable.heart);
+        } else {
+            holder.iv_like.setImageResource(R.drawable.good);
         }
+        holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+        holder.ll_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (loginOrNot()) {
+                    //获取上次是否已经被点击
+                    Log.e("第"+position+"条记录上次点击状态",dynamicContent.isZanFocus()+"");
+                    boolean flag = dynamicContent.isZanFocus();
+                    //判断当前
+                    if (flag) {
+                        int zanNumAfter = dynamicContent.getZan_num()-1;
+                        dynamicContent.setZan_num(zanNumAfter);
+                        decZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
+                    }else {
+                        int zanNumAfter = dynamicContent.getZan_num()+1;
+                        dynamicContent.setZan_num(zanNumAfter);
+                        addZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
+                    }
+                    //反向存储记录，实现取消点赞功能
+                    dynamicContent.setZanFocus(!flag);
+//                    AnimationTools.scale(holder.iv_like);
+                    notifyDataSetChanged();
+                } else {
+                    //没有登录注册 不能点赞  请先登录
+                    Toast.makeText(context, "请先登录哦！", Toast.LENGTH_SHORT).show();
+                }
+//                if (loginOrNot()) {
+//                    if (judgeZan==true){
+//                        holder.iv_like.setImageResource(R.drawable.good);
+//                        int zanNumBefore = dynamicContent.getZan_num();
+//                        int zanNumAfter = zanNumBefore-1;
+////                        decZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
+//                        dynamicContent.setZan_num(zanNumAfter);
+//                        holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+//                        judgeZan = false;
+//                    } else{
+//                        holder.iv_like.setImageResource( R.drawable.heart);
+//                        int zanNumBefore = dynamicContent.getZan_num();
+//                        int zanNumAfter = zanNumBefore+1;
+////                        addZanNum(dynamicContent.getDynamicId(), Integer.parseInt(userId),zanNumAfter);
+//                        dynamicContent.setZan_num(zanNumAfter);
+//                        holder.tv_likeNum.setText(dynamicContent.getZan_num()+"");
+//                        judgeZan = true;
+//                    }
+//                }else {
+//                    //没有登录注册 不能点赞  请先登录
+//                    Toast.makeText(context,"请先登录哦！",Toast.LENGTH_SHORT).show();
+//                }
+            }
         });
 
         //转发
@@ -621,5 +656,15 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 handler1.sendMessage(message);
             }
         }.start();
+    }
+    static class AnimationTools {
+        public static void scale(View v) {
+            ScaleAnimation anim = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+                    0.5f);
+            anim.setDuration(100);
+            v.startAnimation(anim);
+
+        }
     }
 }
