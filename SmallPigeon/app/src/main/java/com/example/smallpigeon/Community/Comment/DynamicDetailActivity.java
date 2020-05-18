@@ -57,6 +57,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
     private TextView tv_user_txt;
     private LinearLayout ll_forwardtype;
     private LinearLayout ll_type;
+    private LinearLayout ll_ftype;
     private ImageView iv_back;
     private ExpandableListView expandableListView;
     private TextView detail_page_do_comment;
@@ -138,6 +139,24 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
             if (!"".equals(dynamicContent.getForwardContent().getDpushImage2())){
                 showDynamicImage(dynamicContent.getForwardContent().getDpushImage2(),user_dynamic_item_img2);
             }
+        }else if (type==2){
+            ll_type.setVisibility(View.GONE);
+            ll_forwardtype.setVisibility(View.GONE);
+            showUserImage(dynamicContent.getUserContent().getUserImage(),iv_icon);
+            tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+            tv_date.setText(dynamicContent.getDate());
+            device.setText(dynamicContent.getDevice());
+            dynamic_item_txt.setText(dynamicContent.getContent());
+        }else if (type==3){
+            ll_type.setVisibility(View.GONE);
+            ll_ftype.setVisibility(View.GONE);
+            showUserImage(dynamicContent.getUserContent().getUserImage(),iv_icon);
+            tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+            tv_date.setText(dynamicContent.getDate());
+            device.setText(dynamicContent.getDevice());
+            dynamic_item_txt.setText(dynamicContent.getContent());
+            tv_user.setText(dynamicContent.getUserContent().getUserNickname()+"：");
+            tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
         }
 
         commentsList = dynamicContent.getCommentDetailBeans();
@@ -172,6 +191,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
         ll_forwardtype = findViewById(R.id.ll_forwardtype);
         ll_type = findViewById(R.id.ll_type);
         iv_back = findViewById(R.id.iv_back);
+        ll_ftype = findViewById(R.id.ll_ftype);
     }
 
     /**

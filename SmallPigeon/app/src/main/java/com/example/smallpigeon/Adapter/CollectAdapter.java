@@ -24,8 +24,10 @@ public class CollectAdapter extends BaseAdapter {
     private Context context;
     private boolean isShowCheckBox = false;//表示当前是否是多选状态。
     private SparseBooleanArray stateCheckedMap = new SparseBooleanArray();//用来存放CheckBox的选中状态，true为选中,false为没有选中
-    private static final int VIEWTYPFIRST = 0;
-    private static final int VIEWTYPSECOND = 1;
+    private static final int VIEWTYPFIRST = 1;
+    private static final int VIEWTYPSECOND = 2;
+    private static final int VIEWTYPTHIRD = 3;
+    private static final int VIEWTYPFOUR = 4;
     private String userId;
     private ViewHolder holder = null;
 
@@ -52,15 +54,21 @@ public class CollectAdapter extends BaseAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 5;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (list.get(position).getType() == 0){
             return VIEWTYPFIRST;
-        }else {
+        } else if(list.get(position).getType() == 1) {
             return VIEWTYPSECOND;
+        }else if(list.get(position).getType() == 2) {
+            return VIEWTYPTHIRD;
+        }else if(list.get(position).getType() == 3) {
+            return VIEWTYPFOUR;
+        }else {
+            return 0;
         }
     }
 
@@ -104,6 +112,24 @@ public class CollectAdapter extends BaseAdapter {
                     holder.commentNum = convertView.findViewById(R.id.commentNum);
                     holder.collectNum = convertView.findViewById(R.id.collectNum);
                     break;
+                case VIEWTYPTHIRD:
+                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem3,null);
+                    holder.iv_icon = convertView.findViewById(R.id.iv_icon);
+                    holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
+                    holder.tv_date = convertView.findViewById(R.id.tv_date);
+                    holder.device = convertView.findViewById(R.id.device);
+                    holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    break;
+                case VIEWTYPFOUR:
+                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem4,null);
+                    holder.iv_icon = convertView.findViewById(R.id.iv_icon);
+                    holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
+                    holder.tv_date = convertView.findViewById(R.id.tv_date);
+                    holder.device = convertView.findViewById(R.id.device);
+                    holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    holder.tv_user_txt = convertView.findViewById(R.id.tv_user_txt);
+                    holder.tv_user = convertView.findViewById(R.id.tv_user);
+                    break;
             }
             convertView.setTag(holder);
         }else {
@@ -136,8 +162,6 @@ public class CollectAdapter extends BaseAdapter {
                 holder.tv_date.setText(dynamicContent.getDate());
                 holder.device.setText(dynamicContent.getDevice());
                 holder.dynamic_item_txt.setText(dynamicContent.getContent());
-//                holder.tv_user.setText(dynamicContent.getForwardContent().getUserContent().getUserNickname()+"：");
-//                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDynamicContent().getContent());
                 holder.tv_user.setText(dynamicContent.getForwardContent().getDuserNickname()+"：");
                 holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.checkBox.setChecked(stateCheckedMap.get(position));
@@ -156,13 +180,6 @@ public class CollectAdapter extends BaseAdapter {
 
         //缓存头像
         showImage(dynamicContent.getUserContent().getUserImage(),holder.iv_icon);
-//        //缓存发布的动态图片
-//        if(!"".equals(dynamicContent.getImg())) {
-//            showImges(dynamicContent.getImg(), holder.dynamic_item_img);
-//        }
-//        if(!"".equals(dynamicContent.getImg2())) {
-//            showImges(dynamicContent.getImg2(), holder.dynamic_item_img2);
-//        }
         //得到点赞用户id
         SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");

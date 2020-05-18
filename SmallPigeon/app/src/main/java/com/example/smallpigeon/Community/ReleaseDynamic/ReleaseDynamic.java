@@ -77,7 +77,7 @@ public class ReleaseDynamic extends AppCompatActivity {
 //    private List<String> bitmaps = new ArrayList<>();
     private EditText dynamic_content;
     //imgInfo为传入所有图片的名称，各个图片名中间用空格隔开
-    private  String imgInfo;
+    private  String imgInfo="";
     private Utils utils;
     private Handler handler = new Handler(){
         @Override
@@ -120,6 +120,11 @@ public class ReleaseDynamic extends AppCompatActivity {
                 dynamicContent.setZan_num(0);
                 dynamicContent.setDevice(Build.MODEL);
                 dynamicContent.setImg(imgInfo);
+                if (imgInfo.equals("")||imgInfo==null){
+                    dynamicContent.setType(3);
+                }else {
+                    dynamicContent.setType(1);
+                }
 
                 //将动态信息插入数据库
                 Timestamp pushTime = new Timestamp(new Date().getTime());
@@ -286,6 +291,7 @@ public class ReleaseDynamic extends AppCompatActivity {
             cursor.moveToFirst();
             String imgPath = cursor.getString(1); //图片文件路径
             String imgName = cursor.getString(3); //图片文件名
+            Log.e("imgName:",imgName);
             if (imgInfo==null || imgInfo.equals("")){
                 imgInfo = imgName;
             }else {

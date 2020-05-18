@@ -9,7 +9,7 @@
         <TextView
             android:id="@+id/tv_cancel"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:text="取消"
