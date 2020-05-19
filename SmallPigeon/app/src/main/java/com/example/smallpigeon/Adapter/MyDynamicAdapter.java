@@ -28,6 +28,8 @@ public class MyDynamicAdapter extends BaseAdapter  implements View.OnClickListen
     private boolean judgeZan = false;
     private static final int VIEWTYPFIRST = 0;
     private static final int VIEWTYPSECOND = 1;
+    private static final int VIEWTYPTHIRD = 3;
+    private static final int VIEWTYPFOUR = 4;
     private ViewHolder holder;
 
     private Handler handler = new Handler(){
@@ -88,8 +90,14 @@ public class MyDynamicAdapter extends BaseAdapter  implements View.OnClickListen
     public int getItemViewType(int position) {
         if (list.get(position).getType() == 0){
             return VIEWTYPFIRST;
-        }else {
+        } else if(list.get(position).getType() == 1) {
             return VIEWTYPSECOND;
+        }else if(list.get(position).getType() == 2) {
+            return VIEWTYPTHIRD;
+        }else if(list.get(position).getType() == 3) {
+            return VIEWTYPFOUR;
+        }else {
+            return 0;
         }
     }
 
@@ -139,6 +147,24 @@ public class MyDynamicAdapter extends BaseAdapter  implements View.OnClickListen
                     holder.tv_likeNum = convertView.findViewById( R.id.tv_likeNum );
                     holder.tv_user = convertView.findViewById(R.id.tv_user);
                     holder.tv_user_txt = convertView.findViewById(R.id.tv_user_txt);
+                    break;
+                case VIEWTYPTHIRD:
+                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem3,null);
+                    holder.iv_icon = convertView.findViewById(R.id.iv_icon);
+                    holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
+                    holder.tv_date = convertView.findViewById(R.id.tv_date);
+                    holder.device = convertView.findViewById(R.id.device);
+                    holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    break;
+                case VIEWTYPFOUR:
+                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem4,null);
+                    holder.iv_icon = convertView.findViewById(R.id.iv_icon);
+                    holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
+                    holder.tv_date = convertView.findViewById(R.id.tv_date);
+                    holder.device = convertView.findViewById(R.id.device);
+                    holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    holder.tv_user_txt = convertView.findViewById(R.id.tv_user_txt);
+                    holder.tv_user = convertView.findViewById(R.id.tv_user);
                     break;
             }
             convertView.setTag(holder);

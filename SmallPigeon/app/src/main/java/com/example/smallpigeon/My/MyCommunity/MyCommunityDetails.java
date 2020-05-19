@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
     private TextView tv_date;
     private TextView device;
     private TextView dynamic_item_txt;
+    private LinearLayout ll_img;
     private ImageView dynamic_item_img;
     private ImageView dynamic_item_img2;
     private ExpandableListView expandableListView;
@@ -86,6 +88,13 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
         dynamicContent.setUserContent(userContent);
         dynamicContent.setContent("今日跑步分享");
         dynamicContent.setDevice(Build.MODEL);
+        dynamicContent.setType( 2 );
+
+        if (dynamicContent.getType() == 2 || dynamicContent.getType() == 3){ //无图片
+            ll_img.setVisibility( View.GONE );
+        } else {
+            ll_img.setVisibility( View.VISIBLE );
+        }
 
         //显示内容
 //        iv_icon.setImageResource(Integer.parseInt(dynamicContent.getUserContent().getUserImage()));
@@ -132,6 +141,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
         tv_date = findViewById(R.id.tv_date);
         device = findViewById(R.id.device);
         dynamic_item_txt = findViewById(R.id.dynamic_item_txt);
+        ll_img = findViewById( R.id.ll_img );
         dynamic_item_img = findViewById(R.id.dynamic_item_img);
         dynamic_item_img2 = findViewById(R.id.dynamic_item_img2);
         expandableListView = findViewById(R.id.detail_page_lv_comment);

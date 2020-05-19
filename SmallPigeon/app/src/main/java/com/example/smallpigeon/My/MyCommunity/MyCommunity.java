@@ -181,6 +181,7 @@ public class MyCommunity extends AppCompatActivity {
         UserContent userContent = new UserContent();
         userContent.setUserNickname("啦啦啦");
         content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+        content.setType( 2 );
         content.setUserContent(userContent);
         content.setContent("今日跑步分享");
         content.setDevice(Build.MODEL);
@@ -189,7 +190,7 @@ public class MyCommunity extends AppCompatActivity {
         content2.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
         content2.setUserContent(userContent);
         content2.setContent("zhuanfa");
-        content2.setType( 1 );
+        content2.setType( 3 );
         ForwardContent forwardContent = new ForwardContent();
         forwardContent.setDpushContent( "jinri" );
         forwardContent.setDuserNickname( "pupupu" );
