@@ -106,6 +106,7 @@ public class PeopleFragment extends Fragment {
                         content.setContent(json.get("pushContent").toString());
                         if(json.has("pushImage") && json.getString("pushImage")!=null && !json.getString("pushImage").equals("")){
                             String [] imgs = json.getString("pushImage").split(";");
+                            content.setImages(json.getString("pushImage"));
                             content.setImg(imgs[0]);
                             if (imgs.length == 2) {
                                 content.setImg2(imgs[1]);
@@ -203,54 +204,54 @@ public class PeopleFragment extends Fragment {
         registerListener();
 
         //显示后台服务器存储的所有发布的动态
-//        selectAllDynamic();
+        selectAllDynamic();
 
         //前端测试用
-        DynamicContent content = new DynamicContent();
-        UserContent userContent = new UserContent();
-        userContent.setUserNickname("啦啦啦");
-        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-        content.setUserContent(userContent);
-        content.setContent("今日跑步分享");
-        content.setDevice(Build.MODEL);
-        content.setType(0);
-        list.add(content);
-        Log.e("content:",content.toString());
-        DynamicContent content1 = new DynamicContent();
-        UserContent userContent1 = new UserContent();
-        userContent1.setUserNickname("啦啦啦");
-        content1.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-        content1.setUserContent(userContent);
-        content1.setContent("今日跑步分享");
-        content1.setDevice(Build.MODEL);
-        ForwardContent forwardContent = new ForwardContent();
-        forwardContent.setDpushContent("dmskc");
-        forwardContent.setDuserNickname("aaaa");
-        content1.setForwardContent(forwardContent);
-        content1.setType(1);
-        list.add(content1);
-
-        DynamicContent content2 = new DynamicContent();
-        UserContent userContent2 = new UserContent();
-        userContent2.setUserNickname("啦啦啦");
-        content2.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-        content2.setUserContent(userContent);
-        content2.setContent("今日跑步分享");
-        content2.setDevice(Build.MODEL);
-        content2.setType(2);
-        list.add(content2);DynamicContent content3 = new DynamicContent();
-        UserContent userContent3 = new UserContent();
-        userContent3.setUserNickname("啦啦啦");
-        content3.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-        content3.setUserContent(userContent3);
-        content3.setContent("今日跑步分享");
-        content3.setDevice(Build.MODEL);
-        content3.setType(3);
-        ForwardContent forwardContent1 = new ForwardContent();
-        forwardContent1.setDpushContent("dmskc");
-        forwardContent1.setDuserNickname("aaaa");
-        content3.setForwardContent(forwardContent1);
-        list.add(content3);
+//        DynamicContent content = new DynamicContent();
+//        UserContent userContent = new UserContent();
+//        userContent.setUserNickname("啦啦啦");
+//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+//        content.setUserContent(userContent);
+//        content.setContent("今日跑步分享");
+//        content.setDevice(Build.MODEL);
+//        content.setType(0);
+//        list.add(content);
+//        Log.e("content:",content.toString());
+//        DynamicContent content1 = new DynamicContent();
+//        UserContent userContent1 = new UserContent();
+//        userContent1.setUserNickname("啦啦啦");
+//        content1.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+//        content1.setUserContent(userContent);
+//        content1.setContent("今日跑步分享");
+//        content1.setDevice(Build.MODEL);
+//        ForwardContent forwardContent = new ForwardContent();
+//        forwardContent.setDpushContent("dmskc");
+//        forwardContent.setDuserNickname("aaaa");
+//        content1.setForwardContent(forwardContent);
+//        content1.setType(1);
+//        list.add(content1);
+//
+//        DynamicContent content2 = new DynamicContent();
+//        UserContent userContent2 = new UserContent();
+//        userContent2.setUserNickname("啦啦啦");
+//        content2.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+//        content2.setUserContent(userContent);
+//        content2.setContent("今日跑步分享");
+//        content2.setDevice(Build.MODEL);
+//        content2.setType(2);
+//        list.add(content2);DynamicContent content3 = new DynamicContent();
+//        UserContent userContent3 = new UserContent();
+//        userContent3.setUserNickname("啦啦啦");
+//        content3.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+//        content3.setUserContent(userContent3);
+//        content3.setContent("今日跑步分享");
+//        content3.setDevice(Build.MODEL);
+//        content3.setType(3);
+//        ForwardContent forwardContent1 = new ForwardContent();
+//        forwardContent1.setDpushContent("dmskc");
+//        forwardContent1.setDuserNickname("aaaa");
+//        content3.setForwardContent(forwardContent1);
+//        list.add(content3);
 
         peopleAdapter = new PeopleAdapter(getContext(),list);
         dynamic_list.setAdapter(peopleAdapter);

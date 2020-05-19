@@ -41,10 +41,10 @@ public class DynamicService {
     @Resource
     private CollectMapper collectMapper;
 
-    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
+    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg,String type) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         Date date = sdf.parse(pushTime);
-        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg);
+        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg,type);
         if(result>0){
             return "true";
         }else{

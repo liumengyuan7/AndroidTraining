@@ -261,7 +261,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
-                holder.ll_forward.setVisibility(View.VISIBLE);
+                holder.ll_forward.setVisibility(View.GONE);//转发的状态隐藏转发按钮
                 holder.ll_toComment.setTag(position);
                 holder.ll_forward.setTag(position);
                 //缓存发布的动态图片 来自被转发动态
@@ -294,7 +294,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
-                holder.ll_forward.setVisibility(View.VISIBLE);
+                holder.ll_forward.setVisibility(View.GONE);//转发状态隐藏转发
                 holder.ll_toComment.setTag(position);
                 holder.ll_forward.setTag(position);
                 break;
@@ -410,7 +410,13 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                             }else {
                     Timestamp pushTime = new Timestamp(new Date().getTime());
                     int forwardId = list.get(position).getDynamicId();
-                    addForwardDynamic(pushTime, nInputContentText ,forwardId);
+                    if (list.get(position).getImages()==null || list.get(position).getImages().equals("") || list.get(position).getImages().equals("null")){
+                        addForwardDynamic(pushTime, nInputContentText ,forwardId,3);
+                        Log.e("转发的type是3",list.get(position).getImages());
+                    }else {
+                        Log.e("转发的type是4",list.get(position).getImages());
+                        addForwardDynamic(pushTime, nInputContentText, forwardId,1);
+                    }
                     mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
                     popupWindow.dismiss();
                     et_discuss.setText( null );
@@ -532,7 +538,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     }
 
     //插入转发信息  当前转发者id  转发时间 转发内容  转发动态的id  转发状态 1 为转发 0为不转发
-    private void addForwardDynamic(Timestamp pushTime, String pushContent,int forwardId){
+    private void addForwardDynamic(Timestamp pushTime, String pushContent,int forwardId,int type){
         Handler handler1 = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -549,7 +555,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             @Override
             public void run() {
                 String result = new Utils().getConnectionResult("dynamic","addForwardDynamic",
-                        "userId="+userId +"&&pushTime="+pushTime+"&&pushContent="+pushContent+"&&forwardId="+forwardId+"&&type="+1);
+                        "userId="+userId +"&&pushTime="+pushTime+"&&pushContent="+pushContent+"&&forwardId="+forwardId+"&&type="+type);
                 Message message = new Message();
                 message.obj = result;
                 handler1.sendMessage(message);
