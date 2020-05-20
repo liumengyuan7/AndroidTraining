@@ -104,6 +104,12 @@ public class DynamicService {
         List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamicByUserId(userId);
         System.out.println(dynamics.toString());
         for (int i =0;i<dynamics.size();i++){
+            int forwardId = dynamics.get(i).getForwardId();
+            if(forwardId!=0) {
+                ForwardContent  forwardContent= this.dynamicMapper.queryDynamicByForwardId(forwardId);
+                dynamics.get(i).setForwardContent(forwardContent);
+                System.out.println(forwardContent.toString());
+            }
             int dynamicId = dynamics.get(i).getId();
             List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
             dynamics.get(i).setComments(comments);

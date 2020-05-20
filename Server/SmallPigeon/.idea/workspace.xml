@@ -7,66 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/controller/DynamicController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/controller/DynamicController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/CommentMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/CommentMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/ReplyMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/ReplyMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/ZanNumMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/dao/ZanNumMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Comment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Friend.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Friend.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Interest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Interest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Plan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Plan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Record.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Record.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Reply.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/Reply.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/friend/control/FriendController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/friend/control/FriendController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/friend/dao/FriendMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/friend/dao/FriendMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/friend/service/FriendService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/friend/service/FriendService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/interest/control/InterestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/interest/control/InterestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/interest/dao/InterestMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/interest/dao/InterestMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/interest/service/InterestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/interest/service/InterestService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/plan/control/PlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/plan/control/PlanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/plan/dao/PlanMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/plan/dao/PlanMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/plan/service/PlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/plan/service/PlanService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/record/control/RecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/record/control/RecordController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/record/dao/RecordMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/record/dao/RecordMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/record/service/RecordService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/record/service/RecordService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/control/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/control/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/dao/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/dao/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/service/UserService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/user/service/UserService$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/CommentMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/CommentMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/ReplyMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/ReplyMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/ZanNumMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/dao/ZanNumMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Comment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Friend.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Friend.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Interest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Interest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Plan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Plan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Record.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Record.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Reply.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/Reply.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/friend/control/FriendController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/friend/control/FriendController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/friend/dao/FriendMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/friend/dao/FriendMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/friend/service/FriendService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/friend/service/FriendService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/interest/control/InterestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/interest/control/InterestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/interest/dao/InterestMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/interest/dao/InterestMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/interest/service/InterestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/interest/service/InterestService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/plan/control/PlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/plan/control/PlanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/plan/dao/PlanMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/plan/dao/PlanMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/plan/service/PlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/plan/service/PlanService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/record/control/RecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/record/control/RecordController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/record/dao/RecordMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/record/dao/RecordMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/record/service/RecordService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/record/service/RecordService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/control/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/control/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/dao/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/dao/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/service/UserService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/user/service/UserService$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/DynamicMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/service/DynamicService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/classes/com/community/service/DynamicService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/service/DynamicService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmallPigeon/com/community/service/DynamicService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/PeopleAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/PeopleAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Entity/DynamicContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Entity/DynamicContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/MyDynamicAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/MyDynamicAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Community/Comment/DynamicDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Community/Comment/DynamicDetailActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/MyCommunity/MyCommunity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/MyCommunity/MyCommunity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,6 +37,17 @@
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="smallpigeon@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="smallpigeon@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="smallpigeon@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="smallpigeon: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
     </expand>
     <select />
@@ -297,7 +256,9 @@
       <workItem from="1589675135427" duration="797000" />
       <workItem from="1589782468485" duration="952000" />
       <workItem from="1589783534990" duration="6044000" />
-      <workItem from="1589892182004" duration="2740000" />
+      <workItem from="1589892182004" duration="4038000" />
+      <workItem from="1589930858400" duration="2378000" />
+      <workItem from="1589933330548" duration="4012000" />
     </task>
     <servers />
   </component>

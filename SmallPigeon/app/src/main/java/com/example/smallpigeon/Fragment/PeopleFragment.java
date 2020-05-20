@@ -261,15 +261,15 @@ public class PeopleFragment extends Fragment {
                 switch (view.getId()){
                     case R.id.ll_toComment:
                         tv_commentNum = view.findViewById( R.id.tv_commentNum );
-                        if (loginOrNot()){
+//                        if (loginOrNot()){
                             Intent intent = new Intent(getContext(), DynamicDetailActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("dynamic",list.get(index));
                             intent.putExtras(bundle);
                             startActivity(intent);
-                        } else {
-                            Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-                        }
+//                        } else {
+//                            Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+//                        }
 
                         break;
                 }
