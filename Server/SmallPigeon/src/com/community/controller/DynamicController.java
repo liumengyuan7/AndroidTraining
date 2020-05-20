@@ -48,9 +48,10 @@ public class DynamicController {
     @RequestMapping("/addDynamic")
     public String addDynamic(@RequestParam("userId") String userId,
                              @RequestParam("pushContent") String pushContent,
-                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg) throws Exception {
+                             @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg,
+                             @RequestParam("type") String type) throws Exception {
         System.out.println(userId+pushContent+pushTime+pushImg);
-        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg);
+        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg,type);
         return result;
     }
     //    添加转发的动态到数据库
