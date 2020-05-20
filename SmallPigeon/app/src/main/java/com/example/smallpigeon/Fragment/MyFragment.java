@@ -51,17 +51,16 @@ public class MyFragment extends Fragment {
     private LinearLayout btnPlan;
     private LinearLayout right_collect;
     private CustomButtonListener listener;
-    private String useId;
+    private String userId;
     private int is_accreditation;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             String status = msg.obj + "";
             is_accreditation = Integer.parseInt(status);
+//            Toast.makeText(getContext(),"当前认证状态"+is_accreditation,Toast.LENGTH_SHORT).show();
         }
     };
-//    private Integer is_accreditation;
-    private String userId;
 
     @Nullable
     @Override
@@ -70,7 +69,10 @@ public class MyFragment extends Fragment {
         getViews(view);
         registerListener();
         loginEvent();
-        selectUserInfo(useId);
+//        selectUserInfo(useId);
+        if(!userId.equals("") && userId != null) {
+            selectUserInfo(userId);
+        }
         return view;
     }
 
@@ -178,8 +180,7 @@ public class MyFragment extends Fragment {
     private boolean loginOrNot(){
         SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String userEmail = pre.getString("user_email","");
-        String userId = pre.getString("user_id","");
-    
+
         if(userEmail.equals("")||userEmail==null){
             return false;
         }else{
@@ -205,7 +206,7 @@ public class MyFragment extends Fragment {
         //跳转登录界面
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",Context.MODE_PRIVATE);
         String nickname = pre.getString("user_nickname","");
-        useId = pre.getString("user_id","");
+        userId = pre.getString("user_id","");
         if(nickname.equals("") || nickname == null){
             loginOrRegister.setText("登录/注册");
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
@@ -216,12 +217,13 @@ public class MyFragment extends Fragment {
                 }
             });
         } else{
-            signIn(useId);
+            signIn(userId);
             loginOrRegister.setText("欢迎登录："+nickname);
             loginOrRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { }
             });
+            selectUserInfo(userId);
         }
     }
 
@@ -243,7 +245,17 @@ public class MyFragment extends Fragment {
         super.onResume();
         loginEvent();
         getAvatar();
-        selectUserInfo(useId);
+        if(!userId.equals("") && userId != null) {
+            selectUserInfo(userId);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(!userId.equals("") && userId != null) {
+            selectUserInfo(userId);
+        }
     }
 
     //获取头像

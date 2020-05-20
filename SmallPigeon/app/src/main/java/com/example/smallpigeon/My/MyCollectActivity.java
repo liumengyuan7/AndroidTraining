@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class MyCollectActivity extends AppCompatActivity {
     private ImageView mycollect_back;
@@ -55,55 +56,97 @@ public class MyCollectActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String result = msg.obj + "";
-            if(!result.equals("false")){
-                Log.e("收藏信息",result);
-                list.clear();
-                try {
-                    JSONArray jsonArray = new JSONArray(result);
-                    for (int i = 0;i<jsonArray.length();i++){
-                        JSONObject json = jsonArray.getJSONObject(i);
-                        Log.e("第"+i+"条动态",json.toString());
-                        DynamicContent content = new DynamicContent();
-                        //获得动态的id
-                        content.setDynamicId(json.getInt("id"));
-                        //获得动态发布的用户昵称 头像
-                        UserContent userContent = new UserContent();
-                        userContent.setUserNickname(json.get("nickName").toString());
-                        userContent.setUserImage(json.getString("userEmail"));
-                        //获得动态发布时间
-                        String time = json.get("pushTime").toString();
-                        Date d = new Date(time);
-                        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
-                        content.setDate(sdf.format(d));//时间转换
-                        content.setUserContent(userContent);
-                        content.setDevice(Build.MODEL);
-                        //获得动态的发布内容
-                        content.setContent(json.get("pushContent").toString());
-                        //获得动态发布的图片信息
-                        String [] imgs = json.getString("pushImage").split(";");
-                        content.setImg(imgs[0]);
-                        if(imgs.length==2) {
-                            content.setImg2(imgs[1]);
+            switch (msg.what){
+                case 0:
+                    String result = msg.obj + "";
+                    if(!result.equals("empty")){
+                        Log.e("收藏信息",result);
+                        list.clear();
+                        try {
+                            JSONArray jsonArray = new JSONArray(result);
+                            for (int i = 0;i<jsonArray.length();i++){
+                                JSONObject json = jsonArray.getJSONObject(i);
+                                Log.e("第"+i+"条动态",json.toString());
+                                DynamicContent content = new DynamicContent();
+                                //获得动态的id
+                                content.setDynamicId(json.getInt("id"));
+                                //获得动态发布的用户昵称 头像
+                                UserContent userContent = new UserContent();
+                                userContent.setUserNickname(json.get("nickName").toString());
+                                userContent.setUserImage(json.getString("userEmail"));
+                                //获得动态发布时间
+                                String time = json.get("pushTime").toString();
+                                Date d = new Date(time);
+                                SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+                                content.setDate(sdf.format(d));//时间转换
+                                content.setUserContent(userContent);
+                                content.setDevice(Build.MODEL);
+                                //获得动态的发布内容
+                                content.setContent(json.get("pushContent").toString());
+                                //获得动态发布的图片信息
+                                if(json.has("pushImage") && json.getString("pushImage")!=null && !json.getString("pushImage").equals("")){
+                                    String [] imgs = json.getString("pushImage").split(";");
+                                    content.setImg(imgs[0]);
+                                    if (imgs.length == 2) {
+                                        content.setImg2(imgs[1]);
+                                    }
+                                }
+                                int forwardId = json.getInt("forwardId");
+                                content.setForwardId(forwardId);
+                                content.setType(json.getInt("dtype"));
+                                Log.e("第"+i+"动态的forwardId和dtype",forwardId+":"+json.getString("dtype"));
+                                if (forwardId>0){
+                                    JSONObject jsonForwardContent = json.getJSONObject("forwardContent");
+                                    ForwardContent forwardContent = new ForwardContent();
+                                    forwardContent.setDid(jsonForwardContent.getInt("did"));
+                                    forwardContent.setDuserNickname(jsonForwardContent.getString("duserNickname"));
+                                    forwardContent.setDuserEmail(jsonForwardContent.getString("duserEmail"));
+                                    String dpushTime = jsonForwardContent.get("dpushTime").toString();
+                                    Date d1 = new Date(dpushTime);
+                                    SimpleDateFormat sdf1  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+                                    forwardContent.setDpushTime(sdf1.format(d1));
+                                    forwardContent.setDpushContent(jsonForwardContent.getString("dpushContent"));
+                                    if(jsonForwardContent.getString("dpushImage")!=null && !jsonForwardContent.getString("dpushImage").equals("")){
+                                        String [] images = jsonForwardContent.getString("dpushImage").split(";");
+                                        forwardContent.setDpushImage1(images[0]);
+                                        if (images.length == 2) {
+                                            forwardContent.setDpushImage2(images[1]);
+                                        }
+                                    }
+                                    Log.e("forward",forwardContent.toString());
+                                    content.setForwardContent(forwardContent);
+                                    Log.e("第"+i+"条动态下的转发",content.getForwardContent().toString());
+                                }
+                                //获得收藏的该条动态的评论数量
+                                int commentNum = json.getInt("commentNum");
+                                content.setComment_Num(commentNum);
+                                //获得收藏的该条动态的收藏数量
+                                int collectNum = json.getInt("collectNum");
+                                content.setCollect_Num(collectNum);
+                                content.setDevice(Build.MODEL);
+                                list.add(content);
+                            }
+                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        //获得收藏的该条动态的评论数量
-                        int commentNum = json.getInt("commentNum");
-                        content.setComment_Num(commentNum);
-                        //获得收藏的该条动态的收藏数量
-                        int collectNum = json.getInt("collectNum");
-                        content.setCollect_Num(collectNum);
-                        content.setDevice(Build.MODEL);
-                        list.add(content);
+                    }else{
+                        Toast toastTip = Toast.makeText(getApplicationContext(),"你的收藏为空哦！",Toast.LENGTH_LONG);
+                        toastTip.setGravity(Gravity.CENTER, 0, 0);
+                        toastTip.show();
                     }
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }else {
-                Toast toastTip = Toast.makeText(getApplicationContext(),"获取收藏信息失败！请检查网络！",Toast.LENGTH_LONG);
-                toastTip.setGravity(Gravity.CENTER, 0, 0);
-                toastTip.show();
+                    break;
+                case 1:
+                    String r = msg.obj + "";
+                    Log.e("删除收藏返回的数据",r);
+                    if(r.equals("true")){
+                        Toast.makeText(getApplicationContext(),"删除收藏成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"删除收藏失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
+
         }
     };
 
@@ -132,46 +175,34 @@ public class MyCollectActivity extends AppCompatActivity {
         lv_collect.setAdapter(adapter);
         setOnListViewItemClickListener();
         setOnListViewItemLongClickListener();
-
-
-//        DynamicContent content = new DynamicContent();
-//        UserContent userContent = new UserContent();
-//        userContent.setUserNickname("aaa");
-//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content.setUserContent(userContent);
-//        content.setContent(".....");
-//        content.setDevice(Build.MODEL);
-//        content.setType(0);
-//        list.add(content);
-//
-//        DynamicContent content1 = new DynamicContent();
-//        UserContent userContent1 = new UserContent();
-//        ForwardContent forwardContent = new ForwardContent();
-//        forwardContent.setUserContent(userContent);
-//        forwardContent.setDynamicContent(content);
-//        userContent1.setUserNickname("啦啦啦");
-//        content1.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-//        content1.setForwardContent(forwardContent);
-//        content1.setUserContent(userContent1);
-//        content1.setContent("今日跑步分享");
-//        content1.setDevice(Build.MODEL);
-//        content1.setType(1);
-//        list.add(content1);
     }
-
-    //todo:查询所有的收藏信息
+    //根据用户id得到收藏数据
     private void getAllCollect(String userId) {
         new Thread(){
             @Override
             public void run() {
                 String result = new Utils().getConnectionResult("dynamic","getAllCollectByUserId","userId="+userId);
                 Message message = new Message();
+                message.what = 0;
                 message.obj = result;
                 handler.sendMessage(message);
             }
         }.start();
     }
-
+    //根据用户id删除收藏数据
+    private void deleteCollect(String userId, String dynamicIdList) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("dynamic","decCollectList","userId="+userId
+                        +"&&dynamicIdList="+dynamicIdList);
+                Message message = new Message();
+                message.what = 1;
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
     private void setOnListViewItemClickListener() {
         lv_collect.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -281,9 +312,15 @@ public class MyCollectActivity extends AppCompatActivity {
         }else {
             list.removeAll(checkList);//删除选中数据
             setStateCheckedMap(false);
+            //后台删除选中数据  多选时传入多个动态id
+            String dynamicIdList="";
+            for (int i =0;i<checkList.size();i++){
+                dynamicIdList = dynamicIdList+checkList.get(i).getDynamicId()+",";
+            }
+            deleteCollect(userId,dynamicIdList);
             checkList.clear();
             adapter.notifyDataSetChanged();
-            Toast.makeText(MyCollectActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MyCollectActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
 
         }
 

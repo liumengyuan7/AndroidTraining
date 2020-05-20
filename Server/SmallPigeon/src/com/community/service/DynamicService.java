@@ -7,10 +7,13 @@ import com.community.dao.ReplyMapper;
 import com.community.dao.ZanNumMapper;
 import com.entity.Comment;
 import com.entity.Dynamics;
+import com.entity.ForwardContent;
 import com.entity.Reply;
 import com.google.gson.Gson;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,10 +41,21 @@ public class DynamicService {
     @Resource
     private CollectMapper collectMapper;
 
-    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg) throws ParseException {
+    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg,String type) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         Date date = sdf.parse(pushTime);
-        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg);
+        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg,type);
+        if(result>0){
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+    //添加转发动态的信息
+    public String addForwardDynamic(String userId, String pushTime, String pushContent,String forwardId,String type) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        Date date = sdf.parse(pushTime);
+        int result = this.dynamicMapper.insertForwardDynamic(userId,date,pushContent,forwardId,type);
         if(result>0){
             return "true";
         }else{
@@ -49,9 +63,30 @@ public class DynamicService {
         }
     }
     //得到所有用户的动态
-    public String queryAllDynamic(){
+ /*   public String queryAllDynamic(){
         List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamic();
         for (int i =0;i<dynamics.size();i++){
+            int dynamicId = dynamics.get(i).getId();
+            List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
+            dynamics.get(i).setComments(comments);
+            for (int j=0;j<comments.size();j++){
+                int commentId = comments.get(j).getId();
+                List<Reply> replies = this.replyMapper.queryReplyByCommentId(commentId);
+                comments.get(j).setReplies(replies);
+            }
+        }
+        System.out.println(new Gson().toJson(dynamics));
+        return new Gson().toJson(dynamics);
+    }*/
+      public String queryAllDynamic(){
+        List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamic();
+        for (int i =0;i<dynamics.size();i++){
+            int forwardId = dynamics.get(i).getForwardId();
+            if(forwardId!=0) {
+                ForwardContent  forwardContent= this.dynamicMapper.queryDynamicByForwardId(forwardId);
+                dynamics.get(i).setForwardContent(forwardContent);
+                System.out.println(forwardContent.toString());
+            }
             int dynamicId = dynamics.get(i).getId();
             List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
             dynamics.get(i).setComments(comments);
@@ -69,6 +104,12 @@ public class DynamicService {
         List<Dynamics> dynamics = this.dynamicMapper.queryAllDynamicByUserId(userId);
         System.out.println(dynamics.toString());
         for (int i =0;i<dynamics.size();i++){
+            int forwardId = dynamics.get(i).getForwardId();
+            if(forwardId!=0) {
+                ForwardContent  forwardContent= this.dynamicMapper.queryDynamicByForwardId(forwardId);
+                dynamics.get(i).setForwardContent(forwardContent);
+                System.out.println(forwardContent.toString());
+            }
             int dynamicId = dynamics.get(i).getId();
             List<Comment> comments = this.commentMapper.selectCommnetByDynamicId(dynamicId);
             dynamics.get(i).setComments(comments);
@@ -153,6 +194,12 @@ public class DynamicService {
     public String queryAllCollectByUserId(String userId){
         List<Dynamics> dynamics = this.collectMapper.queryAllCollectByUserId(userId);
         for (int i =0;i<dynamics.size();i++){
+            int forwardId = dynamics.get(i).getForwardId();
+            if(forwardId!=0) {
+                ForwardContent  forwardContent= this.dynamicMapper.queryDynamicByForwardId(forwardId);
+                dynamics.get(i).setForwardContent(forwardContent);
+                System.out.println(forwardContent.toString());
+            }
             System.out.println(dynamics.get(i).toString());
             int dynamicId = dynamics.get(i).getId();
             System.out.println(dynamicId);
@@ -163,8 +210,9 @@ public class DynamicService {
             System.out.println(this.collectMapper.getCollectNum(dynamicId));
             dynamics.get(i).setCollectNum(collectNum);
         }
-        System.out.println(new Gson().toJson(dynamics));
-        return new Gson().toJson(dynamics);
+        if (dynamics.isEmpty()) return "empty";
+//        System.out.println(new Gson().toJson(dynamics));
+        else return new Gson().toJson(dynamics);
     }
     //收藏动态
     public String addCollect(String dynamicId, String userId){
@@ -183,5 +231,21 @@ public class DynamicService {
         }else{
             return "false";
         }
+    }
+    //批量删除收藏数据
+    public String decCollects(List<String> list,String userId){
+          System.out.println("decCollects service"+list.toString());
+        int result = this.collectMapper.deleteCollects(list,userId);
+        System.out.println("结果"+result);
+        if(result>0){
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+    //得到转发数
+    public String changeForwardNum(String dynamicId,String forwardNum){
+          int result = this.dynamicMapper.changeForwardNum(dynamicId,forwardNum);
+          return result+"";
     }
 }

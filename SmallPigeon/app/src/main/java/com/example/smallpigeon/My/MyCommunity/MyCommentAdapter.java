@@ -1,4 +1,4 @@
-package com.example.smallpigeon.Community.Comment;
+package com.example.smallpigeon.My.MyCommunity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,23 +24,20 @@ import com.example.smallpigeon.Entity.ReplyDetailBean;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+public class MyCommentAdapter extends BaseExpandableListAdapter {
 
-public class CommentExpandAdapter extends BaseExpandableListAdapter {
-    private static final String TAG = "CommentExpandAdapter";
+    private static final String TAG = "MyCommentAdapter";
     private List<CommentDetailBean> commentBeanList;
     private List<ReplyDetailBean> replyBeanList = new ArrayList<>();
     private Context context;
     private int pageIndex = 1;
     private DynamicContent dynamicContent;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -79,9 +75,9 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
         }
     };
-    public CommentExpandAdapter(Context context, DynamicContent dynamicContent) {
+
+    public MyCommentAdapter(Context context, DynamicContent dynamicContent) {
         this.context = context;
-//        this.commentBeanList = commentBeanList;
         this.dynamicContent = dynamicContent;
     }
 
@@ -149,41 +145,44 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
         //得到点赞用户id
         SharedPreferences pre = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        int userId = Integer.parseInt(pre.getString("user_id",""));
-
+//        int userId = Integer.parseInt(pre.getString("user_id",""));
+        int userId = 10;
         String time = dynamicContent.getCommentDetailBeans().get(groupPosition).getCreateDate();
-        groupHolder.tv_time.setText(time.substring(0,19));
+        groupHolder.tv_time.setText(time.substring(0,7));
         groupHolder.tv_content.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getContent());
-        // 取出bean中当记录状态是否为true，是的话则给img设置focus点赞图片
-        if (dynamicContent.getCommentDetailBeans().get(groupPosition).isZanFocus()) {
-            groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
-        } else {
-            groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
-        }
         groupHolder.tv_likeNum.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum()+"");
+        groupHolder.iv_like.setTag(false);
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //获取上次是否已经被点击
-                Log.e("第"+groupPosition+"条记录上次点击状态",dynamicContent.getCommentDetailBeans().get(groupPosition).isZanFocus()+"");
-                boolean flag = dynamicContent.getCommentDetailBeans().get(groupPosition).isZanFocus();
-                //判断当前点赞状态
-                if (flag) {
-                    int zanNumAfter = dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum()-1;
-                    dynamicContent.getCommentDetailBeans().get(groupPosition).setComomentZanNum(zanNumAfter);
-                    //后台取消点赞
-                    decZanNumByComment(dynamicContent.getDynamicId(),dynamicContent.getCommentDetailBeans().get(groupPosition).getId(),userId,zanNumAfter);
+                /*if(isLike){
+                    isLike = false;
+                    groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
                 }else {
-                    int zanNumAfter = dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum()+1;
+                    isLike = true;
+                    groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+                }*/
+                Log.e("iv_like.getTag()",groupHolder.iv_like.getTag()+"");
+                if((boolean)groupHolder.iv_like.getTag()){
+                    groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
+                    int zanNumBefore = dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum();
+                    int zanNumAfter = zanNumBefore-1;
+                    decZanNumByComment(dynamicContent.getDynamicId(),dynamicContent.getCommentDetailBeans().get(groupPosition).getId(),userId,zanNumAfter);
                     dynamicContent.getCommentDetailBeans().get(groupPosition).setComomentZanNum(zanNumAfter);
-                    //后台添加点赞
+                    groupHolder.tv_likeNum.setText(zanNumAfter+"");
+                    groupHolder.iv_like.setTag(false);
+                }else {
+                    groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+                    int zanNumBefore = dynamicContent.getCommentDetailBeans().get(groupPosition).getComomentZanNum();
+                    int zanNumAfter = zanNumBefore+1;
                     addZanNumByComment(dynamicContent.getDynamicId(),dynamicContent.getCommentDetailBeans().get(groupPosition).getId(),userId,zanNumAfter);
+                    dynamicContent.getCommentDetailBeans().get(groupPosition).setComomentZanNum(zanNumAfter);
+                    groupHolder.tv_likeNum.setText(zanNumAfter+"");
+                    groupHolder.iv_like.setTag(true);
                 }
-                //反向存储记录，实现取消点赞功能
-                dynamicContent.getCommentDetailBeans().get(groupPosition).setZanFocus(!flag);
-                notifyDataSetChanged();
             }
         });
+        notifyDataSetChanged();
         return convertView;
     }
 
@@ -207,7 +206,8 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
 
         childHolder.tv_content.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().get(childPosition).getContent());
-        childHolder.tv_time.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().get(childPosition).getCreateDate().substring(0,19));
+//        childHolder.tv_time.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().get(childPosition).getCreateDate().substring(0,19));
+        childHolder.tv_time.setText(dynamicContent.getCommentDetailBeans().get(groupPosition).getReplyList().get(childPosition).getCreateDate());
         return convertView;
     }
 

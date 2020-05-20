@@ -5,12 +5,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp">
-        <TextView
-            android:id="@+id/nearby_user_email"
-            android:gravity="center_vertical"
-            android:text="156267102@qq.com"
-            android:textSize="25dp"
+        <com.example.smallpigeon.RoundImageView
+            android:id="@+id/nearby_user_avatar"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/nearby_user_nickname"
+                android:gravity="bottom"
+                android:text="昵称：ydl"
+                android:textSize="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+            <TextView
+                android:id="@+id/nearby_user_email"
+                android:gravity="top"
+                android:text="邮箱：156267102@qq.com"
+                android:textSize="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

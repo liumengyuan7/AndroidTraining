@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +74,7 @@ public class MyplanAdapter extends BaseAdapter{
 
         //计划状态-默认为未完成
         TextView plan_status = convertView.findViewById( R.id.plan_status );
-        TextView go_wancheng = convertView.findViewById( R.id.go_wancheng );
+        Button go_wancheng = convertView.findViewById( R.id.go_wancheng );
         String status = dataSourse.get(position).get("plan_status");
         if(status.equals("1")){
             plan_status.setText("已完成");

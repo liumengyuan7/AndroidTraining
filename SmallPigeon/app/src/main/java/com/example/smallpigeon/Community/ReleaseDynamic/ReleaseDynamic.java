@@ -77,7 +77,7 @@ public class ReleaseDynamic extends AppCompatActivity {
 //    private List<String> bitmaps = new ArrayList<>();
     private EditText dynamic_content;
     //imgInfo为传入所有图片的名称，各个图片名中间用空格隔开
-    private  String imgInfo;
+    private  String imgInfo="";
     private Utils utils;
     private Handler handler = new Handler(){
         @Override
@@ -112,18 +112,24 @@ public class ReleaseDynamic extends AppCompatActivity {
                 upLoad();
 
                 String id = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString ("user_id","");
-                UserContent userContent = new UserContent();
-                DynamicContent dynamicContent = new DynamicContent();
-                dynamicContent.setUserContent(userContent);
-                dynamicContent.setContent(dynamic_content.getText().toString());
-                dynamicContent.setDate(new Date().toLocaleString());
-                dynamicContent.setZan_num(0);
-                dynamicContent.setDevice(Build.MODEL);
-                dynamicContent.setImg(imgInfo);
+//                UserContent userContent = new UserContent();
+//                DynamicContent dynamicContent = new DynamicContent();
+//                dynamicContent.setUserContent(userContent);
+//                dynamicContent.setContent(dynamic_content.getText().toString());
+//                dynamicContent.setDate(new Date().toLocaleString());
+//                dynamicContent.setZan_num(0);
+//                dynamicContent.setDevice(Build.MODEL);
+//                dynamicContent.setImg(imgInfo);
+                Timestamp pushTime = new Timestamp(new Date().getTime());
+                if (imgInfo.equals("")||imgInfo==null){
+                    sendMessageToServer(id,dynamic_content.getText().toString(),pushTime,2);
+                }else {
+                    sendMessageToServer(id,dynamic_content.getText().toString(),pushTime,0);
+                }
 
                 //将动态信息插入数据库
-                Timestamp pushTime = new Timestamp(new Date().getTime());
-                sendMessageToServer(id,dynamic_content.getText().toString(),pushTime);
+//                Timestamp pushTime = new Timestamp(new Date().getTime());
+//                sendMessageToServer(id,dynamic_content.getText().toString(),pushTime);
                 finish();
             }
         });
@@ -286,6 +292,7 @@ public class ReleaseDynamic extends AppCompatActivity {
             cursor.moveToFirst();
             String imgPath = cursor.getString(1); //图片文件路径
             String imgName = cursor.getString(3); //图片文件名
+            Log.e("imgName:",imgName);
             if (imgInfo==null || imgInfo.equals("")){
                 imgInfo = imgName;
             }else {
@@ -316,14 +323,14 @@ public class ReleaseDynamic extends AppCompatActivity {
     }
 
     //将动态信息插入数据库
-    private void sendMessageToServer(String id, String pushContent, Timestamp pushTime){
+    private void sendMessageToServer(String id, String pushContent, Timestamp pushTime,int type){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
                             +":8080/smallpigeon/dynamic/addDynamic?userId="+id
-                            +"&&pushContent="+pushContent+"&&pushTime="+pushTime+"&&pushImg="+imgInfo);
+                            +"&&pushContent="+pushContent+"&&pushTime="+pushTime+"&&pushImg="+imgInfo+"&&type="+type);
                     Log.e("url",url.toString());
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

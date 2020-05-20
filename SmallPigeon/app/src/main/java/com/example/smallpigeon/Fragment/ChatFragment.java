@@ -3,7 +3,9 @@ package com.example.smallpigeon.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,8 +32,8 @@ import com.example.smallpigeon.R;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
-
 public class ChatFragment extends Fragment {
+
     private ImageView addFriends;
     private View view;
     private FragmentManager fragmentManager;
@@ -43,11 +45,12 @@ public class ChatFragment extends Fragment {
     private LinearLayout tabHuihua;
     private LinearLayout tabFriends;
     private String useId="";
+    private Resources resources;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chat,container,false);
-
         return view;
     }
 
@@ -78,6 +81,7 @@ public class ChatFragment extends Fragment {
         showFragment(conversationListFragment);
         currentFragment = conversationListFragment;
     }
+
     private void findById() {
         tabHuihua = view.findViewById(R.id.tabHuihua);
         tabFriends = view.findViewById(R.id.tabFriends);
@@ -85,27 +89,33 @@ public class ChatFragment extends Fragment {
         tvFriends = view.findViewById(R.id.tvFriends);
         addFriends = view.findViewById(R.id.addFriends);
     }
+
     private void setListeners() {
         MyClickListener myClickListener = new MyClickListener();
         tabHuihua.setOnClickListener(myClickListener);
         tabFriends.setOnClickListener(myClickListener);
         addFriends.setOnClickListener(myClickListener);
     }
-    private class MyClickListener implements View.OnClickListener{
 
+    private class MyClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
+            resources = getContext().getResources();
             switch (v.getId()){
                 case R.id.tabHuihua:
                     showFragment(conversationListFragment);
-                    tvHuihua.setTextColor(Color.parseColor("#259B24"));
-                    tvFriends.setTextColor(Color.parseColor("#737373"));
+                    tvHuihua.setTextColor(resources.getColor( R.color.black ));
+                    tabHuihua.setBackgroundResource( R.drawable.bg_chat_title );
+                    tvFriends.setTextColor(resources.getColor( R.color.btn_gray_pressed ));
+                    tabFriends.setBackgroundResource( 0 );
                     break;
                 case R.id.tabFriends:
                     showFragment(listFragment);
                     currentFragment = listFragment;
-                    tvHuihua.setTextColor(Color.parseColor("#737373"));
-                    tvFriends.setTextColor(Color.parseColor("#259B24"));
+                    tvFriends.setTextColor(resources.getColor( R.color.black ));
+                    tabFriends.setBackgroundResource( R.drawable.bg_chat_title );
+                    tvHuihua.setTextColor(resources.getColor( R.color.btn_gray_pressed ));
+                    tabHuihua.setBackgroundResource( 0 );
                     break;
                 case R.id.addFriends:
                     //TODO:先判断用户是否登陆，若没有登陆则提示用户先登录，用户登陆后才能进行跳转
@@ -120,6 +130,7 @@ public class ChatFragment extends Fragment {
             }
         }
     }
+
     public void showFragment(Fragment fragment){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (fragment != currentFragment){
@@ -132,6 +143,7 @@ public class ChatFragment extends Fragment {
             currentFragment = fragment;
         }
     }
+
     private void signIn(String userId) {
         EMClient.getInstance().login(userId, userId, new EMCallBack() {
             @Override
@@ -143,18 +155,17 @@ public class ChatFragment extends Fragment {
                 Log.e("ChatFragment环信登录","登录失败"+i+","+s);
             }
             @Override
-            public void onProgress(int i, String s) {
-
-            }
+            public void onProgress(int i, String s) { }
         });
     }
+
     //判断是否登录的方法
     private boolean loginOrNot(){
         SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String userEmail = pre.getString("user_email","");
         if(userEmail.equals("")||userEmail==null){
             return false;
-        }else{
+        } else{
             return true;
         }
     }

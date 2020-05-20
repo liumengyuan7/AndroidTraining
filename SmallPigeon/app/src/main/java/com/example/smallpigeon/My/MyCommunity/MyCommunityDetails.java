@@ -3,9 +3,6 @@ package com.example.smallpigeon.My.MyCommunity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +32,10 @@ import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.gson.Gson;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +48,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
     private TextView tv_date;
     private TextView device;
     private TextView dynamic_item_txt;
+    private LinearLayout ll_img;
     private ImageView dynamic_item_img;
     private ImageView dynamic_item_img2;
     private ExpandableListView expandableListView;
@@ -60,7 +59,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
 
     private DynamicContent dynamicContent;
 
-    private CommentAdapter commentAdapter;
+    private MyCommentAdapter myCommentAdapter;
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
@@ -89,6 +88,13 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
         dynamicContent.setUserContent(userContent);
         dynamicContent.setContent("今日跑步分享");
         dynamicContent.setDevice(Build.MODEL);
+        dynamicContent.setType( 2 );
+
+        if (dynamicContent.getType() == 2 || dynamicContent.getType() == 3){ //无图片
+            ll_img.setVisibility( View.GONE );
+        } else {
+            ll_img.setVisibility( View.VISIBLE );
+        }
 
         //显示内容
 //        iv_icon.setImageResource(Integer.parseInt(dynamicContent.getUserContent().getUserImage()));
@@ -108,9 +114,22 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
         //显示评论
         //todo:查询评论
         commentsList = dynamicContent.getCommentDetailBeans();
+
         //测试用
         CommentDetailBean commentDetailBean = new CommentDetailBean( "a", "pinglun1", "2020-1-1" );
+        CommentDetailBean commentDetailBean2 = new CommentDetailBean( "a", "pinglun2", "2020-1-1" );
+
+        List<ReplyDetailBean> replyDetailBeans = new ArrayList<>(  );
+        ReplyDetailBean replyDetailBean = new ReplyDetailBean( "b", "huifu1" );
+        ReplyDetailBean replyDetailBean2 = new ReplyDetailBean( "b", "huifu2" );
+        replyDetailBeans.add( replyDetailBean );
+        replyDetailBeans.add( replyDetailBean2 );
+
+        commentDetailBean.setReplyList( replyDetailBeans );
+        commentDetailBean2.setReplyList( replyDetailBeans );
+
         commentsList.add( commentDetailBean );
+        commentsList.add( commentDetailBean2 );
         dynamicContent.setCommentDetailBeans(commentsList);
 
         initExpandableListView(dynamicContent);
@@ -122,6 +141,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
         tv_date = findViewById(R.id.tv_date);
         device = findViewById(R.id.device);
         dynamic_item_txt = findViewById(R.id.dynamic_item_txt);
+        ll_img = findViewById( R.id.ll_img );
         dynamic_item_img = findViewById(R.id.dynamic_item_img);
         dynamic_item_img2 = findViewById(R.id.dynamic_item_img2);
         expandableListView = findViewById(R.id.detail_page_lv_comment);
@@ -131,15 +151,13 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
 //        iv_collect.setOnClickListener(this);
     }
 
-    /**
-     * 初始化评论和回复列表
-     */
+    //初始化评论和回复列表
     private void initExpandableListView(final DynamicContent dynamicContent){
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
-        commentAdapter = new CommentAdapter( MyCommunityDetails.this, dynamicContent);
-        Log.e("评论列表",dynamicContent.getCommentDetailBeans().toString());
-        expandableListView.setAdapter(commentAdapter);
+        myCommentAdapter = new MyCommentAdapter( MyCommunityDetails.this, dynamicContent);
+        Log.e("评论",dynamicContent.getCommentDetailBeans().toString());
+        expandableListView.setAdapter(myCommentAdapter);
         for(int i = 0; i<dynamicContent.getCommentDetailBeans().size(); i++){
             expandableListView.expandGroup(i);
         }
@@ -204,7 +222,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
                     detailBean.setCommentFromId(userId);
                     detailBean.setUserLogo(userLogo);
                     detailBean.setDynamicId(dynamicContent.getDynamicId());
-                    commentAdapter.addTheCommentData(detailBean);
+                    myCommentAdapter.addTheCommentData(detailBean);
 //                    Toast.makeText(DynamicDetailActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
@@ -255,7 +273,7 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
                     detailBean.setCommentId(String.valueOf(commentsList.get(position).getId()));
                     detailBean.setToId(commentsList.get(position).getCommentFromId());
                     detailBean.setFromId(userId);
-                    commentAdapter.addTheReplyData(detailBean, position);
+                    myCommentAdapter.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
 //                    Toast.makeText(DynamicDetailActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {

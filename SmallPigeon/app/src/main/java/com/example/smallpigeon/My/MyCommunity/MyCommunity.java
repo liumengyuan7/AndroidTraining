@@ -20,8 +20,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.Adapter.MyDynamicAdapter;
+import com.example.smallpigeon.Community.Comment.DynamicDetailActivity;
 import com.example.smallpigeon.Entity.CommentDetailBean;
 import com.example.smallpigeon.Entity.DynamicContent;
+import com.example.smallpigeon.Entity.ForwardContent;
 import com.example.smallpigeon.Entity.ReplyDetailBean;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.R;
@@ -45,7 +47,7 @@ public class MyCommunity extends AppCompatActivity {
 
     private MyDynamicAdapter myDynamicAdapter;
     private List<DynamicContent> list = new ArrayList<>();
-    private boolean isPause = false;
+//    private boolean isPause = false;
     private String userId;
 
     private Handler handler = new Handler() {
@@ -55,6 +57,7 @@ public class MyCommunity extends AppCompatActivity {
             String result = msg.obj + "";
             if(!result.equals("false")){
                 list.clear();
+                Log.e("动态",result);
                 try {
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0;i<jsonArray.length();i++){
@@ -72,49 +75,88 @@ public class MyCommunity extends AppCompatActivity {
                         content.setUserContent(userContent);
                         content.setDevice(Build.MODEL);
                         content.setContent(json.get("pushContent").toString());
-                        String [] imgs = json.getString("pushImage").split(";");
-                        content.setImg(imgs[0]);
-                        if(imgs.length==2) {
-                            content.setImg2(imgs[1]);
-                        }
-                        content.setDevice(Build.MODEL);
-                        content.setZan_num(json.getInt("zanNum"));
-                        JSONArray jsonArrayComment = json.getJSONArray("comments");
-                        Log.e("comments",jsonArrayComment.toString());
-                        List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
-                        for (int j=0;j<jsonArrayComment.length();j++){
-                            JSONObject jsonComment = jsonArrayComment.getJSONObject(j);
-                            Log.e("该动态下第"+j+"条评论",jsonComment.toString());
-                            String nickName = jsonComment.getString("commentFromNickname");
-                            String userLogo = jsonComment.getString("commentFromEmail");
-                            String cContent = jsonComment.getString("commentFromContent");
-                            String createTime = jsonComment.getString("commentFromTime");
-                            int commentId = jsonComment.getInt("id");
-                            int commentFromId = jsonComment.getInt("commenmtFromId");
-                            int dynamicId = jsonComment.getInt("dynamicId");
-                            String createT = createTime.substring(0,19);
-                            CommentDetailBean commentDetailBean = new CommentDetailBean(nickName,cContent,createTime);
-                            commentDetailBean.setId(commentId);
-                            commentDetailBean.setCommentFromId(commentFromId);
-                            commentDetailBean.setDynamicId(dynamicId);
-                            commentDetailBean.setCreateDate(createT);
-                            commentDetailBean.setUserLogo(userLogo);
-                            JSONArray jsonArrayCommentReply = jsonComment.getJSONArray("replies");
-                            List<ReplyDetailBean> replyDetailBeans = new ArrayList<>();
-                            for (int k=0;k<jsonArrayCommentReply.length();k++) {
-                                JSONObject jsonCommentReply = jsonArrayCommentReply.getJSONObject(k);
-                                Log.e("该评论下的回复",jsonArrayCommentReply.toString());
-                                ReplyDetailBean replyDetailBean = new ReplyDetailBean(jsonCommentReply.getString("fNickname"),jsonCommentReply.getString("replyContent"));
-                                replyDetailBean.setCreateDate(jsonCommentReply.getString("replyTime").substring(0,19));
-                                replyDetailBean.setCommentId(jsonCommentReply.getString("commentId"));
-                                replyDetailBeans.add(replyDetailBean);
+                        if(json.has("pushImage") && json.getString("pushImage")!=null && !json.getString("pushImage").equals("")){
+                            String [] imgs = json.getString("pushImage").split(";");
+                            content.setImages(json.getString("pushImage"));
+                            content.setImg(imgs[0]);
+                            if (imgs.length == 2) {
+                                content.setImg2(imgs[1]);
                             }
-                            commentDetailBean.setReplyList(replyDetailBeans);
-                            commentDetailBeans.add(commentDetailBean);
                         }
-                        content.setComment_Num(jsonArrayComment.length());
-                        content.setCommentDetailBeans(commentDetailBeans);
+////                        content.setDevice(Build.MODEL);
+                        content.setForward_Num(json.getInt("forwardNum"));
+                        content.setZan_num(json.getInt("zanNum"));
+                        content.setZanFocus(false);
+                        int forwardId = json.getInt("forwardId");
+                        content.setForwardId(forwardId);
+                        content.setType(json.getInt("dtype"));
+                        Log.e("第"+i+"动态的forwardId和dtype",forwardId+":"+json.getString("dtype"));
+                        if (forwardId>0){
+                            JSONObject jsonForwardContent = json.getJSONObject("forwardContent");
+                            ForwardContent forwardContent = new ForwardContent();
+                            forwardContent.setDid(jsonForwardContent.getInt("did"));
+                            forwardContent.setDuserNickname(jsonForwardContent.getString("duserNickname"));
+                            forwardContent.setDuserEmail(jsonForwardContent.getString("duserEmail"));
+                            String dpushTime = jsonForwardContent.get("dpushTime").toString();
+                            Date d1 = new Date(dpushTime);
+                            SimpleDateFormat sdf1  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+                            forwardContent.setDpushTime(sdf1.format(d1));
+                            forwardContent.setDpushContent(jsonForwardContent.getString("dpushContent"));
+                            if(jsonForwardContent.getString("dpushImage")!=null && !jsonForwardContent.getString("dpushImage").equals("")){
+                                String [] images = jsonForwardContent.getString("dpushImage").split(";");
+                                forwardContent.setDpushImage1(images[0]);
+                                if (images.length == 2) {
+                                    forwardContent.setDpushImage2(images[1]);
+                                }
+                            }
+                            Log.e("forward",forwardContent.toString());
+                            content.setForwardContent(forwardContent);
+                            Log.e("第"+i+"条动态下的转发",content.getForwardContent().toString());
+                        }
+                        if (json.has("comments")) {
+                            JSONArray jsonArrayComment = json.getJSONArray("comments");
+//                        Log.e("comments",jsonArrayComment.toString());
+                            List<CommentDetailBean> commentDetailBeans = new ArrayList<>();
+                            for (int j = 0; j < jsonArrayComment.length(); j++) {
+                                JSONObject jsonComment = jsonArrayComment.getJSONObject(j);
+                                Log.e("该动态下第" + j + "条评论", jsonComment.toString());
+                                String nickName = jsonComment.getString("commentFromNickname");
+                                String userLogo = jsonComment.getString("commentFromEmail");
+                                String cContent = jsonComment.getString("commentFromContent");
+                                String createTime = jsonComment.getString("commentFromTime");
+                                int commentId = jsonComment.getInt("id");
+                                int commentFromId = jsonComment.getInt("commenmtFromId");
+                                int dynamicId = jsonComment.getInt("dynamicId");
+                                int commentZanNum = jsonComment.getInt("commentZanNum");
+                                String createT = createTime.substring(0, 19);
+                                CommentDetailBean commentDetailBean = new CommentDetailBean(nickName, cContent, createTime);
+                                commentDetailBean.setId(commentId);
+                                commentDetailBean.setCommentFromId(commentFromId);
+                                commentDetailBean.setDynamicId(dynamicId);
+                                commentDetailBean.setCreateDate(createT);
+                                commentDetailBean.setComomentZanNum(commentZanNum);
+                                commentDetailBean.setUserLogo(userLogo);
+                                commentDetailBean.setZanFocus(false);
+                                if (jsonComment.has("replies")) {
+                                    JSONArray jsonArrayCommentReply = jsonComment.getJSONArray("replies");
+                                    List<ReplyDetailBean> replyDetailBeans = new ArrayList<>();
+                                    for (int k = 0; k < jsonArrayCommentReply.length(); k++) {
+                                        JSONObject jsonCommentReply = jsonArrayCommentReply.getJSONObject(k);
+                                        Log.e("该评论下的回复", jsonArrayCommentReply.toString());
+                                        ReplyDetailBean replyDetailBean = new ReplyDetailBean(jsonCommentReply.getString("fNickname"), jsonCommentReply.getString("replyContent"));
+                                        replyDetailBean.setCreateDate(jsonCommentReply.getString("replyTime").substring(0, 19));
+                                        replyDetailBean.setCommentId(jsonCommentReply.getString("commentId"));
+                                        replyDetailBeans.add(replyDetailBean);
+                                    }
+                                    commentDetailBean.setReplyList(replyDetailBeans);
+                                    commentDetailBeans.add(commentDetailBean);
+                                }
+                            }
+                            content.setComment_Num(jsonArrayComment.length());
+                            content.setCommentDetailBeans(commentDetailBeans);
+                        }
                         list.add(content);
+                        Log.e("list",list.toString());
                         myDynamicAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
@@ -142,34 +184,63 @@ public class MyCommunity extends AppCompatActivity {
         userId = pre.getString("user_id","");
         Log.e("userId",userId);
         //todo:显示后台服务器存储的当前用户所有发布的动态
+        selectAllDynamic(46+"");
         //前端测试用
-        DynamicContent content = new DynamicContent();
-        UserContent userContent = new UserContent();
-        userContent.setUserNickname("啦啦啦");
-        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
-        content.setUserContent(userContent);
-        content.setContent("今日跑步分享");
-        content.setDevice(Build.MODEL);
-        list.add(content);
+//        DynamicContent content = new DynamicContent();
+//        UserContent userContent = new UserContent();
+//        userContent.setUserNickname("啦啦啦");
+//        content.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+//        content.setType( 2 );
+//        content.setUserContent(userContent);
+//        content.setContent("今日跑步分享");
+//        content.setDevice(Build.MODEL);
+//
+//        DynamicContent content2 = new DynamicContent();
+//        content2.setDate(new SimpleDateFormat("yyyy年-MM月-dd日").format(new Date()));
+//        content2.setUserContent(userContent);
+//        content2.setContent("zhuanfa");
+//        content2.setType( 3 );
+//        ForwardContent forwardContent = new ForwardContent();
+//        forwardContent.setDpushContent( "jinri" );
+//        forwardContent.setDuserNickname( "pupupu" );
+//        content2.setForwardContent( forwardContent );
+//        content2.setDevice(Build.MODEL);
+//
+//        list.add(content);
+//        list.add(content2);
 
-        myDynamicAdapter = new MyDynamicAdapter( MyCommunity.this, R.layout.people_dynamic_listitem, list );
-        my_dynamic_list.setAdapter(myDynamicAdapter);
+        myDynamicAdapter = new MyDynamicAdapter( MyCommunity.this, list );
+//        my_dynamic_list.setAdapter(myDynamicAdapter);
 
         my_dynamic_list.setAdapter(myDynamicAdapter);
         //item点击事件：查看详情
-        my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+//        my_dynamic_list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(getApplicationContext(), MyCommunityDetails.class);
+//                //TODO：传入被点击动态的id
+////                Bundle bundle = new Bundle();
+////                bundle.putSerializable("dynamic", position);
+////                intent.putExtras(bundle);
+////                bundle.putSerializable( "dynamic", content );
+////                intent.putExtras( bundle );
+//                startActivity(intent);
+//            }
+//        } );
+        myDynamicAdapter.setBtnOnclick(new MyDynamicAdapter.btnOnclick() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), MyCommunityDetails.class);
-                //TODO：传入被点击动态的id
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("dynamic", position);
-//                intent.putExtras(bundle);
-//                bundle.putSerializable( "dynamic", content );
-//                intent.putExtras( bundle );
-                startActivity(intent);
+            public void click(View view, int index) {
+                switch (view.getId()){
+                    case R.id.ll_toComment:
+                            Intent intent = new Intent(getApplicationContext(), DynamicDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("dynamic",list.get(index));
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        break;
+                }
             }
-        } );
+        });
     }
 
     class CustomClickListener implements View.OnClickListener{
@@ -215,20 +286,20 @@ public class MyCommunity extends AppCompatActivity {
         }.start();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        isPause = true;//记录页面已经被暂停
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(isPause){//判断是否暂停
-            isPause = false;
-            Log.e("userId",userId);
-            selectAllDynamic(userId);
-            myDynamicAdapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        isPause = true;//记录页面已经被暂停
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if(isPause){//判断是否暂停
+//            isPause = false;
+//            Log.e("userId",userId);
+//            selectAllDynamic(userId);
+//            myDynamicAdapter.notifyDataSetChanged();
+//        }
+//    }
 }

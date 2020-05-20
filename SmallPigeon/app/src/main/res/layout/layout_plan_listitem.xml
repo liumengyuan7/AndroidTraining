@@ -5,15 +5,18 @@
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/item_box"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="220dp">
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
@@ -21,43 +24,38 @@
                 android:layout_height="wrap_content"
                 android:text="我的计划"
                 android:textSize="20sp"
-                android:textColor="#000"
-                />
+                android:textColor="#000" />
+
             <LinearLayout
                 android:gravity="right"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_marginTop="5dp"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-
                     android:text="未完成"
                     android:textColor="#ff0000"
                     android:layout_marginRight="10dp"
-                    android:id="@+id/plan_status"
-                    />
-                <ImageView
+                    android:id="@+id/plan_status" />
 
+                <ImageView
                     android:id="@+id/plan_delete"
                     android:layout_gravity="center"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/delete"
-                    />
+                    android:src="@drawable/delete" />
             </LinearLayout>
-
-
-
         </LinearLayout>
+
         <LinearLayout
             android:gravity="top"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="200dp">
+
             <LinearLayout
                 android:gravity="center"
                 android:layout_weight="3.5"
@@ -65,8 +63,8 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
-                <com.example.smallpigeon.RoundImageView
 
+                <com.example.smallpigeon.RoundImageView
                     android:id="@+id/match_userImg"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
@@ -75,117 +73,111 @@
                     imagecontrol:border_inside_color="#259B24"
                     imagecontrol:border_outside_color="#ffffff"
                     imagecontrol:border_thickness="1dp" />
-
             </LinearLayout>
-            <LinearLayout
 
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="170dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="时间："
                         android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textColor="#000" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textSize="20sp"
                         android:textColor="#000"
-                        android:id="@+id/plan_time"
-                        />
+                        android:id="@+id/plan_time" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="地点："
                         android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textColor="#000" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textSize="20sp"
                         android:textColor="#000"
-                        android:id="@+id/plan_matchAddress"
-                        />
+                        android:id="@+id/plan_matchAddress" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="昵称："
+                        android:text="伙伴昵称："
                         android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textColor="#000" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textSize="20sp"
                         android:textColor="#000"
-                        android:id="@+id/plan_matchNickname"
-                        />
+                        android:id="@+id/plan_matchNickname" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="账号："
+                        android:text="伙伴账号："
                         android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textColor="#000" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textSize="20sp"
                         android:textColor="#000"
-                        android:id="@+id/plan_matchEmail"
-                        />
+                        android:id="@+id/plan_matchEmail" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:gravity="right"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                   <TextView
-                       android:layout_marginRight="35dp"
-                       android:gravity="right"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="去完成"
+
+                    <Button
                        android:id="@+id/go_wancheng"
-                       android:textSize="20sp"
-                       android:textColor="#ff0000"
-                       />
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" android:background="@drawable/circular"
+                       android:layout_marginRight="35dp"
+                       android:text="去完成"
+                       android:textSize="18sp"
+                       android:textColor="#ff0000" />
                 </LinearLayout>
-
-
-
-
-
             </LinearLayout>
-
         </LinearLayout>
-
-
     </LinearLayout>
-
 </LinearLayout>

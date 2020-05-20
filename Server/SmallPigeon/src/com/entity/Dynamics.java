@@ -20,8 +20,11 @@ public class Dynamics {
     private String pushImage;
     private int zanNum;
     private int forwardId;
+    private int forwardNum;
     private int commentNum;
     private int collectNum;
+    private int dtype;
+    private ForwardContent forwardContent;
     private List<Comment> comments = new ArrayList<>();
 
     public int getId() {
@@ -112,6 +115,30 @@ public class Dynamics {
         this.collectNum = collectNum;
     }
 
+    public ForwardContent getForwardContent() {
+        return forwardContent;
+    }
+
+    public void setForwardContent(ForwardContent forwardContent) {
+        this.forwardContent = forwardContent;
+    }
+
+    public int getForwardNum() {
+        return forwardNum;
+    }
+
+    public void setForwardNum(int forwardNum) {
+        this.forwardNum = forwardNum;
+    }
+
+    public int getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(int dtype) {
+        this.dtype = dtype;
+    }
+
     @Override
     public String toString() {
         return "Dynamics{" +
@@ -123,8 +150,10 @@ public class Dynamics {
                 ", pushImage='" + pushImage + '\'' +
                 ", zanNum=" + zanNum +
                 ", forwardId=" + forwardId +
+                ", forwardNum=" + forwardNum +
                 ", commentNum=" + commentNum +
                 ", collectNum=" + collectNum +
+                ", dtype=" + dtype +
                 '}';
     }
 }

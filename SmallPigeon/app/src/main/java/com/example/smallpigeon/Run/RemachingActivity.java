@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.Chat.activity.ChatActivity;
 import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.MainActivity;
@@ -120,8 +122,9 @@ public class RemachingActivity extends AppCompatActivity {
 
     //获取匹配对象的头像
     private void getAvatar() {
+        RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
         Glide.with(this).load("http://"+getResources().getString(R.string.ip_address)
-                +":8080/smallpigeon/avatar/"+userEmail+".jpg").into(match_userImg);
+                +":8080/smallpigeon/avatar/"+userEmail+".jpg").apply(requestOptions).into(match_userImg);
     }
 
     //获取匹配对象的信息
