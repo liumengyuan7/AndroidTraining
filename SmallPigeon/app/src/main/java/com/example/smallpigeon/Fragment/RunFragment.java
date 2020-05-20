@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
@@ -37,6 +38,7 @@ public class RunFragment extends Fragment {
     private Button btnMatching;
     private TextView TodayNum;//今日总公里数
     private MyClickListener listener;
+    private String lngAndLag = "";//经度和纬度的字符串
     private Handler handler  = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -97,11 +99,11 @@ public class RunFragment extends Fragment {
                     //匹配模式
                     if(loginOrNot()){
                         //更新用户当前的位置
-                        String location = getUserLocation();
-                        Log.e("location:",location);
-                        updateUserLocation(location);
+                        getUserLocation();
+                        updateUserLocation(lngAndLag);
                         Intent intentM = new Intent( getContext(), MachingActivity.class );
-                        intentM.putExtra("location",location);  //更新用户位置后传递位置到匹配界面
+                        intentM.putExtra("location",lngAndLag);  //更新用户位置后传递位置到匹配界面
+                        lngAndLag = "";
                         startActivity( intentM );
                     }else{
                         Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
@@ -158,36 +160,51 @@ public class RunFragment extends Fragment {
     }
 
     //获取当前的经纬度
-    public String getUserLocation(){
-        LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        criteria.setCostAllowed(false);
-        //设置位置服务免费
-        criteria.setAccuracy(Criteria.ACCURACY_COARSE); //设置水平位置精度
-        //getBestProvider 只有允许访问调用活动的位置供应商将被返回
-        String providerName = lm.getBestProvider(criteria, true);
-
-        if (providerName != null) {
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "没有权限", Toast.LENGTH_SHORT).show();
-            }
-
-            Location location = lm.getLastKnownLocation(providerName);
-
-            //获取维度信息
-            double latitude = location.getLatitude();
-            //获取经度信息
-            double longitude = location.getLongitude();
-
-            Log.i("获取经纬度", "定位方式： " + providerName + "  维度：" + latitude + "  经度：" + longitude);
-            return longitude+";"+latitude;
-        } else {
-            Toast.makeText(getContext(), "1.请检查网络连接 \n2.请打开我的位置", Toast.LENGTH_SHORT).show();
-            return null;
+    public void getUserLocation(){
+        LocationManager locationManager;
+        String serviceName = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager) getContext().getSystemService(serviceName); // 查找到服务信息
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(), "请开启定位权限...", Toast.LENGTH_SHORT).show();
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1000, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1000, locationListener);
         }
+    }
+
+    //设置定位的监听器
+    public final LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            updateToNewLocation(location);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            updateToNewLocation(null);
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {}
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+    };
+
+    //更新用户的位置
+    private Location updateToNewLocation(Location location) {
+        double lat = 0;
+        double lng = 0;
+        if (location != null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+            lngAndLag += lng+";"+lat;
+        } else {
+            lngAndLag = "无法获取地理信息，请稍后...";
+        }
+        Toast.makeText(getContext(), lngAndLag, Toast.LENGTH_SHORT).show();
+        return location;
     }
 
 }
