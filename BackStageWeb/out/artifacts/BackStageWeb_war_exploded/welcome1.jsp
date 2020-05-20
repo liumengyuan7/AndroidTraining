@@ -50,7 +50,7 @@
                 </div>
                 <div class="layui-col-sm12 layui-col-md6">
                     <div class="layui-card">
-                        <div class="layui-card-header">硬盘使用量</div>
+                        <div class="layui-card-header">男女用户所占比例</div>
                         <div class="layui-card-body" style="min-height: 280px;">
                             <div id="main4" class="layui-col-sm12" style="height: 300px;"></div>
 
@@ -207,10 +207,10 @@
             },
             series: [
                 {
-                    name: '硬盘使用量',
+                    name: '男女用户',
                     type: 'gauge',
                     detail: {formatter:'{value}%'},
-                    data: [{value: 88, name: '已使用'}]
+                    data: [{value: 57, name: '男性用户所占比例'}]
                 }
             ]
         };

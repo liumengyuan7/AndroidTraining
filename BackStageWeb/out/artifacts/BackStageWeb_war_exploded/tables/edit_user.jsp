@@ -61,13 +61,13 @@
            用户积分
            <input name="userPoints" id="userPoints"   type="text" lay-verify="required" class="layui-input" value="${users.userPoints}">
            <hr class="hr15">
-           是否达到标准
+           是否进行认证
            <input name="isAcc" id="isAcc" lay-verify="required"   type="text" class="layui-input" value="${users.isAcc}">
            <hr class="hr15">
-           是否达到标准
+           经度
            <input name="longitude" id="longitude" lay-verify="required"   type="text" class="layui-input" value="${users.longitude}">
            <hr class="hr15">
-           是否达到标准
+           纬度
            <input name="latitude" id="latitude" lay-verify="required"   type="text" class="layui-input" value="${users.latitude}">
            <hr class="hr15">
            <input value="修改用户" lay-submit lay-filter="edit" style="width:100%;" type="submit">
