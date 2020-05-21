@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -94,6 +96,7 @@ public class ReleaseDynamic extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.release_dynamic);
+        setStatusBar();
         gridView = (GridView) findViewById(R.id.gridview);
         dynamic_content = findViewById(R.id.dynamic_content);
         textView = (TextView) findViewById(R.id.send);
@@ -349,4 +352,12 @@ public class ReleaseDynamic extends AppCompatActivity {
         }.start();
     }
 
+    //设置手机的状态栏
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
+    }
 }
