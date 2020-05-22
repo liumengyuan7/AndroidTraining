@@ -34,6 +34,7 @@ import com.example.smallpigeon.BaiduMap.utils.NetUtil;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
+import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,6 +100,7 @@ public class TrackApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        QMUISwipeBackActivityManager.init(this);
         initChatDemo();
         mContext = getApplicationContext();
         entityName = CommonUtil.getEntityName();
