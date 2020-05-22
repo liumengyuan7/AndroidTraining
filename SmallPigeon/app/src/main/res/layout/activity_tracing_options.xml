@@ -18,7 +18,7 @@
             android:id="@+id/tracing_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/back_w"
+            android:src="@drawable/back_white"
             android:layout_margin="10dp"
             android:layout_gravity="left" />
     </LinearLayout>

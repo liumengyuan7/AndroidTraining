@@ -19,7 +19,6 @@ import com.example.smallpigeon.Fragment.ChatFragment;
 import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.Fragment.PeopleFragment;
 import com.example.smallpigeon.Fragment.RunFragment;
-import com.example.smallpigeon.Fragment.PeopleFragment;
 
 import java.io.File;
 
@@ -161,10 +160,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void A(){
-        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.shequgreen));
-        runIv.setImageDrawable(getResources().getDrawable(R.drawable.runblack));
-        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.liaotianblack));
-        myIv.setImageDrawable(getResources().getDrawable(R.drawable.myblack));
+        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.community_green ));
+        runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_black ));
+        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_black ));
+        myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_black ));
         PeopleTv.setTextColor(Color.parseColor("#259B24"));
         RunTv.setTextColor(Color.parseColor("#737373"));
         ChatTv.setTextColor(Color.parseColor("#737373"));
@@ -172,10 +171,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void B(){
-        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.shequblack));
-        runIv.setImageDrawable(getResources().getDrawable(R.drawable.rungreen));
-        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.liaotianblack));
-        myIv.setImageDrawable(getResources().getDrawable(R.drawable.myblack));
+        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.community_black ));
+        runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_green ));
+        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_black ));
+        myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_black ));
 
         PeopleTv.setTextColor(Color.parseColor("#737373"));
         RunTv.setTextColor(Color.parseColor("#259B24"));
@@ -184,10 +183,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void C(){
-        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.shequblack));
-        runIv.setImageDrawable(getResources().getDrawable(R.drawable.runblack));
-        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.liaotiangreen));
-        myIv.setImageDrawable(getResources().getDrawable(R.drawable.myblack));
+        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.community_black ));
+        runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_black ));
+        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_green ));
+        myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_black ));
 
         PeopleTv.setTextColor(Color.parseColor("#737373"));
         RunTv.setTextColor(Color.parseColor("#737373"));
@@ -196,10 +195,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void D(){
-        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.shequblack));
-        runIv.setImageDrawable(getResources().getDrawable(R.drawable.runblack));
-        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.liaotianblack));
-        myIv.setImageDrawable(getResources().getDrawable(R.drawable.mygreen));
+        peopleIv.setImageDrawable(getResources().getDrawable(R.drawable.community_black ));
+        runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_black ));
+        chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_black ));
+        myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_green ));
 
         PeopleTv.setTextColor(Color.parseColor("#737373"));
         RunTv.setTextColor(Color.parseColor("#737373"));

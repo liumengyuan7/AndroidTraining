@@ -85,7 +85,7 @@
                     android:maxHeight="150dp"
                     android:maxWidth="300dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/man"/>
+                    android:src="@drawable/bg_my"/>
 
                 <ImageView
                     android:id="@+id/dynamic_item_img2"

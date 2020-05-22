@@ -8,8 +8,7 @@
             <solid
                 android:color="@color/white"/>
             <corners
-                android:radius="3dip"
-                />
+                android:radius="3dip" />
             <stroke
                 android:width="0.5px"
                 android:color="#505050"/>

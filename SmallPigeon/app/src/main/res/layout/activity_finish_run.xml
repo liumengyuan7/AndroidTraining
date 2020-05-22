@@ -9,25 +9,18 @@
         <LinearLayout
             android:id="@+id/layout_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:background="#259B24"
             android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_gravity="left"
-                android:paddingTop="10dp">
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/left" />
-            </LinearLayout>
 
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/back_white" />
         </LinearLayout>
-
 
         <com.baidu.mapapi.map.MapView
             android:id="@+id/mapView"
@@ -102,7 +95,7 @@
                 android:gravity="center"
                 android:layout_marginLeft="55dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/btn_style"
+                android:background="@drawable/bg_btn_style"
                 android:text="返回"
                 android:textColor="@color/white"/>
 
@@ -113,7 +106,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="55dp"
                 android:text="分享"
-                android:background="@drawable/btn_style"
+                android:background="@drawable/bg_btn_style"
                 android:textColor="@color/white"/>
 
         </LinearLayout>

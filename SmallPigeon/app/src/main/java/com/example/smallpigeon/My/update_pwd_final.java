@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.LoginOrRegister.LoginActivity;
-import com.example.smallpigeon.LoginOrRegister.RegisterActivity;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
@@ -48,7 +47,7 @@ public class update_pwd_final extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
-                btn.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                btn.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
                 Toast.makeText(getApplicationContext(),"修改成功，请重新登录！",Toast.LENGTH_SHORT).show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 pre.edit().clear().commit();

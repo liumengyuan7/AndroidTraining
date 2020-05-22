@@ -101,7 +101,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/zhuanfa"/>
+                android:src="@drawable/forward"/>
 
             <TextView
                 android:id="@+id/tv_forwardNum"
@@ -122,8 +122,8 @@
             android:gravity="right">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/comment"/>
             <TextView
                 android:id="@+id/tv_commentNum"
@@ -131,6 +131,7 @@
                 android:layout_height="25dp"
                 android:textSize="18dp"
                 android:textColor="@color/black"
+                android:layout_marginLeft="3dp"
                 android:text="7"/>
         </LinearLayout>
 

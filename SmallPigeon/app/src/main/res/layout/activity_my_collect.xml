@@ -13,18 +13,19 @@
         android:layout_height="50dp">
         <ImageView
             android:id="@+id/mycollect_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
-            android:src="@drawable/left"/>
+            android:src="@drawable/back_black"/>
         <TextView
             android:layout_gravity="center"
             android:textSize="20sp"
             android:textColor="#000"
             android:text="我的收藏"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
     <ListView
         android:id="@+id/lv_collect"
@@ -109,7 +110,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/selectall"/>
+                android:src="@drawable/select_all"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

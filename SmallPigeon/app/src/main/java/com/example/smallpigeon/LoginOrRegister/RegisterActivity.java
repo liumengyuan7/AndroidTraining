@@ -13,7 +13,6 @@ import okhttp3.Response;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,13 +20,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -102,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             }else if(result.equals("false")){
                 Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
             }else{
-                btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
                 signUp(result);
                 Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
                 finish();
@@ -153,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         setStatusBar();
         getViews();
-        btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng1));
+        btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_blue ));
         setViews();//屏幕适配
         registListeners();
         length();

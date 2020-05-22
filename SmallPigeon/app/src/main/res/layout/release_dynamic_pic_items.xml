@@ -20,6 +20,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="2dp"
-        android:background="@drawable/deletepic"
+        android:background="@drawable/cancle"
         android:button="@null" />
 </com.example.smallpigeon.Community.ReleaseDynamic.SquareRelativeLayout>

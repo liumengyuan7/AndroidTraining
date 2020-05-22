@@ -11,13 +11,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smallpigeon.My.update_pwd_final;
 import com.example.smallpigeon.R;
 
 import java.io.BufferedReader;
@@ -47,7 +45,7 @@ public class ResetPwd extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
-                ok.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                ok.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
                 Toast.makeText(getApplicationContext(),"修改成功，请重新登录！",Toast.LENGTH_SHORT).show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 pre.edit().clear().commit();

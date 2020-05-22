@@ -21,7 +21,7 @@
                 android:id="@+id/tracing_back"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/back_w"
+                android:src="@drawable/back_white"
                 android:layout_gravity="center"/>
         </LinearLayout>
 
@@ -128,7 +128,7 @@
             android:gravity="center"
             android:layout_marginLeft="55dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/btn_style"
+            android:background="@drawable/bg_btn_style"
             android:text="开始"
             android:textColor="@color/white"/>
     </LinearLayout>
@@ -152,7 +152,7 @@
             android:gravity="center"
             android:layout_marginLeft="55dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/btn_style"
+            android:background="@drawable/bg_btn_style"
             android:text="继续"
             android:textColor="@color/white"/>
 
@@ -163,7 +163,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="55dp"
             android:text="停止"
-            android:background="@drawable/btn_stop_style"
+            android:background="@drawable/bg_btn_stop_style"
             android:textColor="@color/white"
             android:onClick="onTraceControl"/>
 

@@ -15,7 +15,7 @@
             android:id="@+id/iv_userImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/mygreen"/>
+            android:src="@drawable/my_green"/>
 
         <TextView
             android:id="@+id/iv_userName"
