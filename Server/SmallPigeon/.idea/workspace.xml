@@ -6,13 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="" />
-=======
     <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
->>>>>>> 8722d3e33e38827010cbc00d8fe740a7fc7b302b
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,11 +91,7 @@
     <property name="android.sdk.path" value="E:/Environmental/AndroidSDK" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-<<<<<<< HEAD
-    <property name="project.structure.last.edited" value="Project" />
-=======
     <property name="project.structure.last.edited" value="Modules" />
->>>>>>> 8722d3e33e38827010cbc00d8fe740a7fc7b302b
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
@@ -186,8 +178,6 @@
       </method>
     </configuration>
   </component>
-<<<<<<< HEAD
-=======
   <component name="ServiceViewManager">
     <option name="viewStates">
       <list>
@@ -211,7 +201,6 @@
       </list>
     </option>
   </component>
->>>>>>> 8722d3e33e38827010cbc00d8fe740a7fc7b302b
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -250,10 +239,6 @@
       <workItem from="1588747369623" duration="2334000" />
       <workItem from="1588750430633" duration="9758000" />
       <workItem from="1588903221070" duration="9038000" />
-<<<<<<< HEAD
-      <workItem from="1589178064193" duration="6787000" />
-      <workItem from="1589366554541" duration="64000" />
-=======
       <workItem from="1589178064193" duration="9362000" />
       <workItem from="1589353709715" duration="2791000" />
       <workItem from="1589377392537" duration="2886000" />
@@ -273,7 +258,6 @@
       <workItem from="1589892182004" duration="4038000" />
       <workItem from="1589930858400" duration="2378000" />
       <workItem from="1589933330548" duration="4012000" />
->>>>>>> 8722d3e33e38827010cbc00d8fe740a7fc7b302b
     </task>
     <servers />
   </component>
