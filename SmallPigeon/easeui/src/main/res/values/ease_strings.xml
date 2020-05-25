@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ip_address">10.7.89.223</string>
+<!--    <string name="ip_address">10.7.89.223</string>-->
+    <string name="ip_address">192.168.2.189</string>
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
     <string name="back">Back</string>
