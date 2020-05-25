@@ -89,6 +89,7 @@ public class MyFragment extends Fragment {
         btnPlan.setOnClickListener(listener);
         btnPlan.setOnTouchListener(listener);
         right_collect.setOnClickListener(listener);
+        right_collect.setOnTouchListener(listener);
     }
 
     class CustomButtonListener implements View.OnClickListener,View.OnTouchListener{
