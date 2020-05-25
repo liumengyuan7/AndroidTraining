@@ -203,7 +203,6 @@ public class RunFragment extends Fragment {
         } else {
             lngAndLag = "无法获取地理信息，请稍后...";
         }
-        Toast.makeText(getContext(), lngAndLag, Toast.LENGTH_SHORT).show();
         return location;
     }
 
