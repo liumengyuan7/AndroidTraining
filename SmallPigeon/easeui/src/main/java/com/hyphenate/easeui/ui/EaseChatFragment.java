@@ -43,6 +43,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.adapter.EMAChatRoomManagerListener;
+import com.hyphenate.easeui.DateDialog;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
@@ -1096,6 +1097,20 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             View layout = LayoutInflater.from(getContext()).inflate(R.layout.activity_add_cake, null);
             final EditText edtTime = layout.findViewById(R.id.edtTime);
             final EditText edtAddress = layout.findViewById(R.id.edtAddress);
+            edtTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final DateDialog dateDialog=new DateDialog(getContext());
+                    dateDialog.onClickOkBtnLisitener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            edtTime.setText(dateDialog.getDate());
+                            dateDialog.dismiss();
+                        }
+                    });
+                    dateDialog.show();
+                }
+            });
             alertBuilder.setView(layout);
             alertBuilder.setNegativeButton("取消", null);
             alertBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -1120,7 +1135,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             public void run() {
                 try {
                     URL url = new URL("http://"+getContext().getResources().getString(R.string.ip_address)
-                            +":8080/smallpigeon/plan/addUserPlan?myId="+myId+"&friendId="+toChatUsername+"&datetime="+addTime+"&address="+addAddress);
+                            +":8080/smallpigeon/plan/addUserPlan?myId="+myId+"&&friendId="+toChatUsername+"&&datetime="+addTime+"&&address="+addAddress);
+                    Log.e("发送的时间数据为",addTime);
                     Log.e("url",url.toString());
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
