@@ -1,73 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/ll_top"
         android:background="#259B24"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/left"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back_white"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             android:tint="@color/white"/>
+
         <TextView
             android:layout_gravity="center"
             android:textSize="20sp"
-            android:textColor="#fff"
+            android:textColor="@color/white"
             android:text="动态详情"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
+
     <RelativeLayout
         android:layout_below="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/detail_page_above_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical">
+
                 <com.example.smallpigeon.RoundImageView
                     android:id="@+id/iv_icon"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/zh"
-                    imagecontrol:border_inside_color="#259B24"
-                    imagecontrol:border_outside_color="#ffffff"
+                    imagecontrol:border_inside_color="@color/colorPrimary"
+                    imagecontrol:border_outside_color="@color/white"
                     imagecontrol:border_thickness="1dp"/>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="6dp"
+                    android:layout_marginLeft="10dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tv_nickName"
                         android:layout_toRightOf="@id/iv_icon"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
                         android:textSize="50px"
                         android:text="用户昵称"
+                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/tv_date"
                             android:layout_marginTop="2dp"
@@ -76,43 +82,26 @@
                             android:layout_alignLeft="@id/tv_nickName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/from"
-                            android:text="来自"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginLeft="3dp"
-                            android:layout_below="@id/tv_nickName"
-                            android:layout_toRightOf="@id/tv_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/device"
-                            android:text="VIVO X23"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_nickName"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="2dp"
-                            android:layout_toRightOf="@+id/from"
-                            android:textColor="#6477e4" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <TextView
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:id="@+id/dynamic_item_txt"
                 android:text="此次跑步分享内容"
                 android:textSize="18sp"
-                android:textColor="#000"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
             <LinearLayout
                 android:id="@+id/ll_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 android:layout_marginLeft="10dp">
+
                 <ImageView
                     android:id="@+id/dynamic_item_img"
                     android:layout_width="150dp"
@@ -121,7 +110,8 @@
                     android:adjustViewBounds="true"
                     android:maxHeight="150dp"
                     android:maxWidth="300dp"
-                    />
+                    android:layout_marginLeft="10dp"/>
+
                 <ImageView
                     android:id="@+id/dynamic_item_img2"
                     android:layout_width="150dp"
@@ -132,6 +122,7 @@
                     android:maxHeight="150dp"
                     android:maxWidth="300dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_forwardtype"
                 android:layout_width="match_parent"
@@ -139,11 +130,13 @@
                 android:background="#F4F5F9"
                 android:orientation="vertical"
                 android:visibility="visible">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp">
+
                     <TextView
                         android:paddingLeft="5dp"
                         android:id="@+id/tv_user"
@@ -151,15 +144,16 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         android:text="用户："
-                        android:textColor="#1F4570"/>
+                        android:textColor="@color/forward_user"/>
                     <TextView
                         android:id="@+id/tv_user_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         android:text="转发内容"
-                        android:textColor="#000"/>
+                        android:textColor="@color/black"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_ftype"
                     android:layout_width="match_parent"
@@ -174,7 +168,8 @@
                         android:adjustViewBounds="true"
                         android:maxHeight="150dp"
                         android:maxWidth="300dp"
-                        android:src="@drawable/man"/>
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/bg_my"/>
 
                     <ImageView
                         android:id="@+id/user_dynamic_item_img2"
@@ -185,24 +180,45 @@
                         android:adjustViewBounds="true"
                         android:maxHeight="150dp"
                         android:maxWidth="300dp" />
-
                 </LinearLayout>
-
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/from"
+                    android:text="来自"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/device"
+                    android:text="VIVO X23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/device" />
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
                 android:background="#e6e6e6"/>
+
             <LinearLayout
                 android:id="@+id/detail_page_comment_container"
                 android:layout_below="@+id/detail_page_above_container"
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <ExpandableListView
                     android:id="@+id/detail_page_lv_comment"
                     android:layout_width="match_parent"
@@ -211,7 +227,6 @@
                     android:layout_marginBottom="64dp"
                     android:listSelector="@android:color/transparent"
                     android:scrollbars="none"/>
-
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -224,38 +239,39 @@
         android:elevation="2dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
+
         <TextView
             android:id="@+id/detail_page_do_comment"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_weight="3"
-            android:textColor="#B6B6B6"
+            android:textColor="@color/gray_pressed"
             android:textSize="12sp"
-            android:text="说点什么吧..."
-            android:background="@drawable/comment_bt_selector"
+            android:hint="说点什么吧..."
+            android:background="@drawable/comment_box"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="22dp"
             android:gravity="center_vertical"
             android:paddingLeft="18dp"/>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+
             <ImageView
                 android:id="@+id/iv_collect"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/icon_collect"/>
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/collect_gray"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#9A9A9A"
+                android:textColor="@color/list_item_desc"
                 android:textSize="14sp"
                 android:layout_marginLeft="5dp"
                 android:text="收藏"/>
         </LinearLayout>
-
-
-
     </LinearLayout>
 </RelativeLayout>

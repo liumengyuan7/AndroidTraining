@@ -49,7 +49,7 @@
             <hr class="hr15">
             <input name="userPoints" id="userPoints" placeholder="用户积分"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
-            <input name="isAcc" id="isAcc" lay-verify="required" placeholder="是否达到标准（没有达到0，达到标准1）"  type="text" class="layui-input">
+            <input name="isAcc" id="isAcc" lay-verify="required" placeholder="是否进行认证（进行认证1，没有进行认证0）"  type="text" class="layui-input">
             <hr class="hr15">
             <input name="longitude" id="longitude" lay-verify="required" placeholder="经度"  type="text" class="layui-input">
             <hr class="hr15">

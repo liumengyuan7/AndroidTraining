@@ -16,9 +16,9 @@
 
         <ImageView
             android:id="@+id/personal_center_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/left"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back_black"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center" />
 
@@ -28,7 +28,8 @@
                 android:textColor="#000"
                 android:text="个人信息"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
     <LinearLayout

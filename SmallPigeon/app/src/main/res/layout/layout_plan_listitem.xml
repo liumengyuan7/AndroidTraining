@@ -54,7 +54,7 @@
             android:gravity="top"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="180dp">
 
             <LinearLayout
                 android:gravity="center"
@@ -81,7 +81,7 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="160dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -171,11 +171,12 @@
                     <Button
                        android:id="@+id/go_wancheng"
                        android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" android:background="@drawable/circular"
+                       android:layout_height="40dp"
+                        android:background="@drawable/circular"
                        android:layout_marginRight="35dp"
                        android:text="去完成"
                        android:textSize="18sp"
-                       android:textColor="#ff0000" />
+                       android:textColor="#000000" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -47,6 +47,12 @@ import com.example.smallpigeon.Entity.UserContent;
 import com.example.smallpigeon.MainActivity;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +60,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -79,7 +86,7 @@ public class PeopleFragment extends Fragment {
     private RelativeLayout rl_input_container;
     private InputMethodManager mInputManager;
     private boolean isPause = false;
-
+    private SmartRefreshLayout smartRefreshLayout;
     private  Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -180,10 +187,11 @@ public class PeopleFragment extends Fragment {
                         }
                         content.setComment_Num(jsonArrayComment.length());
                         content.setCommentDetailBeans(commentDetailBeans);
-                        Log.e("list",list.toString());
                         list.add(content);
-                        peopleAdapter.notifyDataSetChanged();
                     }
+                    Collections.reverse(list);
+                    Log.e("反转后的list",list.toString());
+                    peopleAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -275,6 +283,22 @@ public class PeopleFragment extends Fragment {
                 }
             }
         });
+        //注册刷新监听器
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                selectAllDynamic();
+                smartRefreshLayout.finishRefresh();
+            }
+        });
+        //注册加载更多监听器
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                selectAllDynamic();
+                smartRefreshLayout.finishLoadMore();
+            }
+        });
         return view;
     }
 
@@ -292,10 +316,15 @@ public class PeopleFragment extends Fragment {
     }
 
     private void registerListener() {
+        BezierRadarHeader header = new BezierRadarHeader(getContext());
+        smartRefreshLayout.setRefreshHeader(header);
+        FalsifyFooter footer = new FalsifyFooter(getContext());
+        smartRefreshLayout.setRefreshFooter(footer);
         iv_add_Message.setOnClickListener(listener);
     }
 
     private void getViews(View view) {
+        smartRefreshLayout = view.findViewById(R.id.srl);
         dynamic_list = view.findViewById(R.id.dynamic_list);
         iv_add_Message = view.findViewById(R.id.iv_add_Message);
     }

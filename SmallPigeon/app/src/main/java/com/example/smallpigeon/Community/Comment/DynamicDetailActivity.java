@@ -372,11 +372,11 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
                 if (isCollect){
                     decCollect(dynamicContent.getDynamicId(),userId);
                     isCollect = false;
-                    iv_collect.setImageResource(R.drawable.icon_collect);
+                    iv_collect.setImageResource(R.drawable.collect_gray);
                 }else {
                     addCollect(dynamicContent.getDynamicId(),userId,dynamicContent.getType());
                     isCollect = true;
-                    iv_collect.setImageResource(R.drawable.comment_collect_yellow);
+                    iv_collect.setImageResource(R.drawable.collect_yellow);
                 }
                 break;
         }

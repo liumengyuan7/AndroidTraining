@@ -17,9 +17,9 @@
 
         <ImageView
             android:id="@+id/remaching_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/left"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back_black"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center" />
     </LinearLayout>

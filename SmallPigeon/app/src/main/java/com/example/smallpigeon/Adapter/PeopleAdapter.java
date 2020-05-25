@@ -412,9 +412,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                     int forwardId = list.get(position).getDynamicId();
                     if (list.get(position).getImages()==null || list.get(position).getImages().equals("") || list.get(position).getImages().equals("null")){
                         addForwardDynamic(pushTime, nInputContentText ,forwardId,3);
-                        Log.e("转发的type是3",list.get(position).getImages());
                     }else {
-                        Log.e("转发的type是4",list.get(position).getImages());
                         addForwardDynamic(pushTime, nInputContentText, forwardId,1);
                     }
                     mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);

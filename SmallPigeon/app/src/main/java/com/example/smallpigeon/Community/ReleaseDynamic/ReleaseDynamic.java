@@ -5,17 +5,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -25,29 +25,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smallpigeon.Entity.DynamicContent;
-import com.example.smallpigeon.Entity.UserContent;
-import com.example.smallpigeon.Fragment.PeopleFragment;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Utils;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,7 +44,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.BitmapCompat;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -94,6 +82,7 @@ public class ReleaseDynamic extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.release_dynamic);
+        setStatusBar();
         gridView = (GridView) findViewById(R.id.gridview);
         dynamic_content = findViewById(R.id.dynamic_content);
         textView = (TextView) findViewById(R.id.send);
@@ -259,7 +248,7 @@ public class ReleaseDynamic extends AppCompatActivity {
                 holder.imageView.setImageBitmap(ImageTool.createImageThumbnail(s));
             } else {
                 holder.checkBox.setVisibility(View.GONE);
-                holder.imageView.setImageResource(R.drawable.addpic);
+                holder.imageView.setImageResource(R.drawable.add_picture );
             }
             holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -349,4 +338,12 @@ public class ReleaseDynamic extends AppCompatActivity {
         }.start();
     }
 
+    //设置手机的状态栏
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
+    }
 }

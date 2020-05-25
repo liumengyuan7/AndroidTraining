@@ -50,7 +50,7 @@
                             <a onclick="xadmin.add_tab('在tab打开','table-user.jsp')">
                                 <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
                         <dd>
-                            <a onclick="xadmin.add_tab('在tab打开刷新','member-del.html',true)">
+                            <a onclick="xadmin.add_tab('在tab打开刷新','table-user.jsp',true)">
                                 <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>
                     </dl>
                 </li>

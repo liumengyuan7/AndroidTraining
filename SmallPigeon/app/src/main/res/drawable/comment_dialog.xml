@@ -9,7 +9,7 @@
     <item android:state_window_focused="true">
         <shape>
             <solid android:color="#F8F8F8" />
-            <corners android:radius="3dp"/>
+            <corners android:radius="10dp"/>
         </shape>
     </item>
 </selector>

@@ -36,7 +36,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="@drawable/man"
+        android:background="@drawable/bg_my"
         android:layout_height="200dp">
 
         <com.example.smallpigeon.RoundImageView
@@ -104,7 +104,7 @@
                 android:layout_gravity="center"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/sq"
+                android:src="@drawable/my_community"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -137,8 +137,7 @@
                 android:layout_gravity="center"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/phb"
-                />
+                android:src="@drawable/ranking" />
             <TextView
                 android:layout_width="0dp"
                 android:paddingLeft="5dp"
@@ -170,7 +169,7 @@
                 android:layout_gravity="center"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/jh"
+                android:src="@drawable/plan"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -203,7 +202,7 @@
                 android:layout_gravity="center"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/shoucang"
+                android:src="@drawable/collections"
                 />
             <TextView
                 android:layout_width="0dp"

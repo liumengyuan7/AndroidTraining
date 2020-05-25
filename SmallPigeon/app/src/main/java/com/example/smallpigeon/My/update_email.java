@@ -80,7 +80,7 @@ public class update_email extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("true")){
-                btnFinish.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                btnFinish.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
                 Toast.makeText(getApplicationContext(),"邮箱更改成功！",Toast.LENGTH_SHORT).show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 pre.edit().clear().commit();

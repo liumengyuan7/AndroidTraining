@@ -10,7 +10,6 @@
 
     <LinearLayout
         android:id="@+id/tabs"
-        android:background="@drawable/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -29,7 +28,7 @@
                 android:id="@+id/img1"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/shequblack"/>
+                android:src="@drawable/community_black"/>
 
             <TextView
                 android:id="@+id/tv_title1"
@@ -52,7 +51,7 @@
                 android:id="@+id/img2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/rungreen"/>
+                android:src="@drawable/run_green"/>
 
             <TextView
                 android:id="@+id/tv_title2"
@@ -75,7 +74,7 @@
                 android:id="@+id/img3"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/liaotianblack"/>
+                android:src="@drawable/chat_black"/>
 
             <TextView
                 android:id="@+id/tv_title3"
@@ -96,7 +95,7 @@
                 android:id="@+id/img4"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/myblack"/>
+                android:src="@drawable/my_black"/>
 
             <TextView
                 android:id="@+id/tv_title4"

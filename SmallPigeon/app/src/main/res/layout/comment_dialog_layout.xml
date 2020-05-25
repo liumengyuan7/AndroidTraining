@@ -6,7 +6,7 @@
         android:id="@+id/dialog_comment_et"
         android:layout_width="match_parent"
         android:layout_height="105dp"
-        android:background="@drawable/comment_dialog_et_selector"
+        android:background="@drawable/comment_dialog"
         android:layout_margin="12dp"
         android:hint="请输入评论内容..."
         android:textSize="14sp"

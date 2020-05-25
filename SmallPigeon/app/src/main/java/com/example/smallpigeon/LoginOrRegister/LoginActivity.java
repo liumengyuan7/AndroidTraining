@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
-                userLogin.setImageDrawable(getResources().getDrawable(R.drawable.wancheng));
+                userLogin.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
                 Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
                 finish();
             }

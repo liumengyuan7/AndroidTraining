@@ -40,4 +40,10 @@
 
     <!-- 对话框标题颜色 -->
     <color name="dialog_title">#323232</color>
+
+    <!--被转发用户-->
+    <color name="forward_user">#1F4570</color>
+
+    <!--设备-->
+    <color name="device">#6477e4</color>
 </resources>

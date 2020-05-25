@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg"
+    android:background="@drawable/bg_login"
     android:alpha="0.9"
     tools:context=".LoginOrRegister.LoginActivity">
 
@@ -17,7 +17,7 @@
             android:id="@+id/loginReturn"
             android:layout_width="25dp"
             android:layout_height="match_parent"
-            android:src="@mipmap/returnimage"/>
+            android:src="@drawable/back_black"/>
 
         <TextView
             android:gravity="center"
@@ -88,7 +88,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:alpha="0.6"
-        android:src="@drawable/wancheng1" />
+        android:src="@drawable/wancheng_blue" />
 
     <RelativeLayout
         android:layout_width="match_parent"
