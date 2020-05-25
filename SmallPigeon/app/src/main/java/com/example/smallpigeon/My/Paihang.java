@@ -56,11 +56,11 @@ public class Paihang extends AppCompatActivity {
                     information = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0;i<jsonArray.length();i++){
-                        JSONObject json1 = jsonArray.getJSONObject(i);
-                        JSONObject json2 = json1.getJSONObject("attrs");
+                        JSONObject json = jsonArray.getJSONObject(i);
                         Map<String, String> item = new HashMap<>();
-                        item.put("userName",json2.getString("user_nickname"));
-                        item.put("userPoints",json2.getString("user_points"));
+                        item.put("userName",json.getString("user_nickname"));
+                        item.put("userEmail",json.getString("user_email"));
+                        item.put("userPoints",json.getString("user_points"));
                         item.put("rank",i+1+"");
                         information.add(item);
                     }

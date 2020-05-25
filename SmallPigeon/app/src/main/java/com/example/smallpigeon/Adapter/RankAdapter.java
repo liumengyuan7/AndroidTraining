@@ -1,6 +1,7 @@
 package com.example.smallpigeon.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.R;
 
 import java.util.List;
@@ -47,15 +51,17 @@ public class RankAdapter extends BaseAdapter{
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(stringId, null);
         }
+        Map<String,String> item = dataSourse.get(position);
         //nickname
         TextView userName = convertView.findViewById(R.id.gradeRank_userName);
-        userName.setText(dataSourse.get(position).get("userName").toString());
+        userName.setText(item.get("userName").toString());
        // 积分
         TextView userPoints = convertView.findViewById(R.id.gradeRank_userPoints);
-        userPoints.setText(dataSourse.get(position).get("userPoints").toString());
+        userPoints.setText(item.get("userPoints").toString());
         //
-        String rank=dataSourse.get(position).get("rank").toString();
+        String rank=item.get("rank").toString();
         ImageView img= convertView.findViewById(R.id.user_ranking);
+        ImageView userAvatar = convertView.findViewById(R.id.gradeRank_userImg);
 
         switch (rank){
             case "1":
@@ -69,8 +75,10 @@ public class RankAdapter extends BaseAdapter{
                 break;
         }
 
-
-        notifyDataSetChanged();
+        RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with(context).load("http://"+context.getResources().getString(R.string.ip_address)
+                +":8080/smallpigeon/avatar/"+item.get("userEmail")+".jpg").apply(requestOptions).into(userAvatar);
+        Log.e("邮箱",item.get("userEmail"));
 
         return convertView;
     }
