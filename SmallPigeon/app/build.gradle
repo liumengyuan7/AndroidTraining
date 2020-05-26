@@ -71,4 +71,5 @@ dependencies {
     implementation "com.qmuiteam:arch:2.0.0-alpha08"
     //添加智能刷新框架依赖
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    implementation files('libs\\open_sdk_r8353806_lite.jar')
 }

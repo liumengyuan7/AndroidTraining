@@ -52,13 +52,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private ImageView userLogin;
     private String md5Pass;
+    private LinearLayout ll_qqLogin;
 
     private static final String APPID = "1110462995";//官方获取的APPID
     private Tencent mTencent;
     private BaseUiListener  mListener;
     private UserInfo mInfo;
-    private String name,figureurl,gender;
-    private LinearLayout ll_qqLogin;
+    private String name, figureurl,gender;
 
     private Handler handlerLogin = new Handler(){
         @Override
@@ -231,7 +231,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * 登录方法
+     * qq登录方法
      */
     private void QQLogin() {
         //如果session不可用，则登录，否则说明已经登录
@@ -265,13 +265,12 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject jb = (JSONObject) object;
                         Log.e("json",jb+"");
                         try {
-                            name = jb.getString("nickname");
+                            name = jb.getString("nickname");//昵称
                             figureurl = jb.getString("figureurl_qq_2");  //头像图片的url
-                            gender = jb.getString("gender");
+                            gender = jb.getString("gender");//性别
                             Log.e("json",figureurl+"");
-                            //nickName.setText(name);
-//                            Glide.with(LoginActivity.this).load(figureurl).into(figure);
-//
+                           // nickName.setText(name);
+                            //Glide.with(LoginActivity.this).load(figureurl).into(figure);
 
                         } catch (Exception e) {
                             e.printStackTrace();
