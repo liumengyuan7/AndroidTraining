@@ -14,12 +14,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.smallpigeon.R;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +52,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private ImageView userLogin;
     private String md5Pass;
+
+    private static final String APPID = "1110462995";//官方获取的APPID
+    private Tencent mTencent;
+    private BaseUiListener  mListener;
+    private UserInfo mInfo;
+    private String name,figureurl,gender;
+    private LinearLayout ll_qqLogin;
 
     private Handler handlerLogin = new Handler(){
         @Override
@@ -88,6 +102,9 @@ public class LoginActivity extends AppCompatActivity {
         getViews();
         //按钮的点击事件
         btnEvents();
+
+        // 实例化Tencent
+        mTencent = Tencent.createInstance(APPID, this.getApplicationContext());
     }
 
     //获取视图的控件
@@ -98,10 +115,20 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         loginReturn = findViewById(R.id.loginReturn);
         password = findViewById(R.id.password);
+        ll_qqLogin = findViewById(R.id.ll_qqLogin);
     }
 
     //按钮的点击事件
     private void btnEvents() {
+
+        ll_qqLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QQLogin();//获取所有权限
+                mInfo = new UserInfo(LoginActivity.this,mTencent.getQQToken());
+                mInfo.getUserInfo(mListener);
+            }
+        });
 
         accountRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,5 +228,89 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * 登录方法
+     */
+    private void QQLogin() {
+        //如果session不可用，则登录，否则说明已经登录
+        if (!mTencent.isSessionValid()) {
+            mTencent.login(this, "all", mListener);
+        }
+    }
+
+    // 实现登录成功与否的接口
+    private class BaseUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object object) { //登录成功
+            Toast.makeText(LoginActivity.this, "授权成功", Toast.LENGTH_SHORT).show();
+            //获取openid和token
+            JSONObject jb = (JSONObject) object;
+            try {
+                String openID = jb.getString("openid");  //openid用户唯一标识
+                String access_token = jb.getString("access_token");
+                String expires = jb.getString("expires_in");
+
+                mTencent.setOpenId(openID);
+                mTencent.setAccessToken(access_token, expires);
+
+                QQToken token = mTencent.getQQToken();
+                mInfo = new UserInfo(LoginActivity.this, token);
+                mInfo.getUserInfo(new IUiListener() {
+                    @Override
+                    public void onComplete(Object object) {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        JSONObject jb = (JSONObject) object;
+                        Log.e("json",jb+"");
+                        try {
+                            name = jb.getString("nickname");
+                            figureurl = jb.getString("figureurl_qq_2");  //头像图片的url
+                            gender = jb.getString("gender");
+                            Log.e("json",figureurl+"");
+                            //nickName.setText(name);
+//                            Glide.with(LoginActivity.this).load(figureurl).into(figure);
+//
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(UiError uiError) {
+                        Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(LoginActivity.this,"登录取消",Toast.LENGTH_LONG).show();
+                    }
+
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            Toast.makeText(LoginActivity.this, "授权失败", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onCancel() {
+            Toast.makeText(LoginActivity.this, "授权取消", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mTencent.onActivityResultData(requestCode, resultCode, data, mListener);
     }
 }
