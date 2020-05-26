@@ -57,7 +57,7 @@ public class MyFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             String status = msg.obj + "";
-            is_accreditation = Integer.parseInt(status);
+//            is_accreditation = Integer.parseInt(status);
 //            Toast.makeText(getContext(),"当前认证状态"+is_accreditation,Toast.LENGTH_SHORT).show();
         }
     };

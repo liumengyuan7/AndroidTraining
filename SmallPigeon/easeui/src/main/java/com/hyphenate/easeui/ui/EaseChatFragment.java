@@ -1104,8 +1104,16 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     dateDialog.onClickOkBtnLisitener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            edtTime.setText(dateDialog.getDate());
-                            dateDialog.dismiss();
+//                            edtTime.setText(dateDialog.getDate());
+//                            dateDialog.dismiss();
+                            if (dateDialog.isValid(dateDialog.getDate())){
+                                edtTime.setText(dateDialog.getDate());
+                                dateDialog.dismiss();
+                            }else {
+                                Toast toastTip = Toast.makeText(getContext(),"选择时间不合理，请重新选择~",Toast.LENGTH_SHORT);
+                                toastTip.setGravity(Gravity.CENTER, 0, 0);
+                                toastTip.show();
+                            }
                         }
                     });
                     dateDialog.show();

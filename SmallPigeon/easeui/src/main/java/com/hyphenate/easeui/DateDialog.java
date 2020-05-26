@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -274,8 +277,8 @@ public class DateDialog extends Dialog {
         String day = wv_day.getSelectionItem().toString().replace("日","");
         String hour = wv_hour.getSelectionItem().toString().replace("点","");
         String minute = wv_minute.getSelectionItem().toString().replace("分","");
-//        return year+"-"+month+"-"+day+" "+hour+":"+minute;
-        return year+"年"+month+"月"+day+"日"+hour+"点"+minute+"分";
+        return year+"-"+month+"-"+day+" "+hour+":"+minute;
+//        return year+"年"+month+"月"+day+"日"+hour+"点"+minute+"分";
     }
 
     /**
@@ -291,5 +294,30 @@ public class DateDialog extends Dialog {
 //        }
 //        return true;
 //    }
+    /**
+     * 根据时间戳验证用户选择时间是否合理
+     * @return
+     */
+    public boolean isValid(String chooseTime){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        long time = 0;
+        long currentTime = 0;
+        try {
+            time = simpleDateFormat.parse(chooseTime).getTime();
+            currentTime = simpleDateFormat.parse(getCurrentTimeString()).getTime();
+            if (currentTime > time){
+                return false;
+            }else return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
+    /**
+     * 返回yyyy-MM-dd HH:mm:ss类型的时间字符串
+     */
+    public static String getCurrentTimeString() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    }
 }
