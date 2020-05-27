@@ -12,6 +12,6 @@
         select user.* from user,friend where friend_id =user.id and my_id=#{id}
     </select>
     <insert id="insertFriendInfo" parameterType="com.entity.Friend">
-        insert into friend('my_id','friend_id') values(#{myId},#{friendId})
+        insert into friend(my_id, friend_id) values(#{myId},#{friendId})
     </insert>
 </mapper>

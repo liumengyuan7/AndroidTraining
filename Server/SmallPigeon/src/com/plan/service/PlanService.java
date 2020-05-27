@@ -49,26 +49,28 @@ public class PlanService {
 
     //给用户添加计划
     public boolean addUserPlan(int userId,int friendId,String datetime,String address) throws ParseException {
-        String year = datetime.substring(0, datetime.indexOf("年"));
-        String month = datetime.substring(datetime.indexOf("年")+1, datetime.indexOf("月"));
-        String day = datetime.substring(datetime.indexOf("月")+1, datetime.indexOf("日"));
-        String hour = datetime.substring(datetime.indexOf("日")+1, datetime.indexOf("时"));
-        String time =year+"-"+month+"-"+day+" "+hour+":00:00";
-        System.out.println(year+" "+month+" "+day+" "+hour);
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = simpleDateFormat.parse(time);
-        Timestamp timeStamp = new Timestamp(date.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        Date date = sdf.parse(datetime);
+//        String year = datetime.substring(0, datetime.indexOf("年"));
+//        String month = datetime.substring(datetime.indexOf("年")+1, datetime.indexOf("月"));
+//        String day = datetime.substring(datetime.indexOf("月")+1, datetime.indexOf("日"));
+//        String hour = datetime.substring(datetime.indexOf("日")+1, datetime.indexOf("时"));
+//        String time =year+"-"+month+"-"+day+" "+hour+":00:00";
+//        System.out.println(year+" "+month+" "+day+" "+hour);
+//
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date date = simpleDateFormat.parse(time);
+//        Timestamp timeStamp = new Timestamp(date.getTime());
         Plan myPlan = new Plan();
         myPlan.setUserId(userId);
         myPlan.setCompanionId(friendId);
-        myPlan.setPlanTime(timeStamp);
+        myPlan.setPlanTime(date);
         myPlan.setPlanAddress(address);
         myPlan.setStatus(0);
         Plan friendPlan = new Plan();
         friendPlan.setUserId(friendId);
         friendPlan.setCompanionId(userId);
-        friendPlan.setPlanTime(timeStamp);
+        friendPlan.setPlanTime(date);
         friendPlan.setPlanAddress(address);
         friendPlan.setStatus(0);
         int result1 = this.planMapper.insertPlanInfo(myPlan);

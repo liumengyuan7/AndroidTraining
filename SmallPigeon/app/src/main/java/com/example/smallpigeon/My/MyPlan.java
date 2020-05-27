@@ -27,7 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +51,10 @@ public class MyPlan extends AppCompatActivity {
                         JSONObject json = jsonArray.getJSONObject(i);
                         Map<String, String> item = new HashMap<>();
                         item.put("plan_id",json.getString("id"));
-                        item.put("plan_time",json.getString("plan_time"));
+                        String time = json.get("plan_time").toString();
+                        Date d = new Date(time);
+                        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+                        item.put("plan_time",sdf.format(d));//时间转换
                         item.put("plan_address",json.getString("plan_address"));
                         item.put("plan_email",json.getString("plan_email"));
                         item.put("plan_nickname",json.getString("plan_nickname"));

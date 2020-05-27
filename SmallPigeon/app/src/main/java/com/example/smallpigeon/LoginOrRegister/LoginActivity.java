@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.smallpigeon.R;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -52,13 +51,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private ImageView userLogin;
     private String md5Pass;
-    private LinearLayout ll_qqLogin;
 
     private static final String APPID = "1110462995";//官方获取的APPID
     private Tencent mTencent;
     private BaseUiListener  mListener;
     private UserInfo mInfo;
     private String name, figureurl,gender;
+    private LinearLayout ll_qqLogin;
 
     private Handler handlerLogin = new Handler(){
         @Override
@@ -116,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         loginReturn = findViewById(R.id.loginReturn);
         password = findViewById(R.id.password);
         ll_qqLogin = findViewById(R.id.ll_qqLogin);
+        mListener = new BaseUiListener ();
     }
 
     //按钮的点击事件
@@ -231,7 +231,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * qq登录方法
+     * 登录方法
      */
     private void QQLogin() {
         //如果session不可用，则登录，否则说明已经登录
@@ -269,8 +269,7 @@ public class LoginActivity extends AppCompatActivity {
                             figureurl = jb.getString("figureurl_qq_2");  //头像图片的url
                             gender = jb.getString("gender");//性别
                             Log.e("json",figureurl+"");
-                           // nickName.setText(name);
-                            //Glide.with(LoginActivity.this).load(figureurl).into(figure);
+//                            Glide.with(LoginActivity.this).load(figureurl).into(figure);
 
                         } catch (Exception e) {
                             e.printStackTrace();

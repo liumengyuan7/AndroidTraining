@@ -75,6 +75,10 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1129,7 +1133,15 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     if(!addTime.equals("") && !addAddress.equals("") && addAddress!=null && addTime!=null){
                         plan.put("time",addTime);
                         plan.put("address",addAddress);
-                        sendMessageToAddPlan(addTime,addAddress);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        try {
+                            long time = simpleDateFormat.parse(addTime).getTime();
+                            Timestamp pushTime = new Timestamp(time);
+                            sendMessageToAddPlan(pushTime,addAddress);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }
             });
@@ -1137,14 +1149,13 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             alertDialog.show();
     }
     //向服务器发送模糊查找好友的数据
-    public void sendMessageToAddPlan(final String addTime, final String addAddress){
+    public void sendMessageToAddPlan(final Timestamp addTime, final String addAddress){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getContext().getResources().getString(R.string.ip_address)
                             +":8080/smallpigeon/plan/addUserPlan?myId="+myId+"&&friendId="+toChatUsername+"&&datetime="+addTime+"&&address="+addAddress);
-                    Log.e("发送的时间数据为",addTime);
                     Log.e("url",url.toString());
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
