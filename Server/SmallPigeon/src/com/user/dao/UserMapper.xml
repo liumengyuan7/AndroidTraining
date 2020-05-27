@@ -25,7 +25,7 @@
         select * from user where id=#{id}
     </select>
     <select id="selectAllUserForPoints" resultType="java.util.Map">
-        select * from user order gby user_points desc limit 0,10
+        select * from user order by user_points desc limit 0,10
     </select>
     <select id="selectAllUser" resultType="java.util.Map">
         select * from user
