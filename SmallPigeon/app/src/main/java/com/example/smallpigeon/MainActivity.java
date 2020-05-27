@@ -3,7 +3,6 @@ package com.example.smallpigeon;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -15,14 +14,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.smallpigeon.Adapter.FragmentAdapter;
 import com.example.smallpigeon.Fragment.ChatFragment;
 import com.example.smallpigeon.Fragment.MyFragment;
 import com.example.smallpigeon.Fragment.PeopleFragment;
 import com.example.smallpigeon.Fragment.RunFragment;
+import com.qmuiteam.qmui.widget.QMUIViewPager;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private QMUIViewPager viewPager;
 
     private LinearLayout PeopleTab;
     private LinearLayout RunTab;
@@ -45,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ChatFragment chatFragment;
     private MyFragment myFragment;
 
-    //当前正在显示的Fragment
-    private Fragment currentFragment = new Fragment();
+    private ArrayList<Fragment> fragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setStatusBar();
         findViews();
-        setListeners();
         //创建avatar文件夹
         createAvatar();
         //创建FragmentManager对象
@@ -64,7 +66,51 @@ public class MainActivity extends AppCompatActivity {
         runFragment = new RunFragment();
         chatFragment = new ChatFragment();
         myFragment=new MyFragment();
-        showFragment(runFragment);
+        initViewPager();
+        setListeners();
+    }
+
+    private void initViewPager(){
+        fragmentList = new ArrayList<>();
+        fragmentList.add( 0, peopleFragment );
+        fragmentList.add( 1, runFragment );
+        fragmentList.add( 2, chatFragment );
+        fragmentList.add( 3, myFragment );
+
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(fragmentManager, fragmentList);
+        //ViewPager设置适配器
+        viewPager.setAdapter(fragmentAdapter);
+        //ViewPager显示第一个Fragment
+        viewPager.setCurrentItem(1);
+        //ViewPager页面切换监听
+        viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+    }
+
+    private class MyOnPageChangeListener implements QMUIViewPager.OnPageChangeListener{
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+
+        @Override
+        public void onPageSelected(int position) {
+            switch (position){
+                case 0:
+                    A();
+                    break;
+                case 1:
+                    B();
+                    break;
+                case 2:
+                    C();
+                    break;
+                case 3:
+                    D();
+                    break;
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) { }
     }
 
     //创建avatar文件夹
@@ -87,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
     //获取所有视图控件的引用
     public void findViews(){
+        viewPager = findViewById( R.id.viewPager );
+
         PeopleTab = findViewById(R.id.tab1);
         RunTab = findViewById(R.id.tab2);
         ChatTab = findViewById(R.id.tab3);
@@ -112,50 +160,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class MyClickListener implements View.OnClickListener{
-
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.tab1:
-                    //显示Fragment
-                    showFragment(peopleFragment);
-//                    Toast toastTip = Toast.makeText(MainActivity.this,"程序员们正在努力开发，敬请期待！",Toast.LENGTH_LONG);
-//                    toastTip.setGravity(Gravity.CENTER, 0, 0);
-//                    toastTip.show();
+                    viewPager.setCurrentItem( 0 );
                     A();//变色
                     break;
                 case R.id.tab2:
-                    showFragment(runFragment);
+                    viewPager.setCurrentItem( 1 );
                     B();
                     break;
                 case R.id.tab3:
-                    showFragment(chatFragment);
+                    viewPager.setCurrentItem( 2 );
                     C();
                     break;
                 case R.id.tab4:
-                    showFragment(myFragment);
+                    viewPager.setCurrentItem( 3 );
                     D();
                     break;
             }
-        }
-    }
-
-    public void showFragment(Fragment fragment){
-        //事务
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (fragment != currentFragment){
-            //隐藏正在显示的Fragment
-            transaction.hide(currentFragment);
-            //添加将要显示的Fragment
-            if (!fragment.isAdded()) {
-                transaction.add(R.id.tabContent, fragment);
-            }
-            //显示
-            transaction.show(fragment);
-            //提交事务
-            transaction.commit();
-            //切换当前选中的Fragment
-            currentFragment = fragment;
         }
     }
 
@@ -164,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_black ));
         chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_black ));
         myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_black ));
-        PeopleTv.setTextColor(Color.parseColor("#259B24"));
+        PeopleTv.setTextColor(getResources().getColor( R.color.colorPrimary ));
         RunTv.setTextColor(Color.parseColor("#737373"));
         ChatTv.setTextColor(Color.parseColor("#737373"));
         MyTv.setTextColor(Color.parseColor("#737373"));
@@ -175,9 +199,8 @@ public class MainActivity extends AppCompatActivity {
         runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_green ));
         chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_black ));
         myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_black ));
-
         PeopleTv.setTextColor(Color.parseColor("#737373"));
-        RunTv.setTextColor(Color.parseColor("#259B24"));
+        RunTv.setTextColor(getResources().getColor( R.color.colorPrimary ));
         ChatTv.setTextColor(Color.parseColor("#737373"));
         MyTv.setTextColor(Color.parseColor("#737373"));
     }
@@ -187,10 +210,9 @@ public class MainActivity extends AppCompatActivity {
         runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_black ));
         chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_green ));
         myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_black ));
-
         PeopleTv.setTextColor(Color.parseColor("#737373"));
         RunTv.setTextColor(Color.parseColor("#737373"));
-        ChatTv.setTextColor(Color.parseColor("#259B24"));
+        ChatTv.setTextColor(getResources().getColor( R.color.colorPrimary ));
         MyTv.setTextColor(Color.parseColor("#737373"));
     }
 
@@ -199,10 +221,9 @@ public class MainActivity extends AppCompatActivity {
         runIv.setImageDrawable(getResources().getDrawable(R.drawable.run_black ));
         chatIv.setImageDrawable(getResources().getDrawable(R.drawable.chat_black ));
         myIv.setImageDrawable(getResources().getDrawable(R.drawable.my_green ));
-
         PeopleTv.setTextColor(Color.parseColor("#737373"));
         RunTv.setTextColor(Color.parseColor("#737373"));
         ChatTv.setTextColor(Color.parseColor("#737373"));
-        MyTv.setTextColor(Color.parseColor("#259B24"));
+        MyTv.setTextColor(getResources().getColor( R.color.colorPrimary ));
     }
 }

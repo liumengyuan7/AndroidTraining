@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <com.qmuiteam.qmui.widget.QMUIViewPager
+        android:id="@+id/viewPager"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tabs"/>
+
     <LinearLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
@@ -103,14 +110,6 @@
                 android:layout_height="wrap_content"
                 android:text="我的"/>
         </LinearLayout>
-
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/tabContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/tabs">
-    </FrameLayout>
 
 </RelativeLayout>
