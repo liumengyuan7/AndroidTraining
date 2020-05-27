@@ -11,6 +11,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -48,14 +49,18 @@ public class update_pwd_final extends AppCompatActivity {
             String result = msg.obj + "";
             if(result.equals("true")){
                 btn.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
-                Toast.makeText(getApplicationContext(),"修改成功，请重新登录！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"修改成功，请重新登录！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 pre.edit().clear().commit();
                 Intent intent3 = new Intent(update_pwd_final.this, LoginActivity.class);
                 startActivity(intent3);
                 finish();
             }else {
-                Toast.makeText(getApplicationContext(),"修改失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"修改失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }
         }
     };

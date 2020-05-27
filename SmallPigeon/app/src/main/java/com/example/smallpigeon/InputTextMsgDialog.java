@@ -117,7 +117,9 @@ public class InputTextMsgDialog extends AppCompatDialog {
             public void onClick(View view) {
                 String msg = messageTextView.getText().toString().trim();
                 if (msg.length() > maxNumber) {
-                    Toast.makeText(mContext, "超过最大字数限制", Toast.LENGTH_LONG).show();
+                    Toast toast =  Toast.makeText(mContext, "超过最大字数限制", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                     return;
                 }
                 if (!TextUtils.isEmpty(msg)) {
@@ -127,7 +129,9 @@ public class InputTextMsgDialog extends AppCompatDialog {
                     messageTextView.setText("");
                     dismiss();
                 } else {
-                    Toast.makeText(mContext, "请输入文字", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(mContext, "请输入文字", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }
                 messageTextView.setText(null);
             }
@@ -140,14 +144,18 @@ public class InputTextMsgDialog extends AppCompatDialog {
                     case KeyEvent.KEYCODE_ENDCALL:
                     case KeyEvent.KEYCODE_ENTER:
                         if (messageTextView.getText().length() > maxNumber) {
-                            Toast.makeText(mContext, "超过最大字数限制", Toast.LENGTH_LONG).show();
+                            Toast toast =Toast.makeText(mContext, "超过最大字数限制", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER,0,0);
+                            toast.show();
                             return true;
                         }
                         if (messageTextView.getText().length() > 0) {
                             imm.hideSoftInputFromWindow(messageTextView.getWindowToken(), 0);
                             dismiss();
                         } else {
-                            Toast.makeText(mContext, "请输入文字", Toast.LENGTH_LONG).show();
+                            Toast toast =Toast.makeText(mContext, "请输入文字", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER,0,0);
+                            toast.show();
                         }
                         return true;
                     case KeyEvent.KEYCODE_BACK:

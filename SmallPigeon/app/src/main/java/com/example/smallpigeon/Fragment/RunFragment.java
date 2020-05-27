@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +93,9 @@ public class RunFragment extends Fragment {
                         Intent intentP = new Intent( getContext(), TracingActivity.class );
                         startActivity( intentP );
                     }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.MatchingButton:
@@ -106,7 +109,9 @@ public class RunFragment extends Fragment {
                         lngAndLag = "";
                         startActivity( intentM );
                     }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
             }
@@ -166,7 +171,9 @@ public class RunFragment extends Fragment {
         locationManager = (LocationManager) getContext().getSystemService(serviceName); // 查找到服务信息
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), "请开启定位权限...", Toast.LENGTH_SHORT).show();
+            Toast toast=Toast.makeText(getContext(), "请开启定位权限...", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
         }else{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1000, locationListener);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 1000, locationListener);

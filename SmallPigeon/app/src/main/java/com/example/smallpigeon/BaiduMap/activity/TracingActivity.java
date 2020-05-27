@@ -16,6 +16,7 @@ import android.os.Parcelable;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -203,11 +204,17 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
             String s = intent.getAction();
 
             if (s.equals( SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-                Toast.makeText(TracingActivity.this,"AK验证失败，地图功能无法正常使用", Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(TracingActivity.this,"AK验证失败，地图功能无法正常使用", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             } else if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK)) {
-                Toast.makeText(TracingActivity.this,"AK验证成功", Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(TracingActivity.this,"AK验证成功", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             } else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
-                Toast.makeText(TracingActivity.this,"网络错误", Toast.LENGTH_SHORT).show();
+               Toast toast= Toast.makeText(TracingActivity.this,"网络错误", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         }
     }
@@ -568,7 +575,13 @@ public class TracingActivity extends AppCompatActivity implements View.OnClickLi
                 /*轨迹查询开始-------------------------------------------------------*/
                 if (firstLocate){
                     firstLocate = false;
-                    Toast.makeText(TracingActivity.this, "起点获取中，请稍后...", Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(TracingActivity.this, "起点获取中，请稍后...", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    LinearLayout toastView = (LinearLayout) toast.getView();
+                    ImageView imgBack = new ImageView(TracingActivity.this);
+                    imgBack.setImageResource(R.drawable.loading);
+                    toastView.addView(imgBack, 0);
+                    toast.show();
                     return;
                 }
                 /*轨迹查询结束-------------------------------------------------------------------*/

@@ -23,6 +23,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,7 +88,9 @@ public class AddContactActivity extends EaseBaseActivity {
 				userList.clear();
 				String like = msg.obj.toString();
 				if (like.equals("false")) {
-					Toast.makeText(getApplicationContext(),"该用户不存在,请再次确认！",Toast.LENGTH_SHORT).show();
+					Toast toast=Toast.makeText(getApplicationContext(),"该用户不存在,请再次确认！",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
 				} else {
 					try {
 						JSONArray jsonArray = new JSONArray(like);

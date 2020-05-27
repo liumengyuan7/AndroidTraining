@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -124,7 +125,13 @@ public class PersonalCenter extends AppCompatActivity {
                     pre.edit().clear().commit();
                     signOut();//环信退出登录
                     finish();
-                    Toast.makeText(getApplicationContext(),"注销成功！",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(getApplicationContext(),"注销成功！",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    LinearLayout toastView = (LinearLayout) toast.getView();
+                    ImageView imageCodeProject = new ImageView(getApplicationContext());
+                    imageCodeProject.setImageResource(R.drawable.r);
+                    toastView.addView(imageCodeProject, 0);
+                    toast.show();
                 }
             });
         }
@@ -197,7 +204,9 @@ public class PersonalCenter extends AppCompatActivity {
                         startActivity(intent1);
                         finish();
                     } else{
-                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.userNicknameLayout://进入修改昵称activity
@@ -206,7 +215,9 @@ public class PersonalCenter extends AppCompatActivity {
                         startActivity(intent2);
                         finish();
                     }else {
-                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.userMoreLayout://进入更多修改activity
@@ -215,7 +226,9 @@ public class PersonalCenter extends AppCompatActivity {
                         startActivity(intent3);
                         finish();
                     }else {
-                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.userSecurityLayout:
@@ -224,7 +237,9 @@ public class PersonalCenter extends AppCompatActivity {
                         startActivity(intent4);
                         finish();
                     }else {
-                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
             }

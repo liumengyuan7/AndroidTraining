@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -101,7 +102,9 @@ public class MyFragment extends Fragment {
                         Intent intent = new Intent(getContext(), PersonalCenter.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.right_Authentication:
@@ -115,7 +118,9 @@ public class MyFragment extends Fragment {
                             startActivity(intentJudge);
                         }
                     }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.right_community:
@@ -131,7 +136,9 @@ public class MyFragment extends Fragment {
                         Intent intent1 = new Intent(getContext(), Paihang.class);
                         startActivity(intent1);
                     }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.right_plan:
@@ -139,7 +146,9 @@ public class MyFragment extends Fragment {
                         Intent intent2 = new Intent(getContext(), MyPlan.class);
                         startActivity(intent2);
                     }else {
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.right_collect:

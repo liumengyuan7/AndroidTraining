@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,7 +125,9 @@ public class ChatFragment extends Fragment {
                         Intent intent = new Intent(getContext(), AddContactActivity.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
             }

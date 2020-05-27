@@ -7,11 +7,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.smallpigeon.R;
@@ -38,14 +40,26 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
             if(result.equals("true")){
                 personal_center_btnSaveNickname.setImageDrawable(getResources().
                         getDrawable(R.drawable.wancheng_green ));
-                Toast.makeText(getApplicationContext(),"修改成功！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"修改成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.r);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 SharedPreferences.Editor editor = pre.edit();
                 editor.putString("user_nickname",edtNickname.getText().toString());
                 editor.commit();
                 finish();
             }else{
-                Toast.makeText(getApplicationContext(),"修改失败,请重新输入！",Toast.LENGTH_SHORT).show();
+               Toast toast= Toast.makeText(getApplicationContext(),"修改失败,请重新输入！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.w);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
             }
         }
     };
@@ -85,8 +99,10 @@ public class Personal_center_updateUserNickname extends AppCompatActivity {
                     break;
                 case R.id.personal_center_btnSaveNickname:
                     if(edtNickname.getText().toString().equals("")){
-                        Toast.makeText(getApplicationContext(),
-                                "昵称不能为空哦！", Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),
+                                "昵称不能为空哦！", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
                         updateUserNickname();
                     }

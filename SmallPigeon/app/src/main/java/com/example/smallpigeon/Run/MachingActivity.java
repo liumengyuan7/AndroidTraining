@@ -89,7 +89,9 @@ public class MachingActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result==null){
-                Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT).show();
+                Toast toastTip = Toast.makeText(getApplicationContext(),"匹配失败！",Toast.LENGTH_SHORT);
+                toastTip.setGravity(Gravity.CENTER, 0, 0);
+                toastTip.show();
             }else{
                 Intent request = new Intent();
                 request.setClass(MachingActivity.this,NearbyUserActivity.class);

@@ -10,11 +10,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,9 +45,21 @@ public class update_pwd extends AppCompatActivity {
             String result = msg.obj + "";
             if(result.equals("true")){
                 secondDown();
-                Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.w);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
             }else {
-                Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.w);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
             }
         }
     };

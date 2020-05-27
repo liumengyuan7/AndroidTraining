@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -179,7 +180,9 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Toast.makeText(MyCommunityDetails.this,"点击了回复",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(MyCommunityDetails.this,"点击了回复",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
                 return false;
             }
         });
@@ -226,7 +229,9 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
 //                    Toast.makeText(DynamicDetailActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
-                    Toast.makeText(MyCommunityDetails.this,"评论内容不能为空",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(MyCommunityDetails.this,"评论内容不能为空",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }
             }
         });
@@ -277,7 +282,9 @@ public class MyCommunityDetails extends AppCompatActivity implements View.OnClic
                     expandableListView.expandGroup(position);
 //                    Toast.makeText(DynamicDetailActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(MyCommunityDetails.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(MyCommunityDetails.this,"回复内容不能为空",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }
             }
         });

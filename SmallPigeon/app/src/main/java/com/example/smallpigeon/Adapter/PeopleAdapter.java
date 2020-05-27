@@ -80,16 +80,24 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             switch (msg.what){
                 case 0:
                     if(result.equals("true")){
-                        Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
-                        Toast.makeText(context,"点赞失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"点赞失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case 1:
                     if(result.equals("true")){
-                        Toast.makeText(context,"取消点赞成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"取消点赞成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
-                        Toast.makeText(context,"取消点赞失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"取消点赞失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
             }
@@ -335,7 +343,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                     notifyDataSetChanged();
                 } else {
                     //没有登录注册 不能点赞  请先登录
-                    Toast.makeText(context, "请先登录哦！", Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(context, "请先登录哦！", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }
         });
@@ -406,7 +416,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                             //转发理由
                             nInputContentText = et_discuss.getText().toString().trim();
                             if (nInputContentText == null || "".equals(nInputContentText)) {
-                                Toast.makeText(context,"内容不能为空！",Toast.LENGTH_SHORT).show();
+                                Toast toast= Toast.makeText(context,"内容不能为空！",Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER,0,0);
+                                toast.show();
                             }else {
                     Timestamp pushTime = new Timestamp(new Date().getTime());
                     int forwardId = list.get(position).getDynamicId();
@@ -427,7 +439,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                     changeForwardNum(list.get(position).getDynamicId(),forwardNumAfter); } }});
                     notifyDataSetChanged();
                 } else {
-                    Toast.makeText(context, "请先登录哦！", Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(context, "请先登录哦！", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }
         } );
@@ -543,9 +557,13 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 String result = msg.obj+"";
                 if(result.equals("true")){
 
-                    Toast.makeText(context,"转发成功",Toast.LENGTH_SHORT).show();
+                   Toast toast= Toast.makeText(context,"转发成功",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }else{
-                    Toast.makeText(context,"转发失败",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(context,"转发失败",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }
         };

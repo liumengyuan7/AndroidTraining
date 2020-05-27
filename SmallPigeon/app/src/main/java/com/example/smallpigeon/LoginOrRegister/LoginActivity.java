@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -65,7 +66,9 @@ public class LoginActivity extends AppCompatActivity {
             String re = msg.obj+"";
             Log.e("sssssssss",re);
             if(re.equals("false")){
-                Toast.makeText(getApplicationContext(),"您的账号或者密码错误，登录失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"您的账号或者密码错误，登录失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }else{
                 try {
                     String result = re.split(";;")[0];
@@ -86,7 +89,13 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 userLogin.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
-                Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imgBack = new ImageView(getApplicationContext());
+                imgBack.setImageResource(R.drawable.r);
+                toastView.addView(imgBack, 0);
+                toast.show();
                 finish();
             }
         }
@@ -142,7 +151,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(username.getText().toString().equals("") || password.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(),"账号或者密码不能为空哦，请重新输入！",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(getApplicationContext(),"账号或者密码不能为空哦，请重新输入！",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }else {
                     sendMessageToServer();
                 }
@@ -261,7 +272,13 @@ public class LoginActivity extends AppCompatActivity {
                 mInfo.getUserInfo(new IUiListener() {
                     @Override
                     public void onComplete(Object object) {
-                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        LinearLayout toastView = (LinearLayout) toast.getView();
+                        ImageView imgBack = new ImageView(getApplicationContext());
+                        imgBack.setImageResource(R.drawable.r);
+                        toastView.addView(imgBack, 0);
+                        toast.show();
                         JSONObject jb = (JSONObject) object;
                         Log.e("json",jb+"");
                         try {
@@ -278,12 +295,20 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(UiError uiError) {
-                        Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
+                        Toast toast=Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        LinearLayout toastView = (LinearLayout) toast.getView();
+                        ImageView imgBack = new ImageView(getApplicationContext());
+                        imgBack.setImageResource(R.drawable.w);
+                        toastView.addView(imgBack, 0);
+                        toast.show();
                     }
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText(LoginActivity.this,"登录取消",Toast.LENGTH_LONG).show();
+                        Toast toast=Toast.makeText(LoginActivity.this,"登录取消",Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
 
                 });
@@ -294,13 +319,25 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onError(UiError uiError) {
-            Toast.makeText(LoginActivity.this, "授权失败", Toast.LENGTH_SHORT).show();
+            Toast toast=Toast.makeText(LoginActivity.this, "授权失败", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            LinearLayout toastView = (LinearLayout) toast.getView();
+            ImageView imgBack = new ImageView(getApplicationContext());
+            imgBack.setImageResource(R.drawable.w);
+            toastView.addView(imgBack, 0);
+            toast.show();
 
         }
 
         @Override
         public void onCancel() {
-            Toast.makeText(LoginActivity.this, "授权取消", Toast.LENGTH_SHORT).show();
+            Toast toast=Toast.makeText(LoginActivity.this, "授权取消", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            LinearLayout toastView = (LinearLayout) toast.getView();
+            ImageView imgBack = new ImageView(getApplicationContext());
+            imgBack.setImageResource(R.drawable.w);
+            toastView.addView(imgBack, 0);
+            toast.show();
 
         }
     }

@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,16 +79,24 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
             switch (msg.what){
                 case 0:
                     if(result.equals("true")){
-                        Toast.makeText(getApplicationContext(),"收藏成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"收藏成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }else{
-                        Toast.makeText(getApplicationContext(),"收藏失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"收藏失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                     break;
                 case 1:
                     if(result.equals("true")){
-                        Toast.makeText(getApplicationContext(),"取消收藏成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"取消收藏成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }else{
-                        Toast.makeText(getApplicationContext(),"取消收藏失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"取消收藏失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                     break;
             }
@@ -224,7 +233,9 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Toast.makeText(DynamicDetailActivity.this,"点击了回复",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(DynamicDetailActivity.this,"点击了回复",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
                 return false;
             }
         });
@@ -273,7 +284,9 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
 //                    Toast.makeText(DynamicDetailActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
-                    Toast.makeText(DynamicDetailActivity.this,"评论内容不能为空",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(DynamicDetailActivity.this,"评论内容不能为空",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }
             }
         });
@@ -324,7 +337,9 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
                     expandableListView.expandGroup(position);
 //                    Toast.makeText(DynamicDetailActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(DynamicDetailActivity.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(DynamicDetailActivity.this,"回复内容不能为空",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }
             }
         });

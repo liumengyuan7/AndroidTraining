@@ -8,9 +8,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,14 +43,20 @@ public class ForgetPassword extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("notRepeat")){
-                Toast.makeText(getApplicationContext(),"该邮箱没有注册信息哦！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"该邮箱没有注册信息哦！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
                 getCodeEvent();
             }else if(result.equals("true")){
                 secondDown();
-                Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }else{
                 getCodeEvent();
-                Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         }
     };
@@ -123,7 +131,9 @@ public class ForgetPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmail(userEmail.getText().toString())){
-                    Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式哦！",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式哦！",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }else{
                     getCode.setText("验证码发送中...");
                     getCode.setOnClickListener(null);

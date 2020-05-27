@@ -41,7 +41,7 @@ public class ViewUtil {
         } else {
             mTextView.setText(Html.fromHtml(strBuilder.toString()));
         }
-        mToast.setGravity(Gravity.BOTTOM, 0, activity.getResources().getDisplayMetrics().heightPixels / 5);
+        mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.show();
     }
 

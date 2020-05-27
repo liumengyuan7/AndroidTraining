@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,13 +46,27 @@ public class update_email extends AppCompatActivity {
             String result = msg.obj + "";
             if(result.equals("true")){
                 secondDown();
-                Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.r);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
             }else if(result.equals("repeat")){
                 getEmailCode();
-                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了哦，请换一个吧～",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"该邮箱已经被注册了哦，请换一个吧～",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }else{
                 getEmailCode();
-                Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.w);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
             }
         }
     };
@@ -81,14 +97,28 @@ public class update_email extends AppCompatActivity {
             String result = msg.obj + "";
             if(result.equals("true")){
                 btnFinish.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
-                Toast.makeText(getApplicationContext(),"邮箱更改成功！",Toast.LENGTH_SHORT).show();
+
+                Toast toast=Toast.makeText(getApplicationContext(),"邮箱更改成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.r);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
+
                 SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
                 pre.edit().clear().commit();
                 Intent intent3 = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent3);
                 finish();
             } else{
-                Toast.makeText(getApplicationContext(),"邮箱更改失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"邮箱更改失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setImageResource(R.drawable.w);
+                toastView.addView(imageCodeProject, 0);
+                toast.show();
             }
         }
     };
@@ -131,7 +161,9 @@ public class update_email extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkCode.getText().toString().equals("") || !isEmail(userEmail.getText().toString())
                     || !checkCode.getText().toString().equals(code1)){
-                    Toast.makeText(getApplicationContext(),"请输入正确的信息哦！",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(getApplicationContext(),"请输入正确的信息哦！",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }else{
                     updateEmail();
                 }
@@ -147,7 +179,9 @@ public class update_email extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmail(userEmail.getText().toString())){
-                    Toast.makeText(getApplicationContext(),"请按正确的邮箱格式填写哦！",Toast.LENGTH_SHORT).show();
+                    Toast toast=Toast.makeText(getApplicationContext(),"请按正确的邮箱格式填写哦！",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }else{
                     getCode.setText("验证码发送中...");
                     getCode.setOnClickListener(null);

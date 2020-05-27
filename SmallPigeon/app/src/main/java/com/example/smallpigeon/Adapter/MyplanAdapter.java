@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +33,13 @@ public class MyplanAdapter extends BaseAdapter{
             if(result.equals("true")){
                 dataSourse.remove(msg.what);
                 notifyDataSetChanged();
-                Toast.makeText(context,"删除成功！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(context,"删除成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }else if(result.equals("false")){
-                Toast.makeText(context,"删除失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(context,"删除失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         }
     };

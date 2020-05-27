@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -95,13 +96,27 @@ public class RegisterActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj + "";
             if(result.equals("repeat")){
-                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }else if(result.equals("false")){
-                Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imgBack = new ImageView(getApplicationContext());
+                imgBack.setImageResource(R.drawable.w);
+                toastView.addView(imgBack, 0);
+                toast.show();
             }else{
                 btn_FinishReg.setImageDrawable(getResources().getDrawable(R.drawable.wancheng_green ));
                 signUp(result);
-                Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"恭喜你加入小鸽快跑~ 要好好锻炼哦~",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imgBack = new ImageView(getApplicationContext());
+                imgBack.setImageResource(R.drawable.r);
+                toastView.addView(imgBack, 0);
+                toast.show();
                 finish();
             }
         }
@@ -114,16 +129,29 @@ public class RegisterActivity extends AppCompatActivity {
             String result = msg.obj + "";
             if(result.equals("true")){
                 secondDown();
-                Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送成功！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imgBack = new ImageView(getApplicationContext());
+                imgBack.setImageResource(R.drawable.r);
+                toastView.addView(imgBack, 0);
+                toast.show();
             }else if(result.equals("repeat")){
                 getCode.setText("获取验证码");
                 getCode.setOnClickListener(listener);
-                Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~！",Toast.LENGTH_SHORT).show();
-
+                Toast toast=Toast.makeText(getApplicationContext(),"该邮箱已经被注册了，换一个吧~！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }else{
                 getCode.setText("获取验证码");
                 getCode.setOnClickListener(listener);
-                Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"验证码发送失败！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                LinearLayout toastView = (LinearLayout) toast.getView();
+                ImageView imgBack = new ImageView(getApplicationContext());
+                imgBack.setImageResource(R.drawable.w);
+                toastView.addView(imgBack, 0);
+                toast.show();
             }
         }
     };
@@ -285,22 +313,30 @@ public class RegisterActivity extends AppCompatActivity {
                         getCode.setOnClickListener(null);
                         sendEmail();
                     } else{
-                        Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT).show();
+                       Toast toast= Toast.makeText(getApplicationContext(),"请输入正确的邮箱格式！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                     break;
                 case R.id.btn_FinishReg:
                     radioAndCheckbox();
                     if(!confirmUserInfo()) {
-                        Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }  else{
                         if(checkcode.equals(code)){
                             Log.e("str"," "+interesStr);
                             str1 = interesStr.substring(0,interesStr.length()-1);//兴趣爱好
                             Log.e("str1"," "+str1);
-                            if(!confirmUserInfo()){ Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT).show(); }
+                            if(!confirmUserInfo()){ Toast toast=Toast.makeText(getApplicationContext(),"请正确填写注册信息哦~",Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();}
                             else{
                                 if(!userPassword.equals(checkpwd)){
-                                    Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT).show(); }
+                                    Toast toast=Toast.makeText(getApplicationContext(),"两次密码输入不一致",Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER, 0, 0);
+                                    toast.show();}
                                 else{
                                     try {
                                         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -314,7 +350,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             }
                         } else{
-                            Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT).show();
+                            Toast toast=Toast.makeText(getApplicationContext(),"验证码有误，请重新填写",Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         }
                     }
 

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,9 +73,13 @@ public class ReleaseDynamic extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String result = msg.obj+"";
             if(result.equals("true")){
-                Toast.makeText(getApplicationContext(),"动态发布成功，快去看看叭",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"动态发布成功，快去看看叭",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }else{
-                Toast.makeText(getApplicationContext(),"动态发布失败，请重新发布",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(getApplicationContext(),"动态发布失败，请重新发布",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }
         }
     };
@@ -195,8 +200,11 @@ public class ReleaseDynamic extends AppCompatActivity {
                     if (list.size() < IMG_COUNT) {
                         Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         startActivityForResult(i, 0);
-                    } else
-                        Toast.makeText(ReleaseDynamic.this, "最多只能选择2张照片！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast toast = Toast.makeText(ReleaseDynamic.this, "最多只能选择2张照片！", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
+                    }
                 }
             }
         });

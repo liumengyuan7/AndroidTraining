@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,30 +46,47 @@ public class MyCommentAdapter extends BaseExpandableListAdapter {
             switch (msg.what){
                 case 0:
                     if(result.equals("true")){
-                        Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
+
                     }else{
-                        Toast.makeText(context,"评论失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"评论失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case 1:
                     if(result.equals("true")){
-                        Toast.makeText(context,"回复成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"回复成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
-                        Toast.makeText(context,"回复失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"回复失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case 2:
                     if(result.equals("true")){
-                        Toast.makeText(context,"评论点赞成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"评论点赞成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
-                        Toast.makeText(context,"评论点赞失败",Toast.LENGTH_SHORT).show();
+                        Toast toast= Toast.makeText(context,"评论点赞失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case 3:
                     if(result.equals("true")){
-                        Toast.makeText(context,"取消评论点赞成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"取消评论点赞成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
-                        Toast.makeText(context,"取消评论点赞失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"取消评论点赞失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
             }

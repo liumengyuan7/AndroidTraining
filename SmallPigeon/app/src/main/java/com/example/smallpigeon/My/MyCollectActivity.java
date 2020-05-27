@@ -140,9 +140,13 @@ public class MyCollectActivity extends AppCompatActivity {
                     String r = msg.obj + "";
                     Log.e("删除收藏返回的数据",r);
                     if(r.equals("true")){
-                        Toast.makeText(getApplicationContext(),"删除收藏成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"删除收藏成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
-                        Toast.makeText(getApplicationContext(),"删除收藏失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"删除收藏失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
             }
@@ -308,7 +312,9 @@ public class MyCollectActivity extends AppCompatActivity {
 
     private void delete() {
         if (checkList.size() == 0){
-            Toast.makeText(MyCollectActivity.this,"您还没有选中任何数据",Toast.LENGTH_LONG).show();
+            Toast toast=Toast.makeText(MyCollectActivity.this,"您还没有选中任何数据",Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
         }else {
             list.removeAll(checkList);//删除选中数据
             setStateCheckedMap(false);

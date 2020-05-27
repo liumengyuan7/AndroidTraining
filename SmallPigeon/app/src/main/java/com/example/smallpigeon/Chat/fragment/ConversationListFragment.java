@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -108,7 +109,8 @@ public class ConversationListFragment extends EaseConversationListFragment {
                 EMConversation conversation = conversationListView.getItem(position);
                 String username = conversation.conversationId();
                 if (username.equals(EMClient.getInstance().getCurrentUser()))
-                    Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
+                   Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
+
                 else {
                     String nickName ="";
                     for (int i=0;i<map.size();i++){

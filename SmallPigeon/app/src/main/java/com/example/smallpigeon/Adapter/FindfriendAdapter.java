@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,13 @@ public class FindfriendAdapter extends BaseAdapter {
         public void handleMessage(Message msg) {
             String result = msg.obj.toString();
             if(result.equals("false")){
-                Toast.makeText(context,"添加好友失败",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(context,"添加好友失败",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }else{
-                Toast.makeText(context,"成功加为好友，快去聊天吧！",Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(context,"成功加为好友，快去聊天吧！",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         }
     };
@@ -101,11 +106,15 @@ public class FindfriendAdapter extends BaseAdapter {
     }
     public void addContact(String friendEmail,int friendId,EaseUser easeUser){
         if(myEmail.equals(friendEmail)){//比较是不是加自己
-            Toast.makeText(context,R.string.not_add_myself,Toast.LENGTH_SHORT).show();
+            Toast toast=Toast.makeText(context,R.string.not_add_myself,Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             return;
         }
 		if(ChatHelper.getInstance().getContactList().containsValue(easeUser)){
-            Toast.makeText(context,R.string.This_user_is_already_your_friend,Toast.LENGTH_SHORT).show();
+            Toast toast=Toast.makeText(context,R.string.This_user_is_already_your_friend,Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
 			return;
 		}
         sendMessageToAddContact(context,myId,friendId);

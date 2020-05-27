@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -69,7 +70,9 @@ public class AnQuan extends AppCompatActivity {
                         startActivity(intent1);
                         finish();
                     } else{
-                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
                 case R.id.userChangePassword:
@@ -78,7 +81,9 @@ public class AnQuan extends AppCompatActivity {
                         startActivity(intent2);
                         finish();
                     } else{
-                        Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }
                     break;
             }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,16 +45,24 @@ public class MyDynamicAdapter extends BaseAdapter  implements View.OnClickListen
             switch (msg.what){
                 case 0:
                     if(result.equals("true")){
-                        Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }else{
-                        Toast.makeText(context,"点赞失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"点赞失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                     break;
                 case 1:
                     if(result.equals("true")){
-                        Toast.makeText(context,"取消点赞成功",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"取消点赞成功",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }else{
-                        Toast.makeText(context,"取消点赞失败",Toast.LENGTH_SHORT).show();
+                        Toast toast=Toast.makeText(context,"取消点赞失败",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                     break;
             }
