@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-05-16 19:51:26
+Date: 2020-05-28 20:35:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -91,7 +91,7 @@ CREATE TABLE `dynamics` (
   `forward_id` int(11) NOT NULL DEFAULT '0',
   `type` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dynamics
@@ -154,14 +154,11 @@ CREATE TABLE `interest` (
   `star` int(1) DEFAULT '0',
   `comic` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of interest
 -- ----------------------------
-INSERT INTO `interest` VALUES ('39', '43', '1', '0', '1', '0', '1', '1', '0', '0');
-INSERT INTO `interest` VALUES ('40', '44', '1', '1', '1', '1', '1', '1', '1', '1');
-INSERT INTO `interest` VALUES ('41', '45', '1', '1', '1', '1', '1', '1', '1', '1');
 INSERT INTO `interest` VALUES ('42', '46', '0', '1', '0', '0', '0', '0', '0', '0');
 INSERT INTO `interest` VALUES ('43', '47', '1', '0', '0', '0', '0', '0', '0', '0');
 
@@ -177,11 +174,12 @@ CREATE TABLE `plan` (
   `plan_address` varchar(255) DEFAULT NULL,
   `plan_status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of plan
 -- ----------------------------
+INSERT INTO `plan` VALUES ('2', '48', '46', '2020-05-06 11:46:19', 'gggg', '0');
 
 -- ----------------------------
 -- Table structure for `record`
@@ -234,9 +232,9 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(20) DEFAULT NULL,
   `user_nickname` varchar(20) DEFAULT NULL,
-  `user_password` varchar(50) DEFAULT NULL,
-  `user_sex` char(10) DEFAULT NULL,
-  `user_email` varchar(20) DEFAULT NULL,
+  `user_password` varchar(50) DEFAULT 'secret',
+  `user_sex` char(10) DEFAULT 'secret',
+  `user_email` varchar(300) DEFAULT NULL,
   `user_register_time` datetime DEFAULT NULL,
   `user_school` varchar(50) DEFAULT NULL,
   `user_sno` varchar(20) DEFAULT NULL,
@@ -246,10 +244,10 @@ CREATE TABLE `user` (
   `longitude` double(50,16) DEFAULT '0.0000000000000000',
   `latitude` double(50,16) DEFAULT '0.0000000000000000',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('46', '刘梦圆', 'aa', 'e10adc3949ba59abbe56e057f20f883e', 'woman', '904569030@qq.com', '2020-04-30 15:13:16', '河北师范大学', '2017011897', 'null', '0', '1', '0.0000000000000000', '0.0000000000000000');
-INSERT INTO `user` VALUES ('47', '哈哈', '哈哈', 'e10adc3949ba59abbe56e057f20f883e', 'man', '156267102@qq.com', '2020-04-30 17:13:16', '河北师范大学操场', '2017011897', 'R5RhkQ.jpg;7h9sP8.jpg', '0', '0', '0.0000000000000000', '0.0000000000000000');
+INSERT INTO `user` VALUES ('46', '刘梦圆', 'aa', 'e10adc3949ba59abbe56e057f20f883e', 'woman', '904569030@qq.com', '2020-04-30 15:13:16', '河北师范大学', '2017011897', 'null', '10', '1', '121.4996860000000000', '28.6465550000000000');
+INSERT INTO `user` VALUES ('47', '哈哈', '哈哈', 'e10adc3949ba59abbe56e057f20f883e', 'man', '156267102@qq.com', '2020-04-30 17:13:16', '河北师范大学操场', '2017011897', 'R5RhkQ.jpg;7h9sP8.jpg', '11', '0', '121.3996860000000000', '28.5465550000000000');

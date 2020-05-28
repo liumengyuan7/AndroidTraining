@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,7 +86,7 @@ public class UserService {
 		if(userSex.equals("男")) gender = "man";
 		else gender = "woman";
 		String result = userRegister(openId,"secret",nickname,gender,"secret");
-		getQqAvatar(url,openId);
+		if(!result.equals("repeat")) getQqAvatar(url,openId);
 		return userLogin(openId,"secret");
 	}
 
@@ -259,20 +260,25 @@ public class UserService {
 	//将qq头像下载到本地
 	public void getQqAvatar(String avatarUrl,String avatarName){
 		try {
-			URL url = new URL(avatarUrl);
-			//打开网络输入流
-	        DataInputStream dis = new DataInputStream(url.openStream());
-	        String newImageName= servletContext.getRealPath("")+"avatar\\"+avatarName+".jpg";
-			//建立一个新的文件
-	        FileOutputStream fos = new FileOutputStream(new File(newImageName));
-	        byte[] buffer = new byte[1024];
-	        int length;
-			//开始填充数据
-	        while((length = dis.read(buffer))>0){
-	            fos.write(buffer,0,length);
+			//1.定位网络图片路径
+	        URL url = new URL(avatarUrl);
+	        //2.建立与网络图片的连接,获取该图片的输入流
+	        URLConnection connection = url.openConnection();
+	        InputStream inputStream = connection.getInputStream();
+	        //3.在本地建一个图片路径,接收与存储网络图片
+			String path = servletContext.getRealPath("")+"avatar\\";
+	        File file = new File(path+avatarName+".jpg");
+	        FileOutputStream outputStream = new FileOutputStream(file);
+	        //4.通过字节数组循环读取网络图片到本地
+	        byte[] bs=new byte[1024];
+	        int len=0;
+	        while((len=inputStream.read(bs))!=-1){
+	            outputStream.write(bs,0,len);
 	        }
-	        dis.close();
-	        fos.close();
+	        //5.关闭流
+	        inputStream.close();
+	        outputStream.close();
+	        System.out.println("图片下载成功!");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {

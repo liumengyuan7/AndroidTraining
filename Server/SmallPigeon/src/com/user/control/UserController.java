@@ -4,17 +4,13 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -72,10 +68,21 @@ public class UserController {
 	//qq登录
 	@ResponseBody
 	@RequestMapping(value = "loginForQq",produces = "text/html;charset=UTF-8")
-	public String loginForQq(@RequestParam("nickname") String nickname,
-	                         @RequestParam("figureUrl") String url,
-	                         @RequestParam("userSex") String userSex,
-	                         @RequestParam("openId") String openId){
+	public String loginForQq(HttpServletRequest request){
+		String nickname = null,url = null,userSex = null,openId = null;
+		try {
+			InputStream inputStream = request.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
+			String json = reader.readLine();
+			System.out.println(json);
+			JSONObject jsonObject = new JSONObject(json);
+			nickname = jsonObject.getString("nickname");
+			url = jsonObject.getString("figureUrl");
+			userSex = jsonObject.getString("userSex");
+			openId = jsonObject.getString("openId");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return this.userService.loginForQq(nickname, url, userSex, openId);
 	}
 

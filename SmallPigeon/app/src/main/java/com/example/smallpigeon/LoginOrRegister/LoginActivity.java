@@ -1,6 +1,14 @@
 package com.example.smallpigeon.LoginOrRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -185,11 +193,28 @@ public class LoginActivity extends AppCompatActivity {
         new Thread(){
             @Override
             public void run() {
-                String result = new Utils().getConnectionResult("user","loginForQq",
-                        "nickname="+name+"&&figureUrl="+figureurl+"&&userSex="+gender+"&&openId="+openID);
-                Message message = new Message();
-                message.obj = result;
-                handlerLogin.sendMessage(message);
+                RequestBody requestBody = RequestBody.create(
+                        MediaType.parse("text/plain;charset=utf-8"),
+                        "{\"nickname\":\""+name+"\",\"figureUrl\":\""+figureurl +
+                                "\",\"userSex\":\""+gender+"\",\"openId\":\""+openID+"\"}");
+                Request request = new Request.Builder().post(requestBody)
+                        .url("http://"+getResources().getString(R.string.ip_address)
+                                +":8080/smallpigeon/user/loginForQq").build();
+                OkHttpClient okHttpClient = new OkHttpClient();
+                okHttpClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String result = response.body().string();
+                        Message message = new Message();
+                        message.obj = result;
+                        handlerLogin.sendMessage(message);
+                    }
+                });
             }
         }.start();
     }
@@ -294,7 +319,7 @@ public class LoginActivity extends AppCompatActivity {
                             name = jb.getString("nickname");//昵称
                             figureurl = jb.getString("figureurl_qq_2");  //头像图片的url
                             gender = jb.getString("gender");//性别
-                            Log.e("json",openID);
+                            Log.e("json",figureurl);
                             loginForQq();
 //                            Toast.makeText(getApplicationContext(), openID, Toast.LENGTH_SHORT).show();
 //                            Glide.with(LoginActivity.this).load(figureurl).into(figure);
