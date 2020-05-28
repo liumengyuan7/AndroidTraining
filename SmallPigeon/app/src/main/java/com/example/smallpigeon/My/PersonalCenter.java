@@ -110,7 +110,9 @@ public class PersonalCenter extends AppCompatActivity {
                 }
             });
         } else{
-            personal_center_user_email.setText(pre.getString("user_email",""));
+            if(pre.getString("user_email","").length()>17)
+                personal_center_user_email.setText(pre.getString("user_email","").substring(0,17));
+            else personal_center_user_email.setText(pre.getString("user_email",""));
             personal_center_nickName.setText(pre.getString("user_nickname",""));
             personal_center_user_points.setText(pre.getString("user_points",""));
             SignOut.setOnClickListener(new View.OnClickListener() {
@@ -233,9 +235,13 @@ public class PersonalCenter extends AppCompatActivity {
                     break;
                 case R.id.userSecurityLayout:
                     if(loginOrNot()){
-                        Intent intent4 = new Intent(PersonalCenter.this, AnQuan.class);
-                        startActivity(intent4);
-                        finish();
+                        if(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_email","").length()>17)
+                            Toast.makeText(getApplicationContext(),"请使用邮箱登录！",Toast.LENGTH_SHORT).show();
+                        else{
+                            Intent intent4 = new Intent(PersonalCenter.this, AnQuan.class);
+                            startActivity(intent4);
+                            finish();
+                        }
                     }else {
                         Toast toast=Toast.makeText(getApplicationContext(),"请先登录哦！",Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER,0,0);

@@ -20,8 +20,8 @@
         from plan,user where plan.companion_id=user.id and user_id=#{userId} and plan_status=0
     </select>
     <insert id="insertPlanInfo" parameterType="com.entity.Plan">
-        insert into plan('user_id','companion_id','plan_time','plan_address','plan_status')
-        values (#{userId},#{companionId},#{planTime},#{planAddress},#{planStatus})
+        insert into plan(user_id, companion_id, plan_time, plan_address, plan_status)
+        values (#{userId},#{companionId},#{planTime},#{planAddress},#{status})
     </insert>
     <delete id="deletePlanById" parameterType="com.entity.Plan">
         delete from plan where id=#{planId}

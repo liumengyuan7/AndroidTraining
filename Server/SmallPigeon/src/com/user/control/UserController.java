@@ -68,7 +68,17 @@ public class UserController {
 			return result;
 		}
 	}
-	
+
+	//qq登录
+	@ResponseBody
+	@RequestMapping(value = "loginForQq",produces = "text/html;charset=UTF-8")
+	public String loginForQq(@RequestParam("nickname") String nickname,
+	                         @RequestParam("figureUrl") String url,
+	                         @RequestParam("userSex") String userSex,
+	                         @RequestParam("openId") String openId){
+		return this.userService.loginForQq(nickname, url, userSex, openId);
+	}
+
 	//验证码的接收以及邮箱的验证
 	@ResponseBody
 	@RequestMapping("verifyCodeAndEmail")
@@ -192,6 +202,7 @@ public class UserController {
 	    if(nearbyUser!=null) return nearbyUser;
 	    else return "false";
     }
+
 	//更新学生信息 加入学校 学号 姓名
 	@ResponseBody
 	@RequestMapping("updateUserByMsg")
@@ -204,6 +215,7 @@ public class UserController {
 		System.out.println(userId+userName+userSno+userSchool);
 		return this.userService.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages,status);
 	}
+
 	//获取的学生证图片存入out中
 	@ResponseBody
 	@RequestMapping("/postIdentifyImages")
@@ -217,6 +229,7 @@ public class UserController {
 		item.write(new File(path+item.getName()));
 		return "true";
 	}
+
 	//获得认证状态  是否认证
 	@ResponseBody
 	@RequestMapping("/getStatusByUserId")

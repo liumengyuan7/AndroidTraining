@@ -9,10 +9,11 @@ import com.user.dao.UserMapper;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +79,16 @@ public class UserService {
 		}
 	}
 
+	//qq登录
+	public String loginForQq(String nickname, String url, String userSex, String openId){
+		String gender = null;
+		if(userSex.equals("男")) gender = "man";
+		else gender = "woman";
+		String result = userRegister(openId,"secret",nickname,gender,"secret");
+		getQqAvatar(url,openId);
+		return userLogin(openId,"secret");
+	}
+
 	//用户注册
 	public String userRegister(String userEmail,String userPassword,String userNickname,String userSex,String userInterest){
 		Map userConfirm = this.userMapper.selectUserByEmail(userEmail);
@@ -92,7 +103,9 @@ public class UserService {
 			int result1 = this.userMapper.insertUserInfo(user);
 
 			//为用户添加兴趣
-			String[] interests = userInterest.split(",");
+			String[] interests = null;
+			if(userInterest.equals("secret")) interests = new String[]{"outdoor"};
+			else interests = userInterest.split(",");
 			int result2 = this.interestService.insertInterestInfo(interests,user.getId());
 			if(result1>0 && result2>0) return user.getId()+"";
 			else return "false";
@@ -225,7 +238,8 @@ public class UserService {
 		}
 		return userInfoAndInterest;
 	}
-    //更新学生信息
+
+	//更新学生信息
 	public String updateUserByMsg(String userId,String userName,String userSno,String userSchool,String identifyImages,String status){
 		int n = this.userMapper.updateUserByMsg(userId,userName,userSno,userSchool,identifyImages,status);
 		if(n>0) {
@@ -234,10 +248,38 @@ public class UserService {
             return "false";
         }
 	}
+
 	//通过用户id得到其是否被认证
 	public String getStatusByUserId(String userId){
 		String result = this.userMapper.getStatusByUserId(userId);
 		System.out.println(result);
 		return this.userMapper.getStatusByUserId(userId);
+	}
+
+	//将qq头像下载到本地
+	public void getQqAvatar(String avatarUrl,String avatarName){
+		try {
+			URL url = new URL(avatarUrl);
+			//打开网络输入流
+	        DataInputStream dis = new DataInputStream(url.openStream());
+	        String newImageName= servletContext.getRealPath("")+"avatar\\"+avatarName+".jpg";
+			//建立一个新的文件
+	        FileOutputStream fos = new FileOutputStream(new File(newImageName));
+	        byte[] buffer = new byte[1024];
+	        int length;
+			//开始填充数据
+	        while((length = dis.read(buffer))>0){
+	            fos.write(buffer,0,length);
+	        }
+	        dis.close();
+	        fos.close();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

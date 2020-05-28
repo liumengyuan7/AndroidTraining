@@ -20,10 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.Utils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
+import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     private Tencent mTencent;
     private BaseUiListener  mListener;
     private UserInfo mInfo;
-    private String name, figureurl,gender;
+    private String name, figureurl,gender,openID;
     private LinearLayout ll_qqLogin;
 
     private Handler handlerLogin = new Handler(){
@@ -178,6 +180,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //qq登录向后台发送数据
+    public void loginForQq(){
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("user","loginForQq",
+                        "nickname="+name+"&&figureUrl="+figureurl+"&&userSex="+gender+"&&openId="+openID);
+                Message message = new Message();
+                message.obj = result;
+                handlerLogin.sendMessage(message);
+            }
+        }.start();
+    }
+
     //向服务器发送数据
     private void sendMessageToServer(){
         try {
@@ -260,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
             //获取openid和token
             JSONObject jb = (JSONObject) object;
             try {
-                String openID = jb.getString("openid");  //openid用户唯一标识
+                openID = jb.getString("openid");  //openid用户唯一标识
                 String access_token = jb.getString("access_token");
                 String expires = jb.getString("expires_in");
 
@@ -272,20 +288,15 @@ public class LoginActivity extends AppCompatActivity {
                 mInfo.getUserInfo(new IUiListener() {
                     @Override
                     public void onComplete(Object object) {
-                        Toast toast=Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        LinearLayout toastView = (LinearLayout) toast.getView();
-                        ImageView imgBack = new ImageView(getApplicationContext());
-                        imgBack.setImageResource(R.drawable.r);
-                        toastView.addView(imgBack, 0);
-                        toast.show();
                         JSONObject jb = (JSONObject) object;
                         Log.e("json",jb+"");
                         try {
                             name = jb.getString("nickname");//昵称
                             figureurl = jb.getString("figureurl_qq_2");  //头像图片的url
                             gender = jb.getString("gender");//性别
-                            Log.e("json",figureurl+"");
+                            Log.e("json",openID);
+                            loginForQq();
+//                            Toast.makeText(getApplicationContext(), openID, Toast.LENGTH_SHORT).show();
 //                            Glide.with(LoginActivity.this).load(figureurl).into(figure);
 
                         } catch (Exception e) {
