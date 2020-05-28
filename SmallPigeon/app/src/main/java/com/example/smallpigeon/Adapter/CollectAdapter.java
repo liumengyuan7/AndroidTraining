@@ -94,7 +94,6 @@ public class CollectAdapter extends BaseAdapter {
                     //评论收藏数量
                     holder.commentNum = convertView.findViewById(R.id.commentNum);
                     holder.collectNum = convertView.findViewById(R.id.collectNum);
-                    showAndHideCheckBox();//控制CheckBox的那个的框显示与隐藏
                     break;
                 case VIEWTYPSECOND:
                     convertView = LayoutInflater.from(context).inflate(R.layout.my_collect_listitem2,null);
@@ -119,6 +118,9 @@ public class CollectAdapter extends BaseAdapter {
                     holder.tv_date = convertView.findViewById(R.id.tv_date);
                     holder.device = convertView.findViewById(R.id.device);
                     holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    //评论收藏数量
+                    holder.commentNum = convertView.findViewById(R.id.commentNum);
+                    holder.collectNum = convertView.findViewById(R.id.collectNum);
                     break;
                 case VIEWTYPFOUR:
                     convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem4,null);
@@ -129,6 +131,9 @@ public class CollectAdapter extends BaseAdapter {
                     holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
                     holder.tv_user_txt = convertView.findViewById(R.id.tv_user_txt);
                     holder.tv_user = convertView.findViewById(R.id.tv_user);
+                    //评论收藏数量
+                    holder.commentNum = convertView.findViewById(R.id.commentNum);
+                    holder.collectNum = convertView.findViewById(R.id.collectNum);
                     break;
             }
             convertView.setTag(holder);
@@ -176,6 +181,30 @@ public class CollectAdapter extends BaseAdapter {
                     showImges(dynamicContent.getForwardContent().getDpushImage2(), holder.dynamic_item_img2);
                 }
                 break;
+            case VIEWTYPTHIRD:
+                showAndHideCheckBox();//控制CheckBox的那个的框显示与隐藏
+                holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+                holder.tv_date.setText(dynamicContent.getDate());
+                holder.device.setText(dynamicContent.getDevice());
+                //显示评论和收藏数量
+                holder.commentNum.setText(dynamicContent.getComment_Num()+"");
+                holder.collectNum.setText(dynamicContent.getCollect_Num()+"");
+                holder.dynamic_item_txt.setText(dynamicContent.getContent());
+                holder.checkBox.setChecked(stateCheckedMap.get(position));
+                break;
+            case VIEWTYPFOUR:
+                showAndHideCheckBox();//控制CheckBox的那个的框显示与隐藏
+                holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
+                holder.tv_date.setText(dynamicContent.getDate());
+                holder.device.setText(dynamicContent.getDevice());
+                holder.dynamic_item_txt.setText(dynamicContent.getContent());
+                holder.tv_user.setText(dynamicContent.getForwardContent().getDuserNickname()+"：");
+                holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
+                holder.checkBox.setChecked(stateCheckedMap.get(position));
+                //显示评论和收藏数量
+                holder.commentNum.setText(dynamicContent.getComment_Num()+"");
+                holder.collectNum.setText(dynamicContent.getCollect_Num()+"");
+                break;
         }
 
         //缓存头像
@@ -191,6 +220,7 @@ public class CollectAdapter extends BaseAdapter {
     private void showImges(String imgName,ImageView imageView) {
         String url = "http://"+this.context.getResources().getString(R.string.ip_address)
                 +":8080/smallpigeon/dynamic/"+imgName;
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(this.context).load(url).into(imageView);
     }
 
