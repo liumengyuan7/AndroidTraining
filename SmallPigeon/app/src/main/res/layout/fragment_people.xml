@@ -35,6 +35,8 @@
         <ListView
             android:id="@+id/dynamic_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:divider="#E4E4E4"
+            android:dividerHeight="1.5px"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

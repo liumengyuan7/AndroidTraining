@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/plan_list"
-            />
+            android:divider="#E4E4E4"
+            android:dividerHeight="1.5px"/>
     </LinearLayout>
 </LinearLayout>

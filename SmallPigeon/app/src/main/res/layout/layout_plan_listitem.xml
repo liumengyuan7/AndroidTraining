@@ -1,184 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
     <LinearLayout
-        android:id="@+id/item_box"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="220dp">
-
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+        <ImageView
+            android:id="@+id/match_userImg"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/qq"/>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我的计划"
-                android:textSize="20sp"
-                android:textColor="#000" />
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp">
             <LinearLayout
-                android:gravity="right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="未完成"
-                    android:textColor="#ff0000"
-                    android:layout_marginRight="10dp"
-                    android:id="@+id/plan_status" />
-
-                <ImageView
-                    android:id="@+id/plan_delete"
-                    android:layout_gravity="center"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/delete" />
+                    android:text="伙伴昵称："
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="aaa"
+                    android:textSize="15sp"
+                    android:id="@+id/plan_matchNickname"
+                    android:textColor="#6477e4"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="约定时间："
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2022年5月20日"
+                    android:textSize="15sp"
+                    android:id="@+id/plan_time"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="约定地点："
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="aaa"
+                    android:textSize="15sp"
+                    android:id="@+id/plan_matchAddress"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="完成状态："
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="aaa"
+                    android:textSize="15sp"
+                    android:id="@+id/plan_status" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="top"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="180dp">
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_weight="3.5"
-                android:layout_marginLeft="5dp"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
-
-                <com.example.smallpigeon.RoundImageView
-                    android:id="@+id/match_userImg"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/woman"
-                    imagecontrol:border_inside_color="#259B24"
-                    imagecontrol:border_outside_color="#ffffff"
-                    imagecontrol:border_thickness="1dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="160dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="时间："
-                        android:textSize="20sp"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        android:id="@+id/plan_time" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="地点："
-                        android:textSize="20sp"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        android:id="@+id/plan_matchAddress" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="伙伴昵称："
-                        android:textSize="20sp"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        android:id="@+id/plan_matchNickname" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="伙伴账号："
-                        android:textSize="20sp"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        android:id="@+id/plan_matchEmail" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:gravity="right"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                       android:id="@+id/go_wancheng"
-                       android:layout_width="wrap_content"
-                       android:layout_height="40dp"
-                        android:background="@drawable/circular"
-                       android:layout_marginRight="35dp"
-                       android:text="去完成"
-                       android:textSize="18sp"
-                       android:textColor="#000000" />
-                </LinearLayout>
-            </LinearLayout>
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/plan_delete"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:src="@drawable/d" />
         </LinearLayout>
+
+
     </LinearLayout>
-</LinearLayout>
+
+
+</RelativeLayout>

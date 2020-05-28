@@ -501,6 +501,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     private void showImges(String imgName,ImageView imageView) {
         String url = "http://"+this.context.getResources().getString(R.string.ip_address)
                 +":8080/smallpigeon/dynamic/"+imgName;
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(this.context).load(url).into(imageView);
     }
 

@@ -79,25 +79,14 @@ public class MyplanAdapter extends BaseAdapter{
 
         //计划状态-默认为未完成
         TextView plan_status = convertView.findViewById( R.id.plan_status );
-        Button go_wancheng = convertView.findViewById( R.id.go_wancheng );
         String status = dataSourse.get(position).get("plan_status");
         if(status.equals("1")){
             plan_status.setText("已完成");
             plan_status.setTextColor(Color.parseColor("#108A10"));
-            go_wancheng.setVisibility(View.INVISIBLE);
         }
         else if(status.equals("0")){
             plan_status.setText("未完成");
             plan_status.setTextColor(Color.parseColor("#ff0000"));
-            go_wancheng.setVisibility(View.VISIBLE);
-            //跳转到匹配界面完成跑步
-            go_wancheng.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent( context, MachingActivity.class );
-                    context.startActivity(intent);
-                }
-            });
         }
 
         //删除按钮
