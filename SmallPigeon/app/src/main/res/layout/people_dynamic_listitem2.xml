@@ -127,18 +127,6 @@
         android:layout_marginLeft="18dp"
         android:layout_marginTop="12dp">
 
-<!--        <TextView-->
-<!--            android:id="@+id/from"-->
-<!--            android:text="来自"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/device"-->
-<!--            android:text="VIVO X23"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/device" />-->
         <ImageView
             android:id="@+id/from"
             android:src="@drawable/iphone"

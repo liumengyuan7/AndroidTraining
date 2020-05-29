@@ -270,7 +270,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
-                holder.ll_forward.setVisibility(View.GONE);//转发的状态隐藏转发按钮
+//                holder.ll_forward.setVisibility(View.GONE);//转发的状态隐藏转发按钮
                 holder.ll_toComment.setTag(position);
                 holder.ll_forward.setTag(position);
                 //缓存发布的动态图片 来自被转发动态
@@ -303,7 +303,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                 holder.tv_user_txt.setText(dynamicContent.getForwardContent().getDpushContent());
                 holder.ll_toComment.setOnClickListener(this);
                 holder.ll_forward.setOnClickListener(this);
-                holder.ll_forward.setVisibility(View.GONE);//转发状态隐藏转发
+//                holder.ll_forward.setVisibility(View.GONE);//转发状态隐藏转发
                 holder.ll_toComment.setTag(position);
                 holder.ll_forward.setTag(position);
                 break;

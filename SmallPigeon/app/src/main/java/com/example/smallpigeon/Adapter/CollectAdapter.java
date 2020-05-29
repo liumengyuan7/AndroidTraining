@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -112,18 +113,19 @@ public class CollectAdapter extends BaseAdapter {
                     holder.collectNum = convertView.findViewById(R.id.collectNum);
                     break;
                 case VIEWTYPTHIRD:
-                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem3,null);
+                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem,null);
                     holder.iv_icon = convertView.findViewById(R.id.iv_icon);
                     holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
                     holder.tv_date = convertView.findViewById(R.id.tv_date);
                     holder.device = convertView.findViewById(R.id.device);
                     holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    holder.ll_img = convertView.findViewById(R.id.ll_img);
                     //评论收藏数量
                     holder.commentNum = convertView.findViewById(R.id.commentNum);
                     holder.collectNum = convertView.findViewById(R.id.collectNum);
                     break;
                 case VIEWTYPFOUR:
-                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem4,null);
+                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem2,null);
                     holder.iv_icon = convertView.findViewById(R.id.iv_icon);
                     holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
                     holder.tv_date = convertView.findViewById(R.id.tv_date);
@@ -131,6 +133,7 @@ public class CollectAdapter extends BaseAdapter {
                     holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
                     holder.tv_user_txt = convertView.findViewById(R.id.tv_user_txt);
                     holder.tv_user = convertView.findViewById(R.id.tv_user);
+                    holder.ll_img = convertView.findViewById(R.id.ll_img);
                     //评论收藏数量
                     holder.commentNum = convertView.findViewById(R.id.commentNum);
                     holder.collectNum = convertView.findViewById(R.id.collectNum);
@@ -183,6 +186,7 @@ public class CollectAdapter extends BaseAdapter {
                 break;
             case VIEWTYPTHIRD:
                 showAndHideCheckBox();//控制CheckBox的那个的框显示与隐藏
+                holder.ll_img.setVisibility(View.GONE);
                 holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
                 holder.tv_date.setText(dynamicContent.getDate());
                 holder.device.setText(dynamicContent.getDevice());
@@ -194,6 +198,7 @@ public class CollectAdapter extends BaseAdapter {
                 break;
             case VIEWTYPFOUR:
                 showAndHideCheckBox();//控制CheckBox的那个的框显示与隐藏
+                holder.ll_img.setVisibility(View.GONE);
                 holder.tv_nickName.setText(dynamicContent.getUserContent().getUserNickname());
                 holder.tv_date.setText(dynamicContent.getDate());
                 holder.device.setText(dynamicContent.getDevice());
@@ -245,6 +250,7 @@ public class CollectAdapter extends BaseAdapter {
         TextView tv_user;
         TextView tv_user_txt;
         public CheckBox checkBox;
+        LinearLayout ll_img;
     }
 
     public boolean isShowCheckBox() {
