@@ -60,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp">
 
             <TextView
@@ -69,40 +68,47 @@
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
 
             <LinearLayout
-                android:id="@+id/ll_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible">
+                android:layout_height="match_parent"
+                android:background="#F4F5F9"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:paddingBottom="10dp">
 
-                <ImageView
-                    android:id="@+id/dynamic_item_img"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp"
-                    android:src="@drawable/bg_my"/>
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp">
 
-                <ImageView
-                    android:id="@+id/dynamic_item_img2"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp" />
+                    <TextView
+                        android:id="@+id/tv_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="用户："
+                        android:textColor="@color/forward_user"/>
+                    <TextView
+                        android:id="@+id/tv_user_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="转发内容"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp">
 
                 <ImageView
                     android:id="@+id/from"

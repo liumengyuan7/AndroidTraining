@@ -72,34 +72,6 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:id="@+id/ll_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/dynamic_item_img"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="5dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp"
-                    android:src="@drawable/bg_my"/>
-
-                <ImageView
-                    android:id="@+id/dynamic_item_img2"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
