@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -423,9 +424,9 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
                     Timestamp pushTime = new Timestamp(new Date().getTime());
                     int forwardId = list.get(position).getDynamicId();
                     if (list.get(position).getImages()==null || list.get(position).getImages().equals("") || list.get(position).getImages().equals("null")){
-                        addForwardDynamic(pushTime, nInputContentText ,forwardId,3);
+                        addForwardDynamic(pushTime, nInputContentText ,forwardId,3, Build.MODEL);
                     }else {
-                        addForwardDynamic(pushTime, nInputContentText, forwardId,1);
+                        addForwardDynamic(pushTime, nInputContentText, forwardId,1,Build.MODEL);
                     }
                     mInputManager.hideSoftInputFromWindow(et_discuss.getWindowToken(),0);
                     popupWindow.dismiss();
@@ -551,7 +552,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
     }
 
     //插入转发信息  当前转发者id  转发时间 转发内容  转发动态的id  转发状态 1 为转发 0为不转发
-    private void addForwardDynamic(Timestamp pushTime, String pushContent,int forwardId,int type){
+    private void addForwardDynamic(Timestamp pushTime, String pushContent,int forwardId,int type,String device){
         Handler handler1 = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -572,7 +573,7 @@ public class PeopleAdapter extends BaseAdapter  implements View.OnClickListener{
             @Override
             public void run() {
                 String result = new Utils().getConnectionResult("dynamic","addForwardDynamic",
-                        "userId="+userId +"&&pushTime="+pushTime+"&&pushContent="+pushContent+"&&forwardId="+forwardId+"&&type="+type);
+                        "userId="+userId +"&&pushTime="+pushTime+"&&pushContent="+pushContent+"&&forwardId="+forwardId+"&&type="+type+"&&device="+device);
                 Message message = new Message();
                 message.obj = result;
                 handler1.sendMessage(message);

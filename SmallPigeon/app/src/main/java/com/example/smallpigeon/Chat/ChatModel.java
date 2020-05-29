@@ -40,13 +40,13 @@ public class ChatModel {
                             JSONArray jsonArray = new JSONArray(friends);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
-                                EaseUser contact = new EaseUser(jsonObject1.get("user_nickname").toString());
-                                contact.setId(Integer.parseInt(jsonObject1.get("id").toString()));
-                                contact.setUserEmail(jsonObject1.get("user_email").toString());
-                                contact.setNickname(jsonObject1.get("user_nickname").toString());
-                                contact.setUserSex(jsonObject1.get("user_sex").toString());
-                                contact.setUserPoints(Integer.parseInt(jsonObject1.get("user_points").toString()));
+//                                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
+                                EaseUser contact = new EaseUser(jsonObject.get("user_nickname").toString());
+                                contact.setId(Integer.parseInt(jsonObject.get("id").toString()));
+                                contact.setUserEmail(jsonObject.get("user_email").toString());
+                                contact.setNickname(jsonObject.get("user_nickname").toString());
+                                contact.setUserSex(jsonObject.get("user_sex").toString());
+                                contact.setUserPoints(Integer.parseInt(jsonObject.get("user_points").toString()));
                                 contactList.put("easeUI"+i,contact);
                             }
                         } catch (JSONException e) {
@@ -63,13 +63,13 @@ public class ChatModel {
                             JSONArray jsonArray = new JSONArray(re);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
-                                EaseUser userContent = new EaseUser(jsonObject1.get("user_nickname").toString());
-                                userContent.setId(Integer.parseInt(jsonObject1.get("id").toString()));
-                                userContent.setUserEmail(jsonObject1.get("user_email").toString());
-                                userContent.setNickname(jsonObject1.get("user_nickname").toString());
-                                userContent.setUserSex(jsonObject1.get("user_sex").toString());
-                                userContent.setUserPoints(Integer.parseInt(jsonObject1.get("user_points").toString()));
+//                                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
+                                EaseUser userContent = new EaseUser(jsonObject.get("user_nickname").toString());
+                                userContent.setId(Integer.parseInt(jsonObject.get("id").toString()));
+                                userContent.setUserEmail(jsonObject.get("user_email").toString());
+                                userContent.setNickname(jsonObject.get("user_nickname").toString());
+                                userContent.setUserSex(jsonObject.get("user_sex").toString());
+                                userContent.setUserPoints(Integer.parseInt(jsonObject.get("user_points").toString()));
                                 allUser.put("easeUI"+i,userContent);
                             }
                         } catch (JSONException e) {
@@ -86,13 +86,13 @@ public class ChatModel {
                             JSONArray jsonArray = new JSONArray(like);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
-                                EaseUser likeContent = new EaseUser(jsonObject1.get("user_nickname").toString());
-                                likeContent.setId(Integer.parseInt(jsonObject1.get("id").toString()));
-                                likeContent.setUserEmail(jsonObject1.get("user_email").toString());
-                                likeContent.setNickname(jsonObject1.get("user_nickname").toString());
-                                likeContent.setUserSex(jsonObject1.get("user_sex").toString());
-                                likeContent.setUserPoints(Integer.parseInt(jsonObject1.get("user_points").toString()));
+//                                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
+                                EaseUser likeContent = new EaseUser(jsonObject.get("user_nickname").toString());
+                                likeContent.setId(Integer.parseInt(jsonObject.get("id").toString()));
+                                likeContent.setUserEmail(jsonObject.get("user_email").toString());
+                                likeContent.setNickname(jsonObject.get("user_nickname").toString());
+                                likeContent.setUserSex(jsonObject.get("user_sex").toString());
+                                likeContent.setUserPoints(Integer.parseInt(jsonObject.get("user_points").toString()));
                                 contactLikeList.put("easeUI"+i,likeContent);
                             }
                             Log.e("模糊查询得到数据", contactLikeList.toString());

@@ -21,8 +21,8 @@
 
 
     <insert id="insertCollect">
-        insert into collect(dynamic_id, user_id)
-        value (#{dynamicId},#{userId})
+        insert into collect(dynamic_id, user_id,type)
+        value (#{dynamicId},#{userId},#{type})
     </insert>
     <delete id="deleteCollect">
         delete from collect

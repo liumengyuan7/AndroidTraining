@@ -231,8 +231,8 @@ public class DynamicController {
      */
     @ResponseBody
     @RequestMapping("/addCollect")
-    public  String addCollect(@RequestParam("dynamicId") String dynamicId,@RequestParam("userId") String userId){
-        String result = this.dynamicService.addCollect(dynamicId,userId);
+    public  String addCollect(@RequestParam("dynamicId") String dynamicId,@RequestParam("userId") String userId,@RequestParam("type") String type){
+        String result = this.dynamicService.addCollect(dynamicId,userId,type);
         return result;
     }
     /*

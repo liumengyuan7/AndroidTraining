@@ -183,8 +183,8 @@ public class MyCommunity extends AppCompatActivity {
         SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = pre.getString("user_id","");
         Log.e("userId",userId);
-        //todo:显示后台服务器存储的当前用户所有发布的动态
-        selectAllDynamic(46+"");
+
+        selectAllDynamic(userId);
         //前端测试用
 //        DynamicContent content = new DynamicContent();
 //        UserContent userContent = new UserContent();

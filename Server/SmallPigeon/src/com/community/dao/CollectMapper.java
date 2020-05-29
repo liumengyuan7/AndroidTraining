@@ -14,7 +14,7 @@ public interface CollectMapper {
     //得到收藏动态的收藏数量
     public int getCollectNum(@Param("dynamicId") int dynamicId);
     //收藏
-    public int insertCollect(@Param("dynamicId") String dynamicId,@Param("userId") String userId);
+    public int insertCollect(@Param("dynamicId") String dynamicId,@Param("userId") String userId,@Param("type") String type);
     //取消收藏
     public int deleteCollect(@Param("dynamicId") String dynamicId,@Param("userId") String userId);
     //批量删除收藏数据

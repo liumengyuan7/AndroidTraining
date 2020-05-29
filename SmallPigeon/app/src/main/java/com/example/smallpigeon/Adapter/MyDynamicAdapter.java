@@ -390,6 +390,7 @@ public class MyDynamicAdapter extends BaseAdapter  implements View.OnClickListen
 //        ViewGroup.LayoutParams layoutParams =  imageView.getLayoutParams();
 //        layoutParams.height=500;
 //        imageView.setLayoutParams(layoutParams);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(this.context).load(url).into(imageView);
     }
 

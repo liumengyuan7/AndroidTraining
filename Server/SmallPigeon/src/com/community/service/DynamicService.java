@@ -215,8 +215,8 @@ public class DynamicService {
         else return new Gson().toJson(dynamics);
     }
     //收藏动态
-    public String addCollect(String dynamicId, String userId){
-        int result = this.collectMapper.insertCollect(dynamicId,userId);
+    public String addCollect(String dynamicId, String userId,String type){
+        int result = this.collectMapper.insertCollect(dynamicId,userId,type);
         if(result>0){
             return "true";
         }else{

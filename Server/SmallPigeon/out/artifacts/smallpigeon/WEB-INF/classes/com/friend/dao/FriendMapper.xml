@@ -8,8 +8,8 @@
         <result property="myId" column="my_id" />
         <result property="friendId" column="friend_id" />
     </resultMap>
-    <select id="getFriendById" resultType="java.util.Map">
-        select user.* from user,friend where friend_id =user.id and my_id=#{id}
+    <select id="getMyFriendById" resultType="java.util.Map">
+        select distinct user.* from user,friend where friend_id =user.id and my_id=#{id}
     </select>
     <insert id="insertFriendInfo" parameterType="com.entity.Friend">
         insert into friend(my_id, friend_id) values(#{myId},#{friendId})

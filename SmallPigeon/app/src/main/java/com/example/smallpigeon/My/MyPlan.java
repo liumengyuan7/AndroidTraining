@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -49,6 +50,7 @@ public class MyPlan extends AppCompatActivity {
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0;i<jsonArray.length();i++){
                         JSONObject json = jsonArray.getJSONObject(i);
+                        Log.e("当前第"+i+"个计划",json.toString());
                         Map<String, String> item = new HashMap<>();
                         item.put("plan_id",json.getString("id"));
                         String time = json.get("plan_time").toString();
