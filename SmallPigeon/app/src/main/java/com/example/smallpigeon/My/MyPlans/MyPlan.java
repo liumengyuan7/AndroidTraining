@@ -1,4 +1,4 @@
-package com.example.smallpigeon.My;
+package com.example.smallpigeon.My.MyPlans;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -65,7 +65,7 @@ public class MyPlan extends AppCompatActivity {
                         information.add(item);
                     }
                     ListView listView1 = findViewById(R.id.plan_list);
-                    myplanAdapter = new MyplanAdapter(getApplicationContext(),information,R.layout.layout_plan_listitem);
+                    myplanAdapter = new MyplanAdapter(getApplicationContext(),information,R.layout.item_swipe_delete);
                     listView1.setAdapter(myplanAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
