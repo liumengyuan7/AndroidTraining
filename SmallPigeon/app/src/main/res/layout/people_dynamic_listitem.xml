@@ -18,7 +18,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/zh"
-            imagecontrol:border_inside_color="@color/colorPrimary"
+            imagecontrol:border_inside_color="@color/white"
             imagecontrol:border_outside_color="@color/white"
             imagecontrol:border_thickness="1dp"/>
 
@@ -96,6 +96,8 @@
         android:layout_marginBottom="10dp">
 
         <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/dynamic_item_txt"
             android:text="此次跑步分享内容"
             android:textSize="18sp"
@@ -105,6 +107,7 @@
 
         <LinearLayout
             android:id="@+id/ll_img"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible">
@@ -135,17 +138,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="12dp">
 
-            <TextView
+<!--            <TextView-->
+<!--                android:id="@+id/from"-->
+<!--                android:text="来自"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content" />-->
+            <ImageView
                 android:id="@+id/from"
-                android:text="来自"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:src="@drawable/iphone"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
             <TextView
                 android:id="@+id/device"
                 android:text="VIVO X23"
+                android:paddingTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/device" />

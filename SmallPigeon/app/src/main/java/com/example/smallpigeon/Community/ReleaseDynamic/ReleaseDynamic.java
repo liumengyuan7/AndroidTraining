@@ -116,9 +116,9 @@ public class ReleaseDynamic extends AppCompatActivity {
 //                dynamicContent.setImg(imgInfo);
                 Timestamp pushTime = new Timestamp(new Date().getTime());
                 if (imgInfo.equals("")||imgInfo==null){
-                    sendMessageToServer(id,dynamic_content.getText().toString(),pushTime,2);
+                    sendMessageToServer(id,dynamic_content.getText().toString(),pushTime,2,Build.MODEL);
                 }else {
-                    sendMessageToServer(id,dynamic_content.getText().toString(),pushTime,0);
+                    sendMessageToServer(id,dynamic_content.getText().toString(),pushTime,0,Build.MODEL);
                 }
 
                 //将动态信息插入数据库
@@ -320,14 +320,14 @@ public class ReleaseDynamic extends AppCompatActivity {
     }
 
     //将动态信息插入数据库
-    private void sendMessageToServer(String id, String pushContent, Timestamp pushTime,int type){
+    private void sendMessageToServer(String id, String pushContent, Timestamp pushTime,int type,String device){
         new Thread(){
             @Override
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.ip_address)
                             +":8080/smallpigeon/dynamic/addDynamic?userId="+id
-                            +"&&pushContent="+pushContent+"&&pushTime="+pushTime+"&&pushImg="+imgInfo+"&&type="+type);
+                            +"&&pushContent="+pushContent+"&&pushTime="+pushTime+"&&pushImg="+imgInfo+"&&type="+type+"&&device="+device);
                     Log.e("url",url.toString());
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

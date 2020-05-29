@@ -41,10 +41,10 @@ public class DynamicService {
     @Resource
     private CollectMapper collectMapper;
 
-    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg,String type) throws ParseException {
+    public String addDynamic(String userId, String pushTime, String pushContent, String pushImg,String type,String device) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         Date date = sdf.parse(pushTime);
-        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg,type);
+        int result = this.dynamicMapper.insertDynamic(userId,date,pushContent,pushImg,type,device);
         if(result>0){
             return "true";
         }else{
@@ -52,10 +52,10 @@ public class DynamicService {
         }
     }
     //添加转发动态的信息
-    public String addForwardDynamic(String userId, String pushTime, String pushContent,String forwardId,String type) throws ParseException {
+    public String addForwardDynamic(String userId, String pushTime, String pushContent,String forwardId,String type,String device) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         Date date = sdf.parse(pushTime);
-        int result = this.dynamicMapper.insertForwardDynamic(userId,date,pushContent,forwardId,type);
+        int result = this.dynamicMapper.insertForwardDynamic(userId,date,pushContent,forwardId,type,device);
         if(result>0){
             return "true";
         }else{

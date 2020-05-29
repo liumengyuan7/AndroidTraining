@@ -383,5 +383,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mTencent.onActivityResultData(requestCode, resultCode, data, mListener);
+        if(requestCode == Constants.REQUEST_API) {
+            if(resultCode == Constants.REQUEST_LOGIN) {
+                mTencent.handleResultData(data, new BaseUiListener());
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mTencent!=null){
+            mTencent.logout(LoginActivity.this);
+        }
+        super.onDestroy();
     }
 }

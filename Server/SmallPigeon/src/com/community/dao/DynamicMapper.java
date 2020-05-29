@@ -13,7 +13,7 @@ public interface DynamicMapper {
                              @Param("pushTime") Date pushTime,
                              @Param("pushContent") String pushContent,
                              @Param("pushImg") String pushImg,
-                             @Param("type") String type);
+                             @Param("type") String type,@Param("device") String device);
     public List<Dynamics> queryAllDynamic();
     public int updateZanNum(@Param("dynamicId") String dynamicId,@Param("zanNum") String zanNum);
     public List<Dynamics> queryAllDynamicByUserId(@Param("userId") String userId);
@@ -22,7 +22,7 @@ public interface DynamicMapper {
                          @Param("pushTime") Date pushTime,
                          @Param("pushContent") String pushContent,
                          @Param("forwardId") String forwardId,
-                         @Param("type") String type);
+                         @Param("type") String type,@Param("device") String device);
     //查询转发数量
     public int changeForwardNum(@Param("dynamicId") String dynamicId,@Param("forwardNum") String forwardNum);
     //查询转发的信息
