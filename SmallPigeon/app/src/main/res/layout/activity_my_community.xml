@@ -4,28 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#259B24">
+        android:background="#ededed">
 
         <ImageView
             android:id="@+id/iv_back"
-            android:src="@drawable/back_white"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
+            android:src="@drawable/back_black"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="253dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:text="我的社区"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/my_dynamic_list"
