@@ -1,6 +1,7 @@
 package com.example.smallpigeon.Fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -106,8 +107,9 @@ public class RunFragment extends Fragment {
                         updateUserLocation(lngAndLag);
                         Intent intentM = new Intent( getContext(), MachingActivity.class );
                         intentM.putExtra("location",lngAndLag);  //更新用户位置后传递位置到匹配界面
-                        lngAndLag = "";
+                        Log.e("经度和纬度",lngAndLag);
                         startActivity( intentM );
+                        lngAndLag = "";
                     }else{
                         Toast toast=Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER,0,0);
@@ -165,6 +167,7 @@ public class RunFragment extends Fragment {
     }
 
     //获取当前的经纬度
+    @SuppressLint("MissingPermission")
     public void getUserLocation(){
         LocationManager locationManager;
         String serviceName = Context.LOCATION_SERVICE;
@@ -175,8 +178,8 @@ public class RunFragment extends Fragment {
             toast.setGravity(Gravity.CENTER,0,0);
             toast.show();
         }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1000, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 1000, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1000, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1000, locationListener);
         }
     }
 

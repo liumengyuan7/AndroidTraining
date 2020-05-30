@@ -4,8 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:paddingTop="3dp">
     <LinearLayout
+        android:padding="3dp"
+        android:background="@drawable/match_user_circular"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="260dp">
@@ -18,10 +23,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="计划"
+                android:text=" 计划"
                 android:textSize="20sp"
-                android:textColor="#000"
-                />
+                android:textColor="#000" />
             <LinearLayout
                 android:gravity="right"
                 android:layout_width="match_parent"
@@ -31,9 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="待完成"
-                    android:textColor="#ff0000"
-                    />
+                    android:text="待完成 "
+                    android:textColor="#ff0000" />
             </LinearLayout>
 
 
@@ -64,7 +67,7 @@
 
             </LinearLayout>
             <LinearLayout
-
+                android:layout_marginLeft="5dp"
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:gravity="center"

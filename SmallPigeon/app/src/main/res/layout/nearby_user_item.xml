@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
     <LinearLayout
+        android:background="@drawable/match_user_circular"
         android:layout_width="match_parent"
         android:layout_height="100dp">
         <com.example.smallpigeon.RoundImageView
@@ -20,7 +25,7 @@
                 android:gravity="bottom"
                 android:text="昵称：ydl"
                 android:textSize="15dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
             <TextView
@@ -28,7 +33,7 @@
                 android:gravity="top"
                 android:text="邮箱：156267102@qq.com"
                 android:textSize="15dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
         </LinearLayout>

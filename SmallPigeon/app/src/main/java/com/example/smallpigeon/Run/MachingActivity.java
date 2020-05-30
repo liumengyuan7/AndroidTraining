@@ -30,7 +30,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +66,9 @@ public class MachingActivity extends AppCompatActivity {
                     for (int i = 0;i<jsonArray.length();i++){
                         JSONObject json = jsonArray.getJSONObject(i);
                         Map<String, String> item = new HashMap<>();
-                        item.put("plan_time",json.getString("plan_time"));
+                        Date d = new Date(json.getString("plan_time"));
+                        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+                        item.put("plan_time",sdf.format(d));
                         item.put("plan_address",json.getString("plan_address"));
                         item.put("plan_email",json.getString("plan_email"));
                         item.put("plan_nickname",json.getString("plan_nickname"));
@@ -97,8 +101,6 @@ public class MachingActivity extends AppCompatActivity {
                 request.setClass(MachingActivity.this,NearbyUserActivity.class);
                 request.putExtra("nearbyUser",result);
                 startActivity(request);
-//                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-//                Log.e("aaaaaaaaaaaaaaaaaa",result);
             }
         }
     };
@@ -182,6 +184,7 @@ public class MachingActivity extends AppCompatActivity {
                 String userId = pre.getString("user_id","");
                 Intent response = getIntent();
                 String location = response.getStringExtra("location");
+                Log.e("经度和纬度",location);
                 String result = new Utils().getConnectionResult("user","getNearbyUser",
                         "location="+location+"&&userId="+userId);
                 Message message = new Message();
