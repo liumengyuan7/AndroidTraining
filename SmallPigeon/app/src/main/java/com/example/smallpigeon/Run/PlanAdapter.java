@@ -64,7 +64,9 @@ public class PlanAdapter extends BaseAdapter{
                 dataSourse.get(position).get("plan_email")+".jpg").into(matchUserImg);
         plan_time.setText(dataSourse.get(position).get("plan_time"));
         plan_address.setText(dataSourse.get(position).get("plan_address"));
-        plan_email.setText(dataSourse.get(position).get("plan_email"));
+        if(dataSourse.get(position).get("plan_email").length()>17)
+            plan_email.setText(dataSourse.get(position).get("plan_email").substring(0,17));
+        else plan_email.setText(dataSourse.get(position).get("plan_email"));
         plan_nickname.setText(dataSourse.get(position).get("plan_nickname"));
 
 
