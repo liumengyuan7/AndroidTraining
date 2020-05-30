@@ -96,13 +96,13 @@ public class AddContactActivity extends EaseBaseActivity {
 						JSONArray jsonArray = new JSONArray(like);
 						for (int i = 0; i < jsonArray.length(); i++) {
 							JSONObject jsonObject = jsonArray.getJSONObject(i);
-							JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
-							EaseUser likeContent = new EaseUser(jsonObject1.get("user_nickname").toString());
-							likeContent.setId(Integer.parseInt(jsonObject1.get("id").toString()));
-							likeContent.setUserEmail(jsonObject1.get("user_email").toString());
-							likeContent.setNickname(jsonObject1.get("user_nickname").toString());
-							likeContent.setUserSex(jsonObject1.get("user_sex").toString());
-							likeContent.setUserPoints(Integer.parseInt(jsonObject1.get("user_points").toString()));
+//							JSONObject jsonObject1 = new JSONObject(jsonObject.getString("attrs"));
+							EaseUser likeContent = new EaseUser(jsonObject.get("user_nickname").toString());
+							likeContent.setId(Integer.parseInt(jsonObject.get("id").toString()));
+							likeContent.setUserEmail(jsonObject.get("user_email").toString());
+							likeContent.setNickname(jsonObject.get("user_nickname").toString());
+							likeContent.setUserSex(jsonObject.get("user_sex").toString());
+							likeContent.setUserPoints(Integer.parseInt(jsonObject.get("user_points").toString()));
 	//							contactLikeList.put("easeUI"+i,likeContent);
 							userList.add(likeContent);
 							adapter.notifyDataSetChanged();

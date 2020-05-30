@@ -49,9 +49,9 @@ public class DynamicController {
     public String addDynamic(@RequestParam("userId") String userId,
                              @RequestParam("pushContent") String pushContent,
                              @RequestParam("pushTime") String pushTime,@RequestParam("pushImg") String pushImg,
-                             @RequestParam("type") String type) throws Exception {
+                             @RequestParam("type") String type,@RequestParam("device") String device) throws Exception {
         System.out.println(userId+pushContent+pushTime+pushImg);
-        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg,type);
+        String result =this.dynamicService.addDynamic(userId,pushTime,pushContent,pushImg,type,device);
         return result;
     }
     //    添加转发的动态到数据库
@@ -61,9 +61,9 @@ public class DynamicController {
                              @RequestParam("pushContent") String pushContent,
                              @RequestParam("pushTime") String pushTime,
                                 @RequestParam("forwardId") String forwardId,
-                               @RequestParam("type") String type) throws Exception {
+                               @RequestParam("type") String type,@RequestParam("device") String device) throws Exception {
         System.out.println(userId+pushContent+pushTime+type);
-        String result =this.dynamicService.addForwardDynamic(userId,pushTime,pushContent,forwardId,type);
+        String result =this.dynamicService.addForwardDynamic(userId,pushTime,pushContent,forwardId,type,device);
         return result;
     }
     //获取的图片存入out中
@@ -231,8 +231,8 @@ public class DynamicController {
      */
     @ResponseBody
     @RequestMapping("/addCollect")
-    public  String addCollect(@RequestParam("dynamicId") String dynamicId,@RequestParam("userId") String userId){
-        String result = this.dynamicService.addCollect(dynamicId,userId);
+    public  String addCollect(@RequestParam("dynamicId") String dynamicId,@RequestParam("userId") String userId,@RequestParam("type") String type){
+        String result = this.dynamicService.addCollect(dynamicId,userId,type);
         return result;
     }
     /*

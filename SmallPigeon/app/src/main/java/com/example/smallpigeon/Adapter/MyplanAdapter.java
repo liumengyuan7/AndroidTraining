@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smallpigeon.R;
 import com.example.smallpigeon.Run.MachingActivity;
 import com.example.smallpigeon.Utils;
@@ -71,12 +75,17 @@ public class MyplanAdapter extends BaseAdapter{
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(stringId, null);
         }
+        Log.e("dateSourse",dataSourse.toString());
         //获取控件id
         TextView plan_time = convertView.findViewById( R.id.plan_time );
         TextView plan_address = convertView.findViewById( R.id.plan_matchAddress );
-        TextView plan_email = convertView.findViewById( R.id.plan_matchEmail );
+//        TextView plan_email = convertView.findViewById( R.id.plan_matchEmail );
         TextView plan_nickname = convertView.findViewById( R.id.plan_matchNickname );
-
+        ImageView match_userImg=convertView.findViewById(R.id.iv_icon);
+//        RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
+//        Log.e("头像",dataSourse.get(position).get("plan_email"));
+//        Log.e("计划的头像","http://"+context.getResources().getString(R.string.ip_address)+":8080/smallpigeon/avatar/"+dataSourse.get(position).get("plan_email")+".jpg");
+        Glide.with(context).load("http://"+context.getResources().getString(R.string.ip_address)+":8080/smallpigeon/avatar/"+dataSourse.get(position).get("plan_email")+".jpg").into(match_userImg);
         //计划状态-默认为未完成
         TextView plan_status = convertView.findViewById( R.id.plan_status );
         String status = dataSourse.get(position).get("plan_status");
@@ -90,17 +99,31 @@ public class MyplanAdapter extends BaseAdapter{
         }
 
         //删除按钮
-        ImageView img=convertView.findViewById(R.id.plan_delete);
-
+//        ImageView img=convertView.findViewById(R.id.plan_delete);
+        TextView delete = convertView.findViewById(R.id.tv_delete);
         //添加数据
         plan_time.setText(dataSourse.get(position).get("plan_time"));
         plan_address.setText(dataSourse.get(position).get("plan_address"));
-        plan_email.setText(dataSourse.get(position).get("plan_email"));
+//        match_userImg.setText(dataSourse.get(position).get("plan_email"));
         plan_nickname.setText(dataSourse.get(position).get("plan_nickname"));
         String planId = dataSourse.get(position).get("plan_id");
         notifyDataSetChanged();
         //删除计划事件
-        img.setOnClickListener(new View.OnClickListener() {
+//        img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        Message message = new Message();
+//                        message.obj = new Utils().getConnectionResult("plan","deleteUserPlan","planId="+planId);
+//                        message.what = position;
+//                        handlePlan.sendMessage(message);
+//                    }
+//                }.start();
+//            }
+//        });
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Thread(){
@@ -114,7 +137,6 @@ public class MyplanAdapter extends BaseAdapter{
                 }.start();
             }
         });
-
         return convertView;
     }
 

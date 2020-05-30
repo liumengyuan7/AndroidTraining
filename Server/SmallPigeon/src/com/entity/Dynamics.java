@@ -24,6 +24,7 @@ public class Dynamics {
     private int commentNum;
     private int collectNum;
     private int dtype;
+    private String device;
     private ForwardContent forwardContent;
     private List<Comment> comments = new ArrayList<>();
 
@@ -137,6 +138,14 @@ public class Dynamics {
 
     public void setDtype(int dtype) {
         this.dtype = dtype;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
     }
 
     @Override

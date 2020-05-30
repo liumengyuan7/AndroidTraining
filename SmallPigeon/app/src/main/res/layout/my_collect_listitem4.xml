@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/detail_page_above_container"
+        android:id="@+id/ll_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical">
 
             <com.example.smallpigeon.RoundImageView
@@ -24,7 +24,6 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/zh"
-                imagecontrol:border_inside_color="@color/white"
                 imagecontrol:border_outside_color="@color/white"
                 imagecontrol:border_thickness="1dp"/>
 
@@ -61,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/dynamic_item_txt"
@@ -69,79 +68,111 @@
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
 
             <LinearLayout
-                android:id="@+id/ll_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible">
+                android:layout_height="match_parent"
+                android:background="#F4F5F9"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:paddingBottom="10dp">
 
-                <ImageView
-                    android:id="@+id/dynamic_item_img"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/bg_my"/>
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp">
 
-                <ImageView
-                    android:id="@+id/dynamic_item_img2"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp" />
+                    <TextView
+                        android:id="@+id/tv_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="用户："
+                        android:textColor="@color/forward_user"/>
+                    <TextView
+                        android:id="@+id/tv_user_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="转发内容"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp">
 
                 <ImageView
                     android:id="@+id/from"
                     android:src="@drawable/iphone"
                     android:layout_width="20dp"
                     android:layout_height="20dp"/>
-
                 <TextView
                     android:id="@+id/device"
                     android:text="VIVO X23"
+                    android:paddingTop="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/device" />
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:background="#e6e6e6"/>
-
         <LinearLayout
-            android:id="@+id/detail_page_comment_container"
-            android:layout_below="@+id/detail_page_above_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="right">
 
-            <ExpandableListView
-                android:id="@+id/detail_page_lv_comment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null"
-                android:listSelector="@android:color/transparent"
-                android:scrollbars="none"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/commentNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="评论"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/collectNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收藏"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/chb_select_way_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>

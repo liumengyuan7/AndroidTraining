@@ -109,7 +109,7 @@ public class PeopleFragment extends Fragment {
                         SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
                         content.setDate(sdf.format(d));//时间转换
                         content.setUserContent(userContent);
-                        content.setDevice(Build.MODEL);
+                        content.setDevice(json.get("device").toString());
                         content.setContent(json.get("pushContent").toString());
                         if(json.has("pushImage") && json.getString("pushImage")!=null && !json.getString("pushImage").equals("")){
                             String [] imgs = json.getString("pushImage").split(";");
@@ -119,7 +119,7 @@ public class PeopleFragment extends Fragment {
                                 content.setImg2(imgs[1]);
                             }
                         }
-                        content.setDevice(Build.MODEL);
+//                        content.setDevice(Build.MODEL);
                         content.setForward_Num(json.getInt("forwardNum"));
                         content.setZan_num(json.getInt("zanNum"));
                         content.setZanFocus(false);

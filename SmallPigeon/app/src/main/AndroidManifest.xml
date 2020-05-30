@@ -30,7 +30,7 @@
         <activity android:name=".Community.Comment.DynamicDetailActivity" />
         <activity android:name=".Community.ReleaseDynamic.ReleaseDynamic" />
         <activity android:name=".Run.FinishRunActivity" />
-        <activity android:name=".My.MyPlan" />
+        <activity android:name=".My.MyPlans.MyPlan" />
         <activity android:name=".My.Paihang" />
         <activity android:name=".My.update_email" />
         <activity android:name=".My.update_pwd_final" />

@@ -31,7 +31,7 @@ import com.example.smallpigeon.My.IdentifyActivity;
 import com.example.smallpigeon.My.IsIdentifyActivity;
 import com.example.smallpigeon.My.MyCollectActivity;
 import com.example.smallpigeon.My.MyCommunity.MyCommunity;
-import com.example.smallpigeon.My.MyPlan;
+import com.example.smallpigeon.My.MyPlans.MyPlan;
 import com.example.smallpigeon.My.Paihang;
 import com.example.smallpigeon.My.PersonalCenter;
 import com.example.smallpigeon.R;
@@ -58,7 +58,7 @@ public class MyFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             String status = msg.obj + "";
-//            is_accreditation = Integer.parseInt(status);
+            is_accreditation = Integer.parseInt(status);
 //            Toast.makeText(getContext(),"当前认证状态"+is_accreditation,Toast.LENGTH_SHORT).show();
         }
     };

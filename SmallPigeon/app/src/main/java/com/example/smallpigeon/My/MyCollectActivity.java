@@ -80,7 +80,7 @@ public class MyCollectActivity extends AppCompatActivity {
                                 SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
                                 content.setDate(sdf.format(d));//时间转换
                                 content.setUserContent(userContent);
-                                content.setDevice(Build.MODEL);
+                                content.setDevice(json.get("device").toString());
                                 //获得动态的发布内容
                                 content.setContent(json.get("pushContent").toString());
                                 //获得动态发布的图片信息
@@ -123,7 +123,6 @@ public class MyCollectActivity extends AppCompatActivity {
                                 //获得收藏的该条动态的收藏数量
                                 int collectNum = json.getInt("collectNum");
                                 content.setCollect_Num(collectNum);
-                                content.setDevice(Build.MODEL);
                                 list.add(content);
                             }
                             adapter.notifyDataSetChanged();

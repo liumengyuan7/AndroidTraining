@@ -24,7 +24,6 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/zh"
-                imagecontrol:border_inside_color="@color/colorPrimary"
                 imagecontrol:border_outside_color="@color/white"
                 imagecontrol:border_thickness="1dp"/>
 
@@ -61,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp">
 
             <TextView
@@ -70,50 +68,85 @@
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:background="#F4F5F9"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:paddingBottom="10dp">
 
-                <ImageView
-                    android:id="@+id/dynamic_item_img"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/bg_my"/>
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp">
 
-                <ImageView
-                    android:id="@+id/dynamic_item_img2"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="150dp"
-                    android:maxWidth="300dp" />
+                    <TextView
+                        android:id="@+id/tv_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="用户："
+                        android:textColor="@color/forward_user"/>
+                    <TextView
+                        android:id="@+id/tv_user_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="转发内容"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/ll_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:paddingBottom="10dp"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/dynamic_item_img"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="150dp"
+                        android:maxWidth="150dp"
+                        android:src="@drawable/bg_my" />
+
+                    <ImageView
+                        android:id="@+id/dynamic_item_img2"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="150dp"
+                        android:maxWidth="150dp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp">
 
-                <TextView
+                <ImageView
                     android:id="@+id/from"
-                    android:text="来自"
-                    android:layout_below="@id/tv_nickName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
+                    android:src="@drawable/iphone"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
                 <TextView
                     android:id="@+id/device"
                     android:text="VIVO X23"
+                    android:paddingTop="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/device" />
@@ -167,7 +200,7 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:focusable="false"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

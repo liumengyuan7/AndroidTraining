@@ -421,7 +421,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
             @Override
             public void run() {
                 String result = new Utils().getConnectionResult("dynamic","addCollect","dynamicId="+dynamicId
-                        +"&&userId="+userId);
+                        +"&&userId="+userId+"&&type="+type);
                 Message message = new Message();
                 message.obj = result;
                 message.what=0;

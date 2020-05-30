@@ -43,7 +43,7 @@ public class ForwardContent {
     private Date dpushTime;
     private String dpushContent;
     private String dpushImage;
-
+    private String device;
     public int getDid() {
         return did;
     }
@@ -90,6 +90,14 @@ public class ForwardContent {
 
     public void setDpushImage(String dpushImage) {
         this.dpushImage = dpushImage;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
     }
 
     @Override

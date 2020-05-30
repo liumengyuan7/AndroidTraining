@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.example.smallpigeon.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Personal_center_More extends AppCompatActivity {
 
     private ImageView personal_center_more_back;
@@ -53,8 +56,11 @@ public class Personal_center_More extends AppCompatActivity {
                 personal_center_more_userSex.setText("女");
             }
             getInterestTranslate(pre.getString("user_interest",""));
-            personal_center_more_userRegisterTime.setText(pre.getString("user_register_time","")
-                    .substring(0,pre.getString("user_register_time","").length()-2));
+            Date d = new Date(pre.getString("user_register_time",""));
+            SimpleDateFormat sdf  = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+            personal_center_more_userRegisterTime.setText(sdf.format(d));
+//            personal_center_more_userRegisterTime.setText(pre.getString("user_register_time","")
+//                    .substring(0,pre.getString("user_register_time","").length()-2));
             personal_center_more_userInterest.setText(interestC.substring(0,interestC.length()-1));
         }
     }
