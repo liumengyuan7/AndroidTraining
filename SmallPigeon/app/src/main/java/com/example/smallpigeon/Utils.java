@@ -24,8 +24,8 @@ public class Utils {
 
     private String result;
     private Bitmap bitmapResult;
-//    public static final String ip = "192.168.1.23";
-    public static final String ip = "192.168.2.189";
+    public static final String ip = "192.168.1.23";
+//    public static final String ip = "192.168.2.189";
     public static final String project = "smallpigeon";
 
     //不需要参数的数据传输
