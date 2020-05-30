@@ -6,14 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/controller/DynamicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/dao/CollectMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/community/service/DynamicService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friend/dao/FriendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friend/dao/FriendMapper.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +245,7 @@
       <workItem from="1590637067984" duration="770000" />
       <workItem from="1590637898223" duration="20458000" />
       <workItem from="1590713280816" duration="4474000" />
-      <workItem from="1590732755677" duration="2356000" />
+      <workItem from="1590732755677" duration="5906000" />
     </task>
     <servers />
   </component>
