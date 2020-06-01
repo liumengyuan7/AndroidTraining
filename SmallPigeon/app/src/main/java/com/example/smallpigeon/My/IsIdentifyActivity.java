@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.smallpigeon.R;
@@ -17,6 +20,7 @@ public class IsIdentifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_is_identify);
+        setStatusBar();
         //0 表示未进行认证  1表示认证成功 2表示提交过认证，等待管理员确认
         tv_identify = findViewById(R.id.tv_identify);
         Intent intent = getIntent();
@@ -27,4 +31,14 @@ public class IsIdentifyActivity extends AppCompatActivity {
             tv_identify.setText("审核成功");
         }
     }
+
+    //隐藏状态栏
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
+    }
+
 }

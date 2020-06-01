@@ -223,7 +223,7 @@ public class UserService {
 	public String selectNearbyUserByLocation(double minLongitude,double maxLongitude,double minLatitude,double maxLatitude,String userId){
 		userInfoAndInterest = "";
 		List<Map> result = this.userMapper.selectNearbyUserByLocation(minLongitude, maxLongitude, minLatitude, maxLatitude, userId);
-		userInfoAndInterest += new Gson().toJson(result)+";";
+		userInfoAndInterest += new Gson().toJson(result)+";;";
 		for(int i = 0;i<result.size();i++){
 			interestString = "";
 			Interest interest = this.interestService.selectInterestByUserId(Integer.parseInt(result.get(i).get("id")+""));

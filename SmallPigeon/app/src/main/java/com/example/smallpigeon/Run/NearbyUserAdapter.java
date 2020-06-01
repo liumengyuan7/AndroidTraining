@@ -61,7 +61,10 @@ public class NearbyUserAdapter extends BaseAdapter {
         RoundImageView nearbyUserAvatar = convertView.findViewById(R.id.nearby_user_avatar);
         TextView nearbyUserEmail = convertView.findViewById(R.id.nearby_user_email);
         TextView nearbyUserNickname = convertView.findViewById(R.id.nearby_user_nickname);
-        nearbyUserEmail.setText("邮箱："+item.get("user_email"));
+        String userEmail = item.get("user_email");
+        if(userEmail.length()>17)
+            nearbyUserEmail.setText("邮箱/账号："+userEmail.substring(0,17));
+        else nearbyUserEmail.setText("邮箱/账号："+userEmail);
         nearbyUserNickname.setText("昵称："+item.get("user_nickname"));
         RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
         Glide.with(context).load("http://"+context.getResources().getString(R.string.ip_address)

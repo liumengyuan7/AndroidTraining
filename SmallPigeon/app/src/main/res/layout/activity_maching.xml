@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#eeeeee"
     tools:context=".Run.MachingActivity">
 
     <LinearLayout
-        android:background="#259B24"
+        android:background="#ededed"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -16,12 +17,21 @@
             android:id="@+id/maching_back"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/back_white"
+            android:src="@drawable/back_black"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center" />
+        <TextView
+            android:layout_width="253dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="匹配"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
     <ListView
+        android:background="#eeeeee"
         android:id="@+id/lv_machingTask"
         android:layout_width="match_parent"
         android:layout_height="520dp"

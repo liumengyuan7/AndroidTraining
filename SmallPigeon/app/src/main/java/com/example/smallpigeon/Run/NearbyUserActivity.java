@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.smallpigeon.R;
@@ -27,6 +29,7 @@ public class NearbyUserActivity extends AppCompatActivity {
     private ListView nearbyUserList;
     private NearbyUserAdapter nearbyUserAdapter;
     private List<Map<String,String>> dataSource;
+    private ImageView imageBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,12 @@ public class NearbyUserActivity extends AppCompatActivity {
 
         setStatusBar();
         getViews();
+        imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         prepareDataSource();
         nearbyUserAdapter = new NearbyUserAdapter(dataSource,getApplicationContext(),R.layout.nearby_user_item);
         nearbyUserList.setAdapter(nearbyUserAdapter);
@@ -44,13 +53,17 @@ public class NearbyUserActivity extends AppCompatActivity {
     //获取视图中的控件
     private void getViews() {
         nearbyUserList = findViewById(R.id.nearby_user_list);
+        imageBack = findViewById(R.id.maching_back);
     }
 
     //准备dataSource里面的数据
     public void prepareDataSource(){
         dataSource = new ArrayList<>();
         try {
-            String[] nearbyUserAndInterest = getIntent().getStringExtra("nearbyUser").split(";");
+            String[] nearbyUserAndInterest = getIntent().getStringExtra("nearbyUser").split(";;");
+            for(int i = 0;i<nearbyUserAndInterest.length;i++){
+                Log.e("分段信息",nearbyUserAndInterest[i]);
+            }
             JSONArray jsonArray = new JSONArray(nearbyUserAndInterest[0]);
             String[] interest = nearbyUserAndInterest[1].split("\\+");
             for (int i = 0;i<jsonArray.length();i++){

@@ -3,9 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#C9C9C9"
     tools:context=".Run.NearbyUserActivity">
+    <LinearLayout
+        android:background="#ededed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
 
+        <ImageView
+            android:id="@+id/maching_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back_black"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="253dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="为您匹配到以下用户"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
     <ListView
+        android:divider="@null"
+        android:background="#ededed"
         android:id="@+id/nearby_user_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

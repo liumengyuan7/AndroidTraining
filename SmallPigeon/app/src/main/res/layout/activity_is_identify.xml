@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_alignParentTop="true"
-        android:background="#259B24">
+        android:background="#ededed">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
             android:textSize="20sp"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_identify"

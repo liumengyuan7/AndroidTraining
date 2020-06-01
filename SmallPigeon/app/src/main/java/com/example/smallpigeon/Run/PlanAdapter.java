@@ -11,8 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.smallpigeon.BaiduMap.activity.TracingActivity;
 import com.example.smallpigeon.R;
+import com.example.smallpigeon.RoundImageView;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ public class PlanAdapter extends BaseAdapter{
     private Context context;
     private List<Map<String,String>> dataSourse;
     private int stringId;
+    private RoundImageView matchUserImg;
 
     public PlanAdapter(Context context,List<Map<String,String>> dataSourse,int id){
         this.context = context;
@@ -50,15 +53,20 @@ public class PlanAdapter extends BaseAdapter{
             convertView = inflater.inflate(stringId, null);
         }
         //获取控件id
+        matchUserImg = convertView.findViewById(R.id.match_userImg);
         TextView plan_time = convertView.findViewById( R.id.plan_time );
         TextView plan_address = convertView.findViewById( R.id.plan_matchAddress );
         TextView plan_email = convertView.findViewById( R.id.plan_matchEmail );
         TextView plan_nickname = convertView.findViewById( R.id.plan_matchNickname );
         Button btnToFinish = convertView.findViewById( R.id.goFinish );
         //添加数据
+        Glide.with(context).load("http://"+context.getResources().getString(R.string.ip_address)+":8080/smallpigeon/avatar/"+
+                dataSourse.get(position).get("plan_email")+".jpg").into(matchUserImg);
         plan_time.setText(dataSourse.get(position).get("plan_time"));
         plan_address.setText(dataSourse.get(position).get("plan_address"));
-        plan_email.setText(dataSourse.get(position).get("plan_email"));
+        if(dataSourse.get(position).get("plan_email").length()>17)
+            plan_email.setText(dataSourse.get(position).get("plan_email").substring(0,17));
+        else plan_email.setText(dataSourse.get(position).get("plan_email"));
         plan_nickname.setText(dataSourse.get(position).get("plan_nickname"));
 
 
