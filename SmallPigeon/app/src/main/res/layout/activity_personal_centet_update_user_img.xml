@@ -70,7 +70,7 @@
             android:layout_width="400dp"
             android:layout_height="380dp"
             android:src="@drawable/woman"
-            imagecontrol:border_inside_color="#259B24"
+            imagecontrol:border_inside_color="#ffffff"
             imagecontrol:border_outside_color="#ffffff"
             imagecontrol:border_thickness="1dp"/>
 

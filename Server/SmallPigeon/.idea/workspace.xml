@@ -7,12 +7,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a156bfd-810d-4711-89f5-957121c70c74" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../BackStageWeb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../BackStageWeb/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BackStageWeb/BackStageWeb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../BackStageWeb/BackStageWeb.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/avatar/0EC4855CE988AD3EE70FA00265972311.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/RunFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/RunFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Run/MachingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Run/MachingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/dbinfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/WEB-INF/dbinfo.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/smallpigeon/avatar/156267102@qq.com.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/smallpigeon/avatar/156267102@qq.com.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/dbinfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/dbinfo.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/CollectAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/CollectAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Community/Comment/DynamicDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Community/Comment/DynamicDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/MyFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/MyFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/IdentifyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/IdentifyActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/java/com/example/smallpigeon/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_is_identify.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_is_identify.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_my_collect.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_my_collect.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_personal_center.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_personal_center.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_personal_centet_update_user_img.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/activity_personal_centet_update_user_img.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/grade_rank_listitem.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/grade_rank_listitem.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/my_collect_listitem4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/people_dynamic_listitem2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/layout/people_dynamic_listitem2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SmallPigeon/easeui/src/main/res/values/ease_strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SmallPigeon/easeui/src/main/res/values/ease_strings.xml" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,7 +105,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="E:/Environmental/AndroidSDK" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../BackStageWeb" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -97,6 +119,18 @@
       <recent name="D:\work\code\project\SmallPigeon\server\SmallPigeon\src" />
       <recent name="D:\work\code\project\SmallPigeon\server\SmallPigeon\web\WEB-INF" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="Tomcat 9.0.0.M41" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.0.M4" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
@@ -172,29 +206,6 @@
       </method>
     </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <option name="contentProportion" value="0.21311475" />
-          <treeState>
-            <expand>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-            </expand>
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -265,6 +276,8 @@
       <workItem from="1590823128107" duration="783000" />
       <workItem from="1590807953245" duration="2446000" />
       <workItem from="1590824926366" duration="1870000" />
+      <workItem from="1590996237883" duration="935000" />
+      <workItem from="1591059324650" duration="4459000" />
     </task>
     <servers />
   </component>

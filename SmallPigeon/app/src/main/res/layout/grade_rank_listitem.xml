@@ -24,7 +24,7 @@
             android:layout_height="40dp"
             android:src="@drawable/woman"
             android:id="@+id/gradeRank_userImg"
-            imagecontrol:border_inside_color="#259B24"
+            imagecontrol:border_inside_color="#ffffff"
             imagecontrol:border_outside_color="#ffffff"
             imagecontrol:border_thickness="1dp"/>
         <TextView

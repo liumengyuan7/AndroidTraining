@@ -334,15 +334,12 @@ public class PeopleFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.iv_add_Message:
-                    /*if (loginOrNot()){
+                    if (loginOrNot()){
                         Intent intent = new Intent(getContext(), ReleaseDynamic.class);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(),"请先登录哦！",Toast.LENGTH_SHORT).show();
-                    }*/
-                    Intent intent = new Intent(getContext(), ReleaseDynamic.class);
-                    startActivity(intent);
-
+                    }
                     break;
             }
         }

@@ -379,7 +379,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.detail_page_do_comment:
-                Toast.makeText(getApplicationContext(),"aaa",Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(),"aaa",Toast.LENGTH_LONG).show();
                 showCommentDialog();
                 break;
             case R.id.iv_collect:
@@ -403,6 +403,7 @@ public class DynamicDetailActivity extends AppCompatActivity implements View.OnC
     private void showDynamicImage(String imgName,ImageView imageView) {
         String url = "http://"+this.getResources().getString(R.string.ip_address)
                 +":8080/smallpigeon/dynamic/"+imgName;
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(this).load(url).into(imageView);
     }
     /*
