@@ -65,10 +65,7 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_gravity="center"
-                android:src="@drawable/woman"
-                imagecontrol:border_inside_color="#259B24"
-                imagecontrol:border_outside_color="#ffffff"
-                imagecontrol:border_thickness="1dp" />
+                android:src="@drawable/woman" />
 
         </LinearLayout>
         <LinearLayout
@@ -87,14 +84,12 @@
                     android:layout_height="wrap_content"
                     android:text="昵称："
                     android:textSize="18sp"
-                    android:textColor="#000"
                     />
                 <TextView
                     android:id="@+id/match_userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#000"
                     android:textSize="18sp"
                     />
             </LinearLayout>
@@ -107,7 +102,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="性别："
-                    android:textColor="#000"
                     android:textSize="18sp"
                     />
                 <TextView
@@ -116,7 +110,6 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="18sp"
-                    android:textColor="#000"
                     />
             </LinearLayout>
             <LinearLayout
@@ -128,7 +121,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="积分："
-                    android:textColor="#000"
                     android:textSize="18sp"
                     />
                 <TextView
@@ -136,7 +128,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#000"
                     android:textSize="18sp"
                     />
             </LinearLayout>
@@ -149,7 +140,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="喜好："
-                    android:textColor="#000"
                     android:textSize="18sp"
                     />
                 <TextView
@@ -158,7 +148,6 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="18sp"
-                    android:textColor="#000"
                     />
             </LinearLayout>
             <LinearLayout
@@ -170,7 +159,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="账号："
-                    android:textColor="#000"
                     android:textSize="18sp"
                     />
                 <TextView
@@ -179,7 +167,6 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="18sp"
-                    android:textColor="#000"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -187,13 +174,15 @@
 
     </LinearLayout>
     <LinearLayout
-      android:gravity="right"
+        android:layout_marginBottom="20dp"
+        android:gravity="right"
         android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="60dp">
         <Button
             android:id="@+id/match_goChat"
-           android:background="@drawable/circular"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/circular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="开始聊天"

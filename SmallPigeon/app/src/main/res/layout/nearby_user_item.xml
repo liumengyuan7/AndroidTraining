@@ -23,7 +23,7 @@
             <TextView
                 android:id="@+id/nearby_user_nickname"
                 android:gravity="bottom"
-                android:text="昵称：ydl"
+                android:text="昵称：堕天使的寂寞"
                 android:textSize="15dp"
                 android:layout_marginLeft="25dp"
                 android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             <TextView
                 android:id="@+id/nearby_user_email"
                 android:gravity="top"
-                android:text="邮箱：156267102@qq.com"
+                android:text="账号：111111111111"
                 android:textSize="15dp"
                 android:layout_marginLeft="25dp"
                 android:layout_width="match_parent"

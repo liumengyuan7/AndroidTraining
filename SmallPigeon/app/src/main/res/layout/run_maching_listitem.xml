@@ -81,34 +81,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="时间："
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textSize="18sp" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
+                        android:textSize="18sp"
                         android:id="@+id/plan_time"
                         />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="地点："
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textSize="18sp" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
+                        android:textSize="18sp"
                         android:id="@+id/plan_matchAddress"
                         />
                 </LinearLayout>
@@ -119,17 +114,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="伙伴昵称："
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textSize="18sp" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        android:id="@+id/plan_matchNickname"
-                        />
+                        android:textSize="18sp"
+                        android:id="@+id/plan_matchNickname" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,15 +129,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="伙伴账号："
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        />
+                        android:textSize="18sp" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000"
+                        android:textSize="18sp"
                         android:id="@+id/plan_matchEmail"
                         />
                 </LinearLayout>

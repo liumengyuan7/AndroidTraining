@@ -141,7 +141,7 @@ public class RemachingActivity extends AppCompatActivity {
         match_userPoints.setText(intent.getStringExtra("user_points"));
         match_userInterest.setText(interest.substring(0,interest.length()-1));
         if(intent.getStringExtra("user_email").length()>17)
-            match_userEmail.setText(intent.getStringExtra("user_email").substring(0,17));
+            match_userEmail.setText(intent.getStringExtra("user_email").substring(0,16));
         else match_userEmail.setText(intent.getStringExtra("user_email"));
         userEmail = intent.getStringExtra("user_email");
     }
