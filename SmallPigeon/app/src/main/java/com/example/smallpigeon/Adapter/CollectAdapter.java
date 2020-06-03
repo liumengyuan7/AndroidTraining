@@ -113,18 +113,19 @@ public class CollectAdapter extends BaseAdapter {
                     holder.collectNum = convertView.findViewById(R.id.collectNum);
                     break;
                 case VIEWTYPTHIRD:
-                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem3,null);
+                    convertView = LayoutInflater.from(context).inflate(R.layout.my_collect_listitem3,null);
                     holder.iv_icon = convertView.findViewById(R.id.iv_icon);
                     holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
                     holder.tv_date = convertView.findViewById(R.id.tv_date);
                     holder.device = convertView.findViewById(R.id.device);
                     holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
+                    holder.checkBox = convertView.findViewById(R.id.chb_select_way_point);
                     //评论收藏数量
                     holder.commentNum = convertView.findViewById(R.id.commentNum);
                     holder.collectNum = convertView.findViewById(R.id.collectNum);
                     break;
                 case VIEWTYPFOUR:
-                    convertView = LayoutInflater.from(context).inflate(R.layout.people_dynamic_listitem4,null);
+                    convertView = LayoutInflater.from(context).inflate(R.layout.my_collect_listitem4,null);
                     holder.iv_icon = convertView.findViewById(R.id.iv_icon);
                     holder.tv_nickName = convertView.findViewById(R.id.tv_nickName);
                     holder.tv_date = convertView.findViewById(R.id.tv_date);
@@ -132,6 +133,7 @@ public class CollectAdapter extends BaseAdapter {
                     holder.dynamic_item_txt = convertView.findViewById(R.id.dynamic_item_txt);
                     holder.tv_user_txt = convertView.findViewById(R.id.tv_user_txt);
                     holder.tv_user = convertView.findViewById(R.id.tv_user);
+                    holder.checkBox = convertView.findViewById(R.id.chb_select_way_point);
                     //评论收藏数量
                     holder.commentNum = convertView.findViewById(R.id.commentNum);
                     holder.collectNum = convertView.findViewById(R.id.collectNum);

@@ -58,7 +58,11 @@ public class MyFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             String status = msg.obj + "";
-            is_accreditation = Integer.parseInt(status);
+//            if (status.equals("") || status==null || status.equals("null")){
+//                is_accreditation = 0;
+//            }else{
+                is_accreditation = Integer.parseInt(status);
+//            }
 //            Toast.makeText(getContext(),"当前认证状态"+is_accreditation,Toast.LENGTH_SHORT).show();
         }
     };
@@ -263,6 +267,14 @@ public class MyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if(!userId.equals("") && userId != null) {
+            selectUserInfo(userId);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(!userId.equals("") && userId != null) {
             selectUserInfo(userId);
         }

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:alpha="0.9"
-    tools:context=".LoginOrRegister.LoginActivity">
+    android:alpha="0.9">
 
     <LinearLayout
         android:gravity="center"
@@ -49,7 +48,7 @@
             android:alpha="0.5"
             android:layout_gravity="center"
             android:id="@+id/username"
-            android:hint="用户名/手机号"
+            android:hint="用户名/邮箱"
             android:layout_width="300dp"
             android:layout_height="50dp"/>
     </LinearLayout>

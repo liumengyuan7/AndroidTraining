@@ -61,9 +61,9 @@ public class IdentifyActivity extends AppCompatActivity {
                 case 0:
                     String result = msg.obj + "";
                     if (result.equals("true")) {
-                        Toast toast=Toast.makeText(getApplicationContext(), "提交成功，请等待管理员验证", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER,0,0);
-                        toast.show();
+//                        Toast toast=Toast.makeText(getApplicationContext(), "提交成功，请等待管理员验证", Toast.LENGTH_SHORT);
+//                        toast.setGravity(Gravity.CENTER,0,0);
+//                        toast.show();
                     } else {
                         Toast toast=Toast.makeText(getApplicationContext(), "提交失败，请重新提交", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER,0,0);

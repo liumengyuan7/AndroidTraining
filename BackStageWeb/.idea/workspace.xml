@@ -6,7 +6,35 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40b08f0c-12e0-4589-8242-e8812c7f2509" name="Default Changelist" comment="" />
+    <list default="true" id="40b08f0c-12e0-4589-8242-e8812c7f2509" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackStageWeb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BackStageWeb.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Server/SmallPigeon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/SmallPigeon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Server/SmallPigeon/out/artifacts/smallpigeon/WEB-INF/dbinfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/SmallPigeon/out/artifacts/smallpigeon/WEB-INF/dbinfo.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Server/SmallPigeon/out/artifacts/smallpigeon/avatar/156267102@qq.com.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/SmallPigeon/out/artifacts/smallpigeon/avatar/156267102@qq.com.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Server/SmallPigeon/web/WEB-INF/dbinfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/SmallPigeon/web/WEB-INF/dbinfo.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/CollectAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Adapter/CollectAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Community/Comment/DynamicDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Community/Comment/DynamicDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/MyFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/MyFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Fragment/PeopleFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/IdentifyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/My/IdentifyActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/java/com/example/smallpigeon/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_is_identify.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_is_identify.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_my_collect.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_my_collect.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_personal_center.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_personal_center.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_personal_centet_update_user_img.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/activity_personal_centet_update_user_img.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/grade_rank_listitem.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/grade_rank_listitem.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/my_collect_listitem4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/people_dynamic_listitem2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/layout/people_dynamic_listitem2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SmallPigeon/easeui/src/main/res/values/ease_strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SmallPigeon/easeui/src/main/res/values/ease_strings.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +42,20 @@
   </component>
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -25,6 +67,9 @@
         <option value="Jsp File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -83,8 +128,20 @@
       <recent name="D:\xiazai\Idea\workspace\BackStageWeb\web\images\faces" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager">
-    <configuration name="Tomcat-9.0.0.0" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat " ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
+    <configuration name="Tomcat-9.0.0.0" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.0.M4" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
       <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
       <option name="COMMON_VM_ARGUMENTS" value="-Dfile.encoding=UTF-8" />
       <option name="UPDATING_POLICY" value="restart-server" />
@@ -226,29 +283,6 @@
       </method>
     </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <option name="contentProportion" value="0.3328551" />
-          <treeState>
-            <expand>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-            </expand>
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -314,11 +348,23 @@
       <workItem from="1589872871687" duration="1682000" />
       <workItem from="1589874764451" duration="1695000" />
       <workItem from="1589955797956" duration="1342000" />
+      <workItem from="1591069823717" duration="621000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="233" y="2" key="#Notifications" timestamp="1588062819479">
@@ -466,11 +512,6 @@
           <line>9</line>
           <properties class="com.smallpigeon.admin.dao.AdminMapper" method="insertUser" />
           <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/smallpigeon/admin/controller/AdminController.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
