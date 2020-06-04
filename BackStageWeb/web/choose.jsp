@@ -45,12 +45,12 @@
         <hr class="hr15">
         <input name="password" id="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
         <hr class="hr15">
-        <input type="checkbox" name="agree" value="1"> I agree to the Terms and Conditions
+        <input type="checkbox" name="agree" value="1"> 我同意条款和条件
         <hr class="hr15">
         <input value="register" lay-submit lay-filter="register" style="width:100%;" type="submit">
         <hr class="hr20" >
         <div style="float: right">
-            Already have an account? <a href="${ctx}/login.jsp">Login</a>
+            已经有账户了? <a href="${ctx}/login.jsp">登录</a>
         </div>
     </form>
 </div>

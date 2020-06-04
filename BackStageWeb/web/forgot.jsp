@@ -28,8 +28,10 @@
 			<hr class="hr15">
 			<input value="Reset Password" lay-submit lay-filter="login" style="width:100%;" type="submit">
 			<hr class="hr20" >
+			<a href="${ctx}/login.jsp" style="float:right">
+				登录
+			</a>
 		</form>
 </div>
-	</section>
 </body>
 </html>

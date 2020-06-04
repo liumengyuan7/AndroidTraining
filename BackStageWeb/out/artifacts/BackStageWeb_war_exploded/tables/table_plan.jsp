@@ -84,11 +84,18 @@
                         ${plan.planTime}
                 </td>
                 <td>
-                        ${plan.planAddress}
+                    ${plan.planAddress }
                 </td>
-                <td>
-                        ${plan.planStatus}
-                </td>
+                <c:if test="${plan.planStatus eq 'no'}">
+                    <td>
+                        未完成
+                    </td>
+                </c:if>
+                <c:if test="${plan.planStatus eq 'yes' }">
+                    <td>
+                        已完成
+                    </td>
+                </c:if>
                 <td>
                     <button onclick="window.location.href='${ctx}/plan/editPlans/'+${plan.id}" style="background-color: lightblue;height: 30px;width: 80px;border-radius: 236px 236px 236px 236px;text-align: center">
                         Edit

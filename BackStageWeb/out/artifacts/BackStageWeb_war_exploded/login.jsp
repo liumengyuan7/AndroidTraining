@@ -28,15 +28,15 @@
         <form method="post"  action="${ctx}/admin/login" class="layui-form" >
             <input name="email" id="email" placeholder="邮箱"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
-            <a href="forgot.jsp" style="float:right">
-                Forgot Password?
+            <a href="${ctx}/forgot.jsp" style="float:right">
+                忘记密码?
             </a>
             <input name="password" id="password"  placeholder="密码"  type="password" class="layui-input" required >
             <hr class="hr15">
             <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
             <hr class="hr20" >
             <div style="float: right">
-                Don't have an account? <a href="register.jsp">Create One</a>
+                没有账户? <a href="register.jsp">注册一个</a>
             </div>
         </form>
         </c:if>

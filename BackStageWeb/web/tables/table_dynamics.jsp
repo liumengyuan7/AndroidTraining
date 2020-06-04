@@ -34,6 +34,9 @@
         td{
             font-size: 13px;
         }
+        img{
+            width: 30px;height: 30px;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +90,7 @@
                     ${dynamics.pushContent}
                 </td>
                 <td>
-                    ${dynamics.pushImage}
+                    <img src="${dynamics.pushImage}">
                 </td>
                 <td>
                     ${dynamics.zanNum}

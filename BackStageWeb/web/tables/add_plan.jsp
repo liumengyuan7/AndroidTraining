@@ -40,7 +40,7 @@
         <hr class="hr15">
         <input name="planAddress" id="planAddress" placeholder="计划地址"  type="text" lay-verify="required" class="layui-input" >
         <hr class="hr15">
-        <input name="planStatus" id="planStatus" placeholder="计划状态(是否完成)"  type="text" lay-verify="required" class="layui-input" >
+        <input name="planStatus" id="planStatus" placeholder="计划状态(是否完成)完成输yes,未完成输no"  type="text" lay-verify="required" class="layui-input" >
         <hr class="hr15">
         <input value="添加跑步计划" lay-submit lay-filter="login" style="width:100%;" type="submit">
         <hr class="hr20" >
